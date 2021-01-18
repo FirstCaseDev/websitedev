@@ -1,0 +1,1 @@
+DB_CONNECT = mongodb://PuneetShrivas:admin@firstcase00-shard-00-00.aapjj.mongodb.net:27017,firstcase00-shard-00-01.aapjj.mongodb.net:27017,firstcase00-shard-00-02.aapjj.mongodb.net:27017/caseurls?ssl=true&replicaSet=atlas-upi8rw-shard-0&authSource=admin&retryWrites=true&w=majority

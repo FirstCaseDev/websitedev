@@ -1,0 +1,229 @@
+<script src="node_modules/chart.js/src/chart.js"></script>
+
+<!-- <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" /> -->
+<!-- search part with filters and pagination -->
+
+<body ng-init="rows">
+    <div class="search-bar">
+        <div class="input-group">
+            <input class="form-control" type="text" name="text-1542372332072" id="text-1542372332072" required="required" placeholder="Full Text Search" [(ngModel)]="query" />
+            <label for="text-1542372332072">Type in your query</label>
+            <div class="req-mark">!</div>
+        </div>
+    </div>
+    <div class="page-columns">
+        <div class="left">
+            <h2>Filters</h2>
+            <div class="filter-option">
+                <p>Judgements</p>
+                <form [formGroup]="myForm">
+                    <ng-multiselect-dropdown [placeholder]="'Select one or more...'" [(ngModel)]="selectedJudgements" [settings]="dropdownSettings" [data]="judgement_options" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" [ngModelOptions]="{standalone: true}">
+                    </ng-multiselect-dropdown>
+                </form>
+            </div>
+            <div class="filter-option">
+                <span>Court</span>
+                <span>
+                        <select [(ngModel)]="courtlevel" (change)="selected()">
+                            <!-- <option [value]="defaultcourt.name" selected="selected">{{defaultcourt.name}}</option> -->
+                            <option *ngFor="let item of courtdata" [ngValue]="item">{{item.name}}</option>
+                        </select>
+                    </span>
+            </div>
+            <div class="filter-option">
+                <div class="input-group-2">
+                    <input class="form-control" type="text" id="judgeInput" name="judgeName" required="required" placeholder="Judge" [(ngModel)]="bench" />
+                    <label for="judgeName">Judge Name</label>
+                    <div class="req-mark">!</div>
+                </div>
+            </div>
+            <div class="filter-option">
+                <div class="input-group-2">
+                    <input type="text" id="petitionerInput" name="petitionerName" placeholder="Petitioner" [(ngModel)]="petitioner" />
+                    <label for="petitionerName">Petitioner Name</label>
+                    <div class="req-mark">!</div>
+                </div>
+            </div>
+            <div class="filter-option">
+                <div class="input-group-2">
+                    <input type="text" id="pttcounselInput" name="petitionerCounsel" placeholder="Petitioner Counsel" [(ngModel)]="petitioner_counsel" />
+                    <label for="petitionerCounsel">Petitioner Counsel</label>
+                    <div class="req-mark">!</div>
+                </div>
+            </div>
+            <div class="filter-option">
+                <div class="input-group-2">
+                    <input type="text" id="respondentInput" name="respondentName" placeholder="Respondent" [(ngModel)]="respondent" />
+                    <label for="respondentName">Respondent Name</label>
+                    <div class="req-mark">!</div>
+                </div>
+            </div>
+            <div class="filter-option">
+                <div class="input-group-2">
+                    <input type="text" id="respcounselInput" name="respondentCounsel" placeholder="Respondent Counsel" [(ngModel)]="respondent_counsel" />
+                    <label for="respondentCounsel">Respondent Counsel</label>
+                    <div class="req-mark">!</div>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="grid-container">
+                <div class="grid-item">
+                    <button (click)="first_search() ">Search</button>
+                </div>
+                <div class="grid-item">
+                    <button (click)="reset() ">Reset</button>
+                </div>
+            </div>
+            <div class="layout">
+                <div *ngIf="searched">
+                    <h4 id="total ">Total Results : {{results_count}}</h4>
+                </div>
+
+                <ul class="search-repeater " *ngFor="let data of rows ">
+                    <li>
+                        <h3 id="search-category " name="category ">{{ data.source }}</h3>
+                    </li>
+                    <li>
+                        <h4 id="search-desc " me="desc ">
+                            <a href={{data.url}}>{{ data.title }}</a>
+                        </h4>
+                    </li>
+                    <li>
+                        <h4 class="date">
+                            Date: {{data.date}}/{{data.month}}/{{data.year}}
+                        </h4>
+                    </li>
+                    <li>
+                        <h4 class="judgement">
+                            Judgement: {{data.judgement}}
+                        </h4>
+                    </li>
+                    <li>
+                        <h4 class="bench">
+                            <strong>Bench:</strong> {{data.bench}}
+                        </h4>
+                    </li>
+                </ul>
+
+                <br />
+                <br />
+                <br />
+            </div>
+            <div *ngIf="searched" class="pagination-bar">
+                <div style="min-width: 150px;">
+                    <ul *ngIf="page> 1">
+                        <button id="pagination_pre" (click)="sendPreviousPage()">Previous</button>
+                    </ul>
+                </div>
+                <ul style="list-style-type:none;">
+                    <li>
+                        <h4 id="page-number">Page: {{page}}</h4>
+                    </li>
+                </ul>
+                <div style="min-width: 150px;">
+                    <ul *ngIf="page < results_count / limit">
+                        <button id="pagination_next" (click)="sendNextPage()">Next</button>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Analytics part with graphs -->
+    <div *ngIf="searched">
+        <div>
+            <h2 style="margin-left: 40px;">Analytics</h2>
+        </div>
+
+        <div class="container">
+            <div class="text-center" style="display: flex;">
+                <canvas baseChart [chartType]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [legend]="true"></canvas>
+                <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+            </div>
+        </div>
+        <br>
+        <br><br>
+        <div class="container">
+            <div class="text-center" style="display: flex;">
+                <canvas baseChart [datasets]=" petitionerChartData " [labels]="petitionerChartLabels " [options]="petitionerChartOptions " [legend]="petitionerChartLegend " [chartType]="petitionerChartType "></canvas>
+                <canvas baseChart [datasets]="respondentChartData " [labels]="respondentChartLabels " [options]="respondentChartOptions " [legend]="respondentChartLegend " [chartType]="respondentChartType "></canvas>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="loading" class="loading_animation" style="display: flex;">
+        <div class="loadingio-spinner-ripple-0klw6wjchhb">
+            <div class="ldio-9faui0bm4nl">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <style type="text/css">
+            @keyframes ldio-9faui0bm4nl {
+                0% {
+                    top: 104.16px;
+                    left: 104.16px;
+                    width: 0;
+                    height: 0;
+                    opacity: 1;
+                }
+                100% {
+                    top: 19.53px;
+                    left: 19.53px;
+                    width: 169.26px;
+                    height: 169.26px;
+                    opacity: 0;
+                }
+            }
+            
+            .ldio-9faui0bm4nl div {
+                position: absolute;
+                border-width: 4.34px;
+                border-style: solid;
+                opacity: 1;
+                border-radius: 50%;
+                animation: ldio-9faui0bm4nl 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+            }
+            
+            .ldio-9faui0bm4nl div:nth-child(1) {
+                border-color: #93dbe9
+            }
+            
+            .ldio-9faui0bm4nl div:nth-child(2) {
+                border-color: #689cc5;
+                animation-delay: -0.5s;
+            }
+            
+            .loadingio-spinner-ripple-0klw6wjchhb {
+                width: 217px;
+                height: 217px;
+                display: block;
+                overflow: hidden;
+                background: rgba(255, 255, 255, 0);
+            }
+            
+            .ldio-9faui0bm4nl {
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                transform: translateZ(0) scale(1);
+                backface-visibility: hidden;
+                transform-origin: 0 0;
+                right: 0;
+                position: fixed;
+                /* or absolute */
+                top: 38%;
+                left: 43%;
+                margin: auto;
+                /* see note above */
+            }
+            
+            .ldio-9faui0bm4nl div {
+                box-sizing: content-box;
+            }
+            /* generated by https://loading.io/ */
+        </style>
+    </div>
+
+</body>
