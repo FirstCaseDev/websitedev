@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "concurrently \"cd backend && npm run dev\" \"cd CustomTable && npm start\" "
+        "dev": "concurrently \"cd backend && npm run dev\" \"cd CustomTable && npm start\" ",
+        "start": "concurrently \"cd backend && npm run dev\" \"cd CustomTable && npm start\" "
     },
     "author": "Puneet Shrivas",
     "license": "ISC",
