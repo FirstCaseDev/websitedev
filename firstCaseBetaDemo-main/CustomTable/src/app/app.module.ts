@@ -9,11 +9,19 @@ import { FilterPipe } from './home/filter.pipe';
 import { CasesComponent } from './cases/cases.component';
 import { ChartsModule } from 'ng2-charts';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
- 
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, FilterPipe, CasesComponent],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule, ChartsModule, FormsModule, ReactiveFormsModule, NgMultiSelectDropDownModule.forRoot()],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ChartsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgMultiSelectDropDownModule.forRoot(),
+  ],
   providers: [Title],
   bootstrap: [AppComponent],
 })

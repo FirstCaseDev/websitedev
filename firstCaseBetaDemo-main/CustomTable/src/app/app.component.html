@@ -1,60 +1,48 @@
 <div class="home">
-    <header>
-        <nav>
-            <div>
-                <img id="icon_white" src="../assets/img/White_Logo.svg" />
-            </div>
-            <div class="top-menu">
-                Company
-            </div>
-            <div class="top-menu">
-                Latest Cases
-            </div>
-            <div class="top-menu">
-                Help
-            </div>
-            <!-- <ul>
-          <li>
-            <ul>
-              <li>About Us</li>
-              <li>Our Team</li>
-              <li>Contact Us</li>
-            </ul>
-          </li>
-          <li>Latest Cases</li>
-          <li>Help</li>
-        </ul> -->
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <div>
+        <img id="icon_white" src="../assets/img/White_Logo.svg" />
+      </div>
+      <div class="top-menu">
+        <a href="/cases">Company</a>
+      </div>
+      <div class="top-menu">
+        <a href="/cases">Latest Cases</a>
+      </div>
+      <div class="top-menu">
+        <a href="/cases">Help</a>
+      </div>
+    </nav>
+  </header>
 
-    <div class="pages">
-        <router-outlet></router-outlet>
+  <div class="pages">
+    <router-outlet></router-outlet>
+  </div>
+
+  <br />
+  <br />
+  <footer class="footer">
+    <div>
+      <ul class="footer-list">
+        <h2 class="footer-list-title">Company<br /></h2>
+        <li class="footer-list-item">Our Team</li>
+        <li class="footer-list-item">Gallery</li>
+        <li class="footer-list-item">Contact us</li>
+      </ul>
     </div>
-
-    <br />
-    <br />
-    <footer class="footer">
-        <div>
-            <ul class="footer-list">
-                <h2 class="footer-list-title">Company<br /></h2>
-                <li class="footer-list-item">Our Team</li>
-                <li class="footer-list-item">Gallery</li>
-                <li class="footer-list-item">Contact us</li>
-            </ul>
-        </div>
-        <div>
-            <ul class="footer-list">
-                <h2 class="footer-list-title">Information<br /></h2>
-                <li class="footer-list-item">Legal Services</li>
-                <li class="footer-list-item">Terms and Conditions</li>
-                <li class="footer-list-item">FAQ</li>
-            </ul>
-        </div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </footer>
+    <div>
+      <ul class="footer-list">
+        <h2 class="footer-list-title">Information<br /></h2>
+        <li class="footer-list-item">Legal Services</li>
+        <li class="footer-list-item">Terms and Conditions</li>
+        <li class="footer-list-item">FAQ</li>
+      </ul>
+    </div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </footer>
 </div>
-<script src="script.js" type="text/JavaScript"></script>
