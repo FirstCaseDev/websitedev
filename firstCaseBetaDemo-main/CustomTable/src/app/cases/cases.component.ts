@@ -14,6 +14,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./cases.component.css'],
 })
 export class CasesComponent implements OnInit {
+  public doughnutChartOptions: ChartOptions = {
+    title: {
+      text: 'Judgement distribution',
+      display: true,
+    },
+    responsive: true,
+  }
   public petitionerChartOptions: ChartOptions = {
     title: {
       text: 'Petitioner Counsel Stats',
@@ -207,7 +214,7 @@ export class CasesComponent implements OnInit {
   petitionerDatalabels: any = [];
   respondentDatalabels: any = [];
 
-  constructor(private caseService: CaseService, private fb: FormBuilder) {}
+  constructor(private caseService: CaseService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.courtlevel = this.courtdata[0];
@@ -278,16 +285,24 @@ export class CasesComponent implements OnInit {
 
   show_analytics() {
     this.view_search = false;
+    let element = document.getElementById('analytics_tab');
+    element!.className = 'tab active';
+    let element2 = document.getElementById('search_tab');
+    element2!.className = 'tab';
     console.log('view_search ' + this.view_search);
   }
 
   show_search() {
     this.view_search = true;
+    let element = document.getElementById('search_tab');
+    element!.className = 'tab active';
+    let element2 = document.getElementById('analytics_tab');
+    element2!.className = 'tab';
     console.log('view_search ' + this.view_search);
   }
 
   search() {
-    this.searched = true;
+    this.view_search = false;
     if (this.query.length == 0) {
       this.query = [this.bench, this.petitioner, this.respondent].join(' ');
       if (this.query.length == 2) {
@@ -566,6 +581,7 @@ export class CasesComponent implements OnInit {
           console.log(error);
         }
         this.loading = false;
+        this.searched = true;
       });
 
     this.createArray(this.results_count);
@@ -573,6 +589,7 @@ export class CasesComponent implements OnInit {
 
   reset() {
     this.searched = false;
+    this.view_search = false;
     this.query = '';
     this.bench = '';
     this.petitioner = '';
