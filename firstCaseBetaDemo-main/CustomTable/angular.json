@@ -23,7 +23,7 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
                         "aot": true,
-                        "assets": ["src/favicon.ico", "src/assets"],
+                        "assets": ["src/favicon.ico", "src/assets", "src/target.html", "src", { "glob": "home.html", "input": "src/", "output": "/" }],
                         "styles": ["src/styles.css"],
                         "scripts": [],
                         "allowedCommonJsDependencies": ["chart.js"]

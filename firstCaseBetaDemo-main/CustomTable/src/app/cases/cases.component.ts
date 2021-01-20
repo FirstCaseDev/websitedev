@@ -611,12 +611,16 @@ export class CasesComponent implements OnInit {
 
   sendNextPage() {
     this.page = this.page + 1;
+    
     this.search();
+    this.view_search = true;
   }
 
   sendPreviousPage() {
     this.page = this.page - 1;
+     
     this.search();
+    this.view_search = true; 
   }
 
   createArray(count: number) {
