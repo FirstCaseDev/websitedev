@@ -87,7 +87,7 @@
 
             </div>
 
-            <div class="slider">
+            <div class="x">
                 <div class="slides">
                     <div id="slide-1" *ngIf="view_search">
                         <ul class="search-repeater" *ngFor="let data of rows">
@@ -148,8 +148,8 @@
                             <br /><br />
                             <div class="container">
                                 <div class="text-center" style="display: flex">
-                                    <canvas baseChart [datasets]="petitionerChartData" [labels]="petitionerChartLabels" [options]="petitionerChartOptions" [legend]="petitionerChartLegend" [chartType]="petitionerChartType"></canvas>
-                                    <canvas baseChart [datasets]="respondentChartData" [labels]="respondentChartLabels" [options]="respondentChartOptions" [legend]="respondentChartLegend" [chartType]="respondentChartType"></canvas>
+                                    <canvas height="180px" baseChart [datasets]="petitionerChartData" [labels]="petitionerChartLabels" [options]="petitionerChartOptions" [legend]="petitionerChartLegend" [chartType]="petitionerChartType"></canvas>
+                                    <canvas height="180px" baseChart [datasets]="respondentChartData" [labels]="respondentChartLabels" [options]="respondentChartOptions" [legend]="respondentChartLegend" [chartType]="respondentChartType"></canvas>
                                 </div>
                             </div>
                         </div>

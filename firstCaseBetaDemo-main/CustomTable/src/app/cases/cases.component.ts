@@ -69,7 +69,7 @@ export class CasesComponent implements OnInit {
   ];
   public petitionerChartType: ChartType = 'horizontalBar';
   public petitionerChartLegend = true;
-  public petitionerChartLimit = 20;
+  public petitionerChartLimit = 10;
   public petitionerChartData: ChartDataSets[] = [
     { data: [], label: '', stack: 'a' },
     { data: [], label: '', stack: 'a' },
@@ -126,7 +126,7 @@ export class CasesComponent implements OnInit {
   ];
   public respondentChartType: ChartType = 'horizontalBar';
   public respondentChartLegend = true;
-  public respondentChartLimit = 20;
+  public respondentChartLimit = 10;
   public respondentChartData: ChartDataSets[] = [
     { data: [], label: '', stack: 'a' },
     { data: [], label: '', stack: 'a' },
@@ -242,10 +242,10 @@ export class CasesComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    console.log('onItemSelect', this.selectedJudgements);
+    // console.log('onItemSelect', this.selectedJudgements);
   }
   onSelectAll(items: any) {
-    console.log('onSelectAll', this.selectedJudgements);
+    // console.log('onSelectAll', this.selectedJudgements);
   }
 
   toogleShowFilter() {
@@ -289,7 +289,7 @@ export class CasesComponent implements OnInit {
     element!.className = 'tab active';
     let element2 = document.getElementById('search_tab');
     element2!.className = 'tab';
-    console.log('view_search ' + this.view_search);
+    // console.log('view_search ' + this.view_search);
   }
 
   show_search() {
@@ -298,7 +298,7 @@ export class CasesComponent implements OnInit {
     element!.className = 'tab active';
     let element2 = document.getElementById('analytics_tab');
     element2!.className = 'tab';
-    console.log('view_search ' + this.view_search);
+    // console.log('view_search ' + this.view_search);
   }
 
   search() {
@@ -328,7 +328,7 @@ export class CasesComponent implements OnInit {
         this.limit
       )
       .subscribe((data: any) => {
-        console.log(data.case_list);
+        // console.log(data.case_list);
 
         this.rows = data.case_list;
         this.results_count = data.result_count;
@@ -426,7 +426,7 @@ export class CasesComponent implements OnInit {
         this.petitionerDatalabels.length = 0;
         try {
           data.map((item: any) => {
-            if (item.group.length <= 3) data.pop(item);
+            if (item.group.length <= 5) data.pop(item);
           });
           data.map((item: any) => {
             if (!this.petitionerChartLabels.includes(item.group)) {
@@ -471,47 +471,32 @@ export class CasesComponent implements OnInit {
             }
             sums[i] = sum;
           }
-          console.log(this.petitionerChartData);
-          console.log(sums);
+          // console.log(this.petitionerChartData);
+          // console.log(sums);
           var n = this.petitionerChartLabels.length;
           for (var i = n; i >= 0; i--) {
             for (var j = n; j > n - i; j--) {
               if (sums[j] > sums[j - 1]) {
                 for (var k = 0; k < this.petitionerDatalabels.length; k++) {
                   var temp = this.petitionerChartData[k].data![j];
-                  this.petitionerChartData[k].data![
-                    j
-                  ] = this.petitionerChartData[k].data![j - 1];
+                  this.petitionerChartData[k].data![j] = this.petitionerChartData[k].data![j - 1];
                   this.petitionerChartData[k].data![j - 1] = temp;
-                  // [this.petitionerChartData[k].data[j],this.petitionerChartData[k].data[j-1]] = [this.petitionerChartData[k].data[j-1],this.petitionerChartData[k].data[j]];
                 }
                 var temp2 = this.petitionerChartLabels[j];
-                this.petitionerChartLabels[j] = this.petitionerChartLabels[
-                  j - 1
-                ];
+                this.petitionerChartLabels[j] = this.petitionerChartLabels[j-1];
                 this.petitionerChartLabels[j - 1] = temp2;
-                // [this.petitionerChartLabels[j],this.petitionerChartLabels[j-1]]=[this.petitionerChartLabels[j-1],this.petitionerChartLabels[j]];
+                var temp3 = sums[j];
+                sums[j] = sums[j-1];
+                sums[j-1] = temp3;
               }
             }
           }
-          for (var i = 0; i < this.petitionerChartLabels.length; i++) {
-            var sum: any = 0;
-            for (var j = 0; j < this.petitionerDatalabels.length; j++) {
-              sum = sum + this.petitionerChartData[j]!.data![i];
-            }
-            sums[i] = sum;
-          }
-          console.log(sums);
           for (var i = 0; i < this.petitionerChartData.length; i++) {
-            this.petitionerChartData[i].data = this.petitionerChartData[
-              i
-            ]?.data?.slice(0, this.petitionerChartLimit);
+            this.petitionerChartData[i].data = this.petitionerChartData[i]?.data?.slice(0, this.petitionerChartLimit);
           }
-          this.petitionerChartLabels = this.petitionerChartLabels.slice(
-            0,
-            this.petitionerChartLimit
-          );
+          this.petitionerChartLabels = this.petitionerChartLabels.slice(0,this.petitionerChartLimit);
           console.log(this.petitionerChartData);
+          console.log(this.petitionerChartLabels);
         } catch (error) {
           console.log(error);
         }
@@ -526,12 +511,12 @@ export class CasesComponent implements OnInit {
         this.respondent
       )
       .subscribe((data: any) => {
-        console.log(data);
+        // console.log(data);
         this.respondentChartLabels.length = 0;
         this.respondentDatalabels.length = 0;
         try {
           data.map((item: any) => {
-            if (item.group.length <= 3) data.pop(item);
+            if (item.group.length <= 5) data.pop(item);
           });
           data.map((item: any) => {
             if (!this.respondentChartLabels.includes(item.group)) {
@@ -567,16 +552,38 @@ export class CasesComponent implements OnInit {
             this.respondentChartData[i].label = this.respondentDatalabels[i];
             this.respondentChartData[i].stack = 'a';
           }
-          for (var i = 0; i < this.respondentChartData.length; i++) {
-            this.respondentChartData[i].data = this.respondentChartData[
-              i
-            ]?.data?.slice(0, this.respondentChartLimit);
+
+          var sums = [];
+          for (var i = 0; i < this.respondentChartLabels.length; i++) {
+            var sum: any = 0;
+            for (var j = 0; j < this.respondentDatalabels.length; j++) {
+              sum = sum + this.respondentChartData[j].data![i];
+            }
+            sums[i] = sum;
           }
-          this.respondentChartLabels = this.respondentChartLabels.slice(
-            0,
-            this.respondentChartLimit
-          );
-          console.log(this.respondentChartData);
+          // console.log(sums);
+          var n = this.respondentChartLabels.length;
+          for (var i = n; i >= 0; i--) {
+            for (var j = n; j > n - i; j--) {
+              if (sums[j] > sums[j - 1]) {
+                for (var k = 0; k < this.respondentDatalabels.length; k++) {
+                  var temp = this.respondentChartData[k].data![j];
+                  this.respondentChartData[k].data![j] = this.respondentChartData[k].data![j - 1];
+                  this.respondentChartData[k].data![j - 1] = temp;
+                }
+                var temp2 = this.respondentChartLabels[j];
+                this.petitionerChartLabels[j] = this.respondentChartLabels[j-1];
+                this.respondentChartLabels[j - 1] = temp2;
+                var temp3 = sums[j];
+                sums[j] = sums[j-1];
+                sums[j-1] = temp3;
+              }
+            }
+          }
+          for (var i = 0; i < this.respondentChartData.length; i++) {
+            this.respondentChartData[i].data = this.respondentChartData[i]?.data?.slice(0, this.respondentChartLimit);
+          }
+          this.respondentChartLabels = this.respondentChartLabels.slice(0,this.respondentChartLimit);
         } catch (error) {
           console.log(error);
         }
