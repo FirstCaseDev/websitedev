@@ -498,6 +498,246 @@ module.exports = (router) => {
             });
     });
 
+    router.get('/cases/pvbcharts=:query', (req, res) => {
+        var query = req.params.query;
+        const court = req.query.court;
+        var judge = ".*".concat(req.query.bench, ".*");
+        var ptnr = ".*".concat(req.query.ptn, ".*");
+        var resp = ".*".concat(req.query.rsp, ".*");
+        Case.aggregate([{
+                    "$match": {
+                        "$text": {
+                            "$search": query
+                        },
+                        "source": court,
+                        "bench": {
+                            "$regex": judge,
+                            "$options": 'i'
+                        },
+                        "petitioner": {
+                            "$regex": ptnr,
+                            "$options": 'i'
+                        },
+                        "respondent": {
+                            "$regex": resp,
+                            "$options": 'i'
+                        }
+                    }
+                },
+                {
+                    "$unwind": "$petitioner_counsel"
+                },
+                {
+                    "$group": {
+                        "_id": {
+                            "__alias_0": "$petitioner_counsel",
+                            "__alias_1": "$bench"
+                        },
+                        "__alias_2": {
+                            "$sum": {
+                                "$cond": [{
+                                        "$ne": [{
+                                                "$type": "$judgement"
+                                            },
+                                            "missing"
+                                        ]
+                                    },
+                                    1,
+                                    0
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "$project": {
+                        "_id": 0,
+                        "__alias_0": "$_id.__alias_0",
+                        "__alias_1": "$_id.__alias_1",
+                        "__alias_2": 1
+                    }
+                },
+                {
+                    "$project": {
+                        "y": "$__alias_0",
+                        "x": "$__alias_1",
+                        "color": "$__alias_2",
+                        "_id": 0
+                    }
+                },
+                {
+                    "$addFields": {
+                        "__agg_sum": {
+                            "$sum": [
+                                "$color"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "$group": {
+                        "_id": {
+                            "x": "$x"
+                        },
+                        "__grouped_docs": {
+                            "$push": "$$ROOT"
+                        },
+                        "__agg_sum": {
+                            "$sum": "$__agg_sum"
+                        }
+                    }
+                },
+                {
+                    "$sort": {
+                        "__agg_sum": -1
+                    }
+                },
+                {
+                    "$unwind": "$__grouped_docs"
+                },
+                {
+                    "$replaceRoot": {
+                        "newRoot": "$__grouped_docs"
+                    }
+                },
+                {
+                    "$project": {
+                        "__agg_sum": 0
+                    }
+                },
+                {
+                    "$limit": 20000
+                }
+            ])
+            .exec((err, result) => {
+                if (err) {
+                    return (err);
+                } else {
+                    res.send(result);
+                }
+            });
+    });
+
+    router.get('/cases/rvbcharts=:query', (req, res) => {
+        var query = req.params.query;
+        const court = req.query.court;
+        var judge = ".*".concat(req.query.bench, ".*");
+        var ptnr = ".*".concat(req.query.ptn, ".*");
+        var resp = ".*".concat(req.query.rsp, ".*");
+        Case.aggregate([{
+                    "$match": {
+                        "$text": {
+                            "$search": query
+                        },
+                        "source": court,
+                        "bench": {
+                            "$regex": judge,
+                            "$options": 'i'
+                        },
+                        "petitioner": {
+                            "$regex": ptnr,
+                            "$options": 'i'
+                        },
+                        "respondent": {
+                            "$regex": resp,
+                            "$options": 'i'
+                        }
+                    }
+                },
+                {
+                    "$unwind": "$respondent_counsel"
+                },
+                {
+                    "$group": {
+                        "_id": {
+                            "__alias_0": "$respondent_counsel",
+                            "__alias_1": "$bench"
+                        },
+                        "__alias_2": {
+                            "$sum": {
+                                "$cond": [{
+                                        "$ne": [{
+                                                "$type": "$judgement"
+                                            },
+                                            "missing"
+                                        ]
+                                    },
+                                    1,
+                                    0
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "$project": {
+                        "_id": 0,
+                        "__alias_0": "$_id.__alias_0",
+                        "__alias_1": "$_id.__alias_1",
+                        "__alias_2": 1
+                    }
+                },
+                {
+                    "$project": {
+                        "y": "$__alias_0",
+                        "x": "$__alias_1",
+                        "color": "$__alias_2",
+                        "_id": 0
+                    }
+                },
+                {
+                    "$addFields": {
+                        "__agg_sum": {
+                            "$sum": [
+                                "$color"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "$group": {
+                        "_id": {
+                            "x": "$x"
+                        },
+                        "__grouped_docs": {
+                            "$push": "$$ROOT"
+                        },
+                        "__agg_sum": {
+                            "$sum": "$__agg_sum"
+                        }
+                    }
+                },
+                {
+                    "$sort": {
+                        "__agg_sum": -1
+                    }
+                },
+                {
+                    "$unwind": "$__grouped_docs"
+                },
+                {
+                    "$replaceRoot": {
+                        "newRoot": "$__grouped_docs"
+                    }
+                },
+                {
+                    "$project": {
+                        "__agg_sum": 0
+                    }
+                },
+                {
+                    "$limit": 20000
+                }
+            ])
+            .exec((err, result) => {
+                if (err) {
+                    return (err);
+                } else {
+                    res.send(result);
+                }
+            });
+    });
+
     router.get('/cases/_id=:object_id', (req, res) => {
         Case.find({ _id: mongoose.Types.ObjectId(req.params.object_id) })
             .then((case_item) => {

@@ -41,6 +41,16 @@ export class CaseService {
       `cases/respcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
     );
   }
+  getPtn_v_BenchChart(query:string, court:string, bench: string, petitioner: string, respondent: string){
+    return this.webService.get(
+      `cases/pvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+    );
+  }
+  getRsp_v_BenchChart(query:string, court:string, bench: string, petitioner: string, respondent: string){
+    return this.webService.get(
+      `cases/rvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+    );
+  }
   getLists() {
     return this.webService.get('lists');
   }

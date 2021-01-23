@@ -1,4 +1,5 @@
 <script src="node_modules/chart.js/src/chart.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@0.1.3/dist/chartjs-chart-matrix.js"></script> -->
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -138,9 +139,10 @@
                     <div id="slide-2" *ngIf="!view_search">
                         <!-- Analytics part with graphs -->
                         <div *ngIf="searched">
+
                             <div class="container">
                                 <div class="text-center" style="display: flex">
-                                    <canvas baseChart [chartType]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [legend]="true"></canvas>
+                                    <canvas baseChart [chartType]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="linechartOptions" [legend]="true"></canvas>
                                     <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [options]="doughnutChartOptions" [chartType]="doughnutChartType"></canvas>
                                 </div>
                             </div>
@@ -152,6 +154,26 @@
                                     <canvas height="180px" baseChart [datasets]="respondentChartData" [labels]="respondentChartLabels" [options]="respondentChartOptions" [legend]="respondentChartLegend" [chartType]="respondentChartType"></canvas>
                                 </div>
                             </div>
+                            <br />
+                            <br /><br />
+                            <div class="graphs">
+                                <highcharts-chart [Highcharts]="Highcharts" [options]="pvbChartOptions"></highcharts-chart>
+                                <highcharts-chart [Highcharts]="Highcharts" [options]="rvbChartOptions"></highcharts-chart>
+                            </div>
+                            <!-- <div class="container">
+                                <div class="text-center" style="display: flex">
+
+                                </div>
+                            </div>
+                            <br />
+                            <br /><br />
+                            <div class="container">
+                                <div class="text-center" style="display: flex">
+
+                                </div>
+                            </div> -->
+                            <br />
+                            <br /><br />
                         </div>
                     </div>
                 </div>
@@ -159,7 +181,6 @@
         </div>
     </div>
     <br />
-
     <div *ngIf="loading" class="loading_animation" style="display: flex">
         <div class="loadingio-spinner-ripple-0klw6wjchhb">
             <div class="ldio-9faui0bm4nl">

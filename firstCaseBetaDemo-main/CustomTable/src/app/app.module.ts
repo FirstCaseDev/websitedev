@@ -9,6 +9,7 @@ import { FilterPipe } from './home/filter.pipe';
 import { CasesComponent } from './cases/cases.component';
 import { ChartsModule } from 'ng2-charts';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { HighchartsChartModule } from 'highcharts-angular'
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, FilterPipe, CasesComponent],
@@ -21,6 +22,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     FormsModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule.forRoot(),
+    HighchartsChartModule,
   ],
   providers: [Title],
   bootstrap: [AppComponent],

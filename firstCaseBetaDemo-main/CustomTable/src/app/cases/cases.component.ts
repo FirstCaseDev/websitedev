@@ -1,4 +1,4 @@
-import { Component, Input, NgModule, OnInit } from '@angular/core';
+import { Component, Input, NgModule, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import Case from '../models/case';
 import { CaseService } from './case.service';
@@ -6,7 +6,11 @@ import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { DataService } from './case.service';
 import { Observable } from 'rxjs';
-// import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
+import * as Highcharts from 'highcharts';
+import { HighchartsChartModule } from 'highcharts-angular'
+import HC_heatmap from 'highcharts/modules/heatmap';
+HC_heatmap(Highcharts);
+
 
 @Component({
   selector: 'app-cases',
@@ -14,6 +18,84 @@ import { Observable } from 'rxjs';
   styleUrls: ['./cases.component.css'],
 })
 export class CasesComponent implements OnInit {
+  Highcharts = Highcharts;
+  pvbChartOptions: Highcharts.Options = {};
+  rvbChartOptions: Highcharts.Options = {};
+  pvb_Bench: any = [ "Sun", "Mon", "Tue", "Wed","Thu", "Fri", "Sat",];
+  rvb_Bench: any = [];
+  pvb_Counsel: any = ["Sun", "Mon", "Tue", "Wed","Thu", "Fri", "Sat",];
+  rvb_Counsel: any = [];
+  pvb_data: any = [];
+  rvb_data: any = [];
+
+  pvb_init() {
+    this.pvbChartOptions = {
+      chart: {
+        type: 'heatmap'
+      },
+      title: {
+        text: 'Petitioner Counsel against Benches'
+      },
+      colorAxis: {
+        maxColor: "#FFA1B5",
+        minColor: "#FFFFFF",
+      },
+      xAxis: {
+        title: {
+          text: "Bench",
+        },
+        categories: this.pvb_Bench,
+      },
+      yAxis: {
+        title: {
+          text: "Petitoner Counsel",
+        },
+        categories: this.pvb_Counsel,
+      },
+      series: [{
+        name: "Petitioner Counsel against Benches",
+        type: "heatmap",
+        borderColor: "#FFFFFF",
+        borderWidth: 4,
+        data: this.pvb_data,
+      }],
+    };
+  }
+
+  rvb_init() {
+    this.rvbChartOptions = {
+      chart: {
+        type: 'heatmap'
+      },
+      title: {
+        text: 'Respondent Counsel against Benches'
+      },
+      colorAxis: {
+        maxColor: "#FFA1B5",
+        minColor: "#FFFFFF",
+      },
+      xAxis: {
+        title: {
+          text: "Bench",
+        },
+        categories: this.rvb_Bench,
+      },
+      yAxis: {
+        title: {
+          text: "Respondent Counsel",
+        },
+        categories: this.rvb_Counsel,
+      },
+      series: [{
+        name: "Respondent Counsel against Benches",
+        type: "heatmap",
+        borderColor: "#FFFFFF",
+        borderWidth: 4,
+        data: this.rvb_data,
+      }],
+    };
+  }
+
   public doughnutChartOptions: ChartOptions = {
     title: {
       text: 'Judgement distribution',
@@ -77,7 +159,6 @@ export class CasesComponent implements OnInit {
     { data: [], label: '', stack: 'a' },
     { data: [], label: '', stack: 'a' },
   ];
-
   public respondentChartOptions: ChartOptions = {
     title: {
       text: 'Respondent Counsel Stats',
@@ -168,12 +249,13 @@ export class CasesComponent implements OnInit {
   courtlevel: any;
   defaultcourt: any;
   loading: boolean = false;
+
   courtdata: any = [
     { id: 'Supreme Court of India', name: 'Supreme Court of India' },
     { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
-  chartOptions: ChartOptions = {
+  linechartOptions: ChartOptions = {
     title: {
       text: 'Judgement trend over years',
       display: true,
@@ -214,9 +296,11 @@ export class CasesComponent implements OnInit {
   petitionerDatalabels: any = [];
   respondentDatalabels: any = [];
 
-  constructor(private caseService: CaseService, private fb: FormBuilder) { }
+  constructor(private caseService: CaseService, private fb: FormBuilder) {}
 
   ngOnInit() {
+    this.pvb_init();
+    this.rvb_init();
     this.courtlevel = this.courtdata[0];
     this.court = this.courtdata[0].name;
     this.judgement_options = [
@@ -244,6 +328,7 @@ export class CasesComponent implements OnInit {
   onItemSelect(item: any) {
     // console.log('onItemSelect', this.selectedJudgements);
   }
+  
   onSelectAll(items: any) {
     // console.log('onSelectAll', this.selectedJudgements);
   }
@@ -485,7 +570,8 @@ export class CasesComponent implements OnInit {
                 var temp2 = this.petitionerChartLabels[j];
                 this.petitionerChartLabels[j] = this.petitionerChartLabels[j-1];
                 this.petitionerChartLabels[j - 1] = temp2;
-                var temp3 = sums[j];
+                var temp3;
+                temp3 = sums[j];
                 sums[j] = sums[j-1];
                 sums[j-1] = temp3;
               }
@@ -495,8 +581,8 @@ export class CasesComponent implements OnInit {
             this.petitionerChartData[i].data = this.petitionerChartData[i]?.data?.slice(0, this.petitionerChartLimit);
           }
           this.petitionerChartLabels = this.petitionerChartLabels.slice(0,this.petitionerChartLimit);
-          console.log(this.petitionerChartData);
-          console.log(this.petitionerChartLabels);
+          // console.log(this.petitionerChartData); 
+        console.log(this.petitionerChartLabels);
         } catch (error) {
           console.log(error);
         }
@@ -574,7 +660,8 @@ export class CasesComponent implements OnInit {
                 var temp2 = this.respondentChartLabels[j];
                 this.petitionerChartLabels[j] = this.respondentChartLabels[j-1];
                 this.respondentChartLabels[j - 1] = temp2;
-                var temp3 = sums[j];
+                var temp3;
+                temp3 = sums[j];
                 sums[j] = sums[j-1];
                 sums[j-1] = temp3;
               }
@@ -590,6 +677,92 @@ export class CasesComponent implements OnInit {
         this.loading = false;
         this.searched = true;
       });
+
+    this.caseService
+      .getPtn_v_BenchChart(
+        this.query,
+        this.court,
+        this.bench,
+        this.petitioner,
+        this.respondent
+      )
+      .subscribe((data: any) => {
+        try {
+          this.pvb_Bench=[];
+          this.pvb_Counsel=[];
+          data.map((item: any) => {
+            if (!this.pvb_Bench.includes(item.x)) {
+              this.pvb_Bench.push(item.x);
+            }
+            if (!this.pvb_Counsel.includes(item.y)) {
+              this.pvb_Counsel.push(item.y);
+            }
+          });
+          this.pvb_Bench = this.pvb_Bench.slice(0, 7);
+          this.pvb_Counsel = this.petitionerChartLabels;
+          // this.pvb_Counsel = this.pvb_Counsel.slice(0, 7);
+          this.pvb_data = [];
+          // this.pvb_data.length=0;
+          for (let i = 0; i < this.pvb_Bench.length; i++) {
+            for (let j = 0; j < this.pvb_Counsel.length; j++) {
+              var temp = 0;
+              for(var k = 0;k < data.length; k++){
+                if(data[k].x === this.pvb_Bench[i]&&data[k].y === this.pvb_Counsel[j])
+                {temp = data[k].color; console.log(temp); break;}
+              }
+              this.pvb_data.push({x: i, y: j, value: temp, id:'p' + i +':' + j})
+            }
+          }
+          console.log(this.pvb_data);
+          this.pvb_init();
+          
+        } catch (error) {
+          console.log(error);
+        }
+      })
+
+      this.caseService
+      .getRsp_v_BenchChart(
+        this.query,
+        this.court,
+        this.bench,
+        this.petitioner,
+        this.respondent
+      )
+      .subscribe((data: any) => {
+        try {
+          // console.log(data);
+          this.rvb_Bench=[];
+          this.rvb_Counsel=[];
+          data.map((item: any) => {
+            if (!this.rvb_Bench.includes(item.x)) {
+              this.rvb_Bench.push(item.x);
+            }
+            if (!this.rvb_Counsel.includes(item.y)) {
+              this.rvb_Counsel.push(item.y);
+            }
+          });
+          this.rvb_Bench = this.rvb_Bench.slice(0, 7);
+          this.rvb_Counsel = this.respondentChartLabels;
+          // this.rvb_Counsel = this.rvb_Counsel.slice(0, 7);
+          this.rvb_data = [];
+          // this.pvb_data.length=0;
+          for (let i = 0; i < this.rvb_Bench.length; i++) {
+            for (let j = 0; j < this.rvb_Counsel.length; j++) {
+              var temp = 0;
+              for(var k = 0;k < data.length; k++){
+                if(data[k].x === this.rvb_Bench[i]&&data[k].y === this.rvb_Counsel[j])
+                {temp = data[k].color; console.log(temp); break;}
+              }
+              this.rvb_data.push({x: i, y: j, value: temp, id:'p' + i +':' + j})
+            }
+          }
+          console.log(this.rvb_data);
+          this.rvb_init();
+        } catch (error) {
+          console.log(error);
+        }
+      })
 
     this.createArray(this.results_count);
   }
