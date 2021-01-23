@@ -328,7 +328,7 @@ export class CasesComponent implements OnInit {
   onItemSelect(item: any) {
     // console.log('onItemSelect', this.selectedJudgements);
   }
-  
+
   onSelectAll(items: any) {
     // console.log('onSelectAll', this.selectedJudgements);
   }
@@ -582,7 +582,7 @@ export class CasesComponent implements OnInit {
           }
           this.petitionerChartLabels = this.petitionerChartLabels.slice(0,this.petitionerChartLimit);
           // console.log(this.petitionerChartData); 
-        console.log(this.petitionerChartLabels);
+        // console.log(this.petitionerChartLabels);
         } catch (error) {
           console.log(error);
         }
@@ -597,7 +597,7 @@ export class CasesComponent implements OnInit {
         this.respondent
       )
       .subscribe((data: any) => {
-        // console.log(data);
+        console.log(data);
         this.respondentChartLabels.length = 0;
         this.respondentDatalabels.length = 0;
         try {
@@ -612,6 +612,8 @@ export class CasesComponent implements OnInit {
               this.respondentDatalabels.push(item.dynamicColumns);
             }
           });
+          // this.respondentChartLabels = [...new Set(this.respondentChartLabels)];
+          console.log(this.respondentChartLabels);
           this.respondentChartData = [
             { data: [], label: '', stack: 'a' },
             { data: [], label: '', stack: 'a' },
@@ -658,7 +660,7 @@ export class CasesComponent implements OnInit {
                   this.respondentChartData[k].data![j - 1] = temp;
                 }
                 var temp2 = this.respondentChartLabels[j];
-                this.petitionerChartLabels[j] = this.respondentChartLabels[j-1];
+                this.respondentChartLabels[j] = this.respondentChartLabels[j-1];
                 this.respondentChartLabels[j - 1] = temp2;
                 var temp3;
                 temp3 = sums[j];
@@ -671,6 +673,7 @@ export class CasesComponent implements OnInit {
             this.respondentChartData[i].data = this.respondentChartData[i]?.data?.slice(0, this.respondentChartLimit);
           }
           this.respondentChartLabels = this.respondentChartLabels.slice(0,this.respondentChartLimit);
+          console.log(this.respondentChartLabels);
         } catch (error) {
           console.log(error);
         }
@@ -713,7 +716,7 @@ export class CasesComponent implements OnInit {
               this.pvb_data.push({x: i, y: j, value: temp, id:'p' + i +':' + j})
             }
           }
-          console.log(this.pvb_data);
+          // console.log(this.pvb_data);
           this.pvb_init();
           
         } catch (error) {
@@ -757,7 +760,7 @@ export class CasesComponent implements OnInit {
               this.rvb_data.push({x: i, y: j, value: temp, id:'p' + i +':' + j})
             }
           }
-          console.log(this.rvb_data);
+          // console.log(this.rvb_data);
           this.rvb_init();
         } catch (error) {
           console.log(error);
