@@ -5,6 +5,9 @@
     smalt-blue: #597C94;
 } */
 
+
+/* @import 'https://code.highcharts.com/css/highcharts.css'; */
+
 @font-face {
     font-family: PopLight;
     src: url("../../assets/fonts/Poppins-Light.ttf");
@@ -448,7 +451,23 @@ button:hover {
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 
+
+/* 
 .graphs {
     display: grid;
     grid-template-columns: 50% 50%;
+} */
+
+.graphs-grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+
+.graphs-grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    /* border: 1px solid rgba(0, 0, 0, 0.8); */
+    padding: 5px;
+    font-size: 20px;
+    text-align: center;
 }

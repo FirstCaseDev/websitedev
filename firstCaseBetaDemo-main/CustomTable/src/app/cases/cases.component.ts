@@ -12,6 +12,7 @@ import HC_heatmap from 'highcharts/modules/heatmap';
 HC_heatmap(Highcharts);
 
 
+
 @Component({
   selector: 'app-cases',
   templateUrl: './cases.component.html',
@@ -31,12 +32,19 @@ export class CasesComponent implements OnInit {
   pvb_init() {
     this.pvbChartOptions = {
       chart: {
-        height: 500,
-        width: 614,
-        type: 'heatmap'
+        // height: 500,
+        type: 'heatmap',
+        marginTop: 40,
+        marginBottom: 160,
+        plotBorderWidth: 0,
       },
       title: {
-        text: 'Petitioner Counsel against Benches'
+        text: 'Petitioner Counsel against Benches',
+        style: {
+          color: '#666666',
+          fontWeight: 'bold',
+          fontSize: '12px',
+      }
       },
       colorAxis: {
         maxColor: "#FFA1B5",
@@ -54,12 +62,34 @@ export class CasesComponent implements OnInit {
         },
         categories: this.pvb_Counsel,
       },
+      legend: {
+        align: 'right',
+        layout: 'vertical',
+        margin: 0,
+        verticalAlign: 'top',
+        y: 25,
+        symbolHeight: 200
+      },
+      tooltip: {
+        formatter: function () {
+          return '<b>' + this.series.yAxis.categories[this.point.y!] + '</b> represented <br><b>' +
+            this.point.value + '</b> appellants in front of <br><b>' + this.series.xAxis.categories[this.point.x] + '</b>';
+        },
+        enabled: true
+      },
+      credits: {
+        enabled: false
+      },
       series: [{
         name: "Petitioner Counsel against Benches",
         type: "heatmap",
         borderColor: "#FFFFFF",
         borderWidth: 4,
         data: this.pvb_data,
+      //   dataLabels: {
+      //     enabled: true,
+      //     color: '#000000'
+      // }
       }],
     };
   }
@@ -67,10 +97,20 @@ export class CasesComponent implements OnInit {
   rvb_init() {
     this.rvbChartOptions = {
       chart: {
-        type: 'heatmap'
+        // height: 500,
+        // width: 614,
+        type: 'heatmap',
+        marginTop: 40,
+        marginBottom: 160,
+        plotBorderWidth: 0,
       },
       title: {
-        text: 'Respondent Counsel against Benches'
+        text: 'Respondent Counsel against Benches',
+        style: {
+          color: '#666666',
+          fontWeight: 'bold',
+          fontSize: '12px',
+      }
       },
       colorAxis: {
         maxColor: "#86C7F3",
@@ -88,12 +128,34 @@ export class CasesComponent implements OnInit {
         },
         categories: this.rvb_Counsel,
       },
+      legend: {
+        align: 'right',
+        layout: 'vertical',
+        margin: 0,
+        verticalAlign: 'top',
+        y: 25,
+        symbolHeight: 200
+      },
+      tooltip: {
+        formatter: function () {
+          return '<b>' + this.series.yAxis.categories[this.point.y!] + '</b> represented <br><b>' +
+            this.point.value + '</b> respondents in front of <br><b>' + this.series.xAxis.categories[this.point.x] + '</b>';
+        },
+        enabled: true
+      },
+      credits: {
+        enabled: false
+      },
       series: [{
         name: "Respondent Counsel against Benches",
         type: "heatmap",
         borderColor: "#FFFFFF",
         borderWidth: 4,
         data: this.rvb_data,
+      //   dataLabels: {
+      //     enabled: true,
+      //     color: '#000000'
+      // }
       }],
     };
   }
@@ -278,6 +340,7 @@ export class CasesComponent implements OnInit {
             display: true,
             labelString: 'Number of cases',
           },
+          // stacked: true
         },
       ],
     },
@@ -441,6 +504,7 @@ export class CasesComponent implements OnInit {
             if (!this.Datalabels.includes(item.color)) {
               this.Datalabels.push(item.color);
             }
+            this.Datalabels.sort();
           });
           this.chartData = [
             { data: [], label: '', stack: 'a' },
@@ -491,6 +555,7 @@ export class CasesComponent implements OnInit {
             if (!this.doughnutChartLabels.includes(item.label)) {
               this.doughnutChartLabels.push(item.label);
             }
+            this.doughnutChartLabels.sort();
             arr.push(item.value);
           });
         } catch (error) {
@@ -522,6 +587,7 @@ export class CasesComponent implements OnInit {
             if (!this.petitionerDatalabels.includes(item.dynamicColumns)) {
               this.petitionerDatalabels.push(item.dynamicColumns);
             }
+            this.petitionerDatalabels.sort();
           });
           this.petitionerChartData = [
             { data: [], label: '', stack: 'a' },
@@ -613,6 +679,7 @@ export class CasesComponent implements OnInit {
             if (!this.respondentDatalabels.includes(item.dynamicColumns)) {
               this.respondentDatalabels.push(item.dynamicColumns);
             }
+            this.respondentDatalabels.sort();
           });
           // this.respondentChartLabels = [...new Set(this.respondentChartLabels)];
           console.log(this.respondentChartLabels);
@@ -702,7 +769,7 @@ export class CasesComponent implements OnInit {
               this.pvb_Counsel.push(item.y);
             }
           });
-          this.pvb_Bench = this.pvb_Bench.slice(0, 7);
+          this.pvb_Bench = this.pvb_Bench.slice(0, this.petitionerChartLimit);
           this.pvb_Counsel = this.petitionerChartLabels;
           // this.pvb_Counsel = this.pvb_Counsel.slice(0, 7);
           this.pvb_data = [];
@@ -746,7 +813,7 @@ export class CasesComponent implements OnInit {
               this.rvb_Counsel.push(item.y);
             }
           });
-          this.rvb_Bench = this.rvb_Bench.slice(0, 7);
+          this.rvb_Bench = this.rvb_Bench.slice(0, this.respondentChartLimit);
           this.rvb_Counsel = this.respondentChartLabels;
           // this.rvb_Counsel = this.rvb_Counsel.slice(0, 7);
           this.rvb_data = [];
@@ -818,4 +885,6 @@ export class CasesComponent implements OnInit {
   createArray(count: number) {
     this.arrayOne = new Array<number>(count);
   }
+
+  
 }
