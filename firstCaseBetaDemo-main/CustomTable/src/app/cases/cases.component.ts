@@ -31,6 +31,8 @@ export class CasesComponent implements OnInit {
   pvb_init() {
     this.pvbChartOptions = {
       chart: {
+        height: 500,
+        width: 614,
         type: 'heatmap'
       },
       title: {
@@ -71,7 +73,7 @@ export class CasesComponent implements OnInit {
         text: 'Respondent Counsel against Benches'
       },
       colorAxis: {
-        maxColor: "#FFA1B5",
+        maxColor: "#86C7F3",
         minColor: "#FFFFFF",
       },
       xAxis: {
@@ -677,8 +679,7 @@ export class CasesComponent implements OnInit {
         } catch (error) {
           console.log(error);
         }
-        this.loading = false;
-        this.searched = true;
+
       });
 
     this.caseService
@@ -762,6 +763,8 @@ export class CasesComponent implements OnInit {
           }
           // console.log(this.rvb_data);
           this.rvb_init();
+          this.loading = false;
+          this.searched = true;
         } catch (error) {
           console.log(error);
         }
@@ -786,6 +789,12 @@ export class CasesComponent implements OnInit {
       { data: [], label: '', stack: 'a' },
       { data: [], label: '', stack: 'a' },
     ];
+    this.pvb_Bench=[];
+    this.pvb_Counsel=[];
+    this.pvb_data=[];
+    this.rvb_Bench=[];
+    this.rvb_Counsel=[];
+    this.rvb_data=[];
     this.chartLabels = [1990, 2000, 2010, 2020];
     this.doughnutChartData = [[350, 450, 100]];
     this.doughnutChartLabels = ['allowed', 'dismissed', 'tied / unclear'];

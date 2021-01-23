@@ -148,7 +148,7 @@
                             </div>
                             <br />
                             <br /><br />
-                            <div class="container">
+                            <div class="container" style="padding-bottom: 50px;">
                                 <div class="text-center" style="display: flex">
                                     <canvas height="180px" baseChart [datasets]="petitionerChartData" [labels]="petitionerChartLabels" [options]="petitionerChartOptions" [legend]="petitionerChartLegend" [chartType]="petitionerChartType"></canvas>
                                     <canvas height="180px" baseChart [datasets]="respondentChartData" [labels]="respondentChartLabels" [options]="respondentChartOptions" [legend]="respondentChartLegend" [chartType]="respondentChartType"></canvas>
@@ -156,22 +156,12 @@
                             </div>
                             <br />
                             <br /><br />
-                            <div class="graphs">
+                            <!-- <div class="container" style="display: flex;"> -->
+                            <div class="graphs" style="display: flex; height: auto;">
                                 <highcharts-chart [Highcharts]="Highcharts" [options]="pvbChartOptions"></highcharts-chart>
                                 <highcharts-chart [Highcharts]="Highcharts" [options]="rvbChartOptions"></highcharts-chart>
                             </div>
-                            <!-- <div class="container">
-                                <div class="text-center" style="display: flex">
-
-                                </div>
-                            </div>
-                            <br />
-                            <br /><br />
-                            <div class="container">
-                                <div class="text-center" style="display: flex">
-
-                                </div>
-                            </div> -->
+                            <!-- </div> -->
                             <br />
                             <br /><br />
                         </div>
