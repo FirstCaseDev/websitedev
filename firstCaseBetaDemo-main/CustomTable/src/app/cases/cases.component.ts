@@ -290,6 +290,7 @@ export class CasesComponent implements OnInit {
   selectedJudgements: any = [];
   dropdownSettings: any = {};
   rows: Case[] = [];
+  cited_cases: any = [];
   query: string = '';
   results_count: number = 0;
   arrayOne: Array<number> = [];
@@ -792,7 +793,7 @@ export class CasesComponent implements OnInit {
         }
       })
 
-      this.caseService
+    this.caseService
       .getRsp_v_BenchChart(
         this.query,
         this.court,
@@ -837,6 +838,24 @@ export class CasesComponent implements OnInit {
         }
       })
 
+    this.caseService
+      .getCitedCases(
+        this.query,
+        this.court,
+        this.judgement,
+        this.bench,
+        this.petitioner,
+        this.respondent
+      )
+      .subscribe((data: any) => {
+        try {
+          this.cited_cases = data;
+          console.log(this.cited_cases);
+        } catch (error) {
+          console.log(error);
+        }
+      });
+
     this.createArray(this.results_count);
   }
 
@@ -848,6 +867,7 @@ export class CasesComponent implements OnInit {
     this.petitioner = '';
     this.respondent = '';
     this.rows.length = 0;
+    this.cited_cases.length = 0;
     this.results_count = 0;
     this.chartData = [
       { data: [], label: '', stack: 'a' },

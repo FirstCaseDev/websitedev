@@ -51,6 +51,16 @@ export class CaseService {
       `cases/rvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
     );
   }
+  getCitedCases(query:string, court:string, judgement:Array<string>, bench: string, petitioner: string, respondent: string){
+    return this.webService.get(
+      `cases/cited_cases=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+    );  
+  }
+  getCitedLaws(query:string, court:string, judgement:Array<string>, bench: string, petitioner: string, respondent: string){
+    return this.webService.get(
+      `cases/cited_laws=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+    );  
+  }
   getLists() {
     return this.webService.get('lists');
   }

@@ -11,6 +11,7 @@ import { ChartsModule } from 'ng2-charts';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HighchartsChartModule } from 'highcharts-angular'
 
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, FilterPipe, CasesComponent],
   imports: [

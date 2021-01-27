@@ -738,6 +738,98 @@ module.exports = (router) => {
             });
     });
 
+    router.get('/cases/cited_cases=:query', (req, res) => {
+        var query = req.params.query;
+        const court = req.query.court;
+        var judgements = req.query.judgement.split(',');
+        judgements = judgements.join('|');
+        var judge = ".*".concat(req.query.bench, ".*");
+        var ptnr = ".*".concat(req.query.ptn, ".*");
+        var resp = ".*".concat(req.query.rsp, ".*");
+        Case.aggregate([{
+                    "$match": {
+                        "$text": {
+                            "$search": query
+                        },
+                        "source": court,
+                        "bench": {
+                            "$regex": judge,
+                            "$options": 'i'
+                        },
+                        "petitioner": {
+                            "$regex": ptnr,
+                            "$options": 'i'
+                        },
+                        "respondent": {
+                            "$regex": resp,
+                            "$options": 'i'
+                        },
+                        "judgement": {
+                            "$regex": judgements,
+                            "$options": 'i'
+                        }
+                    },
+
+                },
+                {
+                    "$unwind": "$cases_referred"
+                },
+                {
+                    "$group": {
+                        "_id": {
+                            "__alias_0": "$cases_referred"
+                        },
+                        "__alias_1": {
+                            "$sum": {
+                                "$cond": [{
+                                        "$ne": [{
+                                                "$type": "$cases_referred"
+                                            },
+                                            "missing"
+                                        ]
+                                    },
+                                    1,
+                                    0
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "$project": {
+                        "_id": 0,
+                        "__alias_0": "$_id.__alias_0",
+                        "__alias_1": 1
+                    }
+                },
+                {
+                    "$project": {
+                        "group": "$__alias_0",
+                        "value": "$__alias_1",
+                        "_id": 0
+                    }
+                },
+                {
+                    "$sort": {
+                        "value": -1
+                    }
+                },
+                {
+                    "$limit": 10
+                },
+                {
+                    "$limit": 50000
+                }
+            ])
+            .exec((err, result) => {
+                if (err) {
+                    return next(err);
+                } else {
+                    res.send(result);
+                }
+            });
+    });
+
     router.get('/cases/_id=:object_id', (req, res) => {
         Case.find({ _id: mongoose.Types.ObjectId(req.params.object_id) })
             .then((case_item) => {

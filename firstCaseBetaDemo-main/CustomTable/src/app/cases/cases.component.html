@@ -29,7 +29,6 @@
                 <span>Court</span>
                 <span>
                     <select [(ngModel)]="courtlevel" (change)="selected()">
-                        <!-- <option [value]="defaultcourt.name" selected="selected">{{defaultcourt.name}}</option> -->
                         <option *ngFor="let item of courtdata" [ngValue]="item">{{ item.name }}</option>
                     </select>
                 </span>
@@ -83,8 +82,7 @@
                 <div id="tabs">
                     <button class="tab active" id="analytics_tab" (click)="show_analytics()">Analytics</button>
                     <button class="tab" id="search_tab" (click)="show_search()">Search Results<span *ngIf="searched">:
-                            {{
-                            results_count}}</span></button>
+                            {{results_count}}</span></button>
                 </div>
 
             </div>
@@ -92,6 +90,23 @@
             <div class="x">
                 <div class="slides">
                     <div id="slide-1" *ngIf="view_search">
+                        <h2>Most Cited Cases</h2>
+                        <table class="table" id="table-cited-cases">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Cited Case</th>
+                                    <th scope="col">Times Cited</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of cited_cases; index as i">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>{{item.group}}</td>
+                                    <td id="values">{{item.value | number }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <ul class="search-repeater" *ngFor="let data of rows">
                             <li>
                                 <h2 id="search-desc " name="desc " style="margin-block-end: 0.4em;">
