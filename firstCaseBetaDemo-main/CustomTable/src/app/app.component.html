@@ -15,6 +15,13 @@
             <div class="top-menu">
                 <a href="">Contact Us</a>
             </div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div class="top-menu" *ngIf="isLoggedIn">
+                <a href="" (click)="logout()">Sign Out</a>
+            </div>
         </nav>
     </header>
 

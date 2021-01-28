@@ -1,0 +1,104 @@
+import { Component, OnInit } from '@angular/core';
+import { UsersService } from './users.service';
+import User from '../models/user';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css'],
+})
+export class UsersComponent implements OnInit {
+  constructor(private usersService: UsersService, private router: Router) {}
+  isLoggedIn: boolean = false
+  ngOnInit(): void {
+    if (this.usersService.checkLogin()) {
+      this.isLoggedIn = true;
+      console.log(this.isLoggedIn);
+      this.router.navigate(['/cases']); // navigate to other page
+      console.log("User logged in");
+    } 
+    else {
+      this.isLoggedIn = false;
+      console.log("User not logged in");
+    }
+  }
+
+  login_username: string = '';
+  login_password: string = '';
+  loginData: User = {
+    name: '',
+    username: '',
+    password: '',
+    email: '',
+    organisation: '',
+    position: '',
+  };
+  name: string = '';
+  username: string = '';
+  password: string = '';
+  email: string = '';
+  organisation: string = '';
+  position: string = '';
+  users: User[] = [];
+  regData: User = {
+    name: '',
+    username: '',
+    password: '',
+    email: '',
+    organisation: '',
+    position: '',
+  };
+
+  reset() {
+    this.name = '';
+    this.username = '';
+    this.password = '';
+    this.email = '';
+    this.organisation = '';
+    this.position = '';
+  }
+
+  usersList() {
+    this.usersService.getUsers().subscribe((data: any) => {
+      this.users = data;
+    });
+  }
+
+  login() {
+    this.loginData.username = this.login_username;
+    this.loginData.password = this.login_password;
+    this.usersService.loginUser(this.loginData).subscribe((data: any) => {
+      console.log(data);
+      if (data.success) {
+        this.reset();
+        this.usersService.setToken(data.token);
+        this.isLoggedIn = true;
+        this.router.navigate(['/cases']); // navigate to other page
+      } else if (data.msg == 'Fields required') {
+      } else {
+        this.reset();
+      }
+    });
+  }
+
+  register() {
+    this.regData.name = this.name;
+    this.regData.username = this.username;
+    this.regData.email = this.email;
+    this.regData.password = this.password;
+    this.regData.organisation = this.organisation;
+    this.regData.position = this.position;
+    this.usersService.registerUser(this.regData).subscribe((data: any) => {
+      alert(data.msg);
+      if (data.success) {
+        this.reset();
+      } else if (data.msg == 'Fields required') {
+      } else {
+        this.reset();
+      }
+    });
+  }
+
+
+}

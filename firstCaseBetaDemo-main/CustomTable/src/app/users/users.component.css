@@ -1,0 +1,80 @@
+/* color {
+    #080f19
+} */
+
+.container-1 {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  /* transform: translateY(50%); */
+}
+
+.left {
+  border-right: 1px solid #ddd;
+}
+
+.left-container {
+  margin: 20px;
+  background-color: #080f19;
+  border-radius: 20px;
+  color: white;
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 20px;
+}
+
+.right-container {
+  margin: 20px;
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 20px;
+}
+
+.grid-container {
+  display: grid;
+  margin-left: 30%;
+  margin-right: 30%;
+  grid-template-columns: auto auto;
+  padding: 10px;
+}
+
+.grid-item {
+  /* border: 1px solid rgba(0, 0, 0, 0.8); */
+  padding: 5px;
+  /* font-size: 30px; */
+  text-align: center;
+}
+
+button {
+  display: inline-block;
+  padding: 0.3em 1.2em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: PopRegular;
+  font-weight: 300;
+  color: #080f19;
+  background-color: #fff;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background-color: #080f19;
+  color: #fff;
+}
+
+@media all and (max-width: 30em) {
+  button {
+    display: block;
+    margin: 0.2em auto;
+  }
+}
+
+.users-list {
+  border: 1px solid rgb(104, 102, 102);
+  margin: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  grid-template-columns: auto auto;
+}

@@ -10,10 +10,12 @@ import { CasesComponent } from './cases/cases.component';
 import { ChartsModule } from 'ng2-charts';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HighchartsChartModule } from 'highcharts-angular'
+import { UsersComponent } from './users/users.component'
+import User from './models/user'
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, FilterPipe, CasesComponent],
+  declarations: [AppComponent, HomeComponent, FilterPipe, CasesComponent, UsersComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -23,9 +25,9 @@ import { HighchartsChartModule } from 'highcharts-angular'
     FormsModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule.forRoot(),
-    HighchartsChartModule,
+    HighchartsChartModule
   ],
-  providers: [Title],
+  providers: [Title, User, UsersComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,5 +1,6 @@
 var Case = require('../db/models/case.js');
 var List = require('../db/models/list');
+var User = require('../db/models/user');
 var jwt = require('jsonwebtoken');
 const { json } = require('body-parser');
 var secret = 'secret';
@@ -934,67 +935,68 @@ module.exports = (router) => {
             req.body.password == ''
         ) {
             res.json({
-                success: false,
-                msg: 'Fields required',
+              success: false,
+              msg: "Fields required",
             });
         } else {
             user.save((error) => {
-                if (error) {
-                    res.json({
-                        success: false,
-                        msg: 'Username or Email already exists!',
-                    });
-                } else {
-                    res.json({
-                        password: user.password,
-                        success: true,
-                        msg: 'User created',
-                    });
-                }
-            });
-        }
+              if (error) {
+                res.json({
+                  success: false,
+                  msg: "User already exists!",
+                });
+            } else {
+                res.json({
+                  success: true,
+                  msg: "User created",
+                });
+            }
+        });
+    }
     });
 
-    // User Login
-    router.post('/authenticate', function(req, res) {
-        User.findOne({ username: req.body.username })
-            .select('email username password')
-            .exec(function(err, user) {
-                if (err) {
-                    console.log(err);
-                    res.json({ success: false, msg: err });
-                } else {
-                    if (!user) {
-                        res.json({
-                            success: false,
-                            message: 'Could not authenticate user',
-                        });
-                    } else if (user) {
-                        if (req.body.password) {
-                            var validPassword = user.comparePassword(req.body.password);
-                            //res.send(console.log(validPassword));
-                            if (!validPassword) {
-                                res.json({ success: false, msg: 'Wrong credentials' });
-                                return;
-                            } else {
-                                var token = jwt.sign({ username: user.username, email: user.email },
-                                    secret, { expiresIn: '1h' }
-                                );
-                                res.json({
-                                    success: true,
-                                    msg: 'Successfully logged in',
-                                    token: token,
-                                });
-                                return;
-                            }
-                        } else {
-                            res.json({ success: false, msg: 'No password provided' });
-                            return;
-                        }
-                    }
-                }
+      // User Login Complete
+  router.post("/authenticate", function (req, res) {
+    User.findOne({ username: req.body.username })
+      .select("email username password")
+      .exec(function (err, user) {
+        if (err) {
+          res.json({ success: false, msg: err });
+        } else {
+          if (!user) {
+            res.json({
+              success: false,
+              message: "Could not authenticate user",
             });
-    });
+          } else if (user) {
+            if (req.body.password) {
+              var validPassword = user.comparePassword(req.body.password);
+              //res.send(console.log(validPassword));
+              if (!validPassword) {
+                res.json({ success: false, msg: "Wrong credentials" });
+                return;
+              } else {
+                var token = jwt.sign(
+                  { username: user.username, email: user.email },
+                  process.env.SECRET,
+                  { expiresIn: "60s" }
+                );
+                res.json({
+                  success: true,
+                  msg: "Successfully logged in",
+                  token: token,
+                });
+                return;
+              }
+            } else {
+              res.json({ success: false, msg: "Fields required" });
+              return;
+            }
+          }
+        }
+      });
+  });
+
 
     router.use(function(req, res, next) {
         var token =
