@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
-import { Title } from '@angular/platform-browser';
-import {UsersComponent} from './users/users.component'
+import { Router } from "@angular/router"
 import {UsersService} from './users/users.service'
 import {AppService} from './app.service'
 
@@ -11,12 +9,13 @@ import {AppService} from './app.service'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit{
-  constructor(public router: Router, private usersComponent: UsersComponent, private usersService: UsersService, public appService: AppService){}
-
-  isLoggedIn: boolean = this.usersComponent.isLoggedIn;
-  showSignOut: boolean = false;
-
-  ngOnInit(): void { }
+  constructor(public router: Router, private usersService: UsersService, public appService: AppService){}
+  isLoggedIn: boolean = false;
+  
+  ngOnInit(): void {
+    if (this.usersService.getToken()) this.isLoggedIn = true;
+    else this.isLoggedIn = false;
+  }
 
   // setSignOut() {
   //   if (this.appService.checkLogin()) this.showSignOut = true;
@@ -25,7 +24,6 @@ export class AppComponent implements OnInit{
 
   logout() {
     this.usersService.removeToken();
-    this.usersComponent.isLoggedIn = false;
     console.log("User logged out");
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WebService } from '../web.service';
 import User from '../models/user';
-import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root',
@@ -31,11 +31,6 @@ export class UsersService {
 
   removeToken() {
     localStorage.removeItem('token');
-  }
-
-  checkLogin() {
-    if (this.getToken()) return true;
-    else return false;
   }
 
 }

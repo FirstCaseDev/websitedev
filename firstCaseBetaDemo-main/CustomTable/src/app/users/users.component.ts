@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from './users.service';
 import User from '../models/user';
 import { Router } from '@angular/router';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-users',
@@ -9,18 +10,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
-  constructor(private usersService: UsersService, private router: Router) {}
-  isLoggedIn: boolean = false
+  constructor(private usersService: UsersService, private appComponent: AppComponent, private router: Router) {}
+  isLoggedIn: boolean = false;
+
   ngOnInit(): void {
-    if (this.usersService.checkLogin()) {
-      this.isLoggedIn = true;
-      console.log(this.isLoggedIn);
+    if (this.usersService.getToken()) {
       this.router.navigate(['/cases']); // navigate to other page
-      console.log("User logged in");
+      console.log("User already logged in");
+      this.isLoggedIn = true;
+
     } 
     else {
-      this.isLoggedIn = false;
       console.log("User not logged in");
+      this.isLoggedIn = false;
     }
   }
 
@@ -73,8 +75,10 @@ export class UsersComponent implements OnInit {
       if (data.success) {
         this.reset();
         this.usersService.setToken(data.token);
-        this.isLoggedIn = true;
         this.router.navigate(['/cases']); // navigate to other page
+        this.isLoggedIn = true;
+        this.appComponent.isLoggedIn = true;
+        console.log("User logged in");
       } else if (data.msg == 'Fields required') {
       } else {
         this.reset();

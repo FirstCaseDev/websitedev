@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import {UsersComponent} from './users/users.component'
-
+import {UsersService} from './users/users.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
 
-  constructor(private usersComponent: UsersComponent) { }
+  constructor(private usersService: UsersService) { }
   
   checkLogin() {
-    if (this.usersComponent.isLoggedIn) return true;
+    if (this.usersService.getToken()) return true;
     else return false;
   }
+
 }
