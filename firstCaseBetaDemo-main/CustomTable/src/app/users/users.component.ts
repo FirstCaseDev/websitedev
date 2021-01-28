@@ -94,7 +94,7 @@ export class UsersComponent implements OnInit {
     this.regData.organisation = this.organisation;
     this.regData.position = this.position;
     this.usersService.registerUser(this.regData).subscribe((data: any) => {
-      alert(data.msg);
+      console.log(data);
       if (data.success) {
         this.reset();
       } else if (data.msg == 'Fields required') {
@@ -104,5 +104,6 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  
 
 }

@@ -926,13 +926,18 @@ module.exports = (router) => {
         user.username = req.body.username;
         user.password = req.body.password;
         user.email = req.body.email;
+        user.name = req.body.name;
+        user.organisation = req.body.organisation;
+        user.position = req.body.position;
         if (
             req.body.username == null ||
             req.body.username == '' ||
             req.body.email == null ||
             req.body.email == '' ||
             req.body.password == null ||
-            req.body.password == ''
+            req.body.password == '' ||
+            req.body.name == null ||
+            req.body.name == ''
         ) {
             res.json({
               success: false,
@@ -943,7 +948,7 @@ module.exports = (router) => {
               if (error) {
                 res.json({
                   success: false,
-                  msg: "User already exists!",
+                  msg: error,
                 });
             } else {
                 res.json({

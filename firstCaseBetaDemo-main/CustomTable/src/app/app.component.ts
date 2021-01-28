@@ -17,11 +17,6 @@ export class AppComponent implements OnInit{
     else this.isLoggedIn = false;
   }
 
-  // setSignOut() {
-  //   if (this.appService.checkLogin()) this.showSignOut = true;
-  //   else this.showSignOut = false;
-  // }
-
   logout() {
     this.usersService.removeToken();
     console.log("User logged out");

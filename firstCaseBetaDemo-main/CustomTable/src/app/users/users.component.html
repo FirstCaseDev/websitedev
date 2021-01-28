@@ -1,6 +1,10 @@
+<!-- changes:
+  class: left - ngIf
+     -->
+
 <div class="page">
   <div class="container-1">
-    <div class="left">
+    <div class="left" *ngIf="false">
       <div class="left-container">
         <label for="username">Username</label>
         <input
@@ -76,26 +80,30 @@
     <div class="right">
       <h2 style="margin: 20px">Already have an account? <br />Login here</h2>
       <div class="right-container">
-        <label for="login_username">Username</label>
-        <input
-          class="form-control"
-          type="text"
-          name="login_username"
-          id="login_username"
-          required="required"
-          placeholder="Username"
-          [(ngModel)]="login_username"
-        />
-        <label for="login_password">Password</label>
-        <input
-          class="form-control"
-          type="password"
-          name="login_password"
-          id="login_password"
-          required="required"
-          placeholder="Password"
-          [(ngModel)]="login_password"
-        />
+        <div class="input-group">
+          <label for="login_username">Username</label>
+          <input
+            class="form-control"
+            type="text"
+            name="login_username"
+            id="login_username"
+            required="required"
+            placeholder="Username"
+            [(ngModel)]="login_username"
+          />  
+        </div>
+        <div class="input-group">
+          <label for="login_password">Password</label>
+          <input
+            class="form-control"
+            type="password"
+            name="login_password"
+            id="login_password"
+            required="required"
+            placeholder="Password"
+            [(ngModel)]="login_password"
+          />
+        </div>
       </div>
       <div class="grid-container">
         <div class="grid-item">
@@ -107,12 +115,12 @@
       </div>
     </div>
   </div>
-  <div class="container-2">
+  <!-- <div class="container-2">
     <button (click)="usersList()">Show Users</button>
   </div>
   <div class="users-list" *ngFor="let user of users">
     <p>Name: {{ user.name }}</p>
     <p>Email: {{ user.email }}</p>
     <p>Username: {{ user.username }}</p>
-  </div>
+  </div> -->
 </div>

@@ -1,57 +1,57 @@
 <div class="home">
-    <header *ngIf="router.url !== '/home'">
-        <nav>
-            <div>
-                <a href="/home">
-                    <img id="icon_white" src="../assets/img/White_Logo.png" />
-                </a>
-            </div>
-            <div class="top-menu">
-                <a href="/home">Home</a>
-            </div>
-            <div class="top-menu">
-                <a href="/cases">Test Demo</a>
-            </div>
-            <div class="top-menu">
-                <a href="">Contact Us</a>
-            </div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div class="top-menu" *ngIf="isLoggedIn">
-                <a href="" (click)="logout()">Sign Out</a>
-            </div>
-        </nav>
-    </header>
+  <header *ngIf="router.url !== '/home'">
+    <nav>
+      <div>
+        <a href="/home">
+          <img id="icon_white" src="../assets/img/White_Logo.png" />
+        </a>
+      </div>
+      <div class="top-menu">
+        <a href="/home">Home</a>
+      </div>
+      <div class="top-menu">
+        <a href="/cases">Test Demo</a>
+      </div>
+      <div class="top-menu">
+        <a href="">Contact Us</a>
+      </div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div class="top-menu" *ngIf="isLoggedIn">
+        <a href="" (click)="logout()">Sign Out</a>
+      </div>
+    </nav>
+  </header>
 
-    <div class="pages">
-        <router-outlet></router-outlet>
+  <div class="pages">
+    <router-outlet></router-outlet>
+  </div>
+
+  <br />
+  <br />
+  <footer class="footer" *ngIf="router.url !== '/home'">
+    <div>
+      <ul class="footer-list">
+        <h2 class="footer-list-title">Company<br /></h2>
+        <li class="footer-list-item">Our Team</li>
+        <li class="footer-list-item">Gallery</li>
+        <li class="footer-list-item">Contact us</li>
+      </ul>
     </div>
-
-    <br />
-    <br />
-    <footer class="footer" *ngIf="router.url !== '/home'">
-        <div>
-            <ul class="footer-list">
-                <h2 class="footer-list-title">Company<br /></h2>
-                <li class="footer-list-item">Our Team</li>
-                <li class="footer-list-item">Gallery</li>
-                <li class="footer-list-item">Contact us</li>
-            </ul>
-        </div>
-        <div>
-            <ul class="footer-list">
-                <h2 class="footer-list-title">Information<br /></h2>
-                <li class="footer-list-item">Legal Services</li>
-                <li class="footer-list-item">Terms and Conditions</li>
-                <li class="footer-list-item">FAQ</li>
-            </ul>
-        </div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </footer>
+    <div>
+      <ul class="footer-list">
+        <h2 class="footer-list-title">Information<br /></h2>
+        <li class="footer-list-item">Legal Services</li>
+        <li class="footer-list-item">Terms and Conditions</li>
+        <li class="footer-list-item">FAQ</li>
+      </ul>
+    </div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </footer>
 </div>
