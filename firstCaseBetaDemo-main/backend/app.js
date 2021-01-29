@@ -2,17 +2,13 @@ const express = require('express');
 const app = express();
 var host = process.env.HOST || '0.0.0.0';
 var port = process.env.PORT || 3000;
-var cors_proxy = require('cors-anywhere');
+// var cors = require('cors');
 var router = express.Router();
 var appRoutes = require('./routes/api')(router);
 
 // Load in the mongoose models
-const { List } = require('./db/models/list');
-
 const { mongoose } = require('./db/mongoose');
-
 const bodyParser = require('body-parser');
-
 require('dotenv/config');
 
 //Connect to mongoDB
@@ -26,7 +22,7 @@ mongoose
   .catch((error) => console.log(error));
 
 app.use(express.json());
-
+// app.use(cors({origin: "*" }));
 app.use('/api', appRoutes);
 
 /*  
@@ -34,19 +30,6 @@ CORS -> Cross Origin Request Security.
 localhost:3000 - backend
 localhost:4200 - frontend
 */
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Methods',
-    'GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE'
-  );
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  next();
-});
 
 //list URLS
 

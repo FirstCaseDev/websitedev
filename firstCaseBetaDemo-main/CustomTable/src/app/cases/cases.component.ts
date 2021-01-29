@@ -4,11 +4,11 @@ import Case from '../models/case';
 import { CaseService } from './case.service';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { DataService } from './case.service';
 import { Observable } from 'rxjs';
 import * as Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular'
 import HC_heatmap from 'highcharts/modules/heatmap';
+import { Router } from '@angular/router';
 HC_heatmap(Highcharts);
 
 
@@ -19,6 +19,38 @@ HC_heatmap(Highcharts);
   styleUrls: ['./cases.component.css'],
 })
 export class CasesComponent implements OnInit {
+  constructor(private caseService: CaseService, private fb: FormBuilder, private router: Router) {}
+
+  ngOnInit() {
+    if (!localStorage.getItem('token')) this.router.navigate(['/users'])
+    else {
+      this.pvb_init();
+      this.rvb_init();
+      this.courtlevel = this.courtdata[0];
+      this.court = this.courtdata[0].name;
+      this.judgement_options = [
+        { item_id: 1, item_text: 'allowed' },
+        { item_id: 2, item_text: 'dismissed' },
+        { item_id: 3, item_text: 'tied / unclear' },
+        { item_id: 4, item_text: 'partly allowed' },
+        { item_id: 5, item_text: 'partly dismissed' },
+      ];
+      this.selectedJudgements = this.judgement_options;
+      this.dropdownSettings = {
+        singleSelection: false,
+        idField: 'item_id',
+        textField: 'item_text',
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        itemsShowLimit: 5,
+        allowSearchFilter: this.ShowFilter,
+      };
+      this.myForm = this.fb.group({
+        city: [this.selectedJudgements],
+      });  
+    }
+  }
+
   Highcharts = Highcharts;
   pvbChartOptions: Highcharts.Options = {};
   rvbChartOptions: Highcharts.Options = {};
@@ -286,6 +318,7 @@ export class CasesComponent implements OnInit {
   limitSelection = false;
   searched: boolean = false;
   view_search: boolean = false;
+  view_filters: boolean = true;
   judgement_options: any = [];
   selectedJudgements: any = [];
   dropdownSettings: any = {};
@@ -362,35 +395,6 @@ export class CasesComponent implements OnInit {
   petitionerDatalabels: any = [];
   respondentDatalabels: any = [];
 
-  constructor(private caseService: CaseService, private fb: FormBuilder) {}
-
-  ngOnInit() {
-    this.pvb_init();
-    this.rvb_init();
-    this.courtlevel = this.courtdata[0];
-    this.court = this.courtdata[0].name;
-    this.judgement_options = [
-      { item_id: 1, item_text: 'allowed' },
-      { item_id: 2, item_text: 'dismissed' },
-      { item_id: 3, item_text: 'tied / unclear' },
-      { item_id: 4, item_text: 'partly allowed' },
-      { item_id: 5, item_text: 'partly dismissed' },
-    ];
-    this.selectedJudgements = this.judgement_options;
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 5,
-      allowSearchFilter: this.ShowFilter,
-    };
-    this.myForm = this.fb.group({
-      city: [this.selectedJudgements],
-    });
-  }
-
   onItemSelect(item: any) {
     // console.log('onItemSelect', this.selectedJudgements);
   }
@@ -452,8 +456,22 @@ export class CasesComponent implements OnInit {
     // console.log('view_search ' + this.view_search);
   }
 
+  toggle_filters() {
+    this.view_filters = !this.view_filters;
+  }
+
+  reset_filters() {
+    // this.selectedJudgements = [];
+    this.bench = '';
+    // this.court = '';
+    this.petitioner = '';
+    this.respondent = '';
+    this.petitioner_counsel = '';
+    this.respondent_counsel = '';  
+  }
+
   search() {
-    this.view_search = false;
+    this.view_search = true;
     if (this.query.length == 0) {
       this.query = [this.bench, this.petitioner, this.respondent].join(' ');
       if (this.query.length == 2) {

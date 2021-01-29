@@ -1,26 +1,26 @@
 <div class="home">
   <header *ngIf="router.url !== '/home'">
     <nav>
-      <div>
-        <a href="/home">
-          <img id="icon_white" src="../assets/img/White_Logo.png" />
-        </a>
+      <div class="nav-left">
+        <div>
+          <a href="/home">
+            <img id="icon_white" src="../assets/img/White_Logo.png" />
+          </a>
+        </div>
+        <div class="top-menu">
+          <a href="/home">Home</a>
+        </div>
+        <div class="top-menu">
+          <a href="/cases">Test Demo</a>
+        </div>
+        <div class="top-menu">
+          <a href="">Contact Us</a>
+        </div>
       </div>
-      <div class="top-menu">
-        <a href="/home">Home</a>
-      </div>
-      <div class="top-menu">
-        <a href="/cases">Test Demo</a>
-      </div>
-      <div class="top-menu">
-        <a href="">Contact Us</a>
-      </div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div class="top-menu" *ngIf="isLoggedIn">
-        <a href="" (click)="logout()">Sign Out</a>
+      <div class="nav-right">
+        <div class="top-menu" *ngIf="isLoggedIn">
+          <a href="" (click)="logout()">Sign Out</a>
+        </div>
       </div>
     </nav>
   </header>

@@ -9,6 +9,7 @@ export class WebService {
 
   constructor(private http: HttpClient) {
     this.ROOT_URL = 'http://localhost:8080/http://localhost:3000/api';
+    // this.ROOT_URL = 'http://localhost:3000/api';
   }
 
   get(uri: string) {
