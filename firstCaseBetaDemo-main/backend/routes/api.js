@@ -840,7 +840,28 @@ module.exports = (router) => {
         var ptnr = ".*".concat(req.query.ptn, ".*");
         var resp = ".*".concat(req.query.rsp, ".*");
         Case.aggregate([{
-                    "$match": { "$and": [{ "source": court }, { "$text": { "$search": query } }] },
+                    "$match": {
+                        "$text": {
+                            "$search": query
+                        },
+                        "source": court,
+                        "bench": {
+                            "$regex": judge,
+                            "$options": 'i'
+                        },
+                        "petitioner": {
+                            "$regex": ptnr,
+                            "$options": 'i'
+                        },
+                        "respondent": {
+                            "$regex": resp,
+                            "$options": 'i'
+                        },
+                        "judgement": {
+                            "$regex": judgements,
+                            "$options": 'i'
+                        }
+                    },
 
                 },
                 {

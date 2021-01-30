@@ -100,6 +100,7 @@ div.loading_animation {
     box-shadow: 0px 5px 15px #ddd;
     border-radius: 10px;
 }
+
 #filter-button {
     position: absolute;
     left: 0;
@@ -418,8 +419,9 @@ button:hover {
 
 .searchbar-buttons {
     display: inline;
-    left:0;
+    left: 0;
 }
+
 .searchbar-buttons-item {
     margin: 10px;
 }
@@ -501,6 +503,21 @@ button:hover {
     text-align: center;
 }
 
+.tables-grid-container {
+    display: grid;
+    table-layout: auto;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+
+.tables-grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    /* border: 1px solid rgba(0, 0, 0, 0.8); */
+    padding: 5px;
+    font-size: 12px;
+    text-align: center;
+}
+
 #table-cited-cases {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -540,7 +557,7 @@ button:hover {
     border: 1px solid#ddd;
     padding: 0px;
     text-align: center;
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
 }
 
 #table-cited-provisions tr:nth-child(even) {

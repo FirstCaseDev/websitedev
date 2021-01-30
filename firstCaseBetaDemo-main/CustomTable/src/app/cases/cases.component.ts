@@ -19,7 +19,7 @@ HC_heatmap(Highcharts);
   styleUrls: ['./cases.component.css'],
 })
 export class CasesComponent implements OnInit {
-  constructor(private caseService: CaseService, private fb: FormBuilder, private router: Router) {}
+  constructor(private caseService: CaseService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     if (!localStorage.getItem('token')) this.router.navigate(['/users'])
@@ -47,16 +47,16 @@ export class CasesComponent implements OnInit {
       };
       this.myForm = this.fb.group({
         city: [this.selectedJudgements],
-      });  
+      });
     }
   }
 
   Highcharts = Highcharts;
   pvbChartOptions: Highcharts.Options = {};
   rvbChartOptions: Highcharts.Options = {};
-  pvb_Bench: any = [ "Sun", "Mon", "Tue", "Wed","Thu", "Fri", "Sat",];
+  pvb_Bench: any = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",];
   rvb_Bench: any = [];
-  pvb_Counsel: any = ["Sun", "Mon", "Tue", "Wed","Thu", "Fri", "Sat",];
+  pvb_Counsel: any = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",];
   rvb_Counsel: any = [];
   pvb_data: any = [];
   rvb_data: any = [];
@@ -76,7 +76,7 @@ export class CasesComponent implements OnInit {
           color: '#666666',
           fontWeight: 'bold',
           fontSize: '12px',
-      }
+        }
       },
       colorAxis: {
         maxColor: "#FFA1B5",
@@ -118,10 +118,10 @@ export class CasesComponent implements OnInit {
         borderColor: "#FFFFFF",
         borderWidth: 4,
         data: this.pvb_data,
-      //   dataLabels: {
-      //     enabled: true,
-      //     color: '#000000'
-      // }
+        //   dataLabels: {
+        //     enabled: true,
+        //     color: '#000000'
+        // }
       }],
     };
   }
@@ -142,7 +142,7 @@ export class CasesComponent implements OnInit {
           color: '#666666',
           fontWeight: 'bold',
           fontSize: '12px',
-      }
+        }
       },
       colorAxis: {
         maxColor: "#86C7F3",
@@ -184,10 +184,10 @@ export class CasesComponent implements OnInit {
         borderColor: "#FFFFFF",
         borderWidth: 4,
         data: this.rvb_data,
-      //   dataLabels: {
-      //     enabled: true,
-      //     color: '#000000'
-      // }
+        //   dataLabels: {
+        //     enabled: true,
+        //     color: '#000000'
+        // }
       }],
     };
   }
@@ -318,6 +318,8 @@ export class CasesComponent implements OnInit {
   limitSelection = false;
   searched: boolean = false;
   view_search: boolean = false;
+  view_analytics: boolean = false;
+  view_citations: boolean = false;
   view_filters: boolean = true;
   judgement_options: any = [];
   selectedJudgements: any = [];
@@ -442,19 +444,40 @@ export class CasesComponent implements OnInit {
 
   show_analytics() {
     this.view_search = false;
+    this.view_citations = false;
+    this.view_analytics = true;
     let element = document.getElementById('analytics_tab');
     element!.className = 'tab active';
     let element2 = document.getElementById('search_tab');
     element2!.className = 'tab';
+    let element3 = document.getElementById('citation_tab');
+    element3!.className = 'tab';
+    // console.log('view_search ' + this.view_search);
+  }
+
+  show_citations() {
+    this.view_search = false;
+    this.view_analytics = false;
+    this.view_citations = true;
+    let element = document.getElementById('citation_tab');
+    element!.className = 'tab active';
+    let element2 = document.getElementById('search_tab');
+    element2!.className = 'tab';
+    let element3 = document.getElementById('analytics_tab');
+    element3!.className = 'tab ';
     // console.log('view_search ' + this.view_search);
   }
 
   show_search() {
     this.view_search = true;
+    this.view_analytics = false;
+    this.view_citations = false;
     let element = document.getElementById('search_tab');
     element!.className = 'tab active';
     let element2 = document.getElementById('analytics_tab');
     element2!.className = 'tab';
+    let element3 = document.getElementById('citation_tab');
+    element3!.className = 'tab';
     // console.log('view_search ' + this.view_search);
   }
 
@@ -469,7 +492,7 @@ export class CasesComponent implements OnInit {
     this.petitioner = '';
     this.respondent = '';
     this.petitioner_counsel = '';
-    this.respondent_counsel = '';  
+    this.respondent_counsel = '';
   }
 
   search() {
@@ -657,21 +680,21 @@ export class CasesComponent implements OnInit {
                   this.petitionerChartData[k].data![j - 1] = temp;
                 }
                 var temp2 = this.petitionerChartLabels[j];
-                this.petitionerChartLabels[j] = this.petitionerChartLabels[j-1];
+                this.petitionerChartLabels[j] = this.petitionerChartLabels[j - 1];
                 this.petitionerChartLabels[j - 1] = temp2;
                 var temp3;
                 temp3 = sums[j];
-                sums[j] = sums[j-1];
-                sums[j-1] = temp3;
+                sums[j] = sums[j - 1];
+                sums[j - 1] = temp3;
               }
             }
           }
           for (var i = 0; i < this.petitionerChartData.length; i++) {
             this.petitionerChartData[i].data = this.petitionerChartData[i]?.data?.slice(0, this.petitionerChartLimit);
           }
-          this.petitionerChartLabels = this.petitionerChartLabels.slice(0,this.petitionerChartLimit);
+          this.petitionerChartLabels = this.petitionerChartLabels.slice(0, this.petitionerChartLimit);
           // console.log(this.petitionerChartData); 
-        // console.log(this.petitionerChartLabels);
+          // console.log(this.petitionerChartLabels);
         } catch (error) {
           console.log(error);
         }
@@ -748,19 +771,19 @@ export class CasesComponent implements OnInit {
                   this.respondentChartData[k].data![j - 1] = temp;
                 }
                 var temp2 = this.respondentChartLabels[j];
-                this.respondentChartLabels[j] = this.respondentChartLabels[j-1];
+                this.respondentChartLabels[j] = this.respondentChartLabels[j - 1];
                 this.respondentChartLabels[j - 1] = temp2;
                 var temp3;
                 temp3 = sums[j];
-                sums[j] = sums[j-1];
-                sums[j-1] = temp3;
+                sums[j] = sums[j - 1];
+                sums[j - 1] = temp3;
               }
             }
           }
           for (var i = 0; i < this.respondentChartData.length; i++) {
             this.respondentChartData[i].data = this.respondentChartData[i]?.data?.slice(0, this.respondentChartLimit);
           }
-          this.respondentChartLabels = this.respondentChartLabels.slice(0,this.respondentChartLimit);
+          this.respondentChartLabels = this.respondentChartLabels.slice(0, this.respondentChartLimit);
         } catch (error) {
           console.log(error);
         }
@@ -777,8 +800,8 @@ export class CasesComponent implements OnInit {
       )
       .subscribe((data: any) => {
         try {
-          this.pvb_Bench=[];
-          this.pvb_Counsel=[];
+          this.pvb_Bench = [];
+          this.pvb_Counsel = [];
           data.map((item: any) => {
             if (!this.pvb_Bench.includes(item.x)) {
               this.pvb_Bench.push(item.x);
@@ -795,16 +818,15 @@ export class CasesComponent implements OnInit {
           for (let i = 0; i < this.pvb_Bench.length; i++) {
             for (let j = 0; j < this.pvb_Counsel.length; j++) {
               var temp = 0;
-              for(var k = 0;k < data.length; k++){
-                if(data[k].x === this.pvb_Bench[i]&&data[k].y === this.pvb_Counsel[j])
-                {temp = data[k].color; console.log(temp); break;}
+              for (var k = 0; k < data.length; k++) {
+                if (data[k].x === this.pvb_Bench[i] && data[k].y === this.pvb_Counsel[j]) { temp = data[k].color; console.log(temp); break; }
               }
-              this.pvb_data.push({x: i, y: j, value: temp, id:'p' + i +':' + j})
+              this.pvb_data.push({ x: i, y: j, value: temp, id: 'p' + i + ':' + j })
             }
           }
           // console.log(this.pvb_data);
           this.pvb_init();
-          
+
         } catch (error) {
           console.log(error);
         }
@@ -821,8 +843,8 @@ export class CasesComponent implements OnInit {
       .subscribe((data: any) => {
         try {
           // console.log(data);
-          this.rvb_Bench=[];
-          this.rvb_Counsel=[];
+          this.rvb_Bench = [];
+          this.rvb_Counsel = [];
           data.map((item: any) => {
             if (!this.rvb_Bench.includes(item.x)) {
               this.rvb_Bench.push(item.x);
@@ -839,11 +861,10 @@ export class CasesComponent implements OnInit {
           for (let i = 0; i < this.rvb_Bench.length; i++) {
             for (let j = 0; j < this.rvb_Counsel.length; j++) {
               var temp = 0;
-              for(var k = 0;k < data.length; k++){
-                if(data[k].x === this.rvb_Bench[i]&&data[k].y === this.rvb_Counsel[j])
-                {temp = data[k].color; break;}
+              for (var k = 0; k < data.length; k++) {
+                if (data[k].x === this.rvb_Bench[i] && data[k].y === this.rvb_Counsel[j]) { temp = data[k].color; break; }
               }
-              this.rvb_data.push({x: i, y: j, value: temp, id:'p' + i +':' + j})
+              this.rvb_data.push({ x: i, y: j, value: temp, id: 'p' + i + ':' + j })
             }
           }
           // console.log(this.rvb_data);
@@ -883,61 +904,61 @@ export class CasesComponent implements OnInit {
       )
       .subscribe((data: any) => {
         try {
-          this.CitedActNames=[];
-          this.CitedProvisions=[];
-          data.map((item: any)=>{
-            if(!this.CitedActNames.includes(item.y))
-            this.CitedActNames.push(item.y);
+          this.CitedActNames = [];
+          this.CitedProvisions = [];
+          data.map((item: any) => {
+            if (!this.CitedActNames.includes(item.y))
+              this.CitedActNames.push(item.y);
           })
           console.log(this.CitedActNames);
           var sums: any = [];
           var sections: any = [];
           var section_occurrences: any = [];
-          for(var i=0;i<this.CitedActNames.length;i++){
-            sums[i]=0;
+          for (var i = 0; i < this.CitedActNames.length; i++) {
+            sums[i] = 0;
             sections[i] = [];
             section_occurrences[i] = [];
-            for(var j=0;j<data.length;j++){
-              if(data[j].y === this.CitedActNames[i]) {
+            for (var j = 0; j < data.length; j++) {
+              if (data[j].y === this.CitedActNames[i]) {
                 sums[i] = sums[i] + data[j].x;
                 sections[i].push(data[j].color);
                 section_occurrences[i].push(data[j].x);
               }
             }
-            for(var k=sections[i].length;k>0;k--){
-              for(var l=sections[i].length;l>sections[i].length-k;l--){
-                if(section_occurrences[i][l]>section_occurrences[i][l-1]){
+            for (var k = sections[i].length; k > 0; k--) {
+              for (var l = sections[i].length; l > sections[i].length - k; l--) {
+                if (section_occurrences[i][l] > section_occurrences[i][l - 1]) {
                   var temp4 = section_occurrences[i][l];
-                  section_occurrences[i][l]=section_occurrences[i][l-1];
-                  section_occurrences[i][l-1]=temp4;
+                  section_occurrences[i][l] = section_occurrences[i][l - 1];
+                  section_occurrences[i][l - 1] = temp4;
                   var temp5 = sections[i][l];
-                  sections[i][l]=sections[i][l-1];
-                  sections[i][l-1]=temp5;
+                  sections[i][l] = sections[i][l - 1];
+                  sections[i][l - 1] = temp5;
                 }
               }
             }
-            sections[i] = sections[i].slice(0,5);
-            section_occurrences[i] = section_occurrences[i].slice(0,5);
+            sections[i] = sections[i].slice(0, 5);
+            section_occurrences[i] = section_occurrences[i].slice(0, 5);
           }
           // console.log(sums);
           // console.log(sections);
           // console.log(section_occurrences);
-          for(var z = 0;z<this.CitedActNames.length;z++){
-            this.CitedProvisions.push({"act_name":this.CitedActNames[z], "act_sums":sums[z],"sections":sections[z],"section_sums":section_occurrences[z]})
+          for (var z = 0; z < this.CitedActNames.length; z++) {
+            this.CitedProvisions.push({ "act_name": this.CitedActNames[z], "act_sums": sums[z], "sections": sections[z], "section_sums": section_occurrences[z] })
           }
           console.log(this.CitedProvisions);
         } catch (error) {
           console.log(error);
         }
-      });  
+      });
 
     this.createArray(this.results_count);
   }
 
 
   reset() {
-    this.CitedActNames=[];
-    this.CitedProvisions=[];
+    this.CitedActNames = [];
+    this.CitedProvisions = [];
     this.searched = false;
     this.view_search = false;
     this.query = '';
@@ -954,12 +975,12 @@ export class CasesComponent implements OnInit {
       { data: [], label: '', stack: 'a' },
       { data: [], label: '', stack: 'a' },
     ];
-    this.pvb_Bench=[];
-    this.pvb_Counsel=[];
-    this.pvb_data=[];
-    this.rvb_Bench=[];
-    this.rvb_Counsel=[];
-    this.rvb_data=[];
+    this.pvb_Bench = [];
+    this.pvb_Counsel = [];
+    this.pvb_data = [];
+    this.rvb_Bench = [];
+    this.rvb_Counsel = [];
+    this.rvb_data = [];
     this.chartLabels = [1990, 2000, 2010, 2020];
     this.doughnutChartData = [[350, 450, 100]];
     this.doughnutChartLabels = ['allowed', 'dismissed', 'tied / unclear'];
@@ -968,21 +989,21 @@ export class CasesComponent implements OnInit {
 
   sendNextPage() {
     this.page = this.page + 1;
-    
+
     this.search();
     this.view_search = true;
   }
 
   sendPreviousPage() {
     this.page = this.page - 1;
-     
+
     this.search();
-    this.view_search = true; 
+    this.view_search = true;
   }
 
   createArray(count: number) {
     this.arrayOne = new Array<number>(count);
   }
 
-  
+
 }

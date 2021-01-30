@@ -45,12 +45,12 @@
             <div class="filter-option">
                 <span>Court</span>
                 <span>
-          <select [(ngModel)]="courtlevel" (change)="selected()">
-            <option *ngFor="let item of courtdata" [ngValue]="item">
-              {{ item.name }}
-            </option>
-          </select>
-        </span>
+                    <select [(ngModel)]="courtlevel" (change)="selected()">
+                        <option *ngFor="let item of courtdata" [ngValue]="item">
+                            {{ item.name }}
+                        </option>
+                    </select>
+                </span>
             </div>
             <div class="filter-option">
                 <div class="input-group-2">
@@ -92,58 +92,21 @@
             <div class="nav nav-tabs" *ngIf="searched">
                 <div id="tabs">
                     <button class="tab active" id="search_tab" (click)="show_search()">
-            Search Results<span *ngIf="searched">: {{ results_count }}</span>
-          </button>
-                    <button class="tab active" id="analytics_tab" (click)="show_analytics()">
-            Analytics
-          </button>
+                        Search Results<span *ngIf="searched">: {{ results_count }}</span>
+                    </button>
+                    <button class="tab" id="analytics_tab" (click)="show_analytics()">
+                        Analytics
+                    </button>
+                    <button class="tab" id="citation_tab" (click)="show_citations()">
+                        Citation Results
+                    </button>
                 </div>
             </div>
 
             <div class="x">
                 <div class="slides" *ngIf="searched">
                     <div id="slide-1" *ngIf="view_search">
-                        <table class="table" id="table-cited-provisions" style="table-layout:fixed">
-                            <thead>
-                                <tr>
-                                    <th>Act Name</th>
-                                    <th>Occurences of Act</th>
-                                    <th style=" width:180px;">Section Name</th>
-                                    <th style=" width:180px;">Occurences of Section</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ng-container *ngFor="let provision of CitedProvisions; index as i">
-                                    <tr>
-                                        <td rowspan="6" style="font-size: larger; font-weight: bolder; width:250px;">{{provision.act_name}}</td>
-                                        <td rowspan="6" style="font-size: larger; font-weight: bolder;">{{provision.act_sums}}</td>
-                                    </tr>
-                                    <tr *ngFor="let section of provision.sections; index as i">
-                                        <td>{{section}}</td>
-                                        <td>{{provision.section_sums[i]}}</td>
-                                    </tr>
 
-                                </ng-container>
-
-                            </tbody>
-                        </table>
-                        <h2>Most Cited Cases</h2>
-                        <table class="table" id="table-cited-cases">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Cited Case</th>
-                                    <th scope="col">Times Cited</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of cited_cases; index as i">
-                                    <th scope="row">{{ i + 1 }}</th>
-                                    <td>{{ item.group }}</td>
-                                    <td id="values">{{ item.value | number }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
                         <ul class="search-repeater" *ngFor="let data of rows">
                             <li>
                                 <h2 id="search-desc " name="desc " style="margin-block-end: 0.4em">
@@ -154,18 +117,15 @@
                                 <h4 id="search-category " name="category " style="margin-block-start: 0.5em; margin-block-end: 0.5em">
                                     Source:
                                     <strong style="font-weight: 300"> {{ data.source }}</strong> | Date:
-                                    <strong style="font-weight: 300">{{ data.date }}/{{ data.month }}/{{ data.year }}</strong
-                  >
-                </h4>
-              </li>
+                                    <strong style="font-weight: 300">{{ data.date }}/{{ data.month }}/{{ data.year
+                                        }}</strong>
+                                </h4>
+                            </li>
 
-              <li>
-                <h4
-                  class="judgement"
-                  style="margin-block-start: 0.5em; margin-block-end: 0.5em"
-                >
-                  Judgement:
-                  <strong style="font-weight: 300">{{ data.judgement }}</strong> | Bench:
+                            <li>
+                                <h4 class="judgement" style="margin-block-start: 0.5em; margin-block-end: 0.5em">
+                                    Judgement:
+                                    <strong style="font-weight: 300">{{ data.judgement }}</strong> | Bench:
                                     <strong style="font-weight: 300">{{ data.bench }}</strong>
                                 </h4>
                             </li>
@@ -190,7 +150,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="slide-2" *ngIf="!view_search">
+                    <div id="slide-2" *ngIf="view_analytics">
                         <!-- Analytics part with graphs -->
                         <div *ngIf="searched">
                             <div class="graphs-grid-container">
@@ -217,19 +177,77 @@
                             </div>
                         </div>
                     </div>
+                    <div id="slide-3" *ngIf="view_citations">
+                        <div *ngIf="searched" style="display: flex;">
+                            <div class="tables-grid-container">
+                                <div class="tables-grid-item">
+                                    <div>
+                                        <h2 style="text-align: center;">Most Cited Laws</h2>
+                                        <table class="table" id="table-cited-provisions" style="table-layout:fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th>Act Name</th>
+                                                    <th>Occurence</th>
+                                                    <th style=" width:180px;">Section Name</th>
+                                                    <th style=" width:180px;">Occurence</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let provision of CitedProvisions; index as i">
+                                                    <tr>
+                                                        <td rowspan="6" style="font-size: larger; font-weight: bolder; width:250px;">
+                                                            {{provision.act_name}}</td>
+                                                        <td rowspan="6" style="font-size: larger; font-weight: bolder;">
+                                                            {{provision.act_sums}}</td>
+                                                    </tr>
+                                                    <tr *ngFor="let section of provision.sections; index as i">
+                                                        <td>{{section}}</td>
+                                                        <td>{{provision.section_sums[i]}}</td>
+                                                    </tr>
+
+                                                </ng-container>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tables-grid-item" style="display: flexbox;">
+                                    <div>
+                                        <h2 style="text-align: center;">Most Cited Cases</h2>
+                                        <table class="table" id="table-cited-cases" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col" style="width: 250px;">Cited Case</th>
+                                                    <th scope=" col ">Times Cited</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of cited_cases; index as i ">
+                                                    <th scope="row ">{{ i + 1 }}</th>
+                                                    <td style="width: 250px; ">{{ item.group }}</td>
+                                                    <td id=" values ">{{ item.value | number }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <br />
-    <div *ngIf="loading" class="loading_animation" style="display: flex">
-        <div class="loadingio-spinner-ripple-0klw6wjchhb">
-            <div class="ldio-9faui0bm4nl">
+    <div *ngIf="loading " class="loading_animation " style="display: flex ">
+        <div class="loadingio-spinner-ripple-0klw6wjchhb ">
+            <div class="ldio-9faui0bm4nl ">
                 <div></div>
                 <div></div>
             </div>
         </div>
-        <style type="text/css">
+        <style type="text/css ">
             @keyframes ldio-9faui0bm4nl {
                 0% {
                     top: 104.16px;
