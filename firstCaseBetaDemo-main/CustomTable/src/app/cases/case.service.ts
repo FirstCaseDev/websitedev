@@ -72,6 +72,12 @@ export class CaseService {
       `cases/cited_laws=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
     );  
   }
+
+  getCitedActs(query:string, court:string, judgement:Array<string>, bench: string, petitioner: string, respondent: string){
+    return this.webService.get(
+      `cases/cited_acts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+    );  
+  }
   
   getLists() {
     return this.webService.get('lists');

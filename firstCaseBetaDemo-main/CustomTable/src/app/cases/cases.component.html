@@ -204,21 +204,23 @@
                                                         <td>{{section}}</td>
                                                         <td>{{provision.section_sums[i]}}</td>
                                                     </tr>
-
+                                                    <tr *ngFor="let item of [].constructor(5-provision.section_sums.length); index as i">
+                                                        <td style="border: 0px;"></td>
+                                                        <td style="border: 0px;"></td>
+                                                    </tr>
                                                 </ng-container>
-
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                                <div class="tables-grid-item" style="display: flexbox;">
+                                <div class="tables-grid-item " style="display: flexbox; ">
                                     <div>
-                                        <h2 style="text-align: center;">Most Cited Cases</h2>
-                                        <table class="table" id="table-cited-cases" style="width: 100%">
+                                        <h2 style="text-align: center; ">Most Cited Cases</h2>
+                                        <table class="table " id="table-cited-cases" style="width: 100% ">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col" style="width: 250px;">Cited Case</th>
+                                                    <th scope="col ">#</th>
+                                                    <th scope="col " style="width: 250px; ">Cited Case</th>
                                                     <th scope=" col ">Times Cited</th>
                                                 </tr>
                                             </thead>
