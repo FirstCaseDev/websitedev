@@ -981,7 +981,7 @@ export class CasesComponent implements OnInit {
           console.log(error);
         }
       });
-      this.show_search();
+      if(Boolean(this.view_search) === false) this.show_search();
     this.createArray(this.results_count);
   }
 
