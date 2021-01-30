@@ -347,6 +347,8 @@ export class CasesComponent implements OnInit {
   courtlevel: any;
   defaultcourt: any;
   loading: boolean = false;
+  CitedActNames: any = [];
+  CitedProvisions: any = [];
 
   courtdata: any = [
     { id: 'Supreme Court of India', name: 'Supreme Court of India' },
@@ -684,7 +686,6 @@ export class CasesComponent implements OnInit {
         this.respondent
       )
       .subscribe((data: any) => {
-        console.log(data);
         this.respondentChartLabels.length = 0;
         this.respondentDatalabels.length = 0;
         try {
@@ -701,7 +702,6 @@ export class CasesComponent implements OnInit {
             this.respondentDatalabels.sort();
           });
           // this.respondentChartLabels = [...new Set(this.respondentChartLabels)];
-          console.log(this.respondentChartLabels);
           this.respondentChartData = [
             { data: [], label: '', stack: 'a' },
             { data: [], label: '', stack: 'a' },
@@ -761,7 +761,6 @@ export class CasesComponent implements OnInit {
             this.respondentChartData[i].data = this.respondentChartData[i]?.data?.slice(0, this.respondentChartLimit);
           }
           this.respondentChartLabels = this.respondentChartLabels.slice(0,this.respondentChartLimit);
-          console.log(this.respondentChartLabels);
         } catch (error) {
           console.log(error);
         }
@@ -842,7 +841,7 @@ export class CasesComponent implements OnInit {
               var temp = 0;
               for(var k = 0;k < data.length; k++){
                 if(data[k].x === this.rvb_Bench[i]&&data[k].y === this.rvb_Counsel[j])
-                {temp = data[k].color; console.log(temp); break;}
+                {temp = data[k].color; break;}
               }
               this.rvb_data.push({x: i, y: j, value: temp, id:'p' + i +':' + j})
             }
@@ -868,16 +867,77 @@ export class CasesComponent implements OnInit {
       .subscribe((data: any) => {
         try {
           this.cited_cases = data;
-          console.log(this.cited_cases);
         } catch (error) {
           console.log(error);
         }
       });
 
+    this.caseService
+      .getCitedLaws(
+        this.query,
+        this.court,
+        this.judgement,
+        this.bench,
+        this.petitioner,
+        this.respondent
+      )
+      .subscribe((data: any) => {
+        try {
+          this.CitedActNames=[];
+          this.CitedProvisions=[];
+          data.map((item: any)=>{
+            if(!this.CitedActNames.includes(item.y))
+            this.CitedActNames.push(item.y);
+          })
+          console.log(this.CitedActNames);
+          var sums: any = [];
+          var sections: any = [];
+          var section_occurrences: any = [];
+          for(var i=0;i<this.CitedActNames.length;i++){
+            sums[i]=0;
+            sections[i] = [];
+            section_occurrences[i] = [];
+            for(var j=0;j<data.length;j++){
+              if(data[j].y === this.CitedActNames[i]) {
+                sums[i] = sums[i] + data[j].x;
+                sections[i].push(data[j].color);
+                section_occurrences[i].push(data[j].x);
+              }
+            }
+            for(var k=sections[i].length;k>0;k--){
+              for(var l=sections[i].length;l>sections[i].length-k;l--){
+                if(section_occurrences[i][l]>section_occurrences[i][l-1]){
+                  var temp4 = section_occurrences[i][l];
+                  section_occurrences[i][l]=section_occurrences[i][l-1];
+                  section_occurrences[i][l-1]=temp4;
+                  var temp5 = sections[i][l];
+                  sections[i][l]=sections[i][l-1];
+                  sections[i][l-1]=temp5;
+                }
+              }
+            }
+            sections[i] = sections[i].slice(0,5);
+            section_occurrences[i] = section_occurrences[i].slice(0,5);
+          }
+          // console.log(sums);
+          // console.log(sections);
+          // console.log(section_occurrences);
+          for(var z = 0;z<this.CitedActNames.length;z++){
+            this.CitedProvisions.push({"act_name":this.CitedActNames[z], "act_sums":sums[z],"sections":sections[z],"section_sums":section_occurrences[z]})
+          }
+          console.log(this.CitedProvisions);
+        } catch (error) {
+          console.log(error);
+        }
+      });  
+
     this.createArray(this.results_count);
   }
 
+
   reset() {
+    this.CitedActNames=[];
+    this.CitedProvisions=[];
     this.searched = false;
     this.view_search = false;
     this.query = '';

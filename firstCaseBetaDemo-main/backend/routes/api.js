@@ -831,6 +831,118 @@ module.exports = (router) => {
             });
     });
 
+    router.get('/cases/cited_laws=:query', (req, res) => {
+        var query = req.params.query;
+        const court = req.query.court;
+        var judgements = req.query.judgement.split(',');
+        judgements = judgements.join('|');
+        var judge = ".*".concat(req.query.bench, ".*");
+        var ptnr = ".*".concat(req.query.ptn, ".*");
+        var resp = ".*".concat(req.query.rsp, ".*");
+        Case.aggregate([{
+                    "$match": { "$and": [{ "source": court }, { "$text": { "$search": query } }] },
+
+                },
+                {
+                    "$unwind": "$provisions_referred"
+                },
+                {
+                    "$unwind": "$provisions_referred.act_sections"
+                },
+                {
+                    "$group": {
+                        "_id": {
+                            "__alias_0": "$provisions_referred.act_name",
+                            "__alias_1": "$provisions_referred.act_sections"
+                        },
+                        "__alias_2": {
+                            "$sum": {
+                                "$cond": [{
+                                        "$ne": [{
+                                                "$type": "$provisions_referred.act_name"
+                                            },
+                                            "missing"
+                                        ]
+                                    },
+                                    1,
+                                    0
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "$project": {
+                        "_id": 0,
+                        "__alias_0": "$_id.__alias_0",
+                        "__alias_1": "$_id.__alias_1",
+                        "__alias_2": 1
+                    }
+                },
+                {
+                    "$project": {
+                        "y": "$__alias_0",
+                        "x": "$__alias_2",
+                        "color": "$__alias_1",
+                        "_id": 0
+                    }
+                },
+                {
+                    "$addFields": {
+                        "__agg_sum": {
+                            "$sum": [
+                                "$x"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "$group": {
+                        "_id": {
+                            "y": "$y"
+                        },
+                        "__grouped_docs": {
+                            "$push": "$$ROOT"
+                        },
+                        "__agg_sum": {
+                            "$sum": "$__agg_sum"
+                        }
+                    }
+                },
+                {
+                    "$sort": {
+                        "__agg_sum": -1
+                    }
+                },
+                {
+                    "$limit": 10
+                },
+                {
+                    "$unwind": "$__grouped_docs"
+                },
+                {
+                    "$replaceRoot": {
+                        "newRoot": "$__grouped_docs"
+                    }
+                },
+                {
+                    "$project": {
+                        "__agg_sum": 0
+                    }
+                },
+                {
+                    "$limit": 5000
+                }
+            ])
+            .exec((err, result) => {
+                if (err) {
+                    return next(err);
+                } else {
+                    res.send(result);
+                }
+            });
+    });
+
     router.get('/cases/_id=:object_id', (req, res) => {
         Case.find({ _id: mongoose.Types.ObjectId(req.params.object_id) })
             .then((case_item) => {
@@ -940,67 +1052,65 @@ module.exports = (router) => {
             req.body.name == ''
         ) {
             res.json({
-              success: false,
-              msg: "Fields required",
+                success: false,
+                msg: "Fields required",
             });
         } else {
             user.save((error) => {
-              if (error) {
-                res.json({
-                  success: false,
-                  msg: error,
-                });
-            } else {
-                res.json({
-                  success: true,
-                  msg: "User created",
-                });
-            }
-        });
-    }
+                if (error) {
+                    res.json({
+                        success: false,
+                        msg: error,
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        msg: "User created",
+                    });
+                }
+            });
+        }
     });
 
-      // User Login Complete
-  router.post("/authenticate", function (req, res) {
-    User.findOne({ username: req.body.username })
-      .select("email username password")
-      .exec(function (err, user) {
-        if (err) {
-          res.json({ success: false, msg: err });
-        } else {
-          if (!user) {
-            res.json({
-              success: false,
-              message: "Could not authenticate user",
+    // User Login Complete
+    router.post("/authenticate", function(req, res) {
+        User.findOne({ username: req.body.username })
+            .select("email username password")
+            .exec(function(err, user) {
+                if (err) {
+                    res.json({ success: false, msg: err });
+                } else {
+                    if (!user) {
+                        res.json({
+                            success: false,
+                            message: "Could not authenticate user",
+                        });
+                    } else if (user) {
+                        if (req.body.password) {
+                            var validPassword = user.comparePassword(req.body.password);
+                            //res.send(console.log(validPassword));
+                            if (!validPassword) {
+                                res.json({ success: false, msg: "Wrong credentials" });
+                                return;
+                            } else {
+                                var token = jwt.sign({ username: user.username, email: user.email },
+                                    process.env.SECRET, { expiresIn: "60s" }
+                                );
+                                res.json({
+                                    success: true,
+                                    msg: "Successfully logged in",
+                                    token: token,
+                                });
+                                return;
+                            }
+                        } else {
+                            res.json({ success: false, msg: "Fields required" });
+                            return;
+                        }
+                    }
+                }
             });
-          } else if (user) {
-            if (req.body.password) {
-              var validPassword = user.comparePassword(req.body.password);
-              //res.send(console.log(validPassword));
-              if (!validPassword) {
-                res.json({ success: false, msg: "Wrong credentials" });
-                return;
-              } else {
-                var token = jwt.sign(
-                  { username: user.username, email: user.email },
-                  process.env.SECRET,
-                  { expiresIn: "60s" }
-                );
-                res.json({
-                  success: true,
-                  msg: "Successfully logged in",
-                  token: token,
-                });
-                return;
-              }
-            } else {
-              res.json({ success: false, msg: "Fields required" });
-              return;
-            }
-          }
-        }
-      });
-  });
+    });
 
 
     router.use(function(req, res, next) {

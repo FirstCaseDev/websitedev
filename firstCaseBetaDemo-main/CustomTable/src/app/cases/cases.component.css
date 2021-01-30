@@ -534,3 +534,28 @@ button:hover {
     color: white;
     font-size: medium;
 }
+
+#table-cited-provisions td,
+#table-cited-provisions th {
+    border: 1px solid#ddd;
+    padding: 0px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+#table-cited-provisions tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#table-cited-provisions tr:hover {
+    background-color: #ddd;
+}
+
+#table-cited-provisions th {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-align: center;
+    background-color: #337AC0;
+    color: white;
+    font-size: medium;
+}
