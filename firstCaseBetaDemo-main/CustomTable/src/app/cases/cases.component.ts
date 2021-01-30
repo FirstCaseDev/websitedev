@@ -354,8 +354,8 @@ export class CasesComponent implements OnInit {
 
   courtdata: any = [
     { id: 'Supreme Court of India', name: 'Supreme Court of India' },
-    { id: 'California Court of Appeal', name: 'California Court of Appeal' },
-    { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
+    // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
+    // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
   linechartOptions: ChartOptions = {
     title: {
