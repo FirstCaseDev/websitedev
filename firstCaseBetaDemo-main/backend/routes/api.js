@@ -1217,7 +1217,7 @@ module.exports = (router) => {
                                   }
                                 var token = jwt.create(claims, process.env.SECRET);
                                 var curr_time = new Date().getTime();
-                                token.setExpiration(curr_time + 10*1000);
+                                token.setExpiration(curr_time + 60*30*1000);
                                 
                                 // token = jwt.sign({ username: user.username, email: user.email },
                                 //     process.env.SECRET,
