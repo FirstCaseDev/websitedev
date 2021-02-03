@@ -78,7 +78,6 @@ export class UsersComponent implements OnInit {
     this.loginData.username = this.login_username;
     this.loginData.password = this.login_password;
     this.usersService.loginUser(this.loginData).subscribe((data: any) => {
-      console.log(data);
       if (data.success) {
         this.reset();
         this.router.navigate(['/cases']); // navigate to other page
