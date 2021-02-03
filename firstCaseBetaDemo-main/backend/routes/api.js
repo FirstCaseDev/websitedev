@@ -1,6 +1,6 @@
 var Case = require('../db/models/case.js');
 var User = require('../db/models/user');
-var jwt = require('jsonwebtoken');
+// var jwt = require('jsonwebtoken');
 const { json } = require('body-parser');
 var secret = 'secret';
 var mongoose = require('mongoose');
@@ -1175,19 +1175,6 @@ module.exports = (router) => {
                 }
             });
         }
-    });
-
-    //User login verify
-    router.get("/auth-verify", function(req, res) {
-        var encoded = req.params;
-        jwt.verify(encoded, process.env.SECRET, function(err, decoded) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.send(decoded);
-            }
-        });
     });
 
     // User Login Complete
