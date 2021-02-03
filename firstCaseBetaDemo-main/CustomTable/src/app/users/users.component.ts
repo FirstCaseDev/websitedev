@@ -14,11 +14,18 @@ export class UsersComponent implements OnInit {
   isLoggedIn: boolean = false;
 
   ngOnInit(): void {
-    if (this.usersService.getToken()) {
-      this.router.navigate(['/cases']); // navigate to other page
-      console.log("User already logged in");
-      this.isLoggedIn = true;
-
+    if (localStorage.getItem('token_exp')) {
+      var exp = parseInt(localStorage.token_exp);
+      var curr_time = new Date().getTime();
+      if (curr_time < exp) {
+        this.router.navigate(['/cases']); // navigate to other page
+        console.log("User already logged in");
+        this.isLoggedIn = true;  
+      }
+      else {
+        localStorage.removeItem('token_exp');
+        console.log("users page: Previous token expired, login again!")
+      }
     } 
     else {
       console.log("User not logged in");
@@ -74,8 +81,8 @@ export class UsersComponent implements OnInit {
       console.log(data);
       if (data.success) {
         this.reset();
-        this.usersService.setToken(data.token);
         this.router.navigate(['/cases']); // navigate to other page
+        this.usersService.setTokenExp(data.exp);
         this.isLoggedIn = true;
         this.appComponent.isLoggedIn = true;
         console.log("User logged in");

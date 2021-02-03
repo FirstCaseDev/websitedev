@@ -13,12 +13,12 @@ export class AppComponent implements OnInit{
   isLoggedIn: boolean = false;
   
   ngOnInit(): void {
-    if (this.usersService.getToken()) this.isLoggedIn = true;
+    if (localStorage.getItem('token_exp')) this.isLoggedIn = true;
     else this.isLoggedIn = false;
   }
 
   logout() {
-    this.usersService.removeToken();
+    localStorage.removeItem('token_exp');
     console.log("User logged out");
   }
 }

@@ -21,16 +21,8 @@ export class UsersService {
     return this.webService.post('authenticate', loginData);
   }
 
-  setToken(token: any) {
-    localStorage.setItem('token', token);
-  }
-
-  getToken() {
-    return localStorage.getItem('token');
-  }
-
-  removeToken() {
-    localStorage.removeItem('token');
+  setTokenExp(exp: any) {
+    localStorage.setItem('token_exp', exp);
   }
 
 }

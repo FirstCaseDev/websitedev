@@ -9,7 +9,7 @@ export class AppService {
   constructor(private usersService: UsersService) { }
   
   checkLogin() {
-    if (this.usersService.getToken()) return true;
+    if (localStorage.getItem('token_exp')) return true;
     else return false;
   }
 

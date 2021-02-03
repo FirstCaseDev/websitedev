@@ -1,10 +1,10 @@
 var Case = require('../db/models/case.js');
-var List = require('../db/models/list');
 var User = require('../db/models/user');
 var jwt = require('jsonwebtoken');
 const { json } = require('body-parser');
 var secret = 'secret';
 var mongoose = require('mongoose');
+var jwt = require('njwt');
 
 module.exports = (router) => {
 
@@ -1177,6 +1177,19 @@ module.exports = (router) => {
         }
     });
 
+    //User login verify
+    router.get("/auth-verify", function(req, res) {
+        var encoded = req.params;
+        jwt.verify(encoded, process.env.SECRET, function(err, decoded) {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                res.send(decoded);
+            }
+        });
+    });
+
     // User Login Complete
     router.post("/authenticate", function(req, res) {
         User.findOne({ username: req.body.username })
@@ -1198,13 +1211,22 @@ module.exports = (router) => {
                                 res.json({ success: false, msg: "Wrong credentials" });
                                 return;
                             } else {
-                                var token = jwt.sign({ username: user.username, email: user.email },
-                                    process.env.SECRET, { expiresIn: "60s" }
-                                );
+                                var claims = {
+                                    iss: "https://firstcase.io/",  // The URL of your service
+                                    sub: "users/" + user.username,    // The UID of the user in your system
+                                  }
+                                var token = jwt.create(claims, process.env.SECRET);
+                                var curr_time = new Date().getTime();
+                                token.setExpiration(curr_time + 10*1000);
+                                
+                                // token = jwt.sign({ username: user.username, email: user.email },
+                                //     process.env.SECRET,
+                                //     {expiresIn: "30s"}
+                                // );
                                 res.json({
                                     success: true,
                                     msg: "Successfully logged in",
-                                    token: token,
+                                    exp: token.body.exp*1000
                                 });
                                 return;
                             }

@@ -17,6 +17,7 @@
     "@angular/platform-browser": "~11.0.5",
     "@angular/platform-browser-dynamic": "~11.0.5",
     "@angular/router": "~11.0.5",
+    "@auth0/angular-jwt": "^5.0.2",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
     "chartjs-chart-matrix": "^0.1.3",

@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 HC_heatmap(Highcharts);
 
 
-
 @Component({
   selector: 'app-cases',
   templateUrl: './cases.component.html',
@@ -22,32 +21,44 @@ export class CasesComponent implements OnInit {
   constructor(private caseService: CaseService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
-    if (!localStorage.getItem('token')) this.router.navigate(['/users'])
+    // if (!localStorage.getItem('token_exp')) this.router.navigate(['/users'])
+    this.pvb_init();
+    this.rvb_init();
+    this.courtlevel = this.courtdata[0];
+    this.court = this.courtdata[0].name;
+    this.judgement_options = [
+      { item_id: 1, item_text: 'allowed' },
+      { item_id: 2, item_text: 'dismissed' },
+      { item_id: 3, item_text: 'tied / unclear' },
+      { item_id: 4, item_text: 'partly allowed' },
+      { item_id: 5, item_text: 'partly dismissed' },
+    ];
+    this.selectedJudgements = this.judgement_options;
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 5,
+      allowSearchFilter: this.ShowFilter,
+    };
+    this.myForm = this.fb.group({
+      city: [this.selectedJudgements],
+    });
+    
+    if (localStorage.getItem('token_exp')) {
+      var exp = parseInt(localStorage.token_exp);
+      var curr_time = new Date().getTime();
+      if (curr_time > exp) {
+        localStorage.removeItem('token_exp');
+        console.log("cases page: Previous token expired, login again!")
+        this.router.navigate(['/users']); // navigate to login page
+      }
+    } 
     else {
-      this.pvb_init();
-      this.rvb_init();
-      this.courtlevel = this.courtdata[0];
-      this.court = this.courtdata[0].name;
-      this.judgement_options = [
-        { item_id: 1, item_text: 'allowed' },
-        { item_id: 2, item_text: 'dismissed' },
-        { item_id: 3, item_text: 'tied / unclear' },
-        { item_id: 4, item_text: 'partly allowed' },
-        { item_id: 5, item_text: 'partly dismissed' },
-      ];
-      this.selectedJudgements = this.judgement_options;
-      this.dropdownSettings = {
-        singleSelection: false,
-        idField: 'item_id',
-        textField: 'item_text',
-        selectAllText: 'Select All',
-        unSelectAllText: 'UnSelect All',
-        itemsShowLimit: 5,
-        allowSearchFilter: this.ShowFilter,
-      };
-      this.myForm = this.fb.group({
-        city: [this.selectedJudgements],
-      });
+      console.log("User not logged in, Login required");
+      this.router.navigate(['/users']); // navigate to login page
     }
   }
 
