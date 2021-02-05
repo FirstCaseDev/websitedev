@@ -1,4 +1,5 @@
 export default class Case {
+  _id!: String;
   judgement!: String;
   url!: String;
   source!: String;

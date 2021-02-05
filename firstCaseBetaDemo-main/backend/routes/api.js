@@ -1048,11 +1048,11 @@ module.exports = (router) => {
             });
     });
 
-    router.get('/cases/_id=:object_id', (req, res) => {
-        Case.find({ _id: mongoose.Types.ObjectId(req.params.object_id) })
+    router.get('/cases/:object_id', (req, res) => {
+        Case.findOne({ _id: mongoose.Types.ObjectId(req.params.object_id) })
             .then((case_item) => {
                 res.json({
-                    case_list: case_item,
+                    case: case_item,
                     msg: 'Success',
                 });
             })

@@ -12,11 +12,12 @@ import { ChartsModule } from 'ng2-charts';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HighchartsChartModule } from 'highcharts-angular'
 import { UsersComponent } from './users/users.component'
-import User from './models/user'
+import User from './models/user';
+import { CasedocComponent } from './casedoc/casedoc.component'
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, FilterPipe, CasesComponent, UsersComponent],
+  declarations: [AppComponent, HomeComponent, FilterPipe, CasesComponent, UsersComponent, CasedocComponent],
   imports: [
     BrowserModule,
     FormsModule,

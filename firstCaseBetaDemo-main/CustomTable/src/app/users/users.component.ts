@@ -10,7 +10,11 @@ import { AppComponent } from '../app.component';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
-  constructor(private usersService: UsersService, private appComponent: AppComponent, private router: Router) {}
+  constructor(
+    private usersService: UsersService,
+    private appComponent: AppComponent,
+    private router: Router
+  ) {}
   isLoggedIn: boolean = false;
 
   ngOnInit(): void {
@@ -19,16 +23,14 @@ export class UsersComponent implements OnInit {
       var curr_time = new Date().getTime();
       if (curr_time < exp) {
         this.router.navigate(['/cases']); // navigate to other page
-        console.log("User already logged in");
-        this.isLoggedIn = true;  
-      }
-      else {
+        console.log('User already logged in');
+        this.isLoggedIn = true;
+      } else {
         localStorage.removeItem('token_exp');
-        console.log("users page: Previous token expired, login again!")
+        console.log('users page: Previous token expired, login again!');
       }
-    } 
-    else {
-      console.log("User not logged in");
+    } else {
+      console.log('User not logged in');
       this.isLoggedIn = false;
     }
   }
@@ -80,11 +82,14 @@ export class UsersComponent implements OnInit {
     this.usersService.loginUser(this.loginData).subscribe((data: any) => {
       if (data.success) {
         this.reset();
-        this.router.navigate(['/cases']); // navigate to other page
+        var casedoc_url = localStorage.getItem('casedoc_url');
+        if (casedoc_url) {
+          this.router.navigate([casedoc_url]);
+        } else this.router.navigate(['/cases']); // navigate to other page
         this.usersService.setTokenExp(data.exp);
         this.isLoggedIn = true;
         this.appComponent.isLoggedIn = true;
-        console.log("User logged in");
+        console.log('User logged in');
       } else if (data.msg == 'Fields required') {
       } else {
         this.reset();
@@ -109,7 +114,4 @@ export class UsersComponent implements OnInit {
       }
     });
   }
-
-  
-
 }

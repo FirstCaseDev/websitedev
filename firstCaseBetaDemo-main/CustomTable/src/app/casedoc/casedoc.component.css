@@ -1,0 +1,131 @@
+/* colors {
+    mirage: #19212F;
+    gothic: #7397A5;
+    slate-gray: #647B88;
+    smalt-blue: #597C94;
+} */
+
+@font-face {
+  font-family: PopLight;
+  src: url("../../assets/fonts/Poppins-Light.ttf");
+}
+
+@font-face {
+  font-family: PopRegular;
+  src: url("../../assets/fonts/Poppins-Regular.ttf");
+}
+
+@font-face {
+  font-family: PopMedium;
+  src: url("../../assets/fonts/Poppins-Medium.ttf");
+}
+
+body {
+  font-family: PopLight;
+  padding-bottom: 0px;
+  margin: 30px 10px 0px 10px;
+  /* background-color: #ebf3f3; */
+}
+
+.page {
+  display: block;
+  margin: 0px 100px;
+  /* grid-template-columns: 15vw auto; */
+}
+.left {
+  border-right: 1px solid #bbb;
+  text-align: center;
+  min-height: 80vh;
+}
+.slides {
+  background-color: #597c943d;
+  min-height: 80vh;
+  padding: 10px 100px;
+  overflow: auto;
+  margin-top: 20px;
+  scroll-snap-type: mandatory;
+  box-shadow: 0px -5px 10px #ddd;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px;
+}
+
+.slides::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.slides::-webkit-scrollbar-thumb {
+  background: #647b88;
+  border-radius: 10px;
+}
+
+.slides::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* .right {
+  border-left: 1px solid #ddd;
+  text-align: center;
+  min-height: 80vh;
+} */
+
+.case-tabs {
+  min-width: 100%;
+}
+
+.case-tabs-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  font-family: PopMedium;
+}
+
+.tabs-item {
+  margin: 10px 0px;
+  padding: 5px 20px;
+  text-align: center;
+  color: #19212f;
+  background-color: #19212f;
+  min-width: 100px;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+button {
+  padding: 0.3em 1.2em;
+  min-width: 100px;
+  z-index: 5;
+  margin: 0 0.3em 0 0;
+  border-radius: 2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: PopRegular;
+  font-weight: 300;
+  color: #080f19;
+  background-color: #fff;
+  text-align: center;
+  transition: all 0.2s;
+}
+button:hover {
+  background-color: #080f19;
+  color: #fff;
+}
+
+@media all and (max-width: 30em) {
+  button {
+    display: block;
+    margin: 0.2em auto;
+  }
+}
+
+.about {
+  margin: 0px 100px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.about-property {
+  text-align: right;
+  margin: 10px 50px;
+  padding: 5px 0px;
+}
