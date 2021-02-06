@@ -71,6 +71,12 @@ export class CasedocComponent implements OnInit {
 
   tab1() {
     this.view_tab = 1;
+    // let element = document.getElementById('analytics_tab');
+    // element!.className = 'tab active';
+    // let element2 = document.getElementById('search_tab');
+    // element2!.className = 'tab';
+    // let element3 = document.getElementById('citation_tab');
+    // element3!.className = 'tab';
   }
   tab2() {
     this.view_tab = 2;

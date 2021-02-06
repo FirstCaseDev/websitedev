@@ -27,10 +27,12 @@ export class CaseService {
     respondent: string,
     page: number,
     limit: number,
-    curr_sort: string
+    curr_sort: string,
+    y_floor: Number,
+    y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/query=${query}?&court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}&sortBy=${curr_sort}`
+      `cases/query=${query}?&court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}&sortBy=${curr_sort}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
@@ -40,10 +42,12 @@ export class CaseService {
     judgement: Array<string>,
     bench: string,
     petitioner: string,
-    respondent: string
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/charts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+      `cases/charts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
@@ -53,10 +57,12 @@ export class CaseService {
     judgement: Array<string>,
     bench: string,
     petitioner: string,
-    respondent: string
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/piecharts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+      `cases/piecharts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
@@ -65,10 +71,12 @@ export class CaseService {
     court: string,
     bench: string,
     petitioner: string,
-    respondent: string
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/ptncharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+      `cases/ptncharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
@@ -77,10 +85,12 @@ export class CaseService {
     court: string,
     bench: string,
     petitioner: string,
-    respondent: string
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/respcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+      `cases/respcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
@@ -89,10 +99,12 @@ export class CaseService {
     court: string,
     bench: string,
     petitioner: string,
-    respondent: string
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/pvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+      `cases/pvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
@@ -101,10 +113,12 @@ export class CaseService {
     court: string,
     bench: string,
     petitioner: string,
-    respondent: string
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/rvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+      `cases/rvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
@@ -114,10 +128,12 @@ export class CaseService {
     judgement: Array<string>,
     bench: string,
     petitioner: string,
-    respondent: string
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/cited_cases=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+      `cases/cited_cases=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
@@ -127,10 +143,12 @@ export class CaseService {
     judgement: Array<string>,
     bench: string,
     petitioner: string,
-    respondent: string
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/cited_laws=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+      `cases/cited_laws=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
@@ -140,10 +158,12 @@ export class CaseService {
     judgement: Array<string>,
     bench: string,
     petitioner: string,
-    respondent: string
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/cited_acts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
+      `cases/cited_acts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 

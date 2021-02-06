@@ -373,6 +373,8 @@ export class CasesComponent implements OnInit {
     'partly allowed',
     'partly dismissed',
   ];
+  y_floor: Number = 1950;
+  y_ceil: Number = new Date().getFullYear();
   bench: string = '';
   petitioner: string = '';
   respondent: string = '';
@@ -566,6 +568,8 @@ export class CasesComponent implements OnInit {
   search() {
     this.searched = true;
     this.view_search = true;
+    this.charts_unloaded = true;
+    this.citations_unloaded = true;
     if (this.query.length == 0) {
       this.query = [this.bench, this.petitioner, this.respondent].join(' ');
       if (this.query.length == 2) {
@@ -589,13 +593,19 @@ export class CasesComponent implements OnInit {
         this.respondent,
         this.page,
         this.limit,
-        this.curr_sort
+        this.curr_sort,
+        this.y_floor,
+        this.y_ceil
       )
       .subscribe((data: any) => {
         // console.log(data.case_list);
+        if (data.success) {
+          this.rows = data.case_list;
+          this.results_count = data.result_count;
+        } else {
+          alert(data.msg);
+        }
         this.loading = false;
-        this.rows = data.case_list;
-        this.results_count = data.result_count;
       });
 
     if (Boolean(this.view_search) == false) this.show_search();
@@ -610,7 +620,9 @@ export class CasesComponent implements OnInit {
         this.judgement,
         this.bench,
         this.petitioner,
-        this.respondent
+        this.respondent,
+        this.y_floor,
+        this.y_ceil
       )
       .subscribe((data: any) => {
         this.chartLabels.length = 0;
@@ -665,7 +677,9 @@ export class CasesComponent implements OnInit {
         this.judgement,
         this.bench,
         this.petitioner,
-        this.respondent
+        this.respondent,
+        this.y_floor,
+        this.y_ceil
       )
       .subscribe((data: any) => {
         var arr: any = [];
@@ -694,7 +708,9 @@ export class CasesComponent implements OnInit {
         this.court,
         this.bench,
         this.petitioner,
-        this.respondent
+        this.respondent,
+        this.y_floor,
+        this.y_ceil
       )
       .subscribe((data: any) => {
         this.petitionerChartLabels.length = 0;
@@ -796,7 +812,9 @@ export class CasesComponent implements OnInit {
         this.court,
         this.bench,
         this.petitioner,
-        this.respondent
+        this.respondent,
+        this.y_floor,
+        this.y_ceil
       )
       .subscribe((data: any) => {
         this.respondentChartLabels.length = 0;
@@ -896,7 +914,9 @@ export class CasesComponent implements OnInit {
         this.court,
         this.bench,
         this.petitioner,
-        this.respondent
+        this.respondent,
+        this.y_floor,
+        this.y_ceil
       )
       .subscribe((data: any) => {
         try {
@@ -950,7 +970,9 @@ export class CasesComponent implements OnInit {
         this.court,
         this.bench,
         this.petitioner,
-        this.respondent
+        this.respondent,
+        this.y_floor,
+        this.y_ceil
       )
       .subscribe((data: any) => {
         try {
@@ -1008,7 +1030,9 @@ export class CasesComponent implements OnInit {
         this.judgement,
         this.bench,
         this.petitioner,
-        this.respondent
+        this.respondent,
+        this.y_floor,
+        this.y_ceil
       )
       .subscribe((data: any) => {
         try {
@@ -1027,7 +1051,9 @@ export class CasesComponent implements OnInit {
         this.judgement,
         this.bench,
         this.petitioner,
-        this.respondent
+        this.respondent,
+        this.y_floor,
+        this.y_ceil
       )
       .subscribe((data: any) => {
         try {
@@ -1052,7 +1078,9 @@ export class CasesComponent implements OnInit {
         this.judgement,
         this.bench,
         this.petitioner,
-        this.respondent
+        this.respondent,
+        this.y_floor,
+        this.y_ceil
       )
       .subscribe((data: any) => {
         try {

@@ -92,6 +92,34 @@
         <div class="input-group-2">
           <input
             class="form-control"
+            type="number"
+            id="start-year"
+            name="start-year"
+            placeholder="Start Year"
+            [(ngModel)]="y_floor"
+          />
+          <label for="judgeName">Start Year</label>
+          <div class="req-mark">!</div>
+        </div>
+      </div>
+      <div class="filter-option">
+        <div class="input-group-2">
+          <input
+            class="form-control"
+            type="number"
+            id="end-year"
+            name="end-year"
+            placeholder="End Year"
+            [(ngModel)]="y_ceil"
+          />
+          <label for="judgeName">End Year</label>
+          <div class="req-mark">!</div>
+        </div>
+      </div>
+      <div class="filter-option">
+        <div class="input-group-2">
+          <input
+            class="form-control"
             type="text"
             id="judgeInput"
             name="judgeName"

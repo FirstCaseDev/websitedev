@@ -17,7 +17,11 @@ module.exports = (router) => {
     const endIndex = page * limit;
     const court = req.query.court;
     var sortBy = req.query.sortBy;
-    console.log(req.query.sortBy);
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
+    console.log("Sort by:" + req.query.sortBy);
+    console.log("y_floor: " + y_floor);
+    console.log("y_ceil: " + y_ceil);
     var sort_options = {
       // textScore: 1,
       score: {
@@ -45,6 +49,10 @@ module.exports = (router) => {
             $search: squery,
           },
           source: court,
+          year: {
+            $lte: Number(y_ceil),
+            $gte: Number(y_floor),
+          },
         },
       },
       {
@@ -90,13 +98,77 @@ module.exports = (router) => {
           ],
         },
       },
+
+      // {
+      //   $match: {
+      //     $text: {
+      //       $search: squery,
+      //     },
+      //     source: court,
+      //     year: {
+      //       $lte: y_ceil,
+      //       $gte: y_floor,
+      //     },
+      //   },
+      // },
+      // {
+      //   $project: {
+      //     score: {
+      //       $meta: "textScore",
+      //     },
+      //     url: 1,
+      //     title: 1,
+      //     judgement: 1,
+      //     _id: 1,
+      //     year: 1,
+      //     month: 1,
+      //     date: 1,
+      //     petitioner: 1,
+      //     respondent: 1,
+      //     bench: 1,
+      //     source: 1,
+      //   },
+      // },
+      // {
+      //   $sort: sort_options,
+      // },
+      // {
+      //   $facet: {
+      //     metadata: [
+      //       {
+      //         $count: "total",
+      //       },
+      //       {
+      //         $addFields: {
+      //           page: Number(page),
+      //         },
+      //       },
+      //     ],
+      //     data: [
+      //       {
+      //         $skip: Number(startIndex),
+      //       },
+      //       {
+      //         $limit: Number(limit),
+      //       },
+      //     ],
+      //   },
+      // },
     ])
       .then((case_list) => {
-        res.json({
-          case_list: case_list[0].data,
-          result_count: case_list[0].metadata[0].total,
-          msg: "Success",
-        });
+        if (case_list[0].data.length > 0) {
+          res.json({
+            case_list: case_list[0].data,
+            result_count: case_list[0].metadata[0].total,
+            success: true,
+            msg: "Success",
+          });
+        } else {
+          res.json({
+            success: false,
+            msg: "No results found!",
+          });
+        }
       })
       .catch((error) => console.log(error));
   });
@@ -104,6 +176,8 @@ module.exports = (router) => {
   router.get("/cases/charts=:query", (req, res) => {
     var query = req.params.query;
     const court = req.query.court;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
     var judgements = req.query.judgement.split(",");
     judgements = judgements.join("|");
     var judge = ".*".concat(req.query.bench, ".*");
@@ -116,6 +190,10 @@ module.exports = (router) => {
             $search: query,
           },
           source: court,
+          year: {
+            $lte: Number(y_ceil),
+            $gte: Number(y_floor),
+          },
           bench: {
             $regex: judge,
             $options: "i",
@@ -220,6 +298,8 @@ module.exports = (router) => {
   router.get("/cases/piecharts=:query", (req, res) => {
     var query = req.params.query;
     const court = req.query.court;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
     var judgements = req.query.judgement.split(",");
     judgements = judgements.join("|");
     var judge = ".*".concat(req.query.bench, ".*");
@@ -232,6 +312,10 @@ module.exports = (router) => {
             $search: query,
           },
           source: court,
+          year: {
+            $lte: Number(y_ceil),
+            $gte: Number(y_floor),
+          },
           bench: {
             $regex: judge,
             $options: "i",
@@ -319,6 +403,8 @@ module.exports = (router) => {
   router.get("/cases/ptncharts=:query", (req, res) => {
     var query = req.params.query;
     const court = req.query.court;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
     var judge = ".*".concat(req.query.bench, ".*");
     var ptnr = ".*".concat(req.query.ptn, ".*");
     var resp = ".*".concat(req.query.rsp, ".*");
@@ -329,6 +415,10 @@ module.exports = (router) => {
             $search: query,
           },
           source: court,
+          year: {
+            $lte: Number(y_ceil),
+            $gte: Number(y_floor),
+          },
           bench: {
             $regex: judge,
             $options: "i",
@@ -434,6 +524,8 @@ module.exports = (router) => {
   router.get("/cases/respcharts=:query", (req, res) => {
     var query = req.params.query;
     const court = req.query.court;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
     var judge = ".*".concat(req.query.bench, ".*");
     var ptnr = ".*".concat(req.query.ptn, ".*");
     var resp = ".*".concat(req.query.rsp, ".*");
@@ -444,6 +536,10 @@ module.exports = (router) => {
             $search: query,
           },
           source: court,
+          year: {
+            $lte: Number(y_ceil),
+            $gte: Number(y_floor),
+          },
           bench: {
             $regex: judge,
             $options: "i",
@@ -549,6 +645,8 @@ module.exports = (router) => {
   router.get("/cases/pvbcharts=:query", (req, res) => {
     var query = req.params.query;
     const court = req.query.court;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
     var judge = ".*".concat(req.query.bench, ".*");
     var ptnr = ".*".concat(req.query.ptn, ".*");
     var resp = ".*".concat(req.query.rsp, ".*");
@@ -559,6 +657,10 @@ module.exports = (router) => {
             $search: query,
           },
           source: court,
+          year: {
+            $lte: Number(y_ceil),
+            $gte: Number(y_floor),
+          },
           bench: {
             $regex: judge,
             $options: "i",
@@ -669,6 +771,8 @@ module.exports = (router) => {
   router.get("/cases/rvbcharts=:query", (req, res) => {
     var query = req.params.query;
     const court = req.query.court;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
     var judge = ".*".concat(req.query.bench, ".*");
     var ptnr = ".*".concat(req.query.ptn, ".*");
     var resp = ".*".concat(req.query.rsp, ".*");
@@ -679,6 +783,10 @@ module.exports = (router) => {
             $search: query,
           },
           source: court,
+          year: {
+            $lte: Number(y_ceil),
+            $gte: Number(y_floor),
+          },
           bench: {
             $regex: judge,
             $options: "i",
@@ -789,6 +897,8 @@ module.exports = (router) => {
   router.get("/cases/cited_cases=:query", (req, res) => {
     var query = req.params.query;
     const court = req.query.court;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
     var judgements = req.query.judgement.split(",");
     judgements = judgements.join("|");
     var judge = ".*".concat(req.query.bench, ".*");
@@ -801,6 +911,10 @@ module.exports = (router) => {
             $search: query,
           },
           source: court,
+          year: {
+            $lte: Number(y_ceil),
+            $gte: Number(y_floor),
+          },
           bench: {
             $regex: judge,
             $options: "i",
@@ -882,6 +996,8 @@ module.exports = (router) => {
   router.get("/cases/cited_laws=:query", (req, res) => {
     var query = req.params.query;
     const court = req.query.court;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
     var judgements = req.query.judgement.split(",");
     judgements = judgements.join("|");
     var judge = ".*".concat(req.query.bench, ".*");
@@ -894,6 +1010,10 @@ module.exports = (router) => {
             $search: query,
           },
           source: court,
+          year: {
+            $lte: Number(y_ceil),
+            $gte: Number(y_floor),
+          },
           bench: {
             $regex: judge,
             $options: "i",
@@ -1007,9 +1127,11 @@ module.exports = (router) => {
     });
   });
 
-  router.get("/cases/cited_acts=:query", (req, res) => {
+  router.get("/cases/cited_acts=:query", (req, res, next) => {
     var query = req.params.query;
     const court = req.query.court;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
     var judgements = req.query.judgement.split(",");
     judgements = judgements.join("|");
     var judge = ".*".concat(req.query.bench, ".*");
@@ -1022,6 +1144,10 @@ module.exports = (router) => {
             $search: query,
           },
           source: court,
+          year: {
+            $lte: Number(y_ceil),
+            $gte: Number(y_floor),
+          },
           bench: {
             $regex: judge,
             $options: "i",
