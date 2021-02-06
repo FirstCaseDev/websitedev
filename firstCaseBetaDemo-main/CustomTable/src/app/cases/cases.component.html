@@ -52,6 +52,16 @@
     <div class="left" *ngIf="view_filters">
       <div>
         <button (click)="reset_filters()">Clear Filters</button>
+        <div class="sort-option" style="margin: 20px 0px">
+          <span>Sort By</span>
+          <span>
+            <select [(ngModel)]="sortBy" (change)="selected()">
+              <option *ngFor="let item of sort_options" [ngValue]="item">
+                {{ item.name }}
+              </option>
+            </select>
+          </span>
+        </div>
       </div>
       <div class="filter-option">
         <p>Judgements</p>

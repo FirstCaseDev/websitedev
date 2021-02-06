@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
-
 export class CaseService {
   constructor(private webService: WebService) {}
 
@@ -19,68 +18,136 @@ export class CaseService {
     return this.webService.get(`cases/_id=${object_id}`);
   }
 
-  getSearchedCases(query: string , court:string, judgement:Array<string>, bench: string, petitioner: string, respondent: string, page: number, limit: number) {
+  getSearchedCases(
+    query: string,
+    court: string,
+    judgement: Array<string>,
+    bench: string,
+    petitioner: string,
+    respondent: string,
+    page: number,
+    limit: number,
+    curr_sort: string
+  ) {
     return this.webService.get(
-      `cases/query=${query}?&court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}`  
+      `cases/query=${query}?&court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}&sortBy=${curr_sort}`
     );
   }
 
-  getLineCharts(query:string, court:string, judgement:Array<string>, bench: string, petitioner: string, respondent: string){
+  getLineCharts(
+    query: string,
+    court: string,
+    judgement: Array<string>,
+    bench: string,
+    petitioner: string,
+    respondent: string
+  ) {
     return this.webService.get(
       `cases/charts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
     );
   }
 
-  getPieCharts(query:string, court:string, judgement:Array<string>, bench: string, petitioner: string, respondent: string){
+  getPieCharts(
+    query: string,
+    court: string,
+    judgement: Array<string>,
+    bench: string,
+    petitioner: string,
+    respondent: string
+  ) {
     return this.webService.get(
       `cases/piecharts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
     );
   }
 
-  getPetitionerChart(query:string, court:string, bench: string, petitioner: string, respondent: string){
+  getPetitionerChart(
+    query: string,
+    court: string,
+    bench: string,
+    petitioner: string,
+    respondent: string
+  ) {
     return this.webService.get(
       `cases/ptncharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
     );
   }
 
-  getRespondentChart(query:string, court:string, bench: string, petitioner: string, respondent: string){
+  getRespondentChart(
+    query: string,
+    court: string,
+    bench: string,
+    petitioner: string,
+    respondent: string
+  ) {
     return this.webService.get(
       `cases/respcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
     );
   }
 
-  getPtn_v_BenchChart(query:string, court:string, bench: string, petitioner: string, respondent: string){
+  getPtn_v_BenchChart(
+    query: string,
+    court: string,
+    bench: string,
+    petitioner: string,
+    respondent: string
+  ) {
     return this.webService.get(
       `cases/pvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
     );
   }
 
-  getRsp_v_BenchChart(query:string, court:string, bench: string, petitioner: string, respondent: string){
+  getRsp_v_BenchChart(
+    query: string,
+    court: string,
+    bench: string,
+    petitioner: string,
+    respondent: string
+  ) {
     return this.webService.get(
       `cases/rvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
     );
   }
 
-  getCitedCases(query:string, court:string, judgement:Array<string>, bench: string, petitioner: string, respondent: string){
+  getCitedCases(
+    query: string,
+    court: string,
+    judgement: Array<string>,
+    bench: string,
+    petitioner: string,
+    respondent: string
+  ) {
     return this.webService.get(
       `cases/cited_cases=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
-    );  
+    );
   }
 
-  getCitedLaws(query:string, court:string, judgement:Array<string>, bench: string, petitioner: string, respondent: string){
+  getCitedLaws(
+    query: string,
+    court: string,
+    judgement: Array<string>,
+    bench: string,
+    petitioner: string,
+    respondent: string
+  ) {
     return this.webService.get(
       `cases/cited_laws=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
-    );  
+    );
   }
 
-  getCitedActs(query:string, court:string, judgement:Array<string>, bench: string, petitioner: string, respondent: string){
+  getCitedActs(
+    query: string,
+    court: string,
+    judgement: Array<string>,
+    bench: string,
+    petitioner: string,
+    respondent: string
+  ) {
     return this.webService.get(
       `cases/cited_acts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}`
-    );  
+    );
   }
-  
+
   getLists() {
     return this.webService.get('lists');
   }
 }
-

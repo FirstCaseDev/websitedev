@@ -1,67 +1,67 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var CaseSchema = new Schema(
   {
     _id: {
-      type: 'objectId',
+      type: "objectId",
     },
     bench: {
-      type: 'string',
+      type: "string",
     },
     cases_referred: {
-      type: 'array',
+      type: "array",
       items: {
-        type: 'string',
+        type: "string",
       },
     },
     date: {
-      type: 'number',
+      type: "number",
     },
     doc_author: {
-      type: 'string',
+      type: "string",
     },
     judgement: {
-      type: 'string',
+      type: "string",
     },
     judgement_text: {
-      type: 'string',
+      type: "string",
     },
     month: {
-      type: 'number',
+      type: "number",
     },
     petitioner: {
-      type: 'string',
+      type: "string",
     },
     petitioner_counsel: {
-      type: 'array',
+      type: "array",
       items: {
-        type: 'string',
+        type: "string",
       },
     },
     provisions_referred: {
-      type: 'string',
+      type: "string",
     },
     respondent: {
-      type: 'string',
+      type: "string",
     },
     respondent_counsel: {
-      type: 'array',
+      type: "array",
       items: {
-        type: 'string',
+        type: "string",
       },
     },
     source: {
-      type: 'string',
+      type: "string",
     },
     title: {
-      type: 'string',
+      type: "string",
     },
     url: {
-      type: 'string',
+      type: "string",
     },
     year: {
-      type: 'number',
+      type: "number",
     },
   }
 
@@ -84,19 +84,19 @@ var CaseSchema = new Schema(
 );
 
 CaseSchema.index({
-  url: 'text',
-  source: 'text',
-  petitioner: 'text',
-  respondent: 'text',
-  date: 'number',
-  month: 'number',
-  year: 'number',
-  doc_author: 'text',
-  bench: 'text',
-  judgement: 'text',
-  judgement_text: 'text',
-  title: 'text',
-  provisions_referred: 'text',
+  url: "text",
+  source: "text",
+  petitioner: "text",
+  respondent: "text",
+  date: "number",
+  month: "number",
+  year: "number",
+  doc_author: "text",
+  bench: "text",
+  judgement: "text",
+  judgement_text: "text",
+  title: "text",
+  provisions_referred: "text",
 });
 
-module.exports = mongoose.model('Case', CaseSchema);
+module.exports = mongoose.model("Case", CaseSchema);

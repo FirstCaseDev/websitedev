@@ -4,13 +4,11 @@ import Case from '../models/case';
 import { CaseService } from './case.service';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { Observable } from 'rxjs';
 import * as Highcharts from 'highcharts';
-import { HighchartsChartModule } from 'highcharts-angular'
+import { HighchartsChartModule } from 'highcharts-angular';
 import HC_heatmap from 'highcharts/modules/heatmap';
 import { Router } from '@angular/router';
 HC_heatmap(Highcharts);
-
 
 @Component({
   selector: 'app-cases',
@@ -18,13 +16,18 @@ HC_heatmap(Highcharts);
   styleUrls: ['./cases.component.css'],
 })
 export class CasesComponent implements OnInit {
-  constructor(private caseService: CaseService, private fb: FormBuilder, private router: Router) { }
+  constructor(
+    private caseService: CaseService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     // if (!localStorage.getItem('token_exp')) this.router.navigate(['/users'])
     this.pvb_init();
     this.rvb_init();
     this.courtlevel = this.courtdata[0];
+    this.sortBy = this.sort_options[0];
     this.court = this.courtdata[0].name;
     this.judgement_options = [
       { item_id: 1, item_text: 'allowed' },
@@ -46,18 +49,17 @@ export class CasesComponent implements OnInit {
     this.myForm = this.fb.group({
       city: [this.selectedJudgements],
     });
-    
+
     if (localStorage.getItem('token_exp')) {
       var exp = parseInt(localStorage.token_exp);
       var curr_time = new Date().getTime();
       if (curr_time > exp) {
         localStorage.removeItem('token_exp');
-        console.log("cases page: Previous token expired, login again!")
+        console.log('cases page: Previous token expired, login again!');
         this.router.navigate(['/users']); // navigate to login page
       }
-    } 
-    else {
-      console.log("User not logged in, Login required");
+    } else {
+      console.log('User not logged in, Login required');
       this.router.navigate(['/users']); // navigate to login page
     }
   }
@@ -65,9 +67,9 @@ export class CasesComponent implements OnInit {
   Highcharts = Highcharts;
   pvbChartOptions: Highcharts.Options = {};
   rvbChartOptions: Highcharts.Options = {};
-  pvb_Bench: any = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",];
+  pvb_Bench: any = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   rvb_Bench: any = [];
-  pvb_Counsel: any = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",];
+  pvb_Counsel: any = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   rvb_Counsel: any = [];
   pvb_data: any = [];
   rvb_data: any = [];
@@ -87,21 +89,21 @@ export class CasesComponent implements OnInit {
           color: '#666666',
           fontWeight: 'bold',
           fontSize: '12px',
-        }
+        },
       },
       colorAxis: {
-        maxColor: "#FFA1B5",
-        minColor: "#FFFFFF",
+        maxColor: '#FFA1B5',
+        minColor: '#FFFFFF',
       },
       xAxis: {
         title: {
-          text: "Bench",
+          text: 'Bench',
         },
         categories: this.pvb_Bench,
       },
       yAxis: {
         title: {
-          text: "Petitoner Counsel",
+          text: 'Petitoner Counsel',
         },
         categories: this.pvb_Counsel,
       },
@@ -111,29 +113,38 @@ export class CasesComponent implements OnInit {
         margin: 0,
         verticalAlign: 'top',
         y: 25,
-        symbolHeight: 200
+        symbolHeight: 200,
       },
       tooltip: {
         formatter: function () {
-          return '<b>' + this.series.yAxis.categories[this.point.y!] + '</b> represented <br><b>' +
-            this.point.value + '</b> appellants in front of <br><b>' + this.series.xAxis.categories[this.point.x] + '</b>';
+          return (
+            '<b>' +
+            this.series.yAxis.categories[this.point.y!] +
+            '</b> represented <br><b>' +
+            this.point.value +
+            '</b> appellants in front of <br><b>' +
+            this.series.xAxis.categories[this.point.x] +
+            '</b>'
+          );
         },
-        enabled: true
+        enabled: true,
       },
       credits: {
-        enabled: false
+        enabled: false,
       },
-      series: [{
-        name: "Petitioner Counsel against Benches",
-        type: "heatmap",
-        borderColor: "#FFFFFF",
-        borderWidth: 4,
-        data: this.pvb_data,
-        //   dataLabels: {
-        //     enabled: true,
-        //     color: '#000000'
-        // }
-      }],
+      series: [
+        {
+          name: 'Petitioner Counsel against Benches',
+          type: 'heatmap',
+          borderColor: '#FFFFFF',
+          borderWidth: 4,
+          data: this.pvb_data,
+          //   dataLabels: {
+          //     enabled: true,
+          //     color: '#000000'
+          // }
+        },
+      ],
     };
   }
 
@@ -153,21 +164,21 @@ export class CasesComponent implements OnInit {
           color: '#666666',
           fontWeight: 'bold',
           fontSize: '12px',
-        }
+        },
       },
       colorAxis: {
-        maxColor: "#86C7F3",
-        minColor: "#FFFFFF",
+        maxColor: '#86C7F3',
+        minColor: '#FFFFFF',
       },
       xAxis: {
         title: {
-          text: "Bench",
+          text: 'Bench',
         },
         categories: this.rvb_Bench,
       },
       yAxis: {
         title: {
-          text: "Respondent Counsel",
+          text: 'Respondent Counsel',
         },
         categories: this.rvb_Counsel,
       },
@@ -177,29 +188,38 @@ export class CasesComponent implements OnInit {
         margin: 0,
         verticalAlign: 'top',
         y: 25,
-        symbolHeight: 200
+        symbolHeight: 200,
       },
       tooltip: {
         formatter: function () {
-          return '<b>' + this.series.yAxis.categories[this.point.y!] + '</b> represented <br><b>' +
-            this.point.value + '</b> respondents in front of <br><b>' + this.series.xAxis.categories[this.point.x] + '</b>';
+          return (
+            '<b>' +
+            this.series.yAxis.categories[this.point.y!] +
+            '</b> represented <br><b>' +
+            this.point.value +
+            '</b> respondents in front of <br><b>' +
+            this.series.xAxis.categories[this.point.x] +
+            '</b>'
+          );
         },
-        enabled: true
+        enabled: true,
       },
       credits: {
-        enabled: false
+        enabled: false,
       },
-      series: [{
-        name: "Respondent Counsel against Benches",
-        type: "heatmap",
-        borderColor: "#FFFFFF",
-        borderWidth: 4,
-        data: this.rvb_data,
-        //   dataLabels: {
-        //     enabled: true,
-        //     color: '#000000'
-        // }
-      }],
+      series: [
+        {
+          name: 'Respondent Counsel against Benches',
+          type: 'heatmap',
+          borderColor: '#FFFFFF',
+          borderWidth: 4,
+          data: this.rvb_data,
+          //   dataLabels: {
+          //     enabled: true,
+          //     color: '#000000'
+          // }
+        },
+      ],
     };
   }
 
@@ -209,7 +229,7 @@ export class CasesComponent implements OnInit {
       display: true,
     },
     responsive: true,
-  }
+  };
   public petitionerChartOptions: ChartOptions = {
     title: {
       text: 'Petitioner Counsel Stats',
@@ -344,6 +364,7 @@ export class CasesComponent implements OnInit {
   limit: number = 5;
   judge: string = '';
   court: string = '';
+  curr_sort: string = 'relevance';
   year: number = 2020;
   judgement: Array<string> = [
     'allowed',
@@ -358,18 +379,29 @@ export class CasesComponent implements OnInit {
   petitioner_counsel: string = '';
   respondent_counsel: string = '';
   courtlevel: any;
+  sortBy: any;
   defaultcourt: any;
   loading: boolean = false;
   CitedActNames: any = [];
   CitedActCorrectedData: any = [];
   CitedActCorrectedDataNames: any = [];
   CitedProvisions: any = [];
+  charts_unloaded: boolean = true;
+  citations_unloaded: boolean = true;
 
   courtdata: any = [
     { id: 'Supreme Court of India', name: 'Supreme Court of India' },
     // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
+
+  sort_options: any = [
+    { id: 'relevance', name: 'Most Relevant' },
+    { id: 'year', name: 'Most Recent' },
+    // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
+    // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
+  ];
+
   linechartOptions: ChartOptions = {
     title: {
       text: 'Judgement trend over years',
@@ -441,6 +473,8 @@ export class CasesComponent implements OnInit {
 
   selected() {
     this.court = this.courtlevel.name;
+    this.curr_sort = this.sortBy.id;
+    this.first_search();
   }
 
   search_by_object_id() {
@@ -456,6 +490,17 @@ export class CasesComponent implements OnInit {
   }
 
   show_analytics() {
+    this.loading = true;
+    if (this.charts_unloaded) {
+      this.getLineCharts();
+      this.getPetitionerChart();
+      this.getPieCharts();
+      this.getPtn_v_BenchChart();
+      this.getRespondentChart();
+      this.getRsp_v_BenchChart();
+      this.loading = false;
+      this.charts_unloaded = false;
+    }
     this.view_search = false;
     this.view_citations = false;
     this.view_analytics = true;
@@ -466,9 +511,17 @@ export class CasesComponent implements OnInit {
     let element3 = document.getElementById('citation_tab');
     element3!.className = 'tab';
     // console.log('view_search ' + this.view_search);
+    this.loading = false;
   }
 
   show_citations() {
+    this.loading = true;
+    if (this.citations_unloaded) {
+      this.getCitedActs();
+      this.getCitedCases();
+      this.getCitedLaws();
+      this.citations_unloaded = false;
+    }
     this.view_search = false;
     this.view_analytics = false;
     this.view_citations = true;
@@ -478,6 +531,7 @@ export class CasesComponent implements OnInit {
     element2!.className = 'tab';
     let element3 = document.getElementById('analytics_tab');
     element3!.className = 'tab ';
+    this.loading = false;
     // console.log('view_search ' + this.view_search);
   }
 
@@ -502,6 +556,7 @@ export class CasesComponent implements OnInit {
     // this.selectedJudgements = [];
     this.bench = '';
     // this.court = '';
+    this.sortBy = this.sort_options[0];
     this.petitioner = '';
     this.respondent = '';
     this.petitioner_counsel = '';
@@ -509,6 +564,7 @@ export class CasesComponent implements OnInit {
   }
 
   search() {
+    this.searched = true;
     this.view_search = true;
     if (this.query.length == 0) {
       this.query = [this.bench, this.petitioner, this.respondent].join(' ');
@@ -532,15 +588,21 @@ export class CasesComponent implements OnInit {
         this.petitioner,
         this.respondent,
         this.page,
-        this.limit
+        this.limit,
+        this.curr_sort
       )
       .subscribe((data: any) => {
         // console.log(data.case_list);
-
+        this.loading = false;
         this.rows = data.case_list;
         this.results_count = data.result_count;
       });
 
+    if (Boolean(this.view_search) == false) this.show_search();
+    this.createArray(this.results_count);
+  }
+
+  getLineCharts() {
     this.caseService
       .getLineCharts(
         this.query,
@@ -593,7 +655,9 @@ export class CasesComponent implements OnInit {
           console.log(error);
         }
       });
+  }
 
+  getPieCharts() {
     this.caseService
       .getPieCharts(
         this.query,
@@ -621,7 +685,9 @@ export class CasesComponent implements OnInit {
 
         this.doughnutChartData = arr;
       });
+  }
 
+  getPetitionerChart() {
     this.caseService
       .getPetitionerChart(
         this.query,
@@ -689,11 +755,15 @@ export class CasesComponent implements OnInit {
               if (sums[j] > sums[j - 1]) {
                 for (var k = 0; k < this.petitionerDatalabels.length; k++) {
                   var temp = this.petitionerChartData[k].data![j];
-                  this.petitionerChartData[k].data![j] = this.petitionerChartData[k].data![j - 1];
+                  this.petitionerChartData[k].data![
+                    j
+                  ] = this.petitionerChartData[k].data![j - 1];
                   this.petitionerChartData[k].data![j - 1] = temp;
                 }
                 var temp2 = this.petitionerChartLabels[j];
-                this.petitionerChartLabels[j] = this.petitionerChartLabels[j - 1];
+                this.petitionerChartLabels[j] = this.petitionerChartLabels[
+                  j - 1
+                ];
                 this.petitionerChartLabels[j - 1] = temp2;
                 var temp3;
                 temp3 = sums[j];
@@ -703,16 +773,23 @@ export class CasesComponent implements OnInit {
             }
           }
           for (var i = 0; i < this.petitionerChartData.length; i++) {
-            this.petitionerChartData[i].data = this.petitionerChartData[i]?.data?.slice(0, this.petitionerChartLimit);
+            this.petitionerChartData[i].data = this.petitionerChartData[
+              i
+            ]?.data?.slice(0, this.petitionerChartLimit);
           }
-          this.petitionerChartLabels = this.petitionerChartLabels.slice(0, this.petitionerChartLimit);
-          // console.log(this.petitionerChartData); 
+          this.petitionerChartLabels = this.petitionerChartLabels.slice(
+            0,
+            this.petitionerChartLimit
+          );
+          // console.log(this.petitionerChartData);
           // console.log(this.petitionerChartLabels);
         } catch (error) {
           console.log(error);
         }
       });
+  }
 
+  getRespondentChart() {
     this.caseService
       .getRespondentChart(
         this.query,
@@ -780,11 +857,15 @@ export class CasesComponent implements OnInit {
               if (sums[j] > sums[j - 1]) {
                 for (var k = 0; k < this.respondentDatalabels.length; k++) {
                   var temp = this.respondentChartData[k].data![j];
-                  this.respondentChartData[k].data![j] = this.respondentChartData[k].data![j - 1];
+                  this.respondentChartData[k].data![
+                    j
+                  ] = this.respondentChartData[k].data![j - 1];
                   this.respondentChartData[k].data![j - 1] = temp;
                 }
                 var temp2 = this.respondentChartLabels[j];
-                this.respondentChartLabels[j] = this.respondentChartLabels[j - 1];
+                this.respondentChartLabels[j] = this.respondentChartLabels[
+                  j - 1
+                ];
                 this.respondentChartLabels[j - 1] = temp2;
                 var temp3;
                 temp3 = sums[j];
@@ -794,15 +875,21 @@ export class CasesComponent implements OnInit {
             }
           }
           for (var i = 0; i < this.respondentChartData.length; i++) {
-            this.respondentChartData[i].data = this.respondentChartData[i]?.data?.slice(0, this.respondentChartLimit);
+            this.respondentChartData[i].data = this.respondentChartData[
+              i
+            ]?.data?.slice(0, this.respondentChartLimit);
           }
-          this.respondentChartLabels = this.respondentChartLabels.slice(0, this.respondentChartLimit);
+          this.respondentChartLabels = this.respondentChartLabels.slice(
+            0,
+            this.respondentChartLimit
+          );
         } catch (error) {
           console.log(error);
         }
-
       });
+  }
 
+  getPtn_v_BenchChart() {
     this.caseService
       .getPtn_v_BenchChart(
         this.query,
@@ -832,19 +919,31 @@ export class CasesComponent implements OnInit {
             for (let j = 0; j < this.pvb_Counsel.length; j++) {
               var temp = 0;
               for (var k = 0; k < data.length; k++) {
-                if (data[k].x === this.pvb_Bench[i] && data[k].y === this.pvb_Counsel[j]) { temp = data[k].color;  break; }
+                if (
+                  data[k].x === this.pvb_Bench[i] &&
+                  data[k].y === this.pvb_Counsel[j]
+                ) {
+                  temp = data[k].color;
+                  break;
+                }
               }
-              this.pvb_data.push({ x: i, y: j, value: temp, id: 'p' + i + ':' + j })
+              this.pvb_data.push({
+                x: i,
+                y: j,
+                value: temp,
+                id: 'p' + i + ':' + j,
+              });
             }
           }
           // console.log(this.pvb_data);
           this.pvb_init();
-
         } catch (error) {
           console.log(error);
         }
-      })
+      });
+  }
 
+  getRsp_v_BenchChart() {
     this.caseService
       .getRsp_v_BenchChart(
         this.query,
@@ -875,9 +974,20 @@ export class CasesComponent implements OnInit {
             for (let j = 0; j < this.rvb_Counsel.length; j++) {
               var temp = 0;
               for (var k = 0; k < data.length; k++) {
-                if (data[k].x === this.rvb_Bench[i] && data[k].y === this.rvb_Counsel[j]) { temp = data[k].color; break; }
+                if (
+                  data[k].x === this.rvb_Bench[i] &&
+                  data[k].y === this.rvb_Counsel[j]
+                ) {
+                  temp = data[k].color;
+                  break;
+                }
               }
-              this.rvb_data.push({ x: i, y: j, value: temp, id: 'p' + i + ':' + j })
+              this.rvb_data.push({
+                x: i,
+                y: j,
+                value: temp,
+                id: 'p' + i + ':' + j,
+              });
             }
           }
           // console.log(this.rvb_data);
@@ -887,8 +997,10 @@ export class CasesComponent implements OnInit {
         } catch (error) {
           console.log(error);
         }
-      })
+      });
+  }
 
+  getCitedCases() {
     this.caseService
       .getCitedCases(
         this.query,
@@ -905,8 +1017,10 @@ export class CasesComponent implements OnInit {
           console.log(error);
         }
       });
+  }
 
-      this.caseService
+  getCitedActs() {
+    this.caseService
       .getCitedActs(
         this.query,
         this.court,
@@ -921,14 +1035,16 @@ export class CasesComponent implements OnInit {
           data.map((item: any) => {
             if (!this.CitedActCorrectedDataNames.includes(item.group))
               this.CitedActCorrectedDataNames.push(item.group);
-          })
-          this.CitedActCorrectedData=data;
-          console.log(this.CitedActCorrectedData);
+          });
+          this.CitedActCorrectedData = data;
+          // console.log(this.CitedActCorrectedData);
         } catch (error) {
           console.log(error);
         }
       });
+  }
 
+  getCitedLaws() {
     this.caseService
       .getCitedLaws(
         this.query,
@@ -945,12 +1061,12 @@ export class CasesComponent implements OnInit {
           data.map((item: any) => {
             if (!this.CitedActNames.includes(item.y))
               this.CitedActNames.push(item.y);
-          })
-          console.log(this.CitedActNames);
+          });
+          // console.log(this.CitedActNames);
           var sums: any = [];
           var sections: any = [];
           var section_occurrences: any = [];
-          this.CitedActNames=this.CitedActCorrectedDataNames;
+          this.CitedActNames = this.CitedActCorrectedDataNames;
           for (var i = 0; i < this.CitedActNames.length; i++) {
             sums[i] = 0;
             sections[i] = [];
@@ -962,11 +1078,19 @@ export class CasesComponent implements OnInit {
                 section_occurrences[i].push(data[j].x);
               }
             }
-            while(this.CitedActCorrectedData.length == 0){console.log("waiting");}
-            var temp = this.CitedActCorrectedData.find( (el: any) => el.group === this.CitedActNames[i]);
+            while (this.CitedActCorrectedData.length == 0) {
+              console.log('waiting');
+            }
+            var temp = this.CitedActCorrectedData.find(
+              (el: any) => el.group === this.CitedActNames[i]
+            );
             sums[i] = temp?.value;
             for (var k = sections[i].length; k > 0; k--) {
-              for (var l = sections[i].length; l > sections[i].length - k; l--) {
+              for (
+                var l = sections[i].length;
+                l > sections[i].length - k;
+                l--
+              ) {
                 if (section_occurrences[i][l] > section_occurrences[i][l - 1]) {
                   var temp4 = section_occurrences[i][l];
                   section_occurrences[i][l] = section_occurrences[i][l - 1];
@@ -980,28 +1104,31 @@ export class CasesComponent implements OnInit {
             sections[i] = sections[i].slice(0, 5);
             section_occurrences[i] = section_occurrences[i].slice(0, 5);
           }
-          console.log(sums);
+          // console.log(sums);
           // console.log(sums);
           // console.log(sections);
           // console.log(section_occurrences);
           for (var z = 0; z < this.CitedActNames.length; z++) {
-            this.CitedProvisions.push({ "act_name": this.CitedActNames[z], "act_sums": sums[z], "sections": sections[z], "section_sums": section_occurrences[z] })
+            this.CitedProvisions.push({
+              act_name: this.CitedActNames[z],
+              act_sums: sums[z],
+              sections: sections[z],
+              section_sums: section_occurrences[z],
+            });
           }
           // console.log(this.CitedProvisions);
         } catch (error) {
           console.log(error);
         }
       });
-      if(Boolean(this.view_search) === false) this.show_search();
-    this.createArray(this.results_count);
   }
-
 
   reset() {
     this.CitedActNames = [];
     this.CitedProvisions = [];
     this.searched = false;
     this.view_search = false;
+    this.sortBy = this.sort_options[0];
     this.query = '';
     this.bench = '';
     this.petitioner = '';
@@ -1045,6 +1172,4 @@ export class CasesComponent implements OnInit {
   createArray(count: number) {
     this.arrayOne = new Array<number>(count);
   }
-
-
 }

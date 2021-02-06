@@ -21,6 +21,7 @@
         "jsonwebtoken": "^8.5.0",
         "lodash": "^4.17.20",
         "mongoose": "^5.4.11",
+        "mongoose-aggregate-paginate-v2": "^1.0.42",
         "ng2-charts": "^2.4.2",
         "njwt": "^1.0.0"
     },
