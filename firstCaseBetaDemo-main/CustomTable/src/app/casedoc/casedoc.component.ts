@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import Case from '../models/case';
 import { CasedocService } from './casedoc.service';
@@ -9,7 +10,11 @@ import { CasedocService } from './casedoc.service';
   styleUrls: ['./casedoc.component.css'],
 })
 export class CasedocComponent implements OnInit {
-  constructor(private router: Router, private casedocService: CasedocService) {}
+  constructor(
+    private router: Router,
+    private casedocService: CasedocService,
+    private sanitizer: DomSanitizer
+  ) {}
   url: string = '';
   caseid: string = '';
   loading: boolean = false;
@@ -26,11 +31,14 @@ export class CasedocComponent implements OnInit {
     doc_author: '',
     bench: '',
     judgement_text: '',
+    judgement_html: '',
     title: '',
   };
   bench_arr: string[] = [];
   case_source_url = '';
   view_tab = 1;
+  file: any = '';
+  text: any = '';
 
   ngOnInit(): void {
     this.url = this.router.url;
@@ -65,18 +73,26 @@ export class CasedocComponent implements OnInit {
       this.bench_arr = this.case.bench.split(',');
       // console.log(this.bench_arr);
       this.case_source_url = this.case.url.split('/')[2];
+      this.file = this.sanitizer.bypassSecurityTrustHtml(
+        String(this.case.judgement_html)
+      );
+      // this.text = this.case.judgement_text.replace(
+      //   new RegExp('{^newline^}', 'g'),
+      //   '<br/>'
+      // );
+
       this.loading = false;
     });
   }
 
   tab1() {
     this.view_tab = 1;
-    // let element = document.getElementById('analytics_tab');
-    // element!.className = 'tab active';
-    // let element2 = document.getElementById('search_tab');
-    // element2!.className = 'tab';
-    // let element3 = document.getElementById('citation_tab');
-    // element3!.className = 'tab';
+    let element = document.getElementById('analytics_tab');
+    element!.className = 'tab active';
+    let element2 = document.getElementById('search_tab');
+    element2!.className = 'tab';
+    let element3 = document.getElementById('citation_tab');
+    element3!.className = 'tab';
   }
   tab2() {
     this.view_tab = 2;

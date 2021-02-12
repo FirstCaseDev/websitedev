@@ -10,79 +10,96 @@
         </div>
       </div>
     </div>
-    <div class="slides" *ngIf="!loading">
-      <div id="judgment-page" *ngIf="view_tab == 1">
-        <h2 style="text-align: center">{{ case.title }}</h2>
-        <br />
-        <p style="text-align: justify">{{ case.judgement_text }}</p>
+    <div
+      style="display: grid; grid-template-columns: 25% 50% 25%"
+      *ngIf="!loading"
+    >
+      <div class="left">
+        <h2 style="text-align: center">Left panel</h2>
       </div>
-      <div
-        id="advocates-page"
-        style="
-          display: grid;
-          grid-template-columns: 10% 80% 10%;
-          justify-content: space-evenly;
-        "
-        *ngIf="view_tab == 2"
-      >
-        <div></div>
-        <div>
-          <h2 style="text-align: center">About</h2>
+      <div class="slides">
+        <div id="judgment-page" *ngIf="view_tab == 1">
+          <h2 style="text-align: center">{{ case.title }}</h2>
           <br />
-          <div class="about">
-            <h4 class="about-property">Dated</h4>
-            <div class="tabs-item">
-              {{ case.date }}/{{ case.month }}/{{ case.year }}
-            </div>
-            <h4 class="about-property">Author</h4>
-            <div class="tabs-item">
-              {{ case.doc_author }}
-            </div>
-            <h4 class="about-property">Judgement</h4>
-            <div class="tabs-item">
-              {{ case.judgement }}
-            </div>
-            <h4 class="about-property">Petitioner</h4>
-            <div class="tabs-item">
-              {{ case.petitioner }}
-            </div>
-            <h4 class="about-property">Respondent</h4>
-            <div class="tabs-item">
-              {{ case.respondent }}
-            </div>
-            <h4 class="about-property">Court</h4>
-            <div class="tabs-item">
-              {{ case.source }}
-            </div>
-            <h4 class="about-property">Source</h4>
-            <div class="tabs-item">
-              <a
-                style="text-decoration: none; color: white"
-                href="{{ case.url }}"
-                >{{ case_source_url }}</a
-              >
-            </div>
-          </div>
+          <!-- <div style="white-space: pre-line">
+            {{ case.judgement_text }}
+          </div> -->
+          <!-- <p style="text-align: justify;">{{ case.judgement_text }}</p> -->
+          <div
+            [innerHTML]="case.judgement_text"
+            style="text-align: justify"
+          ></div>
         </div>
-        <div></div>
-      </div>
-      <div id="bench-page" *ngIf="view_tab == 3">
-        <h2 style="text-align: center">Bench</h2>
-        <br />
         <div
+          id="advocates-page"
           style="
-            margin: 0px 10vw;
-            display: flexbox;
-            justify-content: space-around;
+            display: grid;
+            grid-template-columns: 10% 80% 10%;
+            justify-content: space-evenly;
           "
+          *ngIf="view_tab == 2"
         >
-          <div class="tabs-item" *ngFor="let candidate of bench_arr">
-            {{ candidate }}
+          <div></div>
+          <div>
+            <h2 style="text-align: center">About</h2>
+            <br />
+            <div id="about">
+              <h4 class="about-property">Dated</h4>
+              <div class="tabs-item">
+                {{ case.date }}/{{ case.month }}/{{ case.year }}
+              </div>
+              <h4 class="about-property">Author</h4>
+              <div class="tabs-item">
+                {{ case.doc_author }}
+              </div>
+              <h4 class="about-property">Judgement</h4>
+              <div class="tabs-item">
+                {{ case.judgement }}
+              </div>
+              <h4 class="about-property">Petitioner</h4>
+              <div class="tabs-item">
+                {{ case.petitioner }}
+              </div>
+              <h4 class="about-property">Respondent</h4>
+              <div class="tabs-item">
+                {{ case.respondent }}
+              </div>
+              <h4 class="about-property">Court</h4>
+              <div class="tabs-item">
+                {{ case.source }}
+              </div>
+              <h4 class="about-property">Source</h4>
+              <div class="tabs-item">
+                <a
+                  style="text-decoration: none; color: white"
+                  href="{{ case.url }}"
+                  >{{ case_source_url }}</a
+                >
+              </div>
+            </div>
+          </div>
+          <div></div>
+        </div>
+        <div id="bench-page" *ngIf="view_tab == 3">
+          <h2 style="text-align: center">Bench</h2>
+          <br />
+          <div
+            style="
+              margin: 0px 10vw;
+              display: flexbox;
+              justify-content: space-around;
+            "
+          >
+            <div class="tabs-item" *ngFor="let candidate of bench_arr">
+              {{ candidate }}
+            </div>
           </div>
         </div>
+      </div>
+      <div class="right">
+        <h2 style="text-align: center">Right panel</h2>
       </div>
     </div>
-    <!-- <div class="right">Right panel</div> -->
   </div>
   <div *ngIf="loading" class="loading_animation" style="display: flex">
     <div class="loadingio-spinner-ripple-0klw6wjchhb">

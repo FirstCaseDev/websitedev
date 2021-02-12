@@ -12,4 +12,5 @@ export default class Case {
   bench!: String;
   judgement_text!: String;
   title!: String;
+  judgement_html!: String;
 }

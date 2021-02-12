@@ -1,13 +1,13 @@
-import { Component, Input, NgModule, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import Case from '../models/case';
 import { CaseService } from './case.service';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import * as Highcharts from 'highcharts';
-import { HighchartsChartModule } from 'highcharts-angular';
 import HC_heatmap from 'highcharts/modules/heatmap';
 import { Router } from '@angular/router';
+// import { Title } from '@angular/platform-browser';
 HC_heatmap(Highcharts);
 
 @Component({
@@ -20,10 +20,12 @@ export class CasesComponent implements OnInit {
     private caseService: CaseService,
     private fb: FormBuilder,
     private router: Router
-  ) {}
+  ) // private componentTitle: Title
+  {}
 
   ngOnInit() {
     // if (!localStorage.getItem('token_exp')) this.router.navigate(['/users'])
+    // this.componentTitle.setTitle('FirstCase | Search');
     this.pvb_init();
     this.rvb_init();
     this.courtlevel = this.courtdata[0];
@@ -373,8 +375,6 @@ export class CasesComponent implements OnInit {
     'partly allowed',
     'partly dismissed',
   ];
-  y_floor: Number = 1950;
-  y_ceil: Number = new Date().getFullYear();
   bench: string = '';
   petitioner: string = '';
   respondent: string = '';
@@ -563,6 +563,8 @@ export class CasesComponent implements OnInit {
     this.respondent = '';
     this.petitioner_counsel = '';
     this.respondent_counsel = '';
+    this.y_floor = 1900;
+    this.y_ceil = new Date().getFullYear();
   }
 
   search() {
@@ -1199,5 +1201,34 @@ export class CasesComponent implements OnInit {
 
   createArray(count: number) {
     this.arrayOne = new Array<number>(count);
+  }
+
+  y_floor: Number = 1900;
+  y_ceil: Number = new Date().getFullYear();
+  year_range_msg: string = '';
+  year_range_selected: boolean = false;
+
+  getSliderValue1(event: any) {
+    this.y_floor = event.target.value;
+    if (this.y_floor > this.y_ceil) {
+      this.year_range_msg = 'Select valid range';
+      this.y_floor = 1900;
+      this.y_ceil = new Date().getFullYear();
+    } else {
+      this.year_range_msg = String(this.y_floor) + ' to ' + String(this.y_ceil);
+    }
+    this.year_range_selected = true;
+  }
+
+  getSliderValue2(event: any) {
+    this.y_ceil = event.target.value;
+    if (this.y_floor > this.y_ceil) {
+      this.year_range_msg = 'Select valid range';
+      this.y_floor = 1900;
+      this.y_ceil = new Date().getFullYear();
+    } else {
+      this.year_range_msg = String(this.y_floor) + ' to ' + String(this.y_ceil);
+    }
+    this.year_range_selected = true;
   }
 }

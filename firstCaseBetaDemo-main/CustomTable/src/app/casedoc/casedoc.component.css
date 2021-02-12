@@ -29,16 +29,14 @@ body {
 
 .page {
   display: block;
-  margin: 0px 100px;
+  margin: 0px 0px;
   /* grid-template-columns: 15vw auto; */
 }
 .left {
   border-right: 1px solid #bbb;
-  text-align: center;
   min-height: 80vh;
 }
 .slides {
-  background-color: #597c943d;
   min-height: 80vh;
   padding: 10px 100px;
   overflow: auto;
@@ -64,11 +62,10 @@ body {
   background: transparent;
 }
 
-/* .right {
+.right {
   border-left: 1px solid #ddd;
-  text-align: center;
   min-height: 80vh;
-} */
+}
 
 .case-tabs {
   min-width: 100%;
