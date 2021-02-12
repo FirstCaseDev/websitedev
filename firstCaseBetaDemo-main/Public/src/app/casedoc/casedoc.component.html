@@ -11,7 +11,7 @@
       </div>
     </div>
     <div
-      style="display: grid; grid-template-columns: 25% 50% 25%"
+      style="display: grid; grid-template-columns: 20% 60% 20%"
       *ngIf="!loading"
     >
       <div class="left">
@@ -29,6 +29,11 @@
             [innerHTML]="case.judgement_text"
             style="text-align: justify"
           ></div>
+          <!-- <div>
+            <pre style="font-size: large">{{ first_para }}</pre>
+            <p style="text-align: justify" *ngFor="let item of judgement_text_paragraphs">{{ item }}
+            </p>
+          </div> -->
         </div>
         <div
           id="advocates-page"

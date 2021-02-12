@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import Case from '../models/case';
 import { CasedocService } from './casedoc.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-casedoc',
@@ -13,11 +14,13 @@ export class CasedocComponent implements OnInit {
   constructor(
     private router: Router,
     private casedocService: CasedocService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private componentTitle: Title
   ) {}
   url: string = '';
   caseid: string = '';
   loading: boolean = false;
+  judgement_text_paragraphs = [];
   case: Case = {
     _id: '',
     judgement: '',
@@ -39,6 +42,7 @@ export class CasedocComponent implements OnInit {
   view_tab = 1;
   file: any = '';
   text: any = '';
+  first_para = '';
 
   ngOnInit(): void {
     this.url = this.router.url;
@@ -71,7 +75,14 @@ export class CasedocComponent implements OnInit {
       // console.log(data);
       this.case = data.case;
       this.bench_arr = this.case.bench.split(',');
+      this.componentTitle.setTitle('FirstCase | ' + data.case.title);
+
       // console.log(this.bench_arr);
+
+      // Uncomment for processing paragraphs from judgement text
+      // this.judgement_text_paragraphs = data.case.judgement_text_paragraphs;
+      // this.first_para = this.judgement_text_paragraphs[0];
+      // delete this.judgement_text_paragraphs[0];
       this.case_source_url = this.case.url.split('/')[2];
       this.file = this.sanitizer.bypassSecurityTrustHtml(
         String(this.case.judgement_html)

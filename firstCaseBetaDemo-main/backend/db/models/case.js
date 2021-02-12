@@ -27,6 +27,12 @@ var CaseSchema = new Schema(
     judgement_text: {
       type: "string",
     },
+    // judgement_text_paragraphs: {
+    //   type: "array",
+    //   items: {
+    //     type: "string",
+    //   },
+    // },
     month: {
       type: "number",
     },

@@ -3,57 +3,120 @@
      -->
 
 <div class="page">
-    <div class="container-1">
-        <div class="left" *ngIf="false">
-            <div class="left-container">
-                <label for="username">Username</label>
-                <input class="form-control" type="text" name="username" id="username" required="required" placeholder="Username" [(ngModel)]="username" />
-                <label for="password">Password</label>
-                <input class="form-control" type="password" name="password" id="password" required="required" placeholder="Password" [(ngModel)]="password" />
-                <label for="last_name">Name</label>
-                <input class="form-control" type="text" name="name" id="name" required="required" placeholder="Name" [(ngModel)]="name" />
-                <label for="email">Email</label>
-                <input class="form-control" type="email" name="email" id="email" required="required" placeholder="Email" [(ngModel)]="email" />
-                <label for="email">Organisation</label>
-                <input class="form-control" type="text" name="organisation" id="organisation" placeholder="Organisation" [(ngModel)]="organisation" />
-                <label for="email">Position</label>
-                <input class="form-control" type="text" name="position" id="position" placeholder="Position" [(ngModel)]="position" />
-            </div>
-            <br />
-            <br />
-            <br />
-            <div class="grid-container">
-                <div class="grid-item">
-                    <button (click)="register()">Register</button>
-                </div>
-                <div class="grid-item">
-                    <button (click)="reset()">Reset</button>
-                </div>
-            </div>
+  <div class="container-1">
+    <div class="left" *ngIf="false">
+      <div class="left-container">
+        <label for="username">Username</label>
+        <input
+          class="form-control"
+          type="text"
+          name="username"
+          id="username"
+          required="required"
+          placeholder="Username"
+          [(ngModel)]="username"
+        />
+        <label for="password">Password</label>
+        <input
+          class="form-control"
+          type="password"
+          name="password"
+          id="password"
+          required="required"
+          placeholder="Password"
+          [(ngModel)]="password"
+        />
+        <label for="last_name">Name</label>
+        <input
+          class="form-control"
+          type="text"
+          name="name"
+          id="name"
+          required="required"
+          placeholder="Name"
+          [(ngModel)]="name"
+        />
+        <label for="email">Email</label>
+        <input
+          class="form-control"
+          type="email"
+          name="email"
+          id="email"
+          required="required"
+          placeholder="Email"
+          [(ngModel)]="email"
+        />
+        <label for="email">Organisation</label>
+        <input
+          class="form-control"
+          type="text"
+          name="organisation"
+          id="organisation"
+          placeholder="Organisation"
+          [(ngModel)]="organisation"
+        />
+        <label for="email">Position</label>
+        <input
+          class="form-control"
+          type="text"
+          name="position"
+          id="position"
+          placeholder="Position"
+          [(ngModel)]="position"
+        />
+      </div>
+      <br />
+      <br />
+      <br />
+      <div class="grid-container">
+        <div class="grid-item">
+          <button (click)="register()">Register</button>
         </div>
-        <div class="right">
-            <h2 style="margin: 20px">Already have an account? <br />Login here</h2>
-            <div class="right-container">
-                <div class="input-group">
-                    <label for="login_username">Username</label>
-                    <input class="form-control" type="text" name="login_username" id="login_username" required="required" placeholder="Username" [(ngModel)]="login_username" />
-                </div>
-                <div class="input-group">
-                    <label for="login_password">Password</label>
-                    <input class="form-control" type="password" name="login_password" id="login_password" required="required" placeholder="Password" [(ngModel)]="login_password" />
-                </div>
-            </div>
-            <div class="grid-container">
-                <div class="grid-item">
-                    <button (click)="login()">Login</button>
-                </div>
-                <div class="grid-item">
-                    <button (click)="reset()">Reset</button>
-                </div>
-            </div>
+        <div class="grid-item">
+          <button (click)="reset()">Reset</button>
         </div>
+      </div>
     </div>
-    <!-- <div class="container-2">
+    <div class="right">
+      <h2 style="margin: 20px">Already have an account? <br />Login here</h2>
+      <div class="right-container">
+        <div class="input-group">
+          <label for="login_username">Username</label>
+          <input
+            class="form-control"
+            type="text"
+            name="login_username"
+            id="login_username"
+            required="required"
+            placeholder="Username"
+            [(ngModel)]="login_username"
+          />
+        </div>
+        <div class="input-group">
+          <label for="login_password">Password</label>
+          <input
+            class="form-control"
+            type="password"
+            name="login_password"
+            id="login_password"
+            required="required"
+            placeholder="Password"
+            [(ngModel)]="login_password"
+          />
+        </div>
+      </div>
+      <div class="grid-container">
+        <div class="grid-item">
+          <button (click)="login()">Login</button>
+        </div>
+        <div class="grid-item">
+          <button (click)="reset()">Reset</button>
+        </div>
+      </div>
+      <h2 style="margin: 20px">Already have an account? Login here</h2>
+    </div>
+  </div>
+  <!-- <div class="container-2">
     <button (click)="usersList()">Show Users</button>
   </div>
   <div class="users-list" *ngFor="let user of users">
