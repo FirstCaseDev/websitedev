@@ -98,17 +98,81 @@ export class CasedocComponent implements OnInit {
 
   tab1() {
     this.view_tab = 1;
-    let element = document.getElementById('analytics_tab');
+    let element = document.getElementById('show_judgement');
     element!.className = 'tab active';
-    let element2 = document.getElementById('search_tab');
+    let element2 = document.getElementById('show_counsels');
     element2!.className = 'tab';
-    let element3 = document.getElementById('citation_tab');
+    let element3 = document.getElementById('show_case_citations');
+    element3!.className = 'tab';
+    let element4 = document.getElementById('show_act-law_citations');
+    element3!.className = 'tab';
+    let element5 = document.getElementById('show_bench');
     element3!.className = 'tab';
   }
   tab2() {
     this.view_tab = 2;
+    let element = document.getElementById('show_judgement');
+    element!.className = 'tab';
+    let element2 = document.getElementById('show_counsels');
+    element2!.className = 'tab active';
+    let element3 = document.getElementById('show_case_citations');
+    element3!.className = 'tab';
+    let element4 = document.getElementById('show_act-law_citations');
+    element3!.className = 'tab';
+    let element5 = document.getElementById('show_bench');
+    element3!.className = 'tab';
   }
   tab3() {
     this.view_tab = 3;
+    let element = document.getElementById('show_judgement');
+    element!.className = 'tab';
+    let element2 = document.getElementById('show_counsels');
+    element2!.className = 'tab';
+    let element3 = document.getElementById('show_case_citations');
+    element3!.className = 'tab active';
+    let element4 = document.getElementById('show_act-law_citations');
+    element4!.className = 'tab';
+    let element5 = document.getElementById('show_bench');
+    element5!.className = 'tab';
+  }
+  tab4() {
+    this.view_tab = 4;
+    let element = document.getElementById('show_judgement');
+    element!.className = 'tab';
+    let element2 = document.getElementById('show_counsels');
+    element2!.className = 'tab';
+    let element3 = document.getElementById('show_case_citations');
+    element3!.className = 'tab';
+    let element4 = document.getElementById('show_act-law_citations');
+    element4!.className = 'tab active';
+    let element5 = document.getElementById('show_bench');
+    element5!.className = 'tab';
+  }
+  tab5() {
+    this.view_tab = 5;
+    let element = document.getElementById('show_judgement');
+    element!.className = 'tab';
+    let element2 = document.getElementById('show_counsels');
+    element2!.className = 'tab';
+    let element3 = document.getElementById('show_case_citations');
+    element3!.className = 'tab';
+    let element4 = document.getElementById('show_act-law_citations');
+    element4!.className = 'tab';
+    let element5 = document.getElementById('show_bench');
+    element5!.className = 'tab active';
+  }
+
+  // sendToTop() {
+  //   document.getElementById('judgement-page')?.scrollIntoView();
+  // }
+
+  shareBtn() {
+    if (document.getElementById('shareBar') != null) {
+      let element = document.getElementById('shareBar');
+      element!.id = 'shareBar-is-shown';
+    } else {
+      let element = document.getElementById('shareBar-is-shown');
+      element!.id = 'shareBar';
+    }
   }
 }

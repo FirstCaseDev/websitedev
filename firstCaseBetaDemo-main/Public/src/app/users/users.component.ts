@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from './users.service';
 import User from '../models/user';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { AppComponent } from '../app.component';
+import { flatten } from '@angular/compiler';
 
 @Component({
   selector: 'app-users',
@@ -13,11 +15,14 @@ export class UsersComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private appComponent: AppComponent,
-    private router: Router
+    private router: Router,
+    private componentTitle: Title
   ) {}
   isLoggedIn: boolean = false;
+  loginClicked: boolean = false;
 
   ngOnInit(): void {
+    this.componentTitle.setTitle('FirstCase | Login');
     if (localStorage.getItem('token_exp')) {
       var exp = parseInt(localStorage.token_exp);
       var curr_time = new Date().getTime();
@@ -65,6 +70,8 @@ export class UsersComponent implements OnInit {
     this.name = '';
     this.username = '';
     this.password = '';
+    this.login_username = '';
+    this.login_password = '';
     this.email = '';
     this.organisation = '';
     this.position = '';
@@ -81,18 +88,21 @@ export class UsersComponent implements OnInit {
     this.loginData.password = this.login_password;
     this.usersService.loginUser(this.loginData).subscribe((data: any) => {
       if (data.success) {
-        this.reset();
-        var casedoc_url = localStorage.getItem('casedoc_url');
-        if (casedoc_url) {
-          this.router.navigate([casedoc_url]);
-        } else this.router.navigate(['/cases']); // navigate to other page
-        this.usersService.setTokenExp(data.exp);
         this.isLoggedIn = true;
+        this.loginClicked = true;
+        setTimeout(() => {
+          var casedoc_url = localStorage.getItem('casedoc_url');
+          if (casedoc_url) {
+            this.router.navigate([casedoc_url]);
+          } else this.router.navigate(['/cases']); // navigate to other page
+        }, 1500);
+        this.usersService.setTokenExp(data.exp);
         this.appComponent.isLoggedIn = true;
         console.log('User logged in');
       } else if (data.msg == 'Fields required') {
       } else {
         this.reset();
+        this.loginClicked = true;
       }
     });
   }

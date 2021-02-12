@@ -1,102 +1,164 @@
-<body>
+<body *ngIf="!loading">
   <div class="page">
     <div id="header">
       <h4 style="text-align: center; min-height: 30px">{{ case.title }}</h4>
-      <div class="case-tabs">
+      <!-- <div class="case-tabs">
         <div class="case-tabs-buttons" *ngIf="!loading">
           <button (click)="tab1()">Judgement</button>
           <button (click)="tab2()">About</button>
           <button (click)="tab3()">Bench</button>
         </div>
+      </div> -->
+      <div style="display: grid; grid-template-columns: 25% 50% 25%">
+        <div></div>
+        <div class="case-tabs">
+          <div class="case-tabs-buttons">
+            <button class="tab active" (click)="tab1()" id="show_judgement">
+              Judgement
+            </button>
+            <button class="tab" (click)="tab2()" id="show_counsels">
+              Counsels
+            </button>
+            <button class="tab" (click)="tab3()" id="show_case_citations">
+              Bench
+            </button>
+            <button class="tab" (click)="tab4()" id="show_act-law_citations">
+              Act/Law Citations
+            </button>
+            <button class="tab" (click)="tab5()" id="show_bench">
+              Case Citations
+            </button>
+          </div>
+        </div>
+        <div></div>
       </div>
     </div>
-    <div
-      style="display: grid; grid-template-columns: 20% 60% 20%"
-      *ngIf="!loading"
-    >
+    <div style="display: grid; grid-template-columns: 20% 60% 20%">
       <div class="left">
         <h2 style="text-align: center">Left panel</h2>
       </div>
-      <div class="slides">
-        <div id="judgment-page" *ngIf="view_tab == 1">
-          <h2 style="text-align: center">{{ case.title }}</h2>
-          <br />
-          <!-- <div style="white-space: pre-line">
+      <div>
+        <div id="slides" style="padding: 20px">
+          <div style="display: grid; grid-template-columns: 50% 50%">
+            <div>
+              <a href="{{ case.doc_author }}" target="_blank"
+                ><button (click)="tab5()">Download</button></a
+              >
+            </div>
+            <div style="text-align: right; display: flex">
+              <div id="shareBar" name="shareBar">
+                <div class="shareBar-item" (click)="tab5()">
+                  <div>Copy Link</div>
+                </div>
+                <div class="shareBar-item" (click)="tab5()">
+                  <div>Email</div>
+                </div>
+              </div>
+              <button (click)="shareBtn()">Share</button>
+            </div>
+          </div>
+          <div id="judgment-page" *ngIf="view_tab == 1">
+            <p class="case-title">{{ case.petitioner }}</p>
+            <p class="case-title">vs</p>
+            <p class="case-title">{{ case.respondent }}</p>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 50% 50%;
+                font-family: PopRegular;
+              "
+            >
+              <p
+                style="
+                  text-align: right;
+                  padding-right: 20px;
+                  border-right: 1px solid #111;
+                "
+              >
+                {{ case.source }}
+              </p>
+              <p style="border-left: 1px solid #111; padding-left: 20px">
+                {{ case.date }}/{{ case.month }}/{{ case.year }}
+              </p>
+            </div>
+            <br />
+            <!-- <div style="white-space: pre-line">
             {{ case.judgement_text }}
           </div> -->
-          <!-- <p style="text-align: justify;">{{ case.judgement_text }}</p> -->
-          <div
-            [innerHTML]="case.judgement_text"
-            style="text-align: justify"
-          ></div>
-          <!-- <div>
+            <!-- <p style="text-align: justify;">{{ case.judgement_text }}</p> -->
+            <div
+              [innerHTML]="case.judgement_text"
+              style="text-align: justify"
+            ></div>
+            <!-- <div>
             <pre style="font-size: large">{{ first_para }}</pre>
             <p style="text-align: justify" *ngFor="let item of judgement_text_paragraphs">{{ item }}
             </p>
           </div> -->
-        </div>
-        <div
-          id="advocates-page"
-          style="
-            display: grid;
-            grid-template-columns: 10% 80% 10%;
-            justify-content: space-evenly;
-          "
-          *ngIf="view_tab == 2"
-        >
-          <div></div>
-          <div>
-            <h2 style="text-align: center">About</h2>
-            <br />
-            <div id="about">
-              <h4 class="about-property">Dated</h4>
-              <div class="tabs-item">
-                {{ case.date }}/{{ case.month }}/{{ case.year }}
-              </div>
-              <h4 class="about-property">Author</h4>
-              <div class="tabs-item">
-                {{ case.doc_author }}
-              </div>
-              <h4 class="about-property">Judgement</h4>
-              <div class="tabs-item">
-                {{ case.judgement }}
-              </div>
-              <h4 class="about-property">Petitioner</h4>
-              <div class="tabs-item">
-                {{ case.petitioner }}
-              </div>
-              <h4 class="about-property">Respondent</h4>
-              <div class="tabs-item">
-                {{ case.respondent }}
-              </div>
-              <h4 class="about-property">Court</h4>
-              <div class="tabs-item">
-                {{ case.source }}
-              </div>
-              <h4 class="about-property">Source</h4>
-              <div class="tabs-item">
-                <a
-                  style="text-decoration: none; color: white"
-                  href="{{ case.url }}"
-                  >{{ case_source_url }}</a
-                >
+          </div>
+          <div
+            id="advocates-page"
+            style="
+              display: grid;
+              grid-template-columns: 10% 80% 10%;
+              justify-content: space-evenly;
+            "
+            *ngIf="view_tab == 2"
+          >
+            <div></div>
+            <div>
+              <h2 style="text-align: center">About</h2>
+              <br />
+              <div id="about">
+                <h4 class="about-property">Dated</h4>
+                <div class="tabs-item">
+                  {{ case.date }}/{{ case.month }}/{{ case.year }}
+                </div>
+                <h4 class="about-property">Author</h4>
+                <div class="tabs-item">
+                  {{ case.doc_author }}
+                </div>
+                <h4 class="about-property">Judgement</h4>
+                <div class="tabs-item">
+                  {{ case.judgement }}
+                </div>
+                <h4 class="about-property">Petitioner</h4>
+                <div class="tabs-item">
+                  {{ case.petitioner }}
+                </div>
+                <h4 class="about-property">Respondent</h4>
+                <div class="tabs-item">
+                  {{ case.respondent }}
+                </div>
+                <h4 class="about-property">Court</h4>
+                <div class="tabs-item">
+                  {{ case.source }}
+                </div>
+                <h4 class="about-property">Source</h4>
+                <div class="tabs-item">
+                  <a
+                    style="text-decoration: none; color: white"
+                    href="{{ case.url }}"
+                    >{{ case_source_url }}</a
+                  >
+                </div>
               </div>
             </div>
+            <div></div>
           </div>
-          <div></div>
-        </div>
-        <div id="bench-page" *ngIf="view_tab == 3">
-          <h2 style="text-align: center">Bench</h2>
-          <br />
-          <div
-            style="
-              margin: 0px 10vw;
-              display: flexbox;
-              justify-content: space-around;
-            "
-          >
-            <div class="tabs-item" *ngFor="let candidate of bench_arr">
-              {{ candidate }}
+          <div id="bench-page" *ngIf="view_tab == 3">
+            <h2 style="text-align: center">Bench</h2>
+            <br />
+            <div
+              style="
+                margin: 0px 10vw;
+                display: flexbox;
+                justify-content: space-around;
+              "
+            >
+              <div class="tabs-item" *ngFor="let candidate of bench_arr">
+                {{ candidate }}
+              </div>
             </div>
           </div>
         </div>
@@ -104,6 +166,23 @@
       <div class="right">
         <h2 style="text-align: center">Right panel</h2>
       </div>
+    </div>
+    <div
+      style="
+        margin: 100px 20px 20px 20px;
+        background-color: #19212f;
+        color: white;
+        padding: 50px;
+        border-radius: 30px;
+      "
+    >
+      <h2>Data Disclaimer</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
+        laudantium vel tempore dolore incidunt molestias nemo consequuntur
+        facilis ut, nostrum dolores at eveniet assumenda fuga. Repellat
+        blanditiis ducimus quisquam ab?
+      </p>
     </div>
   </div>
   <div *ngIf="loading" class="loading_animation" style="display: flex">
@@ -179,4 +258,7 @@
       /* generated by https://loading.io/ */
     </style>
   </div>
+  <!-- <button id="topLink" (click)="sendToTop()" style="text-align: center">
+    Back to Top
+  </button> -->
 </body>

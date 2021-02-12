@@ -113,15 +113,40 @@
           <button (click)="reset()">Reset</button>
         </div>
       </div>
-      <h2 style="margin: 20px">Already have an account? Login here</h2>
+      <div *ngIf="loginClicked">
+        <div
+          *ngIf="!isLoggedIn"
+          style="
+            background-color: rgb(221, 32, 32);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+          "
+        >
+          <h2 style="margin: 20px">Error occured :(</h2>
+        </div>
+        <div
+          *ngIf="isLoggedIn"
+          style="
+            background-color: rgb(25, 226, 68);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+          "
+        >
+          <h2 style="margin: 20px">Logged In successfully :)</h2>
+        </div>
+      </div>
     </div>
   </div>
-  <!-- <div class="container-2">
-    <button (click)="usersList()">Show Users</button>
+  <div *ngIf="false">
+    <div class="container-2">
+      <button (click)="usersList()">Show Users</button>
+    </div>
+    <div class="users-list" *ngFor="let user of users">
+      <p>Name: {{ user.name }}</p>
+      <p>Email: {{ user.email }}</p>
+      <p>Username: {{ user.username }}</p>
+    </div>
   </div>
-  <div class="users-list" *ngFor="let user of users">
-    <p>Name: {{ user.name }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>Username: {{ user.username }}</p>
-  </div> -->
 </div>

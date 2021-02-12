@@ -22,6 +22,7 @@
 
 body {
   font-family: PopLight;
+  scroll-behavior: smooth;
   padding-bottom: 0px;
   margin: 30px 10px 0px 10px;
   /* background-color: #ebf3f3; */
@@ -36,8 +37,8 @@ body {
   border-right: 1px solid #bbb;
   min-height: 80vh;
 }
-.slides {
-  min-height: 80vh;
+#slides {
+  height: 80vh;
   padding: 10px 100px;
   overflow: auto;
   margin-top: 20px;
@@ -48,17 +49,17 @@ body {
   padding: 20px;
 }
 
-.slides::-webkit-scrollbar {
+#slides::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
-.slides::-webkit-scrollbar-thumb {
+#slides::-webkit-scrollbar-thumb {
   background: #647b88;
   border-radius: 10px;
 }
 
-.slides::-webkit-scrollbar-track {
+#slides::-webkit-scrollbar-track {
   background: transparent;
 }
 
@@ -68,7 +69,9 @@ body {
 }
 
 .case-tabs {
-  min-width: 100%;
+  background: linear-gradient(to right, #19212f, #597c94, #19212f);
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .case-tabs-buttons {
@@ -97,6 +100,7 @@ button {
   border-radius: 2em;
   box-sizing: border-box;
   text-decoration: none;
+  outline: none;
   font-family: PopRegular;
   font-weight: 300;
   color: #080f19;
@@ -104,7 +108,8 @@ button {
   text-align: center;
   transition: all 0.2s;
 }
-button:hover {
+button:hover,
+.active {
   background-color: #080f19;
   color: #fff;
 }
@@ -125,4 +130,161 @@ button:hover {
   text-align: right;
   margin: 10px 50px;
   padding: 5px 0px;
+}
+/* 
+#copiedMsg {
+  position: fixed;
+  bottom: 20px;
+  float: right;
+  right: 20px;
+  background-color: #080f19;
+  border-radius: 20px;
+  color: white;
+  animation: fadeInAndOut ease;
+} */
+
+#shareBar {
+  border-radius: 2em;
+  background-color: #bbb;
+  display: flex;
+  font-size: small;
+  margin-left: 90px;
+  transition-timing-function: ease-in;
+  opacity: 0;
+  transition: 1s;
+  transform: translateX(50%);
+  animation: fadeOut ease 0.2s;
+  -webkit-animation: fadeOut ease 0.2s;
+  -moz-animation: fadeOut ease 0.2s;
+  -o-animation: fadeOut ease 0.2s;
+  -ms-animation: fadeOut ease 0.2s;
+}
+
+#shareBar-is-shown {
+  border-radius: 2em;
+  background-color: #bbb;
+  display: flex;
+  font-size: small;
+  margin-left: 90px;
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: translateX(0);
+  animation: fadeIn ease 1s;
+  -webkit-animation: fadeIn ease 1s;
+  -moz-animation: fadeIn ease 1s;
+  -o-animation: fadeIn ease 1s;
+  -ms-animation: fadeIn ease 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-ms-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.shareBar-item {
+  margin: 5px;
+  padding: 2px;
+  color: white;
+  text-align: center;
+  background-color: teal;
+  border-radius: 2em;
+  min-width: 100px;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+.shareBar-item:hover {
+  background-color: turquoise;
+  color: #080f19;
+}
+
+.case-title {
+  text-align: center;
+  font-size: xx-large;
+  font-family: PopRegular;
+  margin: 0;
 }
