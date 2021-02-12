@@ -7,7 +7,7 @@ import { Label } from 'ng2-charts';
 import * as Highcharts from 'highcharts';
 import HC_heatmap from 'highcharts/modules/heatmap';
 import { Router } from '@angular/router';
-// import { Title } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 HC_heatmap(Highcharts);
 
 @Component({
@@ -19,13 +19,13 @@ export class CasesComponent implements OnInit {
   constructor(
     private caseService: CaseService,
     private fb: FormBuilder,
-    private router: Router
-  ) // private componentTitle: Title
-  {}
+    private router: Router,
+    private componentTitle: Title
+  ) {}
 
   ngOnInit() {
     // if (!localStorage.getItem('token_exp')) this.router.navigate(['/users'])
-    // this.componentTitle.setTitle('FirstCase | Search');
+    this.componentTitle.setTitle('FirstCase | Search');
     this.pvb_init();
     this.rvb_init();
     this.courtlevel = this.courtdata[0];
