@@ -1,15 +1,15 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-var host = process.env.HOST || '0.0.0.0';
+var host = process.env.HOST || "0.0.0.0";
 var port = process.env.PORT || 3000;
 // var cors = require('cors');
 var router = express.Router();
-var appRoutes = require('./routes/api')(router);
+var appRoutes = require("./routes/api")(router);
 
 // Load in the mongoose models
-const { mongoose } = require('./db/mongoose');
-const bodyParser = require('body-parser');
-require('dotenv/config');
+const { mongoose } = require("./db/mongoose");
+const bodyParser = require("body-parser");
+require("dotenv/config");
 
 //Connect to mongoDB
 mongoose
@@ -18,12 +18,12 @@ mongoose
     useUnifiedTopology: true,
     useFindAndModify: false,
   })
-  .then(() => console.log('Database connected'))
+  .then(() => console.log("Database connected"))
   .catch((error) => console.log(error));
 
 app.use(express.json());
 // app.use(cors({origin: "*" }));
-app.use('/api', appRoutes);
+app.use("/api", appRoutes);
 
 /*  
 CORS -> Cross Origin Request Security.
@@ -99,4 +99,4 @@ localhost:4200 - frontend
 //     .catch((error) => console.log(error));
 // });
 
-app.listen(port, () => console.log('Server started on ' + port));
+app.listen(port, () => console.log("Server started on " + port));

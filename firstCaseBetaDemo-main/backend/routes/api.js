@@ -19,9 +19,9 @@ module.exports = (router) => {
     var sortBy = req.query.sortBy;
     var y_floor = req.query.y_floor;
     var y_ceil = req.query.y_ceil;
-    console.log("Sort by:" + req.query.sortBy);
-    console.log("y_floor: " + y_floor);
-    console.log("y_ceil: " + y_ceil);
+    // console.log("Sort by:" + req.query.sortBy);
+    // console.log("y_floor: " + y_floor);
+    // console.log("y_ceil: " + y_ceil);
     var sort_options = {
       // textScore: 1,
       score: {
