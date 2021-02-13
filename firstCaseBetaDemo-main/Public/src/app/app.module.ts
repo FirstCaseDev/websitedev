@@ -15,6 +15,7 @@ import User from './models/user';
 import { CasedocComponent } from './casedoc/casedoc.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MatSliderModule } from '@angular/material/slider';
     CasesComponent,
     UsersComponent,
     CasedocComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -1295,6 +1295,27 @@ module.exports = (router) => {
       });
   });
 
+  router.get("/users/:username", (req, res) => {
+    User.findOne({ username: req.params.username })
+      .then((user) => {
+        res.send(user);
+      })
+      .catch((error) => {
+        res.send(error);
+      });
+  });
+
+  router.get("/cases/:object_id", (req, res) => {
+    Case.findOne({ _id: mongoose.Types.ObjectId(req.params.object_id) })
+      .then((case_item) => {
+        res.json({
+          case: case_item,
+          msg: "Success",
+        });
+      })
+      .catch((error) => console.log(error));
+  });
+
   router.delete("/users", (req, res) => {
     User.deleteOne({
       username: req.body.username,
@@ -1378,7 +1399,7 @@ module.exports = (router) => {
                 };
                 var token = jwt.create(claims, process.env.SECRET);
                 var curr_time = new Date().getTime();
-                token.setExpiration(curr_time + 60 * 30 * 1000);
+                token.setExpiration(curr_time + 30 * 60 * 1000);
 
                 // token = jwt.sign({ username: user.username, email: user.email },
                 //     process.env.SECRET,
@@ -1388,6 +1409,7 @@ module.exports = (router) => {
                   success: true,
                   msg: "Successfully logged in",
                   exp: token.body.exp * 1000,
+                  username: user.username,
                 });
                 return;
               }

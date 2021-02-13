@@ -17,7 +17,6 @@ export class CasedocComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private componentTitle: Title
   ) {}
-  url: string = '';
   caseid: string = '';
   loading: boolean = false;
   judgement_text_paragraphs = [];
@@ -45,13 +44,12 @@ export class CasedocComponent implements OnInit {
   first_para = '';
 
   ngOnInit(): void {
-    this.url = this.router.url;
-    this.caseid = this.url.split('/')[2];
+    this.caseid = this.router.url.split('/')[2];
     // console.log('url: ' + this.url);
     // console.log('caseid: ' + this.caseid);
     this.loading = true;
     this.search(this.caseid);
-    localStorage.setItem('casedoc_url', this.url);
+    localStorage.setItem('request_url', this.router.url);
 
     if (localStorage.getItem('token_exp')) {
       var exp = parseInt(localStorage.token_exp);

@@ -90,10 +90,13 @@ export class UsersComponent implements OnInit {
       if (data.success) {
         this.isLoggedIn = true;
         this.loginClicked = true;
+        localStorage.setItem('firstcase_user_username', data.username);
+        console.log(localStorage.getItem('firstcase_user_username'));
         setTimeout(() => {
-          var casedoc_url = localStorage.getItem('casedoc_url');
-          if (casedoc_url) {
-            this.router.navigate([casedoc_url]);
+          var request_url = localStorage.getItem('request_url');
+          if (request_url) {
+            this.router.navigate([request_url]);
+            localStorage.removeItem('request_url');
           } else this.router.navigate(['/cases']); // navigate to other page
         }, 1500);
         this.usersService.setTokenExp(data.exp);
