@@ -1225,8 +1225,16 @@ module.exports = (router) => {
   router.get("/cases/:object_id", (req, res) => {
     Case.findOne({ _id: mongoose.Types.ObjectId(req.params.object_id) })
       .then((case_item) => {
+        var case_date = case_item.date;
+        var day = case_date.getUTCDay();
+        var month = case_date.getUTCMonth() + 1;
+        var year = case_date.getUTCFullYear();
+        date = case_item.date;
         res.json({
           case: case_item,
+          date: day,
+          month: month,
+          year: year,
           msg: "Success",
         });
       })

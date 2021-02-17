@@ -1,63 +1,96 @@
 <body *ngIf="!loading">
   <div class="page">
-    <div id="header">
-      <h4 style="text-align: center; min-height: 30px">{{ case.title }}</h4>
-      <!-- <div class="case-tabs">
-        <div class="case-tabs-buttons" *ngIf="!loading">
-          <button (click)="tab1()">Judgement</button>
-          <button (click)="tab2()">About</button>
-          <button (click)="tab3()">Bench</button>
+    <div style="display: grid; grid-template-columns: 20% 60% 20%">
+      <div></div>
+      <div>
+        <div class="search-bar">
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              name="text-1542372332072"
+              id="text-1542372332072"
+              required="required"
+              placeholder="Full Text Search"
+              [(ngModel)]="query"
+            />
+            <label for="text-1542372332072">Search In Page</label>
+            <!-- <div class="req-mark"></div> -->
+          </div>
+          <div class="searchbar-buttons">
+            <div class="searchbar-buttons-item">
+              <button (click)="find_in_page()">Search</button>
+            </div>
+            <div class="searchbar-buttons-item">
+              <button (click)="reset()">Reset</button>
+            </div>
+          </div>
+          <div
+            style="
+              min-height: 20px;
+              display: flex;
+              justify-content: space-around;
+            "
+            *ngIf="searched"
+          >
+            <div>Search Results: {{ results_count }}</div>
+            <div>
+              <a href="{{ marked_url }}"
+                ><button (click)="goto_previous()">Previous</button></a
+              >
+              <a href="{{ marked_url }}"
+                ><button (click)="goto_next()">Next</button></a
+              >
+            </div>
+          </div>
         </div>
-      </div> -->
-      <div style="display: grid; grid-template-columns: 25% 50% 25%">
-        <div></div>
-        <div class="case-tabs">
-          <div class="case-tabs-buttons">
+        <div
+          style="
+            position: relative;
+            display: grid;
+            grid-template-columns: 60% 40%;
+          "
+        >
+          <div style="display: flex">
             <button class="tab active" (click)="tab1()" id="show_judgement">
               Judgement
             </button>
             <button class="tab" (click)="tab2()" id="show_counsels">
-              Counsels
+              Bench & Counsels
             </button>
-            <button class="tab" (click)="tab3()" id="show_case_citations">
-              Bench
-            </button>
-            <button class="tab" (click)="tab4()" id="show_act-law_citations">
+            <button class="tab" (click)="tab3()" id="show_act-law_citations">
               Act/Law Citations
             </button>
-            <button class="tab" (click)="tab5()" id="show_bench">
+            <button class="tab" (click)="tab4()" id="show_bench">
               Case Citations
             </button>
           </div>
-        </div>
-        <div></div>
-      </div>
-    </div>
-    <div style="display: grid; grid-template-columns: 20% 60% 20%">
-      <div class="left">
-        <h2 style="text-align: center">Left panel</h2>
-      </div>
-      <div>
-        <div id="slides" style="padding: 20px">
-          <div style="display: grid; grid-template-columns: 50% 50%">
+          <div style="display: flex; justify-content: space-around">
             <div>
-              <a href="{{ case.doc_author }}" target="_blank"
-                ><button (click)="tab5()">Download</button></a
+              <a href="{{ case.url }}" target="_blank"
+                ><button>Download From Source</button></a
               >
             </div>
-            <div style="text-align: right; display: flex">
-              <div id="shareBar" name="shareBar">
-                <div class="shareBar-item" (click)="tab5()">
-                  <div>Copy Link</div>
-                </div>
-                <div class="shareBar-item" (click)="tab5()">
-                  <div>Email</div>
-                </div>
-              </div>
-              <button (click)="shareBtn()">Share</button>
+            <div>
+              <button id="copy-to-clipboard" (click)="copy_link()">
+                {{ copy_btn_text }}
+              </button>
+            </div>
+            <div>
+              <button (click)="email()">Email</button>
             </div>
           </div>
+        </div>
+      </div>
+      <div></div>
+    </div>
+    <div style="display: grid; grid-template-columns: 20% 60% 20%">
+      <!-- <div style="margin: 0 5em"> -->
+      <div></div>
+      <div>
+        <div id="slides" style="padding: 20px; margin-top: 0 !important">
           <div id="judgment-page" *ngIf="view_tab == 1">
+            <br />
             <p class="case-title">{{ case.petitioner }}</p>
             <p class="case-title">vs</p>
             <p class="case-title">{{ case.respondent }}</p>
@@ -68,33 +101,35 @@
                 font-family: PopRegular;
               "
             >
-              <p
-                style="
-                  text-align: right;
-                  padding-right: 20px;
-                  border-right: 1px solid #111;
-                "
-              >
-                {{ case.source }}
+              <p class="judgement-details">Dated</p>
+              <p class="judgement-details-value">
+                {{ case_date }}/{{ case_month }}/{{ case_year }}
               </p>
-              <p style="border-left: 1px solid #111; padding-left: 20px">
-                {{ case.date }}/{{ case.month }}/{{ case.year }}
-              </p>
+              <p class="judgement-details">Source</p>
+              <p class="judgement-details-value">{{ case.source }}</p>
+              <p class="judgement-details">Author</p>
+              <p class="judgement-details-value">{{ case.doc_author }}</p>
+              <p class="judgement-details">Judgement</p>
+              <p class="judgement-details-value">{{ case.judgement }}</p>
             </div>
             <br />
             <!-- <div style="white-space: pre-line">
             {{ case.judgement_text }}
           </div> -->
             <!-- <p style="text-align: justify;">{{ case.judgement_text }}</p> -->
-            <div
+            <!-- <div
               [innerHTML]="case.judgement_text"
               style="text-align: justify"
-            ></div>
-            <!-- <div>
-            <pre style="font-size: large">{{ first_para }}</pre>
-            <p style="text-align: justify" *ngFor="let item of judgement_text_paragraphs">{{ item }}
-            </p>
-          </div> -->
+            ></div> -->
+            <div>
+              <pre style="font-size: large">{{ first_para }}</pre>
+              <div
+                style="text-align: justify"
+                *ngFor="let item of judgement_text_paragraphs"
+              >
+                <div [innerHTML]="item | highlight: query"></div>
+              </div>
+            </div>
           </div>
           <div
             id="advocates-page"
@@ -110,14 +145,6 @@
               <h2 style="text-align: center">About</h2>
               <br />
               <div id="about">
-                <h4 class="about-property">Dated</h4>
-                <div class="tabs-item">
-                  {{ case.date }}/{{ case.month }}/{{ case.year }}
-                </div>
-                <h4 class="about-property">Author</h4>
-                <div class="tabs-item">
-                  {{ case.doc_author }}
-                </div>
                 <h4 class="about-property">Judgement</h4>
                 <div class="tabs-item">
                   {{ case.judgement }}
@@ -163,9 +190,10 @@
           </div>
         </div>
       </div>
-      <div class="right">
+      <div></div>
+      <!-- <div class="right">
         <h2 style="text-align: center">Right panel</h2>
-      </div>
+      </div> -->
     </div>
     <div
       style="

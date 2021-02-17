@@ -16,7 +16,7 @@ var CaseSchema = new Schema(
       },
     },
     date: {
-      type: "number",
+      type: Date,
     },
     doc_author: {
       type: "string",

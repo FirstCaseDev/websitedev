@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { FilterPipe } from './home/filter.pipe';
+import { HighlightPipe } from './casedoc/highlight.pipe';
 import { CasesComponent } from './cases/cases.component';
 import { ChartsModule } from 'ng2-charts';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -22,6 +23,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     AppComponent,
     HomeComponent,
     FilterPipe,
+    HighlightPipe,
     CasesComponent,
     UsersComponent,
     CasedocComponent,
