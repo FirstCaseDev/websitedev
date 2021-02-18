@@ -52,14 +52,14 @@ export class CasedocComponent implements OnInit {
   // page_url = 'https://firstcase.io';
   page_url = 'http://localhost:4200';
   url = this.router.url;
-  highlighted_URLs: any[] = [];
+  // highlighted_URLs: any[] = [];
   marked_url = '';
 
   ngOnInit(): void {
-    this.caseid = this.url.split('/')[2].split('#marked')[0];
-    if (this.url.split('#marked').length > 1) {
-      this.router.navigate(['/casedoc/' + this.caseid]);
-    }
+    this.caseid = this.url.split('/')[2];
+    // if (this.url.split('#marked').length > 1) {
+    //   this.router.navigate(['/casedoc/' + this.caseid]);
+    // }
     // console.log('url: ' + this.url);
     // console.log('caseid: ' + this.caseid);
     this.loading = true;
@@ -230,38 +230,58 @@ export class CasedocComponent implements OnInit {
             ).length;
         }
       }
-      console.log(this.results_count);
     }
-    this.add_id();
+    setTimeout(() => {
+      this.add_id();
+    }, 1000);
   }
 
   reset() {
     this.query = '';
     this.searched = false;
     this.marked_url_idx = 0;
-    this.highlighted_URLs = [];
+    // this.highlighted_URLs = [];
     this.results_count = 0;
   }
 
   marked_url_idx = 0;
+  no_of_marked_elems = 0;
 
   add_id() {
     var elem = document.getElementsByClassName('highlighted');
+    var count = 0;
     for (var i = 0; i < elem.length; i++) {
       elem[i].setAttribute('id', 'marked' + String(i));
-      this.highlighted_URLs[i] = this.url + '#marked' + String(i);
+      count = count + 1;
+      console.log('marked');
+      // this.highlighted_URLs[i] = this.url + '#marked' + String(i);
     }
     this.marked_url_idx = 0;
-    this.marked_url = this.highlighted_URLs[this.marked_url_idx];
+    // this.marked_url = this.highlighted_URLs[this.marked_url_idx];
+    this.no_of_marked_elems = count;
   }
 
   goto_previous() {
     if (this.marked_url_idx != 0) this.marked_url_idx = this.marked_url_idx - 1;
-    this.marked_url = this.highlighted_URLs[this.marked_url_idx];
+    if (this.marked_url_idx == 0) {
+      document.getElementById('judgment-page')?.scrollIntoView();
+      setTimeout(() => {
+        alert('Reached top of the page!');
+      }, 1000);
+    } else {
+      document
+        .getElementById('marked' + String(this.marked_url_idx))
+        ?.scrollIntoView();
+    }
+    document.getElementById('search-bar')?.scrollIntoView();
   }
   goto_next() {
-    if (this.marked_url_idx != this.highlighted_URLs.length - 1)
+    if (this.marked_url_idx != this.no_of_marked_elems - 1) {
       this.marked_url_idx = this.marked_url_idx + 1;
-    this.marked_url = this.highlighted_URLs[this.marked_url_idx];
+    }
+    document
+      .getElementById('marked' + String(this.marked_url_idx))
+      ?.scrollIntoView();
+    document.getElementById('search-bar')?.scrollIntoView();
   }
 }

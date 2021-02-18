@@ -3,7 +3,7 @@
     <div style="display: grid; grid-template-columns: 20% 60% 20%">
       <div></div>
       <div>
-        <div class="search-bar">
+        <div id="search-bar" class="search-bar">
           <div class="input-group">
             <input
               class="form-control"
@@ -35,12 +35,8 @@
           >
             <div>Search Results: {{ results_count }}</div>
             <div>
-              <a href="{{ marked_url }}"
-                ><button (click)="goto_previous()">Previous</button></a
-              >
-              <a href="{{ marked_url }}"
-                ><button (click)="goto_next()">Next</button></a
-              >
+              <button (click)="goto_previous()">Previous</button>
+              <button (click)="goto_next()">Next</button>
             </div>
           </div>
         </div>
@@ -127,7 +123,14 @@
                 style="text-align: justify"
                 *ngFor="let item of judgement_text_paragraphs"
               >
-                <div [innerHTML]="item | highlight: query"></div>
+                <p *ngIf="!searched" style="text-align: justify">
+                  {{ item }}
+                </p>
+
+                <div
+                  *ngIf="searched"
+                  [innerHTML]="item | highlight: query"
+                ></div>
               </div>
             </div>
           </div>
@@ -142,32 +145,32 @@
           >
             <div></div>
             <div>
-              <h2 style="text-align: center">About</h2>
+              <h2 style="text-align: center">Bench</h2>
               <br />
-              <div id="about">
-                <h4 class="about-property">Judgement</h4>
-                <div class="tabs-item">
-                  {{ case.judgement }}
+              <div id="bench">
+                <div
+                  style="
+                    margin: 0px 10vw;
+                    display: flexbox;
+                    justify-content: space-around;
+                  "
+                >
+                  <div class="tabs-item" *ngFor="let candidate of bench_arr">
+                    {{ candidate }}
+                  </div>
                 </div>
-                <h4 class="about-property">Petitioner</h4>
-                <div class="tabs-item">
-                  {{ case.petitioner }}
-                </div>
-                <h4 class="about-property">Respondent</h4>
-                <div class="tabs-item">
-                  {{ case.respondent }}
-                </div>
-                <h4 class="about-property">Court</h4>
-                <div class="tabs-item">
-                  {{ case.source }}
-                </div>
-                <h4 class="about-property">Source</h4>
-                <div class="tabs-item">
-                  <a
-                    style="text-decoration: none; color: white"
-                    href="{{ case.url }}"
-                    >{{ case_source_url }}</a
-                  >
+              </div>
+              <div id="counsels">
+                <div
+                  style="
+                    margin: 0px 10vw;
+                    display: flexbox;
+                    justify-content: space-around;
+                  "
+                >
+                  <div class="tabs-item" *ngFor="let candidate of bench_arr">
+                    {{ candidate }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -175,18 +178,6 @@
           </div>
           <div id="bench-page" *ngIf="view_tab == 3">
             <h2 style="text-align: center">Bench</h2>
-            <br />
-            <div
-              style="
-                margin: 0px 10vw;
-                display: flexbox;
-                justify-content: space-around;
-              "
-            >
-              <div class="tabs-item" *ngFor="let candidate of bench_arr">
-                {{ candidate }}
-              </div>
-            </div>
           </div>
         </div>
       </div>
