@@ -266,7 +266,7 @@ export class CasedocComponent implements OnInit {
     if (this.marked_url_idx == 0) {
       document.getElementById('judgment-page')?.scrollIntoView();
       setTimeout(() => {
-        alert('Reached top of the page!');
+        alert('Reached top of the document!');
       }, 1000);
     } else {
       document
@@ -279,9 +279,16 @@ export class CasedocComponent implements OnInit {
     if (this.marked_url_idx != this.no_of_marked_elems - 1) {
       this.marked_url_idx = this.marked_url_idx + 1;
     }
-    document
-      .getElementById('marked' + String(this.marked_url_idx))
-      ?.scrollIntoView();
+    if (this.marked_url_idx == this.no_of_marked_elems - 1) {
+      document.getElementById('page-end')?.scrollIntoView();
+      setTimeout(() => {
+        alert('Reached end of the document!');
+      }, 1000);
+    } else {
+      document
+        .getElementById('marked' + String(this.marked_url_idx))
+        ?.scrollIntoView();
+    }
     document.getElementById('search-bar')?.scrollIntoView();
   }
 }
