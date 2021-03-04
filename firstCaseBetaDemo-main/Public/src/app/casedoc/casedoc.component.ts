@@ -54,8 +54,11 @@ export class CasedocComponent implements OnInit {
   url = this.router.url;
   // highlighted_URLs: any[] = [];
   marked_url = '';
+  small_screen_device = false;
 
   ngOnInit(): void {
+    if (localStorage.screen == 'small') this.small_screen_device = true;
+    else this.small_screen_device = false;
     this.caseid = this.url.split('/')[2];
     // if (this.url.split('#marked').length > 1) {
     //   this.router.navigate(['/casedoc/' + this.caseid]);
@@ -75,7 +78,7 @@ export class CasedocComponent implements OnInit {
         this.router.navigate(['/users']); // navigate to login page
       } else {
         console.log('Login check: user already logged in');
-        localStorage.removeItem('casedoc_url');
+        localStorage.removeItem('request_url');
       }
     } else {
       console.log('User not logged in, Login required');

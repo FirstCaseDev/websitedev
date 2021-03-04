@@ -1,4 +1,4 @@
-<body *ngIf="!loading">
+<div *ngIf="!loading && !small_screen_device">
   <div class="page">
     <div style="display: grid; grid-template-columns: 20% 60% 20%">
       <div></div>
@@ -281,4 +281,120 @@
   <!-- <button id="topLink" (click)="sendToTop()" style="text-align: center">
     Back to Top
   </button> -->
-</body>
+</div>
+
+<!-- ==================================================Mobile Site================================================== -->
+
+<div *ngIf="small_screen_device">
+  <div>
+    <div style="display: grid; grid-template-columns: 33% 33% 33%">
+      <button (click)="find_in_page()">Find</button>
+      <button id="copy-to-clipboard" (click)="copy_link()">
+        {{ copy_btn_text }}
+      </button>
+      <a
+        href="{{ case.url }}"
+        target="_blank"
+        style="text-decoration: none; color: #000"
+      >
+        <button>Download</button>
+      </a>
+    </div>
+    <div>
+      <div id="slides" style="padding: 20px; margin-top: 0 !important">
+        <div id="judgment-page" *ngIf="view_tab == 1">
+          <br />
+          <p class="case-title">{{ case.petitioner }}</p>
+          <p class="case-title">vs</p>
+          <p class="case-title">{{ case.respondent }}</p>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 50% 50%;
+              font-family: PopRegular;
+            "
+          >
+            <p class="judgement-details">Dated</p>
+            <p class="judgement-details-value">
+              {{ case_date }}/{{ case_month }}/{{ case_year }}
+            </p>
+            <p class="judgement-details">Source</p>
+            <p class="judgement-details-value">{{ case.source }}</p>
+            <p class="judgement-details">Author</p>
+            <p class="judgement-details-value">{{ case.doc_author }}</p>
+            <p class="judgement-details">Judgement</p>
+            <p class="judgement-details-value">{{ case.judgement }}</p>
+          </div>
+          <br />
+          <!-- <div style="white-space: pre-line">
+        {{ case.judgement_text }}
+      </div> -->
+          <!-- <p style="text-align: justify;">{{ case.judgement_text }}</p> -->
+          <!-- <div
+          [innerHTML]="case.judgement_text"
+          style="text-align: justify"
+        ></div> -->
+          <div>
+            <pre style="font-size: large">{{ first_para }}</pre>
+            <div
+              style="text-align: justify"
+              *ngFor="let item of judgement_text_paragraphs"
+            >
+              <p *ngIf="!searched" style="text-align: justify">
+                {{ item }}
+              </p>
+
+              <div *ngIf="searched" [innerHTML]="item | highlight: query"></div>
+            </div>
+          </div>
+          <div id="page-end"></div>
+        </div>
+        <div
+          id="advocates-page"
+          style="
+            display: grid;
+            grid-template-columns: 10% 80% 10%;
+            justify-content: space-evenly;
+          "
+          *ngIf="view_tab == 2"
+        >
+          <div></div>
+          <div>
+            <h2 style="text-align: center">Bench</h2>
+            <br />
+            <div id="bench">
+              <div
+                style="
+                  margin: 0px 10vw;
+                  display: flexbox;
+                  justify-content: space-around;
+                "
+              >
+                <div class="tabs-item" *ngFor="let candidate of bench_arr">
+                  {{ candidate }}
+                </div>
+              </div>
+            </div>
+            <div id="counsels">
+              <div
+                style="
+                  margin: 0px 10vw;
+                  display: flexbox;
+                  justify-content: space-around;
+                "
+              >
+                <div class="tabs-item" *ngFor="let candidate of bench_arr">
+                  {{ candidate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div></div>
+        </div>
+        <div id="bench-page" *ngIf="view_tab == 3">
+          <h2 style="text-align: center">Bench</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

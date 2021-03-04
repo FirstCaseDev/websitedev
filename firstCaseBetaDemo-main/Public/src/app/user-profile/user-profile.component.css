@@ -25,16 +25,39 @@
   display: grid;
   grid-template-columns: 30% 70%;
   font-family: PopLight;
+  margin: 50px 100px;
 }
 
 #left-col {
-  padding: 20px;
+  padding: 5px;
   min-height: 80vh;
-  border-right: 1px solid #222;
 }
 
 #right-col {
-  padding: 20px;
+  padding: 0 50px;
   min-height: 80vh;
-  border-left: 1px solid #222;
+}
+
+.menu-tab {
+  padding: 1px 30px;
+  margin: 10px 0px;
+  text-align: right;
+  cursor: pointer;
+  border-right: 6px solid rgb(255, 255, 255);
+}
+
+.active {
+  border-right: 6px solid #7397a5;
+}
+
+#profile-pic {
+  width: 96px;
+  height: 96px;
+}
+
+.form-input-1 input {
+  outline: none;
+  border: none;
+  padding: 15px;
+  border-bottom: 1px solid #222 !important;
 }

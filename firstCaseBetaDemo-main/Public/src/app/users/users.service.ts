@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { WebService } from '../web.service';
 import User from '../models/user';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private webService: WebService, private user: User) {}
+  constructor(private webService: WebService) {}
 
   getUsers() {
     return this.webService.get('users');
@@ -24,5 +23,4 @@ export class UsersService {
   setTokenExp(exp: any) {
     localStorage.setItem('token_exp', exp);
   }
-
 }

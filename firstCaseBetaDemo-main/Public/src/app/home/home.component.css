@@ -1,19 +1,7 @@
-.home-page {
-    position: fixed;
-    height: 100%;
-    min-width: 100%;
-    background-image: url("https://canada-insights.bakermckenzie.com/wp-content/uploads/sites/31/2019/02/3d-ai-artificial-intelligence-1166602-1.jpg");
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-.logo {
-    width: 540px;
-    height: auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 7.75%;
+#page {
+  background: url("../../assets/img/app-background.jpg") no-repeat center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  color: white;
 }

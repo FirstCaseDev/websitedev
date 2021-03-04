@@ -1,8 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import List from '../models/case';
-import { HomeService } from '../home/home.service';
-import { Router } from '@angular/router';
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,12 +6,7 @@ import { from } from 'rxjs';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  rows: List[] = [];
-  headers = ['idx', 'name', 'age', 'gender', 'country'];
-
-  constructor(private homeService: HomeService) {
-    // this.loadScripts();
-  }
+  constructor() {}
 
   ngOnInit(): void {
     document.getElementById('redirect')?.click();

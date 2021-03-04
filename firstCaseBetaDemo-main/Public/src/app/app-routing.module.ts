@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 import { CasedocComponent } from './casedoc/casedoc.component';
 import { CasesComponent } from './cases/cases.component';
+import { AboutComponent } from './about/about.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
   { path: 'cases', component: CasesComponent },
+  { path: 'about', component: AboutComponent },
   { path: 'users', component: UsersComponent },
   { path: 'casedoc/:caseid', component: CasedocComponent },
   { path: 'my', component: UserProfileComponent },

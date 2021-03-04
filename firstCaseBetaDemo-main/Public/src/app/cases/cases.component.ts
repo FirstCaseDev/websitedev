@@ -23,7 +23,11 @@ export class CasesComponent implements OnInit {
     private componentTitle: Title
   ) {}
 
+  small_screen_device = false;
+
   ngOnInit() {
+    if (localStorage.screen == 'small') this.small_screen_device = true;
+    else this.small_screen_device = false;
     // if (!localStorage.getItem('token_exp')) this.router.navigate(['/users'])
     this.componentTitle.setTitle('FirstCase | Search');
     this.pvb_init();
@@ -352,8 +356,10 @@ export class CasesComponent implements OnInit {
   searched: boolean = false;
   view_search: boolean = false;
   view_analytics: boolean = false;
+  view_analytics_mobile: boolean = false;
   view_citations: boolean = false;
   view_filters: boolean = true;
+  view_filters_mobile: boolean = false;
   judgement_options: any = [];
   selectedJudgements: any = [];
   dropdownSettings: any = {};
@@ -491,6 +497,10 @@ export class CasesComponent implements OnInit {
     this.search();
   }
 
+  toggle_analytics_mobile() {
+    this.view_analytics_mobile = !this.view_analytics_mobile;
+  }
+
   show_analytics() {
     this.loading = true;
     if (this.charts_unloaded) {
@@ -552,6 +562,7 @@ export class CasesComponent implements OnInit {
 
   toggle_filters() {
     this.view_filters = !this.view_filters;
+    this.view_filters_mobile = !this.view_filters_mobile;
   }
 
   reset_filters() {

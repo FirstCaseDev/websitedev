@@ -14,6 +14,8 @@ export class UserProfileComponent implements OnInit {
     private router: Router
   ) {}
 
+  rt_col_slide = 0;
+
   ngOnInit(): void {
     localStorage.setItem('request_url', this.router.url);
 
@@ -52,6 +54,42 @@ export class UserProfileComponent implements OnInit {
         .subscribe((data: any) => {
           this.user = data;
         });
+    }
+  }
+
+  view_userInfo() {
+    this.rt_col_slide = 0;
+    let elem = document.getElementById('tab-user-info');
+    elem!.className = 'menu-tab active';
+    elem = document.getElementById('tab-watchlist');
+    elem!.className = 'menu-tab';
+    elem = document.getElementById('tab-settings');
+    elem!.className = 'menu-tab';
+  }
+  view_watchlist() {
+    this.rt_col_slide = 1;
+    let elem = document.getElementById('tab-user-info');
+    elem!.className = 'menu-tab';
+    elem = document.getElementById('tab-watchlist');
+    elem!.className = 'menu-tab active';
+    elem = document.getElementById('tab-settings');
+    elem!.className = 'menu-tab';
+  }
+  view_settings() {
+    this.rt_col_slide = 2;
+    let elem = document.getElementById('tab-user-info');
+    elem!.className = 'menu-tab';
+    elem = document.getElementById('tab-watchlist');
+    elem!.className = 'menu-tab';
+    elem = document.getElementById('tab-settings');
+    elem!.className = 'menu-tab active';
+  }
+
+  conf_pass: any = '';
+
+  send_security_code() {
+    // First compare password and confirm password text
+    if (this.user.password == this.conf_pass) {
     }
   }
 }

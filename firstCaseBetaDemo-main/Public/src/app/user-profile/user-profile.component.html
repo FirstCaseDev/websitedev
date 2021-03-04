@@ -1,16 +1,102 @@
 <body>
   <br />
   <div>
-    <div id="header">
-      <span> Hi {{ user.name }}</span>
-    </div>
+    <div id="header"></div>
   </div>
   <div class="table">
     <div id="left-col">
-      <h1>Left col</h1>
+      <h2 style="text-align: right; margin-right: 20px">User Profile</h2>
+      <br />
+      <br />
+      <div>
+        <div
+          class="menu-tab active"
+          id="tab-user-info"
+          (click)="view_userInfo()"
+        >
+          <h3>User Info</h3>
+        </div>
+        <div class="menu-tab" id="tab-watchlist" (click)="view_watchlist()">
+          <h3>Watchlist</h3>
+        </div>
+        <div class="menu-tab" id="tab-settings" (click)="view_settings()">
+          <h3>Settings</h3>
+        </div>
+      </div>
     </div>
     <div id="right-col">
-      <h1>Right col</h1>
+      <div style="display: flex">
+        <img id="profile-pic" src="../../assets/img/user-placeholder.jpg" />
+        <div style="margin: 5px 50px; vertical-align: center">
+          <b style="font-size: x-large">{{ user.name }}</b> <br />{{
+            user.username
+          }}
+          <br />{{ user.email }}
+        </div>
+      </div>
+      <br />
+      <br />
+      <div id="slide-1" *ngIf="rt_col_slide == 0">
+        <div style="display: flex; justify-content: space-around">
+          <div class="form-input-1">
+            <h3>Organization</h3>
+            <input
+              type="text"
+              id="organization"
+              placeholder="Enter your organization"
+              [(ngModel)]="user.organisation"
+            />
+          </div>
+          <div class="form-input-1">
+            <h3>Position</h3>
+            <input
+              type="text"
+              id="position"
+              placeholder="Enter your position"
+              [(ngModel)]="user.position"
+            />
+          </div>
+        </div>
+      </div>
+      <div id="slide-2" *ngIf="rt_col_slide == 1">Watchlist</div>
+      <div id="slide-3" *ngIf="rt_col_slide == 2">
+        <div style="display: grid; grid-template-columns: 50% 50%">
+          <div class="form-input-1">
+            <h3>Change Password</h3>
+            <input
+              type="password"
+              id="password"
+              placeholder="New Password"
+              (ngModel)="(user.password)"
+            />
+          </div>
+          <div style="text-align: center; padding: 30px">
+            <div
+              style="
+                margin-top: 50px;
+                background-color: #597c94;
+                border-radius: 5px;
+              "
+            >
+              <a
+                style="text-decoration: none; color: white"
+                href=""
+                (click)="send_security_code()"
+                >Request Code</a
+              >
+            </div>
+          </div>
+          <div class="form-input-1">
+            <h3>Confirm Password</h3>
+            <input
+              type="password"
+              id="conf_pass"
+              placeholder="Enter Again"
+              [(ngModel)]="conf_pass"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </body>
