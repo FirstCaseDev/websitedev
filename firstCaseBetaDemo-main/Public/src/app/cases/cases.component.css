@@ -729,3 +729,24 @@ section.range-slider input[type="range"]::-moz-focus-outer {
   margin-top: 5px;
   font-weight: 100;
 }
+
+.instructions {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin: 50px;
+}
+
+.instruction-element {
+  color: #fff;
+  height: 200px;
+  text-align: center;
+  background-color: #1a6fc4;
+  margin: 5px;
+  border-radius: 10px;
+}
+.instruction-logo {
+  background-color: #647b88;
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+}

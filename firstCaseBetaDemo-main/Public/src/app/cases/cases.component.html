@@ -189,6 +189,43 @@
         </div>
       </div>
       <div class="right">
+        <div class="instruction-logo">
+            <img src="../../assets/img/White_Logo.png">
+        </div>
+        <div class="instructions" *ngIf="!searched">
+            <div class="instruction-element">
+              <h1>
+                Search Query
+              </h1>
+              <p>
+                Search by entering text in query box
+              </p>
+            </div>
+            <div class="instruction-element">
+              <h1>
+                Query Operators
+              </h1>
+              <p>
+                You can use '+' or '-' to search specific terms
+              </p>
+            </div>
+            <div class="instruction-element">
+              <h1>
+                Analytics
+              </h1>
+              <p>
+                The specific analytics of a case is present under analytics tab
+              </p>
+            </div>
+            <div class="instruction-element">
+              <h1>
+                Filter
+              </h1>
+              <p>
+                You can filter specific cases using filter option
+              </p>
+            </div>
+        </div>
         <div class="nav nav-tabs" *ngIf="searched">
           <div id="tabs">
             <button class="tab active" id="search_tab" (click)="show_search()">
