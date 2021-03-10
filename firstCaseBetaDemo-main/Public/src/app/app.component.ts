@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   scrWidth: any;
 
   @HostListener('window:resize', ['$event'])
-  getScreenSize(event?) {
+  getScreenSize(event) {
     this.scrWidth = window.innerWidth;
     this.scrHeight = window.innerHeight;
     console.log('width = ' + this.scrWidth);
