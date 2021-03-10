@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Input,
-  HostListener,
-} from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from './app.service';
 import { Meta } from '@angular/platform-browser';
@@ -15,16 +9,16 @@ import { Meta } from '@angular/platform-browser';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  scrHeight: any;
-  scrWidth: any;
+  // scrHeight: any;
+  // scrWidth: any;
 
-  @HostListener('window:resize', ['$event'])
-  getScreenSize(event?) {
-    this.scrWidth = window.innerWidth;
-    this.scrHeight = window.innerHeight;
-    console.log('width = ' + this.scrWidth);
-  }
-  small_screen_device = false;
+  // @HostListener('window:resize', ['$event'])
+  // getScreenSize(event?) {
+  //   this.scrWidth = window.innerWidth;
+  //   this.scrHeight = window.innerHeight;
+  //   console.log('width = ' + this.scrWidth);
+  // }
+  isMobile = false;
   mobile_menu_open = false;
 
   constructor(
@@ -32,14 +26,10 @@ export class AppComponent implements OnInit {
     private metaService: Meta,
     public appService: AppService
   ) {
-    this.getScreenSize();
-    if (this.scrWidth < 720) {
-      this.small_screen_device = true;
-      localStorage.setItem('screen', 'small');
-    } else {
-      this.small_screen_device = false;
-      localStorage.setItem('screen', 'large');
-    }
+    this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (this.isMobile) localStorage.setItem('device_type', 'mobile');
+    else localStorage.setItem('device_type', 'other');
+    console.log('isMobile = ', this.isMobile);
   }
   isLoggedIn: boolean = false;
 

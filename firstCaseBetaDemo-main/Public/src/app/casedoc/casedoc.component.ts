@@ -54,11 +54,11 @@ export class CasedocComponent implements OnInit {
   url = this.router.url;
   // highlighted_URLs: any[] = [];
   marked_url = '';
-  small_screen_device = false;
+  isMobile = false;
 
   ngOnInit(): void {
-    if (localStorage.screen == 'small') this.small_screen_device = true;
-    else this.small_screen_device = false;
+    if (localStorage.device_type == 'mobile') this.isMobile = true;
+    else this.isMobile = false;
     this.caseid = this.url.split('/')[2];
     // if (this.url.split('#marked').length > 1) {
     //   this.router.navigate(['/casedoc/' + this.caseid]);
@@ -195,14 +195,14 @@ export class CasedocComponent implements OnInit {
     }
   }
 
-  copy_btn_text = 'Copy Link';
+  copied = false;
 
   copy_link() {
     copy(this.page_url + this.router.url);
     console.log('copied');
-    this.copy_btn_text = 'Copied!';
+    this.copied = true;
     setTimeout(() => {
-      this.copy_btn_text = 'Copy Link';
+      this.copied = false;
     }, 5000);
   }
 
@@ -293,5 +293,10 @@ export class CasedocComponent implements OnInit {
         ?.scrollIntoView();
     }
     document.getElementById('search-bar')?.scrollIntoView();
+  }
+
+  toggle_right_menu = false;
+  right_menu_btn() {
+    this.toggle_right_menu = !this.toggle_right_menu;
   }
 }

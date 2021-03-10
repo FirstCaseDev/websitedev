@@ -1,4 +1,4 @@
-<div class="page" *ngIf="!small_screen_device">
+<div class="page" *ngIf="!isMobile">
   <div class="container-1">
     <div class="left" *ngIf="false">
       <div class="left-container">
@@ -148,7 +148,7 @@
 </div>
 
 <!-- =================================================Mobile Site=================================================== -->
-<div *ngIf="small_screen_device" style="font-family: PopRegular">
+<div *ngIf="isMobile" style="font-family: PopRegular">
   <div class="right">
     <h2 style="margin: 20px">Already have an account? <br />Login here</h2>
     <div class="right-container">

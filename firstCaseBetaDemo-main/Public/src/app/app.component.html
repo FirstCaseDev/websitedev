@@ -1,4 +1,4 @@
-<div class="home-screen-size-large" *ngIf="!small_screen_device">
+<div class="home-screen-size-large" *ngIf="!isMobile">
   <header *ngIf="router.url !== '/home'">
     <nav>
       <div style="text-align: center">
@@ -64,7 +64,7 @@
 
 <!-- ===========================================Mobile Site==================================================== -->
 
-<div class="home-screen-size-small" *ngIf="small_screen_device">
+<div class="home-screen-size-small" *ngIf="isMobile">
   <div
     *ngIf="router.url !== '/home'"
     style="

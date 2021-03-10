@@ -49,10 +49,10 @@ module.exports = (router) => {
             $search: squery,
           },
           source: court,
-          year: {
-            $lte: Number(y_ceil),
-            $gte: Number(y_floor),
-          },
+          // year: {
+          //   $lte: Number(y_ceil),
+          //   $gte: Number(y_floor),
+          // },
         },
       },
       {

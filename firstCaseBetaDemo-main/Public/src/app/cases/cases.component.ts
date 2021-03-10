@@ -23,11 +23,11 @@ export class CasesComponent implements OnInit {
     private componentTitle: Title
   ) {}
 
-  small_screen_device = false;
+  isMobile = false;
 
   ngOnInit() {
-    if (localStorage.screen == 'small') this.small_screen_device = true;
-    else this.small_screen_device = false;
+    if (localStorage.device_type == 'mobile') this.isMobile = true;
+    else this.isMobile = false;
     // if (!localStorage.getItem('token_exp')) this.router.navigate(['/users'])
     this.componentTitle.setTitle('FirstCase | Search');
     this.pvb_init();
@@ -1241,5 +1241,11 @@ export class CasesComponent implements OnInit {
       this.year_range_msg = String(this.y_floor) + ' to ' + String(this.y_ceil);
     }
     this.year_range_selected = true;
+  }
+
+  tags_list: Array<String> = [];
+  add_tag: string = '';
+  addTag() {
+    this.tags_list.push(this.add_tag);
   }
 }
