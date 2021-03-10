@@ -20,11 +20,11 @@ export class UsersComponent implements OnInit {
   ) {}
   isLoggedIn: boolean = false;
   loginClicked: boolean = false;
-  small_screen_device = false;
+  isMobile = false;
 
   ngOnInit(): void {
-    if (localStorage.screen == 'small') this.small_screen_device = true;
-    else this.small_screen_device = false;
+    if (localStorage.device_type == 'mobile') this.isMobile = true;
+    else this.isMobile = false;
     this.componentTitle.setTitle('FirstCase | Login');
     if (localStorage.getItem('token_exp')) {
       var exp = parseInt(localStorage.token_exp);
