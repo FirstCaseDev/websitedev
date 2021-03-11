@@ -49,8 +49,8 @@ export class CasedocComponent implements OnInit {
   file: any = '';
   text: any = '';
   first_para = '';
-  // page_url = 'https://firstcase.io';
-  page_url = 'http://localhost:4200';
+  page_url = 'https://firstcase.io';
+  // page_url = 'http://localhost:4200';
   url = this.router.url;
   // highlighted_URLs: any[] = [];
   marked_url = '';
