@@ -3,7 +3,7 @@
     #19212F
     #7397A5
     #647B88
-    #597C94
+    #4a7feb
 } */
 
 /* 
@@ -19,7 +19,6 @@ changes -
   transform: translateX(50%);
   transform: translateY(50%);
 } */
-
 
 @font-face {
   font-family: PopLight;
@@ -43,9 +42,8 @@ changes -
   box-shadow: 0px 5px 15px #ddd;
   border-radius: 10px;
   padding: 20px;
-  color: rgb(56, 56, 56)
+  color: rgb(56, 56, 56);
 }
-
 
 /* .filter-option {
   margin-top: 20px;
@@ -126,7 +124,8 @@ button:hover {
   position: relative;
   font-size: small;
   color: #a7b4c1;
-  transition: opacity 0.2s ease-in-out, filter 0.2s ease-in-out, box-shadow 0.1s ease-in-out;
+  transition: opacity 0.2s ease-in-out, filter 0.2s ease-in-out,
+    box-shadow 0.1s ease-in-out;
 }
 
 .input-group:hover {
@@ -177,8 +176,8 @@ button:hover {
   cursor: text;
 }
 
-.input-group input:focus+label,
-.input-group input:not(:placeholder-shown)+label {
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
   bottom: 20px;
   font-size: 13px;
   opacity: 0.7;
@@ -197,8 +196,6 @@ button:hover {
   color: #e0e0e0;
   font-family: "Ubuntu", sans-serif;
 }
-
-
 
 /* 
 .users-list {

@@ -376,67 +376,9 @@
                   <div class="tables-grid-item">
                     <div>
                       <h2 style="text-align: center">Most Relevant Laws</h2>
-                      <table
-                        class="table"
-                        id="table-cited-provisions"
-                        style="table-layout: fixed"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Act Name</th>
-                            <th>Occurence</th>
-                            <th style="width: 180px">Section Name</th>
-                            <th style="width: 180px">Occurence</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <ng-container
-                            *ngFor="
-                              let provision of CitedProvisions;
-                              index as i
-                            "
-                          >
-                            <tr>
-                              <td
-                                rowspan="6"
-                                style="
-                                  font-size: larger;
-                                  font-weight: bolder;
-                                  width: 250px;
-                                "
-                              >
-                                {{ provision.act_name }}
-                              </td>
-                              <td
-                                rowspan="6"
-                                style="font-size: larger; font-weight: bolder"
-                              >
-                                {{ provision.act_sums }}
-                              </td>
-                            </tr>
-                            <tr
-                              *ngFor="
-                                let section of provision.sections;
-                                index as i
-                              "
-                            >
-                              <td>{{ section }}</td>
-                              <td>{{ provision.section_sums[i] }}</td>
-                            </tr>
-                            <tr
-                              *ngFor="
-                                let item of [].constructor(
-                                  5 - provision.section_sums.length
-                                );
-                                index as i
-                              "
-                            >
-                              <td style="border: 0px"></td>
-                              <td style="border: 0px"></td>
-                            </tr>
-                          </ng-container>
-                        </tbody>
-                      </table>
+                      <div style="display: grid; grid-template-columns: 30% 70%;">
+
+                      </div>
                     </div>
                   </div>
                   <div class="tables-grid-item" style="display: flexbox">

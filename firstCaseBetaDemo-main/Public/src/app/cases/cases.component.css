@@ -2,7 +2,7 @@
     mirage: #19212F;
     gothic: #7397A5;
     slate-gray: #647B88;
-    smalt-blue: #597C94;
+    smalt-blue: #4a7feb;
 } */
 
 /* @import 'https://code.highcharts.com/css/highcharts.css'; */
@@ -617,12 +617,12 @@ section.range-slider input[type="range"]::-webkit-slider-thumb {
     left top,
     left bottom,
     color-stop(0%, #dad8da),
-    color-stop(100%, #597c94)
+    color-stop(100%, #4a7feb)
   );
   /* android <= 2.2 */
-  background-image: -webkit-linear-gradient(top, #dad8da 0, #597c94 100%);
+  background-image: -webkit-linear-gradient(top, #dad8da 0, #4a7feb 100%);
   /* older mobile safari and android > 2.2 */
-  background-image: linear-gradient(to bottom, #dad8da 0, #597c94 100%);
+  background-image: linear-gradient(to bottom, #dad8da 0, #4a7feb 100%);
   /* W3C */
 }
 section.range-slider input[type="range"]::-moz-range-thumb {
@@ -634,7 +634,7 @@ section.range-slider input[type="range"]::-moz-range-thumb {
   height: 20px;
   border: none;
   border-radius: 14px;
-  background-image: linear-gradient(to bottom, #dad8da 0, #597c94 100%);
+  background-image: linear-gradient(to bottom, #dad8da 0, #4a7feb 100%);
   /* W3C */
 }
 section.range-slider input[type="range"]::-ms-thumb {
@@ -646,7 +646,7 @@ section.range-slider input[type="range"]::-ms-thumb {
   height: 20px;
   border-radius: 14px;
   border: 0;
-  background-image: linear-gradient(to bottom, #dad8da 0, #597c94 100%);
+  background-image: linear-gradient(to bottom, #dad8da 0, #4a7feb 100%);
   /* W3C */
 }
 section.range-slider input[type="range"]::-moz-range-track {

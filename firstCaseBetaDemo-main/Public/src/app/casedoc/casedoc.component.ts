@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import Case from '../models/case';
+import provisions_referred_object from '../models/provisions_referred_object';
 import { CasedocService } from './casedoc.service';
 import { Title } from '@angular/platform-browser';
 import * as copy from 'copy-to-clipboard';
@@ -28,7 +29,9 @@ export class CasedocComponent implements OnInit {
     url: '',
     source: '',
     petitioner: '',
+    petitioner_counsel: [],
     respondent: '',
+    respondent_counsel: [],
     date: '',
     month: '',
     year: '',
@@ -37,6 +40,8 @@ export class CasedocComponent implements OnInit {
     judgement_text: '',
     judgement_html: '',
     title: '',
+    provisions_referred: [],
+    cases_referred: [],
   };
   query: string = '';
 
@@ -44,13 +49,16 @@ export class CasedocComponent implements OnInit {
   case_month = '';
   case_year = '';
   bench_arr: string[] = [];
+  petitioner_arr: string[] = [];
+  respondent_arr: string[] = [];
+  provisions_referred_arr: provisions_referred_object[] = [];
   case_source_url = '';
   view_tab = 1;
   file: any = '';
   text: any = '';
   first_para = '';
-  // page_url = 'https://firstcase.io';
-  page_url = 'http://localhost:4200';
+  page_url = 'https://firstcase.io';
+  // page_url = 'http://localhost:4200';
   url = this.router.url;
   // highlighted_URLs: any[] = [];
   marked_url = '';
@@ -88,12 +96,15 @@ export class CasedocComponent implements OnInit {
 
   search(_id: string) {
     this.casedocService.getCaseDoc(_id).subscribe((data: any) => {
-      // console.log(data);
+      console.log(data.case);
       this.case = data.case;
       this.case_date = data.date;
       this.case_month = data.month;
       this.case_year = data.year;
       this.bench_arr = this.case.bench.split(',');
+      this.petitioner_arr = this.case.petitioner_counsel;
+      this.respondent_arr = this.case.respondent_counsel;
+      this.provisions_referred_arr = this.case.provisions_referred;
       this.componentTitle.setTitle('FirstCase | ' + data.case.title);
 
       // console.log(this.bench_arr);
@@ -117,29 +128,28 @@ export class CasedocComponent implements OnInit {
 
   tab1() {
     this.view_tab = 1;
+    this.right_menu_btn_visible = true;
     let element = document.getElementById('show_judgement');
     element!.className = 'tab active';
-    let element2 = document.getElementById('show_counsels');
+    let element2 = document.getElementById('show_bench_counsels');
     element2!.className = 'tab';
-    let element3 = document.getElementById('show_case_citations');
+    let element3 = document.getElementById('show_act_law_citations');
     element3!.className = 'tab';
-    let element4 = document.getElementById('show_act-law_citations');
-    element3!.className = 'tab';
-    let element5 = document.getElementById('show_bench');
-    element3!.className = 'tab';
+    let element4 = document.getElementById('show_case_citations');
+    element4!.className = 'tab';
   }
   tab2() {
     this.view_tab = 2;
+    this.right_menu_btn_visible = false;
+    this.toggle_right_menu = false;
     let element = document.getElementById('show_judgement');
     element!.className = 'tab';
-    let element2 = document.getElementById('show_counsels');
+    let element2 = document.getElementById('show_bench_counsels');
     element2!.className = 'tab active';
-    let element3 = document.getElementById('show_case_citations');
+    let element3 = document.getElementById('show_act_law_citations');
     element3!.className = 'tab';
-    let element4 = document.getElementById('show_act-law_citations');
-    element3!.className = 'tab';
-    let element5 = document.getElementById('show_bench');
-    element3!.className = 'tab';
+    let element4 = document.getElementById('show_case_citations');
+    element4!.className = 'tab';
   }
   // tab3() {
   //   this.view_tab = 3;
@@ -156,29 +166,29 @@ export class CasedocComponent implements OnInit {
   // }
   tab3() {
     this.view_tab = 3;
+    this.right_menu_btn_visible = false;
+    this.toggle_right_menu = false;
     let element = document.getElementById('show_judgement');
     element!.className = 'tab';
-    let element2 = document.getElementById('show_counsels');
+    let element2 = document.getElementById('show_bench_counsels');
     element2!.className = 'tab';
-    let element3 = document.getElementById('show_case_citations');
-    element3!.className = 'tab';
-    let element4 = document.getElementById('show_act-law_citations');
-    element4!.className = 'tab active';
-    let element5 = document.getElementById('show_bench');
-    element5!.className = 'tab';
+    let element3 = document.getElementById('show_act_law_citations');
+    element3!.className = 'tab active';
+    let element4 = document.getElementById('show_case_citations');
+    element4!.className = 'tab';
   }
   tab4() {
     this.view_tab = 4;
+    this.right_menu_btn_visible = false;
+    this.toggle_right_menu = false;
     let element = document.getElementById('show_judgement');
     element!.className = 'tab';
-    let element2 = document.getElementById('show_counsels');
+    let element2 = document.getElementById('show_bench_counsels');
     element2!.className = 'tab';
-    let element3 = document.getElementById('show_case_citations');
+    let element3 = document.getElementById('show_act_law_citations');
     element3!.className = 'tab';
-    let element4 = document.getElementById('show_act-law_citations');
-    element4!.className = 'tab';
-    let element5 = document.getElementById('show_bench');
-    element5!.className = 'tab active';
+    let element4 = document.getElementById('show_case_citations');
+    element4!.className = 'tab active';
   }
 
   // sendToTop() {
@@ -212,6 +222,7 @@ export class CasedocComponent implements OnInit {
   results_count = 0;
 
   find_in_page() {
+    this.tab1();
     if (this.query == '' || this.query == null) {
       this.searched = false;
       alert('Please enter a keyword');
@@ -298,5 +309,22 @@ export class CasedocComponent implements OnInit {
   toggle_right_menu = false;
   right_menu_btn() {
     this.toggle_right_menu = !this.toggle_right_menu;
+    if (this.toggle_right_menu) {
+      var elements: Element[] = Array.from(
+        document.getElementsByClassName('slide')
+      );
+      elements.forEach((el: Element) => {
+        el.className = 'slide-short-width';
+      });
+    } else {
+      var elements: Element[] = Array.from(
+        document.getElementsByClassName('slide-short-width')
+      );
+      elements.forEach((el: Element) => {
+        el.className = 'slide';
+      });
+    }
   }
+
+  right_menu_btn_visible = true;
 }
