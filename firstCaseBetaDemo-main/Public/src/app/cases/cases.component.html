@@ -253,9 +253,9 @@
                     Source:
                     <strong style="font-weight: 300"> {{ data.source }}</strong>
                     | Date:
-                    <strong style="font-weight: 300"
-                      >{{ data.date }}/{{ data.month }}/{{ data.year }}</strong
-                    >
+                    <strong style="font-weight: 300">{{
+                      data.date.toLocaleString()
+                    }}</strong>
                   </h4>
                 </li>
 
@@ -376,9 +376,9 @@
                   <div class="tables-grid-item">
                     <div>
                       <h2 style="text-align: center">Most Relevant Laws</h2>
-                      <div style="display: grid; grid-template-columns: 30% 70%;">
-
-                      </div>
+                      <div
+                        style="display: grid; grid-template-columns: 30% 70%"
+                      ></div>
                     </div>
                   </div>
                   <div class="tables-grid-item" style="display: flexbox">
@@ -741,9 +741,9 @@
               <strong style="font-weight: 300"> {{ data.source }}</strong>
               <br />
               Date:
-              <strong style="font-weight: 300"
-                >{{ data.date }}/{{ data.month }}/{{ data.year }}</strong
-              >
+              <strong style="font-weight: 300">{{
+                data.date.toLocaleString()
+              }}</strong>
             </h4>
           </li>
           <li>

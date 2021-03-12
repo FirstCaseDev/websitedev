@@ -399,6 +399,7 @@ export class CasesComponent implements OnInit {
 
   courtdata: any = [
     { id: 'Supreme Court of India', name: 'Supreme Court of India' },
+    { id: 'Delhi High Court', name: 'Supreme Court of India' },
     // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
@@ -614,6 +615,7 @@ export class CasesComponent implements OnInit {
         // console.log(data.case_list);
         if (data.success) {
           this.rows = data.case_list;
+          console.log(this.rows);
           this.results_count = data.result_count;
         } else {
           alert(data.msg);

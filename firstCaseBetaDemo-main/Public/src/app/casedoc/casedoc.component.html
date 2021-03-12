@@ -1,4 +1,4 @@
-<div *ngIf="!isMobile">
+<div *ngIf="!loading && !isMobile">
   <div class="page">
     <div>
       <div class="top-bar">
@@ -190,37 +190,31 @@
             <div id="page-end"></div>
           </div>
           <div class="slide" id="bench-counsels-page" *ngIf="view_tab == 2">
-            <h2 style="text-align: center">Bench</h2>
-            <div style="display: flexbox; max-width: 20vw; margin: 0 auto">
-              <div class="tabs-item" *ngFor="let candidate of bench_arr">
-                {{ candidate }}
-              </div>
-            </div>
-            <br />
-            <br />
-            <div style="display: grid; grid-template-columns: 50% 50%">
-              <div>
-                <h2 style="text-align: center">Petitioner Counsel</h2>
-                <div style="display: flexbox; max-width: 20vw; margin: 0 auto">
-                  <div
-                    class="tabs-item"
-                    *ngFor="let candidate of petitioner_arr"
-                  >
-                    {{ candidate }}
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h2 style="text-align: center">Respondent Counsel</h2>
-                <div style="display: flexbox; max-width: 20vw; margin: 0 auto">
-                  <div
-                    class="tabs-item"
-                    *ngFor="let candidate of respondent_arr"
-                  >
-                    {{ candidate }}
-                  </div>
-                </div>
-              </div>
+            <div style="display: flex; justify-content: space-around">
+              <table>
+                <tr>
+                  <th style="width: 20vw">Bench</th>
+                </tr>
+                <tr *ngFor="let item of bench_arr">
+                  <td style="width: 20vw">{{ item }}</td>
+                </tr>
+              </table>
+              <table>
+                <tr>
+                  <th style="width: 20vw">Petitioner Counsel</th>
+                </tr>
+                <tr *ngFor="let item of petitioner_arr">
+                  <td style="width: 20vw">{{ item }}</td>
+                </tr>
+              </table>
+              <table>
+                <tr>
+                  <th style="width: 20vw">Respondent Counsel</th>
+                </tr>
+                <tr *ngFor="let item of respondent_arr">
+                  <td style="width: 20vw">{{ item }}</td>
+                </tr>
+              </table>
             </div>
           </div>
           <div class="slide" id="act-law-citation-page" *ngIf="view_tab == 3">
