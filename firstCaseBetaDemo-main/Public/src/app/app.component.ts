@@ -1,7 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { AppService } from './app.service';
 import { Meta } from '@angular/platform-browser';
+declare let gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,13 @@ export class AppComponent implements OnInit {
     if (this.isMobile) localStorage.setItem('device_type', 'mobile');
     else localStorage.setItem('device_type', 'other');
     console.log('isMobile = ', this.isMobile);
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        gtag('config', 'G-DLMYJT00J2', {
+          page_path: event.urlAfterRedirects,
+        });
+      }
+    });
   }
   isLoggedIn: boolean = false;
 

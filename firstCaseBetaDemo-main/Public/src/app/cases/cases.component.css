@@ -749,6 +749,7 @@ section.range-slider input[type="range"]::-moz-focus-outer {
   text-align: center;
   margin: 10px;
   padding: 10px;
+}
 #addTag {
   border: none;
   border-bottom: 1px solid #555 !important;

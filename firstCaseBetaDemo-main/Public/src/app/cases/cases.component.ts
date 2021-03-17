@@ -8,6 +8,9 @@ import * as Highcharts from 'highcharts';
 import HC_heatmap from 'highcharts/modules/heatmap';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { GoogleAnalyticsService } from '../google-analytics.service';
+//import { Console } from 'console';
+
 HC_heatmap(Highcharts);
 
 @Component({
@@ -22,6 +25,17 @@ export class CasesComponent implements OnInit {
     private router: Router,
     private componentTitle: Title
   ) {}
+
+  SendAddToCartEvent() {
+    //console.log('Hello____');
+    GoogleAnalyticsService.eventEmitter(
+      'Search_button',
+      'button',
+      'click',
+      this.query,
+      this.results_count
+    );
+  }
 
   isMobile = false;
 

@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AboutComponent } from './about/about.component';
+import { GoogleAnalyticsService } from './google-analytics.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { AboutComponent } from './about/about.component';
     HighchartsChartModule,
     BrowserAnimationsModule,
   ],
-  providers: [Title, User, UsersComponent],
+  providers: [Title, User, UsersComponent, GoogleAnalyticsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
