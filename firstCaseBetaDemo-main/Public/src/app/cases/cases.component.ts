@@ -538,6 +538,14 @@ export class CasesComponent implements OnInit {
     element3!.className = 'tab';
     // console.log('view_search ' + this.view_search);
     this.loading = false;
+
+    GoogleAnalyticsService.eventEmitter(
+      'Analytics_tab',
+      'button',
+      'click',
+      'Analytics Tab',
+      this.results_count
+    );
   }
 
   show_citations() {
@@ -558,6 +566,13 @@ export class CasesComponent implements OnInit {
     let element3 = document.getElementById('analytics_tab');
     element3!.className = 'tab ';
     this.loading = false;
+    GoogleAnalyticsService.eventEmitter(
+      'citations_tab',
+      'button',
+      'click',
+      'Citations Tab',
+      this.results_count
+    );
     // console.log('view_search ' + this.view_search);
   }
 
@@ -572,6 +587,13 @@ export class CasesComponent implements OnInit {
     let element3 = document.getElementById('citation_tab');
     element3!.className = 'tab';
     // console.log('view_search ' + this.view_search);
+    GoogleAnalyticsService.eventEmitter(
+      'citations_tab',
+      'button',
+      'click',
+      'Citations Tab',
+      this.results_count
+    );
   }
 
   toggle_filters() {
