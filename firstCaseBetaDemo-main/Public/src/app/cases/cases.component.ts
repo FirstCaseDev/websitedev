@@ -56,18 +56,18 @@ export class CasesComponent implements OnInit {
       city: [this.selectedJudgements],
     });
 
-    if (localStorage.getItem('token_exp')) {
-      var exp = parseInt(localStorage.token_exp);
-      var curr_time = new Date().getTime();
-      if (curr_time > exp) {
-        localStorage.removeItem('token_exp');
-        console.log('cases page: Previous token expired, login again!');
-        this.router.navigate(['/users']); // navigate to login page
-      }
-    } else {
-      console.log('User not logged in, Login required');
-      this.router.navigate(['/users']); // navigate to login page
-    }
+    // if (localStorage.getItem('token_exp')) {
+    //   var exp = parseInt(localStorage.token_exp);
+    //   var curr_time = new Date().getTime();
+    //   if (curr_time > exp) {
+    //     localStorage.removeItem('token_exp');
+    //     console.log('cases page: Previous token expired, login again!');
+    //     this.router.navigate(['/users']); // navigate to login page
+    //   }
+    // } else {
+    //   console.log('User not logged in, Login required');
+    //   this.router.navigate(['/users']); // navigate to login page
+    // }
   }
 
   Highcharts = Highcharts;
@@ -358,8 +358,8 @@ export class CasesComponent implements OnInit {
   view_analytics: boolean = false;
   view_analytics_mobile: boolean = false;
   view_citations: boolean = false;
-  view_filters: boolean = true;
-  view_filters_mobile: boolean = false;
+  view_tags: boolean = false;
+  view_tags_mobile: boolean = false;
   judgement_options: any = [];
   selectedJudgements: any = [];
   dropdownSettings: any = {};
@@ -399,7 +399,7 @@ export class CasesComponent implements OnInit {
 
   courtdata: any = [
     { id: 'Supreme Court of India', name: 'Supreme Court of India' },
-    { id: 'Delhi High Court', name: 'Supreme Court of India' },
+    { id: 'Delhi High Court', name: 'Delhi High Court' },
     // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
@@ -562,8 +562,8 @@ export class CasesComponent implements OnInit {
   }
 
   toggle_filters() {
-    this.view_filters = !this.view_filters;
-    this.view_filters_mobile = !this.view_filters_mobile;
+    this.view_tags = !this.view_tags;
+    this.view_tags_mobile = !this.view_tags_mobile;
   }
 
   reset_filters() {
@@ -640,6 +640,7 @@ export class CasesComponent implements OnInit {
         this.y_ceil
       )
       .subscribe((data: any) => {
+        console.log(data);
         this.chartLabels.length = 0;
         this.Datalabels.length = 0;
         try {
@@ -1159,7 +1160,7 @@ export class CasesComponent implements OnInit {
               section_sums: section_occurrences[z],
             });
           }
-          // console.log(this.CitedProvisions);
+          console.log(this.CitedProvisions);
         } catch (error) {
           console.log(error);
         }
@@ -1248,6 +1249,25 @@ export class CasesComponent implements OnInit {
   tags_list: Array<String> = [];
   add_tag: string = '';
   addTag() {
+    this.view_tags = true;
+    if (!this.tags_list.includes(this.add_tag))
+      this.tags_list.push(this.add_tag);
+    this.no_of_tags = this.no_of_tags + 1;
+    this.IdTags();
+  }
+
+  removeTag(id: any) {
+    var tagValue = document.getElementById(id)?.textContent;
+    // this.tags_list.indexOf(tagValue);
     this.tags_list.push(this.add_tag);
+    this.no_of_tags = this.no_of_tags - 1;
+    this.IdTags();
+  }
+  no_of_tags = 0;
+  IdTags() {
+    var elem = document.getElementsByClassName('remove-tag');
+    for (var i = 0; i < elem.length; i++) {
+      elem[i].setAttribute('id', 'tag' + String(i));
+    }
   }
 }
