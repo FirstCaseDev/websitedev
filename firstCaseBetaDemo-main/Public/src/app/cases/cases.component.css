@@ -2,7 +2,7 @@
     mirage: #19212F;
     gothic: #7397A5;
     slate-gray: #647B88;
-    smalt-blue: #4a7feb;
+    smalt-blue: #597C94;
 } */
 
 /* @import 'https://code.highcharts.com/css/highcharts.css'; */
@@ -80,6 +80,7 @@ div.loading_animation {
 }
 
 .page-columns {
+  display: flex;
   /* grid-template-columns: 25% 75%; */
   border-bottom: 1px solid #ddd;
 }
@@ -107,9 +108,10 @@ div.loading_animation {
   align-items: center;
 }
 
-.page {
+.right {
   min-height: 80vh;
-  margin: 20px;
+  min-width: 75vw;
+  margin-left: 10px;
   font-size: small;
 }
 
@@ -615,12 +617,12 @@ section.range-slider input[type="range"]::-webkit-slider-thumb {
     left top,
     left bottom,
     color-stop(0%, #dad8da),
-    color-stop(100%, #4a7feb)
+    color-stop(100%, #597c94)
   );
   /* android <= 2.2 */
-  background-image: -webkit-linear-gradient(top, #dad8da 0, #4a7feb 100%);
+  background-image: -webkit-linear-gradient(top, #dad8da 0, #597c94 100%);
   /* older mobile safari and android > 2.2 */
-  background-image: linear-gradient(to bottom, #dad8da 0, #4a7feb 100%);
+  background-image: linear-gradient(to bottom, #dad8da 0, #597c94 100%);
   /* W3C */
 }
 section.range-slider input[type="range"]::-moz-range-thumb {
@@ -632,7 +634,7 @@ section.range-slider input[type="range"]::-moz-range-thumb {
   height: 20px;
   border: none;
   border-radius: 14px;
-  background-image: linear-gradient(to bottom, #dad8da 0, #4a7feb 100%);
+  background-image: linear-gradient(to bottom, #dad8da 0, #597c94 100%);
   /* W3C */
 }
 section.range-slider input[type="range"]::-ms-thumb {
@@ -644,7 +646,7 @@ section.range-slider input[type="range"]::-ms-thumb {
   height: 20px;
   border-radius: 14px;
   border: 0;
-  background-image: linear-gradient(to bottom, #dad8da 0, #4a7feb 100%);
+  background-image: linear-gradient(to bottom, #dad8da 0, #597c94 100%);
   /* W3C */
 }
 section.range-slider input[type="range"]::-moz-range-track {
@@ -730,16 +732,13 @@ section.range-slider input[type="range"]::-moz-focus-outer {
 
 #addTag {
   border: none;
+  border-bottom: 1px solid #555 !important;
   min-width: 20vw;
-  border-bottom: 1px solid #bbb;
-  padding: 10px;
 }
 
 #tags-bar {
-  padding: 10px 20px;
-  border-radius: 2em;
-  box-shadow: 0px 5px 15px #ddd;
-  align-items: center;
+  display: flex;
+  justify-content: space-between;
 }
 
 .tags-list-item {
@@ -758,21 +757,4 @@ section.range-slider input[type="range"]::-moz-focus-outer {
   background-color: #19212f;
   text-align: center;
   transition: all 0.2s;
-}
-
-.blue-button {
-  background-color: #4a7feb;
-  width: 100px;
-  margin-left: 20px;
-  position: relative;
-  border-radius: 5px;
-}
-
-.blue-button a {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 25px;
-  height: 25px;
-  margin: -25px 0 0 -25px;
 }

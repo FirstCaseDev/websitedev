@@ -31,14 +31,14 @@ export class AppComponent implements OnInit {
     else localStorage.setItem('device_type', 'other');
     console.log('isMobile = ', this.isMobile);
   }
-  isLoggedIn: boolean = true;
+  isLoggedIn: boolean = false;
 
   ngOnInit(): void {
     this.metaService.addTags([
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ]);
-    // if (localStorage.getItem('token_exp')) this.isLoggedIn = true;
-    // else this.isLoggedIn = false;
+    if (localStorage.getItem('token_exp')) this.isLoggedIn = true;
+    else this.isLoggedIn = false;
   }
 
   logout() {
