@@ -189,6 +189,7 @@
             </div>
             <div id="page-end"></div>
           </div>
+
           <div class="slide" id="bench-counsels-page" *ngIf="view_tab == 2">
             <div style="display: flex; justify-content: space-around">
               <table>
@@ -215,6 +216,16 @@
                   <td style="width: 20vw">{{ item }}</td>
                 </tr>
               </table>
+
+          <div id="page-end"></div>
+        </div>
+        <div class="slide" id="bench-counsels-page" *ngIf="view_tab == 2">
+          <h2 style="text-align: center">Bench</h2>
+          <br />
+          <div style="display: flexbox; max-width: 20vw; margin: 0 auto">
+            <div class="tabs-item" *ngFor="let candidate of case.bench">
+              {{ candidate }}
+
             </div>
           </div>
           <div class="slide" id="act-law-citation-page" *ngIf="view_tab == 3">

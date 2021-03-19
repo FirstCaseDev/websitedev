@@ -7,7 +7,7 @@ var CaseSchema = new Schema(
       type: "objectId",
     },
     bench: {
-      type: "string",
+      type: "array",
     },
     cases_referred: {
       type: "array",

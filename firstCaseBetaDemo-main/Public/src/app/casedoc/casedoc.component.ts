@@ -48,10 +48,12 @@ export class CasedocComponent implements OnInit {
   case_date = '';
   case_month = '';
   case_year = '';
+
   bench_arr: string[] = [];
   petitioner_arr: string[] = [];
   respondent_arr: string[] = [];
   provisions_referred_arr: provisions_referred_object[] = [];
+
   case_source_url = '';
   view_tab = 1;
   file: any = '';
@@ -67,6 +69,7 @@ export class CasedocComponent implements OnInit {
   ngOnInit(): void {
     if (localStorage.device_type == 'mobile') this.isMobile = true;
     else this.isMobile = false;
+    console.log('this.url: ', this.url);
     this.caseid = this.url.split('/')[2];
     // if (this.url.split('#marked').length > 1) {
     //   this.router.navigate(['/casedoc/' + this.caseid]);
@@ -96,23 +99,26 @@ export class CasedocComponent implements OnInit {
 
   search(_id: string) {
     this.casedocService.getCaseDoc(_id).subscribe((data: any) => {
-      console.log(data.case);
+
       this.case = data.case;
       this.case_date = data.date;
       this.case_month = data.month;
       this.case_year = data.year;
-      this.bench_arr = this.case.bench.split(',');
-      this.petitioner_arr = this.case.petitioner_counsel;
-      this.respondent_arr = this.case.respondent_counsel;
-      this.provisions_referred_arr = this.case.provisions_referred;
+
+
+      console.log('this.case.bench: ', this.case.bench);
+      // this.bench_arr = this.case.bench;
+
       this.componentTitle.setTitle('FirstCase | ' + data.case.title);
 
       // console.log(this.bench_arr);
 
       // Uncomment for processing paragraphs from judgement text
+      console.log('data.case.judgement_text: ', data.case.judgement_text);
       this.judgement_text_paragraphs = data.case.judgement_text.split('>>>>');
       this.first_para = this.judgement_text_paragraphs[0];
       delete this.judgement_text_paragraphs[0];
+      console.log('this.case.url: ', this.case.url);
       this.case_source_url = this.case.url.split('/')[2];
       this.file = this.sanitizer.bypassSecurityTrustHtml(
         String(this.case.judgement_html)
