@@ -39,14 +39,14 @@ export class AppComponent implements OnInit {
       }
     });
   }
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean = true;
 
   ngOnInit(): void {
     this.metaService.addTags([
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ]);
-    if (localStorage.getItem('token_exp')) this.isLoggedIn = true;
-    else this.isLoggedIn = false;
+    // if (localStorage.getItem('token_exp')) this.isLoggedIn = true;
+    // else this.isLoggedIn = false;
   }
 
   logout() {

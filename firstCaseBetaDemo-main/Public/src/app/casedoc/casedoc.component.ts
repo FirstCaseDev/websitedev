@@ -77,21 +77,21 @@ export class CasedocComponent implements OnInit {
     this.search(this.caseid);
     localStorage.setItem('request_url', this.router.url);
 
-    if (localStorage.getItem('token_exp')) {
-      var exp = parseInt(localStorage.token_exp);
-      var curr_time = new Date().getTime();
-      if (curr_time > exp) {
-        localStorage.removeItem('token_exp');
-        console.log('cases page: Previous token expired, login again!');
-        this.router.navigate(['/users']); // navigate to login page
-      } else {
-        console.log('Login check: user already logged in');
-        localStorage.removeItem('request_url');
-      }
-    } else {
-      console.log('User not logged in, Login required');
-      this.router.navigate(['/users']); // navigate to login page
-    }
+    // if (localStorage.getItem('token_exp')) {
+    //   var exp = parseInt(localStorage.token_exp);
+    //   var curr_time = new Date().getTime();
+    //   if (curr_time > exp) {
+    //     localStorage.removeItem('token_exp');
+    //     console.log('cases page: Previous token expired, login again!');
+    //     this.router.navigate(['/users']); // navigate to login page
+    //   } else {
+    //     console.log('Login check: user already logged in');
+    //     localStorage.removeItem('request_url');
+    //   }
+    // } else {
+    //   console.log('User not logged in, Login required');
+    //   this.router.navigate(['/users']); // navigate to login page
+    // }
   }
 
   search(_id: string) {

@@ -49,10 +49,10 @@ module.exports = (router) => {
             $search: squery,
           },
           source: court,
-          // year: {
-          //   $lte: Number(y_ceil),
-          //   $gte: Number(y_floor),
-          // },
+          year: {
+            $lte: y_ceil,
+            $gte: y_floor,
+          },
         },
       },
       {
@@ -183,6 +183,14 @@ module.exports = (router) => {
     var judge = ".*".concat(req.query.bench, ".*");
     var ptnr = ".*".concat(req.query.ptn, ".*");
     var resp = ".*".concat(req.query.rsp, ".*");
+    console.log("query: ", query);
+    console.log("court: ", court);
+    console.log("y_floor: ", y_floor);
+    console.log("y_ceil: ", y_ceil);
+    console.log("judgements: ", judgements);
+    console.log("judge: ", judge);
+    console.log("ptnr: ", ptnr);
+    console.log("resp: ", resp);
     Case.aggregate([
       {
         $match: {
@@ -191,8 +199,8 @@ module.exports = (router) => {
           },
           source: court,
           year: {
-            $lte: Number(y_ceil),
-            $gte: Number(y_floor),
+            $lte: y_ceil,
+            $gte: y_floor,
           },
           bench: {
             $regex: judge,
@@ -288,8 +296,10 @@ module.exports = (router) => {
       },
     ]).exec((err, result) => {
       if (err) {
+        console.log("error \n", err);
         return next(err);
       } else {
+        console.log("Data: \n", result);
         res.send(result);
       }
     });
@@ -313,8 +323,8 @@ module.exports = (router) => {
           },
           source: court,
           year: {
-            $lte: Number(y_ceil),
-            $gte: Number(y_floor),
+            $lte: y_ceil,
+            $gte: y_floor,
           },
           bench: {
             $regex: judge,
@@ -416,8 +426,8 @@ module.exports = (router) => {
           },
           source: court,
           year: {
-            $lte: Number(y_ceil),
-            $gte: Number(y_floor),
+            $lte: y_ceil,
+            $gte: y_floor,
           },
           bench: {
             $regex: judge,
@@ -537,8 +547,8 @@ module.exports = (router) => {
           },
           source: court,
           year: {
-            $lte: Number(y_ceil),
-            $gte: Number(y_floor),
+            $lte: y_ceil,
+            $gte: y_floor,
           },
           bench: {
             $regex: judge,
@@ -658,8 +668,8 @@ module.exports = (router) => {
           },
           source: court,
           year: {
-            $lte: Number(y_ceil),
-            $gte: Number(y_floor),
+            $lte: y_ceil,
+            $gte: y_floor,
           },
           bench: {
             $regex: judge,
@@ -784,8 +794,8 @@ module.exports = (router) => {
           },
           source: court,
           year: {
-            $lte: Number(y_ceil),
-            $gte: Number(y_floor),
+            $lte: y_ceil,
+            $gte: y_floor,
           },
           bench: {
             $regex: judge,
@@ -912,8 +922,8 @@ module.exports = (router) => {
           },
           source: court,
           year: {
-            $lte: Number(y_ceil),
-            $gte: Number(y_floor),
+            $lte: y_ceil,
+            $gte: y_floor,
           },
           bench: {
             $regex: judge,
@@ -1011,8 +1021,8 @@ module.exports = (router) => {
           },
           source: court,
           year: {
-            $lte: Number(y_ceil),
-            $gte: Number(y_floor),
+            $lte: y_ceil,
+            $gte: y_floor,
           },
           bench: {
             $regex: judge,
@@ -1122,6 +1132,7 @@ module.exports = (router) => {
       if (err) {
         return next(err);
       } else {
+        console.log("Data: \n", result);
         res.send(result);
       }
     });
@@ -1145,8 +1156,8 @@ module.exports = (router) => {
           },
           source: court,
           year: {
-            $lte: Number(y_ceil),
-            $gte: Number(y_floor),
+            $lte: y_ceil,
+            $gte: y_floor,
           },
           bench: {
             $regex: judge,
