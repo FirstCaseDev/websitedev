@@ -9,7 +9,7 @@
 
 <body>
   <div ng-init="rows" *ngIf="!isMobile">
-    <div class="grid-container">
+    <!-- <div class="grid-container">
       <div class="grid-item" id="filter-button">
         <img
           *ngIf="view_filters"
@@ -24,7 +24,7 @@
           src="../../assets/img/filter-left.svg"
         />
       </div>
-    </div>
+    </div> -->
 
     <div class="search-bar">
       <div class="input-group">
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="page-columns">
-      <div class="left" *ngIf="view_filters">
+      <!-- <div class="left" *ngIf="view_filters">
         <div>
           <button (click)="reset_filters()">Clear Filters</button>
           <div class="sort-option" style="margin: 20px 0px">
@@ -182,35 +182,71 @@
             <label for="respondentCounsel">Respondent Counsel</label>
           </div>
         </div>
-      </div>
-      <div class="right">
-        <div style="margin: 10px 20px">
-          <div id="tags-bar">
-            <h3>Search Tags</h3>
-            <div>
-              <input
-                type="text"
-                id="addTag"
-                placeholder="Add Tag"
-                [(ngModel)]="add_tag"
-              />
-              <button style="margin-left: 20px" (click)="addTag()">Add</button>
+      </div> -->
+      <div class="page">
+        <div id="tags-bar">
+          <div
+            style="
+              padding: 10px 20px 0 20px;
+              display: flex;
+              justify-content: space-between;
+            "
+          >
+            <div style="margin-bottom: 1em">
+              <h3 style="padding: 0; margin-bottom: 0">Search Tags</h3>
+              <p style="margin: 0 auto">
+                Add search tags according to different category to filter out
+                results
+              </p>
             </div>
+            <ul
+              style="
+                display: flex;
+                list-style-type: none;
+                align-items: center;
+                justify-content: space-evenly;
+              "
+            >
+              <li>
+                <input
+                  type="text"
+                  id="addTag"
+                  placeholder="Add Tag"
+                  [(ngModel)]="add_tag"
+                />
+              </li>
+              <li
+                style="
+                  background-color: #4a7feb;
+                  border-radius: 5px;
+                  padding: 0.7em 1.5em;
+                  margin-left: 20px;
+                  cursor: pointer;
+                  text-decoration: none;
+                  color: white;
+                "
+                (click)="addTag()"
+              >
+                <h3 style="margin: 0">Add</h3>
+              </li>
+            </ul>
           </div>
           <div
             style="
               display: flex;
-              width: 75vw;
+              border-top: 1px solid #bbb;
               flex-wrap: wrap;
               -webkit-flex-wrap: wrap;
             "
+            *ngIf="view_tags"
           >
-            <div *ngFor="let tag of tags_list">
+            <div style="margin-top: 10px" *ngFor="let tag of tags_list">
               <span class="tags-list-item"
                 >{{ tag
                 }}<img
                   style="margin-left: 10px"
                   width="10px"
+                  class="remove-tag"
                   src="../../assets/img/x-cross.svg"
               /></span>
             </div>
@@ -226,7 +262,7 @@
               Analytics
             </button>
             <button class="tab" id="citation_tab" (click)="show_citations()">
-              Citation Results
+              Intelligent Legal Output
             </button>
           </div>
         </div>
@@ -253,9 +289,9 @@
                     Source:
                     <strong style="font-weight: 300"> {{ data.source }}</strong>
                     | Date:
-                    <strong style="font-weight: 300"
-                      >{{ data.date }}/{{ data.month }}/{{ data.year }}</strong
-                    >
+                    <strong style="font-weight: 300">{{
+                      data.date.toLocaleString()
+                    }}</strong>
                   </h4>
                 </li>
 
@@ -439,6 +475,7 @@
                       </table>
                     </div>
                   </div>
+
                   <div class="tables-grid-item" style="display: flexbox">
                     <div>
                       <h2 style="text-align: center">Most Relevant Cases</h2>
@@ -578,7 +615,7 @@
       </div>
     </div>
     <div>
-      <div *ngIf="view_filters_mobile">
+      <div *ngIf="view_tags_mobile">
         <div>
           <button (click)="reset_filters()">Clear Filters</button>
           <div class="sort-option" style="margin: 20px 0px">
@@ -799,9 +836,9 @@
               <strong style="font-weight: 300"> {{ data.source }}</strong>
               <br />
               Date:
-              <strong style="font-weight: 300"
-                >{{ data.date }}/{{ data.month }}/{{ data.year }}</strong
-              >
+              <strong style="font-weight: 300">{{
+                data.date.toLocaleString()
+              }}</strong>
             </h4>
           </li>
           <li>
