@@ -46,7 +46,7 @@ var CaseSchema = new Schema(
       },
     },
     provisions_referred: {
-      type: "string",
+      type: "array",
     },
     respondent: {
       type: "string",
