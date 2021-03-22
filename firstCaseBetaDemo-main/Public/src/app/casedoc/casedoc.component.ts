@@ -56,7 +56,7 @@ export class CasedocComponent implements OnInit {
   provisions_referred_arr: provisions_referred_object[] = [];
 
   case_source_url = '';
-  view_tab = 1;
+  view_tab: any = 1;
   file: any = '';
   text: any = '';
   first_para = '';
@@ -100,12 +100,10 @@ export class CasedocComponent implements OnInit {
 
   search(_id: string) {
     this.casedocService.getCaseDoc(_id).subscribe((data: any) => {
-
       this.case = data.case;
       this.case_date = data.date;
       this.case_month = data.month;
       this.case_year = data.year;
-
 
       console.log('this.case.bench: ', this.case.bench);
       // this.bench_arr = this.case.bench;

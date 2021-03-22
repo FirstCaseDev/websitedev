@@ -362,8 +362,9 @@ export class CasesComponent implements OnInit {
   courtdata: any = [
     { id: 'Supreme Court of India', name: 'Supreme Court of India' },
     { id: 'Delhi High Court', name: 'Delhi High Court' },
-    { id: 'Allahabad High Court', name: 'Allahabad High Court' },
     { id: 'Bombay High Court', name: 'Bombay High Court' },
+    { id: 'Madras High Court', name: 'Madras High Court' },
+    { id: 'Calcutta High Court', name: 'Calcutta High Court' },
     // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
@@ -1340,7 +1341,7 @@ export class CasesComponent implements OnInit {
     this.year_range_selected = true;
   }
 
-  tags_list: Array<Object> = [];
+  tags_list: Array<any> = [];
   add_tag: string = '';
   no_of_tags = 0;
 
@@ -1363,26 +1364,26 @@ export class CasesComponent implements OnInit {
       var idx = elem.length - 1;
       switch (this.tagType.id) {
         case 'judgeName': {
-          elem[idx]?.className = 'tags-list-item tag-judgeName';
-          this.bench = elem[idx].textContent;
+          elem[idx].className = 'tags-list-item tag-judgeName';
+          this.bench = elem[idx].textContent!;
           break;
         }
         case 'petitionerName': {
-          elem[idx]?.className = 'tags-list-item tag-petitionerName';
-          this.petitioner = elem[idx].textContent;
+          elem[idx].className = 'tags-list-item tag-petitionerName';
+          this.petitioner = elem[idx].textContent!;
           break;
         }
         case 'petitionerCounsel': {
-          elem[idx]?.className = 'tags-list-item tag-petitionerCounsel';
+          elem[idx].className = 'tags-list-item tag-petitionerCounsel';
           break;
         }
         case 'respondentName': {
-          elem[idx]?.className = 'tags-list-item tag-respondentName';
-          this.respondent = elem[idx].textContent;
+          elem[idx].className = 'tags-list-item tag-respondentName';
+          this.respondent = elem[idx].textContent!;
           break;
         }
         case 'respondentCounsel': {
-          elem[idx]?.className = 'tags-list-item tag-respondentCounsel';
+          elem[idx].className = 'tags-list-item tag-respondentCounsel';
           break;
         }
       }
