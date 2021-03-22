@@ -708,6 +708,8 @@ export class CasesComponent implements OnInit {
           this.results_count = data.result_count;
         } else {
           alert(data.msg);
+          this.reset();
+          this.reset_filters();
         }
         this.loading = false;
       });
