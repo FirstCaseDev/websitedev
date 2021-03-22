@@ -33,7 +33,13 @@ var CaseSchema = new Schema(
     //     type: "string",
     //   },
     // },
+    day: {
+      type: "number",
+    },
     month: {
+      type: "string",
+    },
+    year: {
       type: "number",
     },
     petitioner: {
@@ -66,9 +72,6 @@ var CaseSchema = new Schema(
     url: {
       type: "string",
     },
-    year: {
-      type: "number",
-    },
   }
 
   //   {
@@ -95,7 +98,8 @@ CaseSchema.index({
   petitioner: "text",
   respondent: "text",
   date: "number",
-  month: "number",
+  day: "number",
+  month: "text",
   year: "number",
   doc_author: "text",
   bench: "text",

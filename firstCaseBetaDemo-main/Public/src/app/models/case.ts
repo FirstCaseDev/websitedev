@@ -6,6 +6,7 @@ export default class Case {
   petitioner!: String;
   respondent!: String;
   date!: String;
+  day!: String;
   month!: String;
   year!: String;
   doc_author!: String;
