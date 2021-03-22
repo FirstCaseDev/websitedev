@@ -8,7 +8,6 @@ import { Title } from '@angular/platform-browser';
 import * as copy from 'copy-to-clipboard';
 import { stringify } from '@angular/compiler/src/util';
 import { GoogleAnalyticsService } from '../google-analytics.service';
-import { Console } from 'console';
 
 @Component({
   selector: 'app-casedoc',
