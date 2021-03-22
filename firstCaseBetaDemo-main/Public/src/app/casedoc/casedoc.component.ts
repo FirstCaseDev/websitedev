@@ -286,20 +286,19 @@ export class CasedocComponent implements OnInit {
   results_count = 0;
 
   find_in_page() {
+    GoogleAnalyticsService.eventEmitter(
+      'casedoc_search_button',
+      'button',
+      'click',
+      this.query,
+      this.results_count
+    );
     this.tab1();
     if (this.query == '' || this.query == null) {
       this.searched = false;
       alert('Please enter a keyword');
     } else {
       this.searched = true;
-
-      GoogleAnalyticsService.eventEmitter(
-        'casedoc_search_button',
-        'button',
-        'click',
-        this.query,
-        this.results_count
-      );
 
       for (var i = 0; i < this.judgement_text_paragraphs.length; i++) {
         if (
