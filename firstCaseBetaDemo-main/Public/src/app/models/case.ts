@@ -1,10 +1,15 @@
+import provisions_referred_object from '../models/provisions_referred_object';
+
 export default class Case {
   _id!: String;
   judgement!: String;
   url!: String;
   source!: String;
   petitioner!: String;
+  petitioner_counsel!: Array<string>;
   respondent!: String;
+  respondent_counsel!: Array<string>;
+  cases_referred!: Array<string>;
   date!: String;
   day!: String;
   month!: String;
@@ -14,4 +19,5 @@ export default class Case {
   judgement_text!: String;
   title!: String;
   judgement_html!: String;
+  provisions_referred!: Array<provisions_referred_object>;
 }
