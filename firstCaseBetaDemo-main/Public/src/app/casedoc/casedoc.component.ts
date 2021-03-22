@@ -33,6 +33,7 @@ export class CasedocComponent implements OnInit {
     respondent: '',
     respondent_counsel: [],
     date: '',
+    day: '',
     month: '',
     year: '',
     doc_author: '',

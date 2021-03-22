@@ -11,6 +11,7 @@ export default class Case {
   respondent_counsel!: Array<string>;
   cases_referred!: Array<string>;
   date!: String;
+  day!: String;
   month!: String;
   year!: String;
   doc_author!: String;

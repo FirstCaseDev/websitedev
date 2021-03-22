@@ -24,52 +24,6 @@ export class CasesComponent implements OnInit {
   ) {}
 
   isMobile = false;
-
-  ngOnInit() {
-    if (localStorage.device_type == 'mobile') this.isMobile = true;
-    else this.isMobile = false;
-    // if (!localStorage.getItem('token_exp')) this.router.navigate(['/users'])
-    this.componentTitle.setTitle('FirstCase | Search');
-    this.pvb_init();
-    this.rvb_init();
-    this.courtlevel = this.courtdata[0];
-    this.sortBy = this.sort_options[0];
-    this.court = this.courtdata[0].name;
-    this.judgement_options = [
-      { item_id: 1, item_text: 'allowed' },
-      { item_id: 2, item_text: 'dismissed' },
-      { item_id: 3, item_text: 'tied / unclear' },
-      { item_id: 4, item_text: 'partly allowed' },
-      { item_id: 5, item_text: 'partly dismissed' },
-    ];
-    this.selectedJudgements = this.judgement_options;
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 5,
-      allowSearchFilter: this.ShowFilter,
-    };
-    this.myForm = this.fb.group({
-      city: [this.selectedJudgements],
-    });
-
-    // if (localStorage.getItem('token_exp')) {
-    //   var exp = parseInt(localStorage.token_exp);
-    //   var curr_time = new Date().getTime();
-    //   if (curr_time > exp) {
-    //     localStorage.removeItem('token_exp');
-    //     console.log('cases page: Previous token expired, login again!');
-    //     this.router.navigate(['/users']); // navigate to login page
-    //   }
-    // } else {
-    //   console.log('User not logged in, Login required');
-    //   this.router.navigate(['/users']); // navigate to login page
-    // }
-  }
-
   Highcharts = Highcharts;
   pvbChartOptions: Highcharts.Options = {};
   rvbChartOptions: Highcharts.Options = {};
@@ -79,6 +33,54 @@ export class CasesComponent implements OnInit {
   rvb_Counsel: any = [];
   pvb_data: any = [];
   rvb_data: any = [];
+  myForm: any;
+  disabled = false;
+  ShowFilter = false;
+  limitSelection = false;
+  searched: boolean = false;
+  view_search: boolean = false;
+  view_analytics: boolean = false;
+  view_analytics_mobile: boolean = false;
+  view_citations: boolean = false;
+  view_tags: boolean = false;
+  view_tags_mobile: boolean = false;
+  selectedJudgements: any = [];
+  dropdownSettings: any = {};
+  rows: Case[] = [];
+  cited_cases: any = [];
+  query: string = '';
+  results_count: number = 0;
+  arrayOne: Array<number> = [];
+  page: number = 1;
+  limit: number = 5;
+  judge: string = '';
+  court: string = '';
+  tagTypeValue: string = '';
+  curr_sort: string = 'relevance';
+  year: number = 2020;
+  judgement: Array<string> = [
+    'allowed',
+    'dismissed',
+    'tied / unclear',
+    'partly allowed',
+    'partly dismissed',
+  ];
+  bench: string = '';
+  petitioner: string = '';
+  respondent: string = '';
+  petitioner_counsel: string = '';
+  respondent_counsel: string = '';
+  courtlevel: any;
+  tagType: any;
+  sortBy: any;
+  defaultcourt: any;
+  loading: boolean = false;
+  CitedActNames: any = [];
+  CitedActCorrectedData: any = [];
+  CitedActCorrectedDataNames: any = [];
+  CitedProvisions: any = [];
+  charts_unloaded: boolean = true;
+  citations_unloaded: boolean = true;
 
   pvb_init() {
     this.pvbChartOptions = {
@@ -349,57 +351,37 @@ export class CasesComponent implements OnInit {
     { data: [], label: '', stack: 'a' },
   ];
 
-  myForm: any;
-  disabled = false;
-  ShowFilter = false;
-  limitSelection = false;
-  searched: boolean = false;
-  view_search: boolean = false;
-  view_analytics: boolean = false;
-  view_analytics_mobile: boolean = false;
-  view_citations: boolean = false;
-  view_tags: boolean = false;
-  view_tags_mobile: boolean = false;
-  judgement_options: any = [];
-  selectedJudgements: any = [];
-  dropdownSettings: any = {};
-  rows: Case[] = [];
-  cited_cases: any = [];
-  query: string = '';
-  results_count: number = 0;
-  arrayOne: Array<number> = [];
-  page: number = 1;
-  limit: number = 5;
-  judge: string = '';
-  court: string = '';
-  curr_sort: string = 'relevance';
-  year: number = 2020;
-  judgement: Array<string> = [
-    'allowed',
-    'dismissed',
-    'tied / unclear',
-    'partly allowed',
-    'partly dismissed',
+  judgement_options = [
+    { item_id: 1, item_text: 'Allowed' },
+    { item_id: 2, item_text: 'Dismissed' },
+    { item_id: 3, item_text: 'Tied or Unclear' },
+    { item_id: 4, item_text: 'Partly Allowed' },
+    { item_id: 5, item_text: 'Partly Dismissed' },
   ];
-  bench: string = '';
-  petitioner: string = '';
-  respondent: string = '';
-  petitioner_counsel: string = '';
-  respondent_counsel: string = '';
-  courtlevel: any;
-  sortBy: any;
-  defaultcourt: any;
-  loading: boolean = false;
-  CitedActNames: any = [];
-  CitedActCorrectedData: any = [];
-  CitedActCorrectedDataNames: any = [];
-  CitedProvisions: any = [];
-  charts_unloaded: boolean = true;
-  citations_unloaded: boolean = true;
 
   courtdata: any = [
     { id: 'Supreme Court of India', name: 'Supreme Court of India' },
     { id: 'Delhi High Court', name: 'Delhi High Court' },
+    { id: 'Allahabad High Court', name: 'Allahabad High Court' },
+    { id: 'Bombay High Court', name: 'Bombay High Court' },
+    // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
+    // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
+  ];
+
+  tagCategory: any = [
+    { id: 'judgeName', name: 'Judge Name', subtitle: 'Judge' },
+    { id: 'petitionerName', name: 'Petitioner Name', subtitle: 'Petitioner' },
+    {
+      id: 'petitionerCounsel',
+      name: 'Petitioner Counsel',
+      subtitle: 'Petitioner Counsel',
+    },
+    { id: 'respondentName', name: 'Respondent Name', subtitle: 'Respondent' },
+    {
+      id: 'respondentCounsel',
+      name: 'Respondent Counsel',
+      subtitle: 'Respondent Counsel',
+    },
     // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
@@ -453,6 +435,45 @@ export class CasesComponent implements OnInit {
   petitionerDatalabels: any = [];
   respondentDatalabels: any = [];
 
+  ngOnInit() {
+    if (localStorage.device_type == 'mobile') this.isMobile = true;
+    else this.isMobile = false;
+    // if (!localStorage.getItem('token_exp')) this.router.navigate(['/users'])
+    this.componentTitle.setTitle('FirstCase | Search');
+    this.pvb_init();
+    this.rvb_init();
+    this.courtlevel = this.courtdata[0];
+    this.tagType = this.tagCategory[0];
+    this.sortBy = this.sort_options[0];
+    this.court = this.courtdata[0].name;
+    this.selectedJudgements = this.judgement_options;
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 5,
+      allowSearchFilter: this.ShowFilter,
+    };
+    this.myForm = this.fb.group({
+      city: [this.selectedJudgements],
+    });
+
+    // if (localStorage.getItem('token_exp')) {
+    //   var exp = parseInt(localStorage.token_exp);
+    //   var curr_time = new Date().getTime();
+    //   if (curr_time > exp) {
+    //     localStorage.removeItem('token_exp');
+    //     console.log('cases page: Previous token expired, login again!');
+    //     this.router.navigate(['/users']); // navigate to login page
+    //   }
+    // } else {
+    //   console.log('User not logged in, Login required');
+    //   this.router.navigate(['/users']); // navigate to login page
+    // }
+  }
+
   onItemSelect(item: any) {
     // console.log('onItemSelect', this.selectedJudgements);
   }
@@ -486,6 +507,10 @@ export class CasesComponent implements OnInit {
     this.first_search();
   }
 
+  selected_tag() {
+    this.tagTypeValue = this.tagType.name;
+  }
+
   search_by_object_id() {
     this.caseService.getSpecificCase(this.query).subscribe((data: any) => {
       this.rows = data.case_list;
@@ -498,54 +523,77 @@ export class CasesComponent implements OnInit {
     this.search();
   }
 
+  search_on_enter_press(event: any) {
+    if (event.which == 13) {
+      this.first_search();
+    }
+  }
+
   toggle_analytics_mobile() {
     this.view_analytics_mobile = !this.view_analytics_mobile;
   }
 
   show_analytics() {
     this.loading = true;
-    if (this.charts_unloaded) {
-      this.getLineCharts();
-      this.getPetitionerChart();
-      this.getPieCharts();
-      this.getPtn_v_BenchChart();
-      this.getRespondentChart();
-      this.getRsp_v_BenchChart();
+    this.analytics_promise().then(() => {
       this.loading = false;
-      this.charts_unloaded = false;
-    }
-    this.view_search = false;
-    this.view_citations = false;
-    this.view_analytics = true;
-    let element = document.getElementById('analytics_tab');
-    element!.className = 'tab active';
-    let element2 = document.getElementById('search_tab');
-    element2!.className = 'tab';
-    let element3 = document.getElementById('citation_tab');
-    element3!.className = 'tab';
-    // console.log('view_search ' + this.view_search);
-    this.loading = false;
+    });
+  }
+
+  analytics_promise() {
+    return new Promise((resolve, reject) => {
+      if (this.charts_unloaded) {
+        this.getLineCharts();
+        this.getPetitionerChart();
+        this.getPieCharts();
+        this.getPtn_v_BenchChart();
+        this.getRespondentChart();
+        this.getRsp_v_BenchChart();
+        this.loading = false;
+        this.charts_unloaded = false;
+      }
+      this.view_search = false;
+      this.view_citations = false;
+      this.view_analytics = true;
+      let element = document.getElementById('analytics_tab');
+      element!.className = 'tab active';
+      let element2 = document.getElementById('search_tab');
+      element2!.className = 'tab';
+      let element3 = document.getElementById('citation_tab');
+      element3!.className = 'tab';
+      // console.log('view_search ' + this.view_search);
+
+      return resolve(true);
+    });
   }
 
   show_citations() {
     this.loading = true;
-    if (this.citations_unloaded) {
-      this.getCitedActs();
-      this.getCitedCases();
-      this.getCitedLaws();
-      this.citations_unloaded = false;
-    }
-    this.view_search = false;
-    this.view_analytics = false;
-    this.view_citations = true;
-    let element = document.getElementById('citation_tab');
-    element!.className = 'tab active';
-    let element2 = document.getElementById('search_tab');
-    element2!.className = 'tab';
-    let element3 = document.getElementById('analytics_tab');
-    element3!.className = 'tab ';
-    this.loading = false;
-    // console.log('view_search ' + this.view_search);
+    this.citations_promise().then(() => {
+      this.loading = false;
+    });
+  }
+
+  citations_promise() {
+    return new Promise((resolve, reject) => {
+      if (this.citations_unloaded) {
+        this.getCitedActs();
+        this.getCitedCases();
+        this.getCitedLaws();
+        this.citations_unloaded = false;
+      }
+      this.view_search = false;
+      this.view_analytics = false;
+      this.view_citations = true;
+      let element = document.getElementById('citation_tab');
+      element!.className = 'tab active';
+      let element2 = document.getElementById('search_tab');
+      element2!.className = 'tab';
+      let element3 = document.getElementById('analytics_tab');
+      element3!.className = 'tab ';
+      this.loading = false;
+      // console.log('view_search ' + this.view_search);
+    });
   }
 
   show_search() {
@@ -569,6 +617,9 @@ export class CasesComponent implements OnInit {
   reset_filters() {
     // this.selectedJudgements = [];
     this.bench = '';
+    this.tags_list = [];
+    this.tagType = this.tagCategory[0];
+    this.no_of_tags = 0;
     // this.court = '';
     this.sortBy = this.sort_options[0];
     this.petitioner = '';
@@ -579,7 +630,45 @@ export class CasesComponent implements OnInit {
     this.y_ceil = new Date().getFullYear();
   }
 
+  reset_on_search_change() {
+    // this.view_tags = false;
+    // this.tags_list = [];
+    // this.tagType = this.tagCategory[0];
+    this.CitedActNames = [];
+    this.CitedProvisions = [];
+    // this.searched = false;
+    // this.no_of_tags = 0;
+    // this.view_search = false;
+    // this.sortBy = this.sort_options[0];
+    // this.query = '';
+    // this.add_tag = '';
+    // this.bench = '';
+    // this.petitioner = '';
+    // this.respondent = '';
+    this.rows.length = 0;
+    this.cited_cases.length = 0;
+    this.results_count = 0;
+    this.chartData = [
+      { data: [], label: '', stack: 'a' },
+      { data: [], label: '', stack: 'a' },
+      { data: [], label: '', stack: 'a' },
+      { data: [], label: '', stack: 'a' },
+      { data: [], label: '', stack: 'a' },
+    ];
+    this.pvb_Bench = [];
+    this.pvb_Counsel = [];
+    this.pvb_data = [];
+    this.rvb_Bench = [];
+    this.rvb_Counsel = [];
+    this.rvb_data = [];
+    this.chartLabels = [1990, 2000, 2010, 2020];
+    this.doughnutChartData = [[350, 450, 100]];
+    this.doughnutChartLabels = ['Allowed', 'Dismissed', 'Tied or Unclear'];
+    this.selectedJudgements = this.judgement_options;
+  }
+
   search() {
+    this.reset_on_search_change();
     this.searched = true;
     this.view_search = true;
     this.charts_unloaded = true;
@@ -612,7 +701,7 @@ export class CasesComponent implements OnInit {
         this.y_ceil
       )
       .subscribe((data: any) => {
-        // console.log(data.case_list);
+        console.log(data.case_list);
         if (data.success) {
           this.rows = data.case_list;
           console.log(this.rows);
@@ -1168,12 +1257,17 @@ export class CasesComponent implements OnInit {
   }
 
   reset() {
+    this.view_tags = false;
+    this.tags_list = [];
+    this.tagType = this.tagCategory[0];
     this.CitedActNames = [];
     this.CitedProvisions = [];
     this.searched = false;
+    this.no_of_tags = 0;
     this.view_search = false;
     this.sortBy = this.sort_options[0];
     this.query = '';
+    this.add_tag = '';
     this.bench = '';
     this.petitioner = '';
     this.respondent = '';
@@ -1246,28 +1340,76 @@ export class CasesComponent implements OnInit {
     this.year_range_selected = true;
   }
 
-  tags_list: Array<String> = [];
+  tags_list: Array<Object> = [];
   add_tag: string = '';
+  no_of_tags = 0;
+
   addTag() {
+    var object = {
+      value: this.add_tag,
+      type: this.tagType.subtitle,
+    };
     this.view_tags = true;
-    if (!this.tags_list.includes(this.add_tag))
-      this.tags_list.push(this.add_tag);
-    this.no_of_tags = this.no_of_tags + 1;
-    this.IdTags();
+    if (!this.tags_list.includes(object)) {
+      this.tags_list.push(object);
+      this.no_of_tags = this.no_of_tags + 1;
+    }
+    setTimeout(() => {
+      this.IdTags();
+    }, 500);
+    setTimeout(() => {
+      var elem = document.getElementsByClassName('tags-list-item');
+      console.log(elem);
+      var idx = elem.length - 1;
+      switch (this.tagType.id) {
+        case 'judgeName': {
+          elem[idx]?.className = 'tags-list-item tag-judgeName';
+          this.bench = elem[idx].textContent;
+          break;
+        }
+        case 'petitionerName': {
+          elem[idx]?.className = 'tags-list-item tag-petitionerName';
+          this.petitioner = elem[idx].textContent;
+          break;
+        }
+        case 'petitionerCounsel': {
+          elem[idx]?.className = 'tags-list-item tag-petitionerCounsel';
+          break;
+        }
+        case 'respondentName': {
+          elem[idx]?.className = 'tags-list-item tag-respondentName';
+          this.respondent = elem[idx].textContent;
+          break;
+        }
+        case 'respondentCounsel': {
+          elem[idx]?.className = 'tags-list-item tag-respondentCounsel';
+          break;
+        }
+      }
+    }, 500);
   }
 
-  removeTag(id: any) {
-    var tagValue = document.getElementById(id)?.textContent;
-    // this.tags_list.indexOf(tagValue);
-    this.tags_list.push(this.add_tag);
-    this.no_of_tags = this.no_of_tags - 1;
-    this.IdTags();
-  }
-  no_of_tags = 0;
   IdTags() {
-    var elem = document.getElementsByClassName('remove-tag');
+    var elem = document.getElementsByClassName('tags-list-item');
     for (var i = 0; i < elem.length; i++) {
-      elem[i].setAttribute('id', 'tag' + String(i));
+      var child_img = elem[i].getElementsByTagName('img');
+      child_img[0].setAttribute('id', 'remtag' + String(i));
     }
+  }
+
+  removeTag(event: any) {
+    var id = event.target.attributes.id.value;
+    var idx = Number(id.charAt(id.length - 1));
+    this.tags_list.splice(idx, 1);
+    if (this.tags_list.length == 0) this.view_tags = false;
+    else this.IdTags();
+    this.no_of_tags = this.no_of_tags - 1;
+  }
+
+  check_curr_data() {
+    console.log('bench: ', this.bench);
+    console.log('petitioner: ', this.petitioner);
+    console.log('respondent: ', this.respondent);
+    console.log('tags_list: ', this.tags_list);
   }
 }

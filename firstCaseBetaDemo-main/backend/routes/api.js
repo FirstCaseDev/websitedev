@@ -53,6 +53,22 @@ module.exports = (router) => {
             $lte: y_ceil,
             $gte: y_floor,
           },
+          bench: {
+            $regex: judge,
+            $options: "i",
+          },
+          petitioner: {
+            $regex: ptnr,
+            $options: "i",
+          },
+          respondent: {
+            $regex: resp,
+            $options: "i",
+          },
+          judgement: {
+            $regex: judgements,
+            $options: "i",
+          },
         },
       },
       {
@@ -66,6 +82,7 @@ module.exports = (router) => {
           _id: 1,
           year: 1,
           month: 1,
+          day: 1,
           date: 1,
           petitioner: 1,
           respondent: 1,
@@ -162,7 +179,9 @@ module.exports = (router) => {
             result_count: case_list[0].metadata[0].total,
             success: true,
             msg: "Success",
+            day: case_list[0].data[0].day,
           });
+          console.log(case_list[0].data[0].day);
         } else {
           res.json({
             success: false,
