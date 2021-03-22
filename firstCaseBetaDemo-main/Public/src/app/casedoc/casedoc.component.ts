@@ -8,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 import * as copy from 'copy-to-clipboard';
 import { stringify } from '@angular/compiler/src/util';
 import { GoogleAnalyticsService } from '../google-analytics.service';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-casedoc',
@@ -21,14 +22,13 @@ export class CasedocComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private componentTitle: Title
   ) {}
-
   casedoc_tab_clicked() {
     GoogleAnalyticsService.eventEmitter(
-      'Casedoc_Tab_visit',
-      'button',
-      'click',
+      'Casedoc_page_visit',
       'title',
-      this.results_count
+      'click',
+      String(this.case.title),
+      0
     );
   }
 
@@ -80,7 +80,6 @@ export class CasedocComponent implements OnInit {
   isMobile = false;
 
   ngOnInit(): void {
-    this.casedoc_tab_clicked();
     if (localStorage.device_type == 'mobile') this.isMobile = true;
     else this.isMobile = false;
     // console.log('this.url: ', this.url);
@@ -135,6 +134,7 @@ export class CasedocComponent implements OnInit {
       this.file = this.sanitizer.bypassSecurityTrustHtml(
         String(this.case.judgement_html)
       );
+      this.casedoc_tab_clicked();
       // this.text = this.case.judgement_text.replace(
       //   new RegExp('{^newline^}', 'g'),
       //   '<br/>'
@@ -144,7 +144,24 @@ export class CasedocComponent implements OnInit {
     });
   }
 
+  casedoc_download_button_google_analytics() {
+    GoogleAnalyticsService.eventEmitter(
+      'Casedoc_Download_case',
+      'button',
+      'click',
+      String(this.case.url),
+      0
+    );
+  }
+
   tab1() {
+    GoogleAnalyticsService.eventEmitter(
+      'Casedoc_Judgement_button',
+      'button',
+      'click',
+      'Judgement',
+      0
+    );
     this.view_tab = 1;
     this.right_menu_btn_visible = true;
     let element = document.getElementById('show_judgement');
@@ -157,6 +174,13 @@ export class CasedocComponent implements OnInit {
     element4!.className = 'tab';
   }
   tab2() {
+    GoogleAnalyticsService.eventEmitter(
+      'Casedoc_Bench&Counsel_button',
+      'button',
+      'click',
+      'Bench & Counsel',
+      0
+    );
     this.view_tab = 2;
     this.right_menu_btn_visible = false;
     this.toggle_right_menu = false;
@@ -183,6 +207,13 @@ export class CasedocComponent implements OnInit {
   //   element5!.className = 'tab';
   // }
   tab3() {
+    GoogleAnalyticsService.eventEmitter(
+      'Casedoc_Act/Law_Citiations_button',
+      'button',
+      'click',
+      'Act/Law Citiations',
+      0
+    );
     this.view_tab = 3;
     this.right_menu_btn_visible = false;
     this.toggle_right_menu = false;
@@ -196,6 +227,13 @@ export class CasedocComponent implements OnInit {
     element4!.className = 'tab';
   }
   tab4() {
+    GoogleAnalyticsService.eventEmitter(
+      'Casedoc_CaseCitiations_button',
+      'button',
+      'click',
+      'Case Citiations',
+      0
+    );
     this.view_tab = 4;
     this.right_menu_btn_visible = false;
     this.toggle_right_menu = false;
@@ -227,7 +265,7 @@ export class CasedocComponent implements OnInit {
 
   copy_link() {
     GoogleAnalyticsService.eventEmitter(
-      'copy_link_to_clipboard',
+      'casedoc_copy_link_to_clipboard',
       'button',
       'click',
       this.page_url + this.router.url,

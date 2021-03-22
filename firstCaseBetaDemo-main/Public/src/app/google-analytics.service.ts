@@ -19,5 +19,6 @@ export class GoogleAnalyticsService {
       eventAction: eventAction,
       eventValue: eventValue,
     });
+    console.log(eventName, eventCategory, eventAction, eventLabel, eventValue);
   }
 }

@@ -612,10 +612,10 @@ export class CasesComponent implements OnInit {
     this.view_analytics = false;
     this.view_citations = false;
     GoogleAnalyticsService.eventEmitter(
-      'citations_tab',
+      'search_tab',
       'button',
       'click',
-      'Citations Tab',
+      'Search Tab',
       this.results_count
     );
     let element = document.getElementById('search_tab');
@@ -1376,16 +1376,12 @@ export class CasesComponent implements OnInit {
     this.view_tags = true;
     GoogleAnalyticsService.eventEmitter(
       'add_tag',
-      'Tags_Add',
+      this.tagType.subtitle,
       'click',
       this.add_tag,
       this.results_count
     );
 
-    if (!this.tags_list.includes(this.add_tag))
-      this.tags_list.push(this.add_tag);
-    this.no_of_tags = this.no_of_tags + 1;
-    this.IdTags();
     if (!this.tags_list.includes(object)) {
       this.tags_list.push(object);
       this.no_of_tags = this.no_of_tags + 1;
