@@ -7,6 +7,7 @@ import { CasedocService } from './casedoc.service';
 import { Title } from '@angular/platform-browser';
 import * as copy from 'copy-to-clipboard';
 import { stringify } from '@angular/compiler/src/util';
+import { GoogleAnalyticsService } from '../google-analytics.service';
 
 @Component({
   selector: 'app-casedoc',
@@ -20,6 +21,17 @@ export class CasedocComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private componentTitle: Title
   ) {}
+
+  casedoc_tab_clicked() {
+    GoogleAnalyticsService.eventEmitter(
+      'Casedoc_Tab_visit',
+      'button',
+      'click',
+      'title',
+      this.results_count
+    );
+  }
+
   caseid: string = '';
   loading: boolean = false;
   judgement_text_paragraphs: any[] = [];
@@ -65,6 +77,7 @@ export class CasedocComponent implements OnInit {
   isMobile = false;
 
   ngOnInit(): void {
+    this.casedoc_tab_clicked();
     if (localStorage.device_type == 'mobile') this.isMobile = true;
     else this.isMobile = false;
     this.caseid = this.url.split('/')[2];
@@ -208,6 +221,14 @@ export class CasedocComponent implements OnInit {
   copied = false;
 
   copy_link() {
+    GoogleAnalyticsService.eventEmitter(
+      'copy_link_to_clipboard',
+      'button',
+      'click',
+      this.page_url + this.router.url,
+      this.results_count
+    );
+
     copy(this.page_url + this.router.url);
     console.log('copied');
     this.copied = true;
@@ -228,6 +249,15 @@ export class CasedocComponent implements OnInit {
       alert('Please enter a keyword');
     } else {
       this.searched = true;
+
+      GoogleAnalyticsService.eventEmitter(
+        'casedoc_search_button',
+        'button',
+        'click',
+        this.query,
+        this.results_count
+      );
+
       for (var i = 0; i < this.judgement_text_paragraphs.length; i++) {
         if (
           this.judgement_text_paragraphs[i] === undefined ||

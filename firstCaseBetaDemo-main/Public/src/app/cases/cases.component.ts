@@ -36,7 +36,6 @@ export class CasesComponent implements OnInit {
       this.results_count
     );
   }
-
   isMobile = false;
 
   ngOnInit() {
@@ -518,6 +517,14 @@ export class CasesComponent implements OnInit {
 
   show_analytics() {
     this.loading = true;
+    GoogleAnalyticsService.eventEmitter(
+      'Analytics_tab',
+      'button',
+      'click',
+      'Analytics Tab',
+      this.results_count
+    );
+
     if (this.charts_unloaded) {
       this.getLineCharts();
       this.getPetitionerChart();
@@ -539,18 +546,17 @@ export class CasesComponent implements OnInit {
     element3!.className = 'tab';
     // console.log('view_search ' + this.view_search);
     this.loading = false;
-
-    GoogleAnalyticsService.eventEmitter(
-      'Analytics_tab',
-      'button',
-      'click',
-      'Analytics Tab',
-      this.results_count
-    );
   }
 
   show_citations() {
     this.loading = true;
+    GoogleAnalyticsService.eventEmitter(
+      'citations_tab',
+      'button',
+      'click',
+      'Citations Tab',
+      this.results_count
+    );
     if (this.citations_unloaded) {
       this.getCitedActs();
       this.getCitedCases();
@@ -567,13 +573,7 @@ export class CasesComponent implements OnInit {
     let element3 = document.getElementById('analytics_tab');
     element3!.className = 'tab ';
     this.loading = false;
-    GoogleAnalyticsService.eventEmitter(
-      'citations_tab',
-      'button',
-      'click',
-      'Citations Tab',
-      this.results_count
-    );
+
     // console.log('view_search ' + this.view_search);
   }
 
@@ -581,13 +581,6 @@ export class CasesComponent implements OnInit {
     this.view_search = true;
     this.view_analytics = false;
     this.view_citations = false;
-    let element = document.getElementById('search_tab');
-    element!.className = 'tab active';
-    let element2 = document.getElementById('analytics_tab');
-    element2!.className = 'tab';
-    let element3 = document.getElementById('citation_tab');
-    element3!.className = 'tab';
-    // console.log('view_search ' + this.view_search);
     GoogleAnalyticsService.eventEmitter(
       'citations_tab',
       'button',
@@ -595,6 +588,13 @@ export class CasesComponent implements OnInit {
       'Citations Tab',
       this.results_count
     );
+    let element = document.getElementById('search_tab');
+    element!.className = 'tab active';
+    let element2 = document.getElementById('analytics_tab');
+    element2!.className = 'tab';
+    let element3 = document.getElementById('citation_tab');
+    element3!.className = 'tab';
+    // console.log('view_search ' + this.view_search);
   }
 
   toggle_filters() {
@@ -1286,6 +1286,14 @@ export class CasesComponent implements OnInit {
   add_tag: string = '';
   addTag() {
     this.view_tags = true;
+    GoogleAnalyticsService.eventEmitter(
+      'add_tag',
+      'Tags_Add',
+      'click',
+      this.add_tag,
+      this.results_count
+    );
+
     if (!this.tags_list.includes(this.add_tag))
       this.tags_list.push(this.add_tag);
     this.no_of_tags = this.no_of_tags + 1;
