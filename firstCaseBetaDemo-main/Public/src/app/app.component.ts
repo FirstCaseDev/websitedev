@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (this.isMobile) localStorage.setItem('device_type', 'mobile');
     else localStorage.setItem('device_type', 'other');
-    console.log('isMobile = ', this.isMobile);
+    // console.log('isMobile = ', this.isMobile);
   }
   isLoggedIn: boolean = false;
 
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('token_exp');
     localStorage.removeItem('firstcase_user_username');
     localStorage.removeItem('request_url');
-    console.log('User logged out');
+    // console.log('User logged out');
   }
 
   show_mobile_menu() {

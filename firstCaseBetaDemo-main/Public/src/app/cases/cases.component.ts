@@ -365,6 +365,7 @@ export class CasesComponent implements OnInit {
     { id: 'Bombay High Court', name: 'Bombay High Court' },
     { id: 'Madras High Court', name: 'Madras High Court' },
     { id: 'Calcutta High Court', name: 'Calcutta High Court' },
+    { id: 'Allahabad High Court', name: 'Allahabad High Court' },
     // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
@@ -536,65 +537,50 @@ export class CasesComponent implements OnInit {
 
   show_analytics() {
     this.loading = true;
-    this.analytics_promise().then(() => {
-      this.loading = false;
-    });
-  }
+    // console.log('show_analytics start - loading: ', this.loading);
+    if (this.charts_unloaded) {
+      this.getLineCharts();
+      this.getPetitionerChart();
+      this.getPieCharts();
+      this.getPtn_v_BenchChart();
+      this.getRespondentChart();
+      this.getRsp_v_BenchChart();
+      this.charts_unloaded = false;
+    }
+    this.view_search = false;
+    this.view_citations = false;
+    this.view_analytics = true;
+    let element = document.getElementById('analytics_tab');
+    element!.className = 'tab active';
+    let element2 = document.getElementById('search_tab');
+    element2!.className = 'tab';
+    let element3 = document.getElementById('citation_tab');
+    element3!.className = 'tab';
+    // console.log('show_analytics end - loading: ', this.loading);
 
-  analytics_promise() {
-    return new Promise((resolve, reject) => {
-      if (this.charts_unloaded) {
-        this.getLineCharts();
-        this.getPetitionerChart();
-        this.getPieCharts();
-        this.getPtn_v_BenchChart();
-        this.getRespondentChart();
-        this.getRsp_v_BenchChart();
-        this.loading = false;
-        this.charts_unloaded = false;
-      }
-      this.view_search = false;
-      this.view_citations = false;
-      this.view_analytics = true;
-      let element = document.getElementById('analytics_tab');
-      element!.className = 'tab active';
-      let element2 = document.getElementById('search_tab');
-      element2!.className = 'tab';
-      let element3 = document.getElementById('citation_tab');
-      element3!.className = 'tab';
-      // console.log('view_search ' + this.view_search);
-
-      return resolve(true);
-    });
+    // console.log('view_search ' + this.view_search);
   }
 
   show_citations() {
     this.loading = true;
-    this.citations_promise().then(() => {
-      this.loading = false;
-    });
-  }
+    // console.log('show_citations start - loading: ', this.loading);
+    if (this.citations_unloaded) {
+      this.getCitedActs();
+      this.getCitedCases();
+      this.getCitedLaws();
+      this.citations_unloaded = false;
+    }
+    this.view_search = false;
+    this.view_analytics = false;
+    this.view_citations = true;
+    let element = document.getElementById('citation_tab');
+    element!.className = 'tab active';
+    let element2 = document.getElementById('search_tab');
+    element2!.className = 'tab';
+    let element3 = document.getElementById('analytics_tab');
+    element3!.className = 'tab ';
 
-  citations_promise() {
-    return new Promise((resolve, reject) => {
-      if (this.citations_unloaded) {
-        this.getCitedActs();
-        this.getCitedCases();
-        this.getCitedLaws();
-        this.citations_unloaded = false;
-      }
-      this.view_search = false;
-      this.view_analytics = false;
-      this.view_citations = true;
-      let element = document.getElementById('citation_tab');
-      element!.className = 'tab active';
-      let element2 = document.getElementById('search_tab');
-      element2!.className = 'tab';
-      let element3 = document.getElementById('analytics_tab');
-      element3!.className = 'tab ';
-      this.loading = false;
-      // console.log('view_search ' + this.view_search);
-    });
+    // console.log('view_search ' + this.view_search);
   }
 
   show_search() {
@@ -682,6 +668,7 @@ export class CasesComponent implements OnInit {
       }
     }
     this.loading = true;
+    // console.log('search start - loading: ', this.loading);
     this.judgement = [];
     this.selectedJudgements.map((item: any) => {
       this.judgement.push(item.item_text);
@@ -702,10 +689,10 @@ export class CasesComponent implements OnInit {
         this.y_ceil
       )
       .subscribe((data: any) => {
-        console.log(data.case_list);
+        // console.log(data.case_list);
         if (data.success) {
           this.rows = data.case_list;
-          console.log(this.rows);
+          // console.log(this.rows);
           this.results_count = data.result_count;
         } else {
           alert(data.msg);
@@ -713,6 +700,7 @@ export class CasesComponent implements OnInit {
           this.reset_filters();
         }
         this.loading = false;
+        // console.log('search end - loading: ', this.loading);
       });
 
     if (Boolean(this.view_search) == false) this.show_search();
@@ -732,7 +720,7 @@ export class CasesComponent implements OnInit {
         this.y_ceil
       )
       .subscribe((data: any) => {
-        console.log(data);
+        // console.log(data);
         this.chartLabels.length = 0;
         this.Datalabels.length = 0;
         try {
@@ -772,7 +760,7 @@ export class CasesComponent implements OnInit {
             this.chartData[i].stack = 'a';
           }
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       });
   }
@@ -802,7 +790,7 @@ export class CasesComponent implements OnInit {
             arr.push(item.value);
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
 
         this.doughnutChartData = arr;
@@ -908,7 +896,7 @@ export class CasesComponent implements OnInit {
           // console.log(this.petitionerChartData);
           // console.log(this.petitionerChartLabels);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       });
   }
@@ -1010,7 +998,7 @@ export class CasesComponent implements OnInit {
             this.respondentChartLimit
           );
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       });
   }
@@ -1066,7 +1054,7 @@ export class CasesComponent implements OnInit {
           // console.log(this.pvb_data);
           this.pvb_init();
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       });
   }
@@ -1123,9 +1111,9 @@ export class CasesComponent implements OnInit {
           // console.log(this.rvb_data);
           this.rvb_init();
           this.loading = false;
-          this.searched = true;
+          // console.log('getRsp_v_BenchChart end - loading: ', this.loading);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       });
   }
@@ -1146,7 +1134,7 @@ export class CasesComponent implements OnInit {
         try {
           this.cited_cases = data;
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       });
   }
@@ -1173,7 +1161,7 @@ export class CasesComponent implements OnInit {
           this.CitedActCorrectedData = data;
           // console.log(this.CitedActCorrectedData);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       });
   }
@@ -1215,7 +1203,7 @@ export class CasesComponent implements OnInit {
               }
             }
             while (this.CitedActCorrectedData.length == 0) {
-              console.log('waiting');
+              // console.log('waiting');
             }
             var temp = this.CitedActCorrectedData.find(
               (el: any) => el.group === this.CitedActNames[i]
@@ -1252,10 +1240,12 @@ export class CasesComponent implements OnInit {
               section_sums: section_occurrences[z],
             });
           }
-          console.log(this.CitedProvisions);
+          // console.log(this.CitedProvisions);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
+        this.loading = false;
+        // console.log('getCitedLaws end - loading: ', this.loading);
       });
   }
 
@@ -1362,7 +1352,7 @@ export class CasesComponent implements OnInit {
     }, 500);
     setTimeout(() => {
       var elem = document.getElementsByClassName('tags-list-item');
-      console.log(elem);
+      // console.log(elem);
       var idx = elem.length - 1;
       switch (this.tagType.id) {
         case 'judgeName': {
@@ -1410,9 +1400,9 @@ export class CasesComponent implements OnInit {
   }
 
   check_curr_data() {
-    console.log('bench: ', this.bench);
-    console.log('petitioner: ', this.petitioner);
-    console.log('respondent: ', this.respondent);
-    console.log('tags_list: ', this.tags_list);
+    // console.log('bench: ', this.bench);
+    // console.log('petitioner: ', this.petitioner);
+    // console.log('respondent: ', this.respondent);
+    // console.log('tags_list: ', this.tags_list);
   }
 }

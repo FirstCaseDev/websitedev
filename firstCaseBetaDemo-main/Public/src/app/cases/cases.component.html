@@ -859,7 +859,7 @@
       </div>
       <div *ngIf="view_analytics_mobile">
         <div *ngIf="searched">
-          <div>
+          <div style="display: grid; grid-template-columns: 50% 50%">
             <div>
               <canvas
                 style="width: fit-content"
@@ -905,7 +905,7 @@
                 [chartType]="respondentChartType"
               ></canvas>
             </div>
-            <div>
+            <!-- <div>
               <highcharts-chart
                 style="width: fit-content"
                 [Highcharts]="Highcharts"
@@ -920,7 +920,7 @@
                 [options]="rvbChartOptions"
               >
               </highcharts-chart>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
