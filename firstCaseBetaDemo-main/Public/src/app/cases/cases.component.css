@@ -113,6 +113,10 @@ div.loading_animation {
   font-size: small;
 }
 
+.nav {
+  margin: 0 50px;
+}
+
 .slides {
   overflow: auto;
   scroll-snap-type: mandatory;
@@ -120,6 +124,7 @@ div.loading_animation {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   padding: 20px;
+  margin: 0 50px;
 }
 
 .slides::-webkit-scrollbar {
@@ -176,14 +181,13 @@ div.loading_animation {
   padding-top: 30px;
 }
 
-::ng-deep .multiselect-dropdown .dropdown-btn {
+/* ::ng-deep .multiselect-dropdown .dropdown-btn {
   width: 95% !important;
   padding: 10px;
   margin-left: 0px;
   margin-right: 0px;
   width: auto;
   padding: 10px 45px 10px 15px;
-  /* font-size: 16px; */
   border: 1px solid #ccc;
   border-radius: 15px !important;
   height: auto;
@@ -199,25 +203,31 @@ div.loading_animation {
 
 ::ng-deep .multiselect-parent .dropdown-toggle {
   background-color: rgb(128, 40, 40);
-  width: 95% !important;
+  width: 80% !important;
   margin: 10px;
 }
 
 ::ng-deep .multiselect-dropdown {
-  width: 95% !important;
+  width: 60% !important;
   margin: 5px;
 }
 
 ::ng-deep .multiselect-dropdown .dropdown-btn .dropdown-multiselect__caret {
   width: 8% !important;
-  margin: 40px;
+  margin: 20px;
+} */
+
+::ng-deep .multiselect-dropdown {
+  width: 80% !important;
+}
+::ng-deep .selected-item {
+  border-radius: 5px !important;
+  margin-bottom: 3px !important;
 }
 
 /* Dropdown styling */
 
 select {
-  margin-left: 10px;
-  margin-right: 10px;
   width: auto;
   padding: 10px 45px 10px 15px;
   /* font-size: 16px; */
@@ -489,7 +499,7 @@ button:hover {
 
 .graphs-grid-container {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 50% 50%;
   padding: 10px;
 }
 
@@ -578,7 +588,6 @@ button:hover {
 section.range-slider {
   position: relative;
   width: 300px;
-  height: 300px;
   float: left;
   text-align: center;
 }
@@ -769,7 +778,7 @@ section.range-slider input[type="range"]::-moz-focus-outer {
   z-index: 5;
   align-items: center;
   margin: 0.3em;
-  border-radius: 2em;
+  border-radius: 20px;
   box-sizing: border-box;
   text-decoration: none;
   font-family: PopRegular;
@@ -795,4 +804,21 @@ section.range-slider input[type="range"]::-moz-focus-outer {
   width: 25px;
   height: 25px;
   margin: -25px 0 0 -25px;
+}
+
+.tag-judgeName {
+  background-color: #03365f;
+}
+.tag-petitionerName {
+  background-color: #006400;
+}
+.tag-petitionerCounsel {
+  background-color: #ff5100;
+}
+.tag-respondentName {
+  background-color: #19212f;
+}
+.tag-respondentCounsel {
+  background-color: #ffff00;
+  color: #444;
 }

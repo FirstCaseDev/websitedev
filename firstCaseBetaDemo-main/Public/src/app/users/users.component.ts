@@ -31,14 +31,14 @@ export class UsersComponent implements OnInit {
       var curr_time = new Date().getTime();
       if (curr_time < exp) {
         this.router.navigate(['/cases']); // navigate to other page
-        console.log('User already logged in');
+        // console.log('User already logged in');
         this.isLoggedIn = true;
       } else {
         localStorage.removeItem('token_exp');
-        console.log('users page: Previous token expired, login again!');
+        // console.log('users page: Previous token expired, login again!');
       }
     } else {
-      console.log('User not logged in');
+      // console.log('User not logged in');
       this.isLoggedIn = false;
     }
   }
@@ -94,7 +94,7 @@ export class UsersComponent implements OnInit {
         this.isLoggedIn = true;
         this.loginClicked = true;
         localStorage.setItem('firstcase_user_username', data.username);
-        console.log(localStorage.getItem('firstcase_user_username'));
+        // console.log(localStorage.getItem('firstcase_user_username'));
         setTimeout(() => {
           var request_url = localStorage.getItem('request_url');
           if (request_url) {
@@ -104,7 +104,7 @@ export class UsersComponent implements OnInit {
         }, 1500);
         this.usersService.setTokenExp(data.exp);
         this.appComponent.isLoggedIn = true;
-        console.log('User logged in');
+        // console.log('User logged in');
       } else if (data.msg == 'Fields required') {
       } else {
         this.reset();
@@ -121,7 +121,7 @@ export class UsersComponent implements OnInit {
     this.regData.organisation = this.organisation;
     this.regData.position = this.position;
     this.usersService.registerUser(this.regData).subscribe((data: any) => {
-      console.log(data);
+      // console.log(data);
       if (data.success) {
         this.reset();
       } else if (data.msg == 'Fields required') {

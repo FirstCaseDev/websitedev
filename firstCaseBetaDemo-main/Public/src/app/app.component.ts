@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (this.isMobile) localStorage.setItem('device_type', 'mobile');
     else localStorage.setItem('device_type', 'other');
-    console.log('isMobile = ', this.isMobile);
+    //console.log('isMobile = ', this.isMobile);
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         gtag('config', 'G-DLMYJT00J2', {
@@ -39,21 +39,21 @@ export class AppComponent implements OnInit {
       }
     });
   }
-  isLoggedIn: boolean = true;
+  isLoggedIn: boolean = false;
 
   ngOnInit(): void {
     this.metaService.addTags([
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ]);
-    // if (localStorage.getItem('token_exp')) this.isLoggedIn = true;
-    // else this.isLoggedIn = false;
+    if (localStorage.getItem('token_exp')) this.isLoggedIn = true;
+    else this.isLoggedIn = false;
   }
 
   logout() {
     localStorage.removeItem('token_exp');
     localStorage.removeItem('firstcase_user_username');
     localStorage.removeItem('request_url');
-    console.log('User logged out');
+    // console.log('User logged out');
   }
 
   show_mobile_menu() {
