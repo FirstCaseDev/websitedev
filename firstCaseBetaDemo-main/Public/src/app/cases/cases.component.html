@@ -316,9 +316,17 @@
               style="margin-top: 10px; text-align: center"
               *ngFor="let tag of tags_list"
             >
-              <div style="display: flex; align-items: center">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
                 <div>
-                  {{ tag.value }}
+                  <h3 style="margin: 0; padding: 0">
+                    {{ tag.value }}
+                  </h3>
                   <p style="font-size: xx-small; margin: 0">
                     {{ tag.type }}
                   </p>
@@ -436,7 +444,9 @@
                     name="desc "
                     style="margin-block-end: 0.4em"
                   >
-                    <a href="/casedoc/{{ data._id }}" target="_blank">{{ data.title }}</a>
+                    <a href="/casedoc/{{ data._id }}" target="_blank">{{
+                      data.title
+                    }}</a>
                   </h2>
                 </li>
                 <li>

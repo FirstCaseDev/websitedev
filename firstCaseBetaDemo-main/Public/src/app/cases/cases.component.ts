@@ -1396,12 +1396,22 @@ export class CasesComponent implements OnInit {
       switch (this.tagType.id) {
         case 'judgeName': {
           elem[idx].className = 'tags-list-item tag-judgeName';
-          this.bench = elem[idx].textContent!;
+          var elem_h3 = elem[idx].getElementsByTagName('h3');
+          if (this.bench == '') this.bench = elem_h3[0].textContent!;
+          else
+            this.bench = this.bench
+              .concat(' || ')
+              .concat(elem_h3[0].textContent!);
           break;
         }
         case 'petitionerName': {
           elem[idx].className = 'tags-list-item tag-petitionerName';
-          this.petitioner = elem[idx].textContent!;
+          var elem_h3 = elem[idx].getElementsByTagName('h3');
+          if (this.petitioner == '') this.petitioner = elem_h3[0].textContent!;
+          else
+            this.petitioner = this.petitioner
+              .concat(' || ')
+              .concat(elem_h3[0].textContent!);
           break;
         }
         case 'petitionerCounsel': {
@@ -1410,7 +1420,12 @@ export class CasesComponent implements OnInit {
         }
         case 'respondentName': {
           elem[idx].className = 'tags-list-item tag-respondentName';
-          this.respondent = elem[idx].textContent!;
+          var elem_h3 = elem[idx].getElementsByTagName('h3');
+          if (this.respondent == '') this.respondent = elem_h3[0].textContent!;
+          else
+            this.respondent = this.respondent
+              .concat(' || ')
+              .concat(elem_h3[0].textContent!);
           break;
         }
         case 'respondentCounsel': {
@@ -1418,6 +1433,9 @@ export class CasesComponent implements OnInit {
           break;
         }
       }
+      console.log('bench: ', this.bench);
+      console.log('petitioner: ', this.petitioner);
+      console.log('respondent: ', this.respondent);
     }, 500);
   }
 
