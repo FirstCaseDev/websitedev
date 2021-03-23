@@ -32,7 +32,7 @@ export class CasedocComponent implements OnInit {
   }
 
   caseid: string = '';
-  loading: boolean = false;
+  loading: boolean = true;
   judgement_text_paragraphs: any[] = [];
   case: Case = {
     _id: '',
@@ -61,9 +61,9 @@ export class CasedocComponent implements OnInit {
   case_month = '';
   case_year = '';
 
-  bench_arr: string[] = [];
-  petitioner_arr: string[] = [];
-  respondent_arr: string[] = [];
+  bench_arr: any = [];
+  petitioner_arr: any[] = [];
+  respondent_arr: any[] = [];
   provisions_referred_arr: provisions_referred_object[] = [];
 
   case_source_url = '';
@@ -88,9 +88,8 @@ export class CasedocComponent implements OnInit {
     // }
     // console.log('url: ' + this.url);
     // console.log('caseid: ' + this.caseid);
-    this.loading = true;
     this.search(this.caseid);
-    localStorage.setItem('request_url', this.router.url);
+    // localStorage.setItem('request_url', this.router.url);
 
     // if (localStorage.getItem('token_exp')) {
     //   var exp = parseInt(localStorage.token_exp);
@@ -111,15 +110,19 @@ export class CasedocComponent implements OnInit {
 
   search(_id: string) {
     this.casedocService.getCaseDoc(_id).subscribe((data: any) => {
+      console.log(data);
       this.case = data.case;
       this.case_date = data.date;
       this.case_month = data.month;
       this.case_year = data.year;
 
       // console.log('this.case.bench: ', this.case.bench);
-      // this.bench_arr = this.case.bench;
+      this.bench_arr = this.case.bench;
+      this.petitioner_arr = this.case.petitioner_counsel;
+      this.respondent_arr = this.case.respondent_counsel;
 
       this.componentTitle.setTitle('FirstCase | ' + data.case.title);
+      this.provisions_referred_arr = this.case.provisions_referred;
 
       // console.log(this.bench_arr);
 
@@ -138,7 +141,6 @@ export class CasedocComponent implements OnInit {
       //   new RegExp('{^newline^}', 'g'),
       //   '<br/>'
       // );
-
       this.loading = false;
     });
   }

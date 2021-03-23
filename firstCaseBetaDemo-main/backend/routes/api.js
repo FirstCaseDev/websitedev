@@ -181,7 +181,6 @@ module.exports = (router) => {
             msg: "Success",
             day: case_list[0].data[0].day,
           });
-          console.log(case_list[0].data[0].day);
         } else {
           res.json({
             success: false,
@@ -1267,6 +1266,7 @@ module.exports = (router) => {
           year: year,
           msg: "Success",
         });
+        console.log(case_item);
       })
       .catch((error) => console.log(error));
   });
