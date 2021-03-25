@@ -720,7 +720,7 @@ export class CasesComponent implements OnInit {
         this.y_ceil
       )
       .subscribe((data: any) => {
-        // console.log(data.case_list);
+        console.log(data.case_list);
         if (data.success) {
           this.rows = data.case_list;
           // console.log(this.rows);
@@ -1462,4 +1462,10 @@ export class CasesComponent implements OnInit {
     // console.log('respondent: ', this.respondent);
     // console.log('tags_list: ', this.tags_list);
   }
+
+  service_down = false;
+  service_unavailable(){
+    this.service_down = true;
+  }
 }
+
