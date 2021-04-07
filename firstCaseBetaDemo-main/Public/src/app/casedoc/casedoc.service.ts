@@ -9,7 +9,7 @@ export class CasedocService {
   constructor(private webService: WebService) { }
 
   getCaseDoc(_id: String) {
-    return this.webService.get(`/cases/${_id}`)
+    return this.webService.get(`cases/${_id}`)
   }
   
 }
