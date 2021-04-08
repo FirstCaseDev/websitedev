@@ -355,11 +355,11 @@ export class CasesComponent implements OnInit {
   ];
 
   judgement_options = [
-    { item_id: 1, item_text: 'Allowed' },
-    { item_id: 2, item_text: 'Dismissed' },
-    { item_id: 3, item_text: 'Tied or Unclear' },
-    { item_id: 4, item_text: 'Partly Allowed' },
-    { item_id: 5, item_text: 'Partly Dismissed' },
+    { item_id: 1, item_text: 'allowed' },
+    { item_id: 2, item_text: 'dismissed' },
+    { item_id: 3, item_text: 'tied / unclear' },
+    { item_id: 4, item_text: 'partly allowed' },
+    { item_id: 5, item_text: 'partly dismissed' },
   ];
 
   courtdata: any = [
@@ -682,7 +682,7 @@ export class CasesComponent implements OnInit {
     this.chartLabels = [1990, 2000, 2010, 2020];
     this.doughnutChartData = [[350, 450, 100]];
     this.doughnutChartLabels = ['Allowed', 'Dismissed', 'Tied or Unclear'];
-    this.selectedJudgements = this.judgement_options;
+    // this.selectedJudgements = this.judgement_options;
   }
 
   search() {
@@ -1397,21 +1397,21 @@ export class CasesComponent implements OnInit {
         case 'judgeName': {
           elem[idx].className = 'tags-list-item tag-judgeName';
           var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.bench == '') this.bench = elem_h3[0].textContent!;
+          if (this.bench == '') this.bench = elem_h3[0].textContent!.toLowerCase().replace(/\s/g, '');
           else
             this.bench = this.bench
-              .concat(' || ')
-              .concat(elem_h3[0].textContent!);
+              .concat('|')
+              .concat(elem_h3[0].textContent!).toLowerCase().replace(/\s/g, '');
           break;
         }
         case 'petitionerName': {
           elem[idx].className = 'tags-list-item tag-petitionerName';
           var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.petitioner == '') this.petitioner = elem_h3[0].textContent!;
+          if (this.petitioner == '') this.petitioner = elem_h3[0].textContent!.toLowerCase().replace(/\s/g, '');
           else
             this.petitioner = this.petitioner
-              .concat(' || ')
-              .concat(elem_h3[0].textContent!);
+              .concat('|')
+              .concat(elem_h3[0].textContent!).toLowerCase().replace(/\s/g, '');
           break;
         }
         case 'petitionerCounsel': {
@@ -1421,11 +1421,11 @@ export class CasesComponent implements OnInit {
         case 'respondentName': {
           elem[idx].className = 'tags-list-item tag-respondentName';
           var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.respondent == '') this.respondent = elem_h3[0].textContent!;
+          if (this.respondent == '') this.respondent = elem_h3[0].textContent!.toLowerCase().replace(/\s/g, '');
           else
             this.respondent = this.respondent
-              .concat(' || ')
-              .concat(elem_h3[0].textContent!);
+              .concat('|')
+              .concat(elem_h3[0].textContent!).toLowerCase().replace(/\s/g, '');
           break;
         }
         case 'respondentCounsel': {

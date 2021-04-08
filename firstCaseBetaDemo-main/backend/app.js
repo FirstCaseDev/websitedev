@@ -2,25 +2,12 @@ const express = require("express");
 const app = express();
 var host = process.env.HOST || "0.0.0.0";
 var port = process.env.PORT || 3000;
-// var cors = require('cors');
 var router = express.Router();
-// var appRoutes = require("./routes/api")(router);
 
-// Load in the mongoose models
-// const { mongoose } = require("./db/mongoose");
 const bodyParser = require("body-parser");
 const elasticsearch = require("elasticsearch")
 require("dotenv/config");
 
-//Connect to mongoDB
-// mongoose
-//     .connect(process.env.DB_CONNECT, {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//         useFindAndModify: false,
-//     })
-//     .then(() => console.log("Database connected"))
-//     .catch((error) => console.log(error));
 
 app.use(express.json());
 app.use(bodyParser.json())
@@ -28,9 +15,6 @@ app.use(bodyParser.json())
 app.listen(port, () => {
     console.log("connected to elasticsearch")
 })
-
-// app.use(cors({origin: "*" }));
-// app.use("/api", appRoutes);
 
 const esClient = elasticsearch.Client({
     host: "https://search-firstcasecourtdata-fhx2m5ssjtso7lmalxrhhzrkmy.us-east-2.es.amazonaws.com/",
@@ -41,9 +25,10 @@ const esClient = elasticsearch.Client({
 app.get("/api/cases/query=:query", (req, res) => {
     const searchText = req.params.query;
     const court = req.query.court;
-    // console.log(String(court));
     var judgements = req.query.judgement.split(",");
-    judgements = judgements.join("|");
+    for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
+    // judgements = ["allowed", "dismissed"]
+    // judgements = judgements.join("|");
     var page = req.query.page;
     var limit = req.query.limit;
     var sortBy = req.query.sortBy;
@@ -51,10 +36,16 @@ app.get("/api/cases/query=:query", (req, res) => {
     var y_ceil = req.query.y_ceil;
     var startIndex = (page - 1) * limit;
     var endIndex = page * limit;
-    var judge = ".*".concat(req.query.bench, ".*");
-    var ptnr = ".*".concat(req.query.ptn, ".*");
-    var resp = ".*".concat(req.query.rsp, ".*");
-    //TODO : sort options
+    var judge = req.query.bench;
+    if (judge.length == 0) judge = "@"
+    var ptnr = req.query.ptn;
+    if (ptnr.length == 0) ptnr = "@"
+    var resp = req.query.rsp;
+    if (resp.length == 0) resp = "@"
+    var sort_options = ["_score"];
+    if (sortBy === "year") {
+        sort_options = [{ "date": "desc" }, "_score"];
+    }
     esClient.search({
             index: "indian_court_data.cases",
             body: {
@@ -91,38 +82,33 @@ app.get("/api/cases/query=:query", (req, res) => {
                                     ]
                                 }
                             },
-                            // {
-                            //     regexp: {
-                            //         "bench": {
-                            //             value: judge,
-                            //             flags: "ALL"
-                            //         }
-                            //     }
-                            // },
-                            // {
-                            //     regexp: {
-                            //         "petitioner": {
-                            //             value: ptnr,
-                            //             flags: "ALL"
-                            //         }
-                            //     }
-                            // },
-                            // {
-                            //     match: {
-                            //         "respondent": req.query.rsp
-                            //     }
-                            // },
-                            // {
-                            //     match: {
-                            //         "judgement.keyword": judgements
-                            //     }
-                            // }
-                        ],
-                        filter: {
-                            range: {
-                                "year": { gte: y_floor, lte: y_ceil }
+                            {
+                                regexp: {
+                                    "bench": judge
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "petitioner": ptnr
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "respondent": resp
+                                }
                             }
-                        }
+                        ],
+                        filter: [{
+                                range: {
+                                    "year": { gte: y_floor, lte: y_ceil }
+                                }
+                            },
+                            {
+                                terms: {
+                                    "judgement.keyword": judgements
+                                }
+                            }
+                        ]
                     }
                 },
                 script_fields: {
@@ -133,7 +119,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                         }
                     }
                 },
-                sort: [{ "date": "desc" }, "_score"],
+                sort: sort_options,
             }
         })
         .then(response => {
@@ -174,85 +160,8 @@ app.get("/api/cases/:object_id", (req, res) => {
         }).then((response) => {
             res.json({
                 case: response.hits.hits[0]._source,
-                // case: response.hits.hits.map(function(i) { return i['_source'] }),
                 msg: "Success",
             });
         })
         .catch((error) => console.log(error));
 })
-
-/*
-CORS -> Cross Origin Request Security.
-localhost:3000 - backend
-localhost:4200 - frontend
-*/
-
-//list URLS
-
-// app.get('/lists/:listId', (req, res) => {
-//   List.find({ _id: req.params.listId })
-//     .then((list) => res.send(list))
-//     .catch((error) => console.log(error));
-// });
-
-// app.post('/lists', (req, res) => {
-//   new List({ title: req.body.title })
-//     .save()
-//     .then((list) => res.send(list))
-//     .catch((error) => console.log(error));
-// });
-
-// app.patch('/lists/:listId', (req, res) => {
-//   List.findByIdAndUpdate({ _id: req.params.listId }, { $set: req.body })
-//     .then((list) => res.send(list))
-//     .catch((error) => console.log(error));
-// });
-
-// app.delete('/lists/:listId', (req, res) => {
-//   const deleteTasks = (list) => {
-//     Task.deleteMany({ _listId: list._id })
-//       .then(() => list)
-//       .catch((error) => console.log(error));
-//   };
-//   const list = List.findByIdAndDelete(req.params.listId)
-//     .then((list) => deleteTasks(list))
-//     .catch((error) => console.log(error));
-//   res.send(list);
-// });
-
-// //task URLs
-// app.get('/lists/:listId/tasks', (req, res) => {
-//   Task.find({ _listId: req.params.listId })
-//     .then((task) => res.send(task))
-//     .catch((error) => console.log(error));
-// });
-
-// app.get('/lists/:listId/tasks/:taskId', (req, res) => {
-//   Task.findOne({ _listId: req.params.listId, _id: req.params.taskId })
-//     .then((task) => res.send(task))
-//     .catch((error) => console.log(error));
-// });
-
-// app.post('/lists/:listId/tasks', (req, res) => {
-//   new Task({ title: req.body.title, _listId: req.params.listId })
-//     .save()
-//     .then((task) => res.send(task))
-//     .catch((error) => console.log(error));
-// });
-
-// app.patch('/lists/:listId/tasks/:taskId', (req, res) => {
-//   Task.findOneAndUpdate(
-//     { _listId: req.params.listId, _id: req.params.taskId },
-//     { $set: req.body }
-//   )
-//     .then((task) => res.send(task))
-//     .catch((error) => console.log(error));
-// });
-
-// app.delete('/lists/:listId/tasks/:taskId', (req, res) => {
-//   Task.findOneAndDelete({ _listId: req.params.listId, _id: req.params.taskId })
-//     .then((task) => res.send(task))
-//     .catch((error) => console.log(error));
-// });
-
-// app.listen(port, () => console.log("Server started on " + port));
