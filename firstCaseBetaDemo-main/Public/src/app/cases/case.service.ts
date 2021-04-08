@@ -20,7 +20,7 @@ export class CaseService {
 
   getSearchedCases(
     query: string,
-    court: string,
+    courts: Array<string>,
     judgement: Array<string>,
     bench: string,
     petitioner: string,
@@ -31,8 +31,9 @@ export class CaseService {
     y_floor: Number,
     y_ceil: Number
   ) {
+    // console.log("courts",courts);
     return this.webService.get(
-      `cases/query=${query}?&court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}&sortBy=${curr_sort}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+      `cases/query=${query}?&courts=${courts}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}&sortBy=${curr_sort}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 

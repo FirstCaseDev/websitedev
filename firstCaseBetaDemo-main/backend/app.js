@@ -24,11 +24,10 @@ const esClient = elasticsearch.Client({
 
 app.get("/api/cases/query=:query", (req, res) => {
     const searchText = req.params.query;
-    const court = req.query.court;
+    var courts = req.query.courts.split(",");
     var judgements = req.query.judgement.split(",");
     for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
-    // judgements = ["allowed", "dismissed"]
-    // judgements = judgements.join("|");
+    for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
     var page = req.query.page;
     var limit = req.query.limit;
     var sortBy = req.query.sortBy;
@@ -69,8 +68,8 @@ app.get("/api/cases/query=:query", (req, res) => {
                 query: {
                     bool: {
                         must: [{
-                                match: {
-                                    "source.keyword": court
+                                terms: {
+                                    "source.keyword": courts
                                 }
                             },
                             {
@@ -107,7 +106,12 @@ app.get("/api/cases/query=:query", (req, res) => {
                                 terms: {
                                     "judgement.keyword": judgements
                                 }
-                            }
+                            },
+                            // {
+                            //     terms: {
+                            //         "source.keyword": courts
+                            //     }
+                            // }
                         ]
                     }
                 },

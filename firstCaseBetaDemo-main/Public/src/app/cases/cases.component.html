@@ -246,11 +246,19 @@
           >
             <div style="margin-bottom: 1em">
               <p>Court</p>
-              <select [(ngModel)]="courtlevel" (change)="selected()">
-                <option *ngFor="let item of courtdata" [ngValue]="item">
-                  {{ item.name }}
-                </option>
-              </select>
+              <form [formGroup]="courtForm">
+                <ng-multiselect-dropdown
+                  style="width: 100px"
+                  [placeholder]="'Select one or more...'"
+                  [(ngModel)]="selectedCourts"
+                  [settings]="dropdownSettings"
+                  [data]="court_options"
+                  (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                </ng-multiselect-dropdown>
+              </form>
             </div>
             <div>
               <h3 style="padding: 0; margin-bottom: 0">Search Tags</h3>
@@ -900,13 +908,19 @@
         </div>
         <div class="filter-option">
           <span>Court</span>
-          <span>
-            <select [(ngModel)]="courtlevel" (change)="selected()">
-              <option *ngFor="let item of courtdata" [ngValue]="item">
-                {{ item.name }}
-              </option>
-            </select>
-          </span>
+          <form [formGroup]="courtForm">
+                <ng-multiselect-dropdown
+                  style="width: 100px"
+                  [placeholder]="'Select one or more...'"
+                  [(ngModel)]="selectedCourts"
+                  [settings]="dropdownSettings"
+                  [data]="court_options"
+                  (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                </ng-multiselect-dropdown>
+              </form>
         </div>
         <br />
         <div style="text-align: center; margin-top: 10px">

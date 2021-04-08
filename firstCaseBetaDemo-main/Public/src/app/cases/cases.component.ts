@@ -24,7 +24,7 @@ export class CasesComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private componentTitle: Title
-  ) {}
+  ) { }
 
   isMobile = false;
   Highcharts = Highcharts;
@@ -37,6 +37,7 @@ export class CasesComponent implements OnInit {
   pvb_data: any = [];
   rvb_data: any = [];
   myForm: any;
+  courtForm: any;
   disabled = false;
   ShowFilter = false;
   limitSelection = false;
@@ -48,6 +49,7 @@ export class CasesComponent implements OnInit {
   view_tags: boolean = false;
   view_tags_mobile: boolean = false;
   selectedJudgements: any = [];
+  selectedCourts: any = [];
   dropdownSettings: any = {};
   rows: Case[] = [];
   cited_cases: any = [];
@@ -67,6 +69,14 @@ export class CasesComponent implements OnInit {
     'tied / unclear',
     'partly allowed',
     'partly dismissed',
+  ];
+  courts: Array<string> = [
+    'Supreme Court of India',
+    'Delhi High Court',
+    'Bombay High Court',
+    'Madras High Court',
+    'Calcutta High Court',
+    'Allahabad High Court',
   ];
   bench: string = '';
   petitioner: string = '';
@@ -362,6 +372,15 @@ export class CasesComponent implements OnInit {
     { item_id: 5, item_text: 'partly dismissed' },
   ];
 
+  court_options = [
+    { item_id: 1, item_text: 'Supreme Court of India' },
+    { item_id: 2, item_text: 'Delhi High Court' },
+    { item_id: 3, item_text: 'Bombay High Court' },
+    { item_id: 4, item_text: 'Madras High Court' },
+    { item_id: 5, item_text: 'Calcutta High Court' },
+    { item_id: 6, item_text: 'Allahabad High Court' },
+  ];
+
   courtdata: any = [
     { id: 'Supreme Court of India', name: 'Supreme Court of India' },
     { id: 'Delhi High Court', name: 'Delhi High Court' },
@@ -452,6 +471,7 @@ export class CasesComponent implements OnInit {
     this.sortBy = this.sort_options[0];
     this.court = this.courtdata[0].name;
     this.selectedJudgements = this.judgement_options;
+    this.selectedCourts = this.court_options;
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -464,7 +484,9 @@ export class CasesComponent implements OnInit {
     this.myForm = this.fb.group({
       city: [this.selectedJudgements],
     });
-
+    this.courtForm = this.fb.group({
+      city: [this.selectedCourts],
+    });
     // if (localStorage.getItem('token_exp')) {
     //   var exp = parseInt(localStorage.token_exp);
     //   var curr_time = new Date().getTime();
@@ -704,11 +726,14 @@ export class CasesComponent implements OnInit {
     this.selectedJudgements.map((item: any) => {
       this.judgement.push(item.item_text);
     });
-
+    this.courts = [];
+    this.selectedCourts.map((item: any) => {
+      this.courts.push(item.item_text);
+    });
     this.caseService
       .getSearchedCases(
         this.query,
-        this.court,
+        this.courts,
         this.judgement,
         this.bench,
         this.petitioner,
@@ -1315,6 +1340,7 @@ export class CasesComponent implements OnInit {
     this.doughnutChartData = [[350, 450, 100]];
     this.doughnutChartLabels = ['allowed', 'dismissed', 'tied / unclear'];
     this.selectedJudgements = this.judgement_options;
+    this.selectedCourts = this.court_options;
   }
 
   sendNextPage() {
@@ -1464,7 +1490,7 @@ export class CasesComponent implements OnInit {
   }
 
   service_down = false;
-  service_unavailable(){
+  service_unavailable() {
     this.service_down = true;
   }
 }
