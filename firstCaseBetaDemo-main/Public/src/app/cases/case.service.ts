@@ -52,6 +52,21 @@ export class CaseService {
     );
   }
 
+  getCitedActs(
+    query: string,
+    court: Array<string>,
+    judgement: Array<string>,
+    bench: string,
+    petitioner: string,
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
+  ) {
+    return this.webService.get(
+      `cases/cited_provisions=${query}?courts=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+    );
+  }
+
   getLineCharts(
     query: string,
     court: string,
@@ -155,20 +170,7 @@ export class CaseService {
     );
   }
 
-  getCitedActs(
-    query: string,
-    court: string,
-    judgement: Array<string>,
-    bench: string,
-    petitioner: string,
-    respondent: string,
-    y_floor: Number,
-    y_ceil: Number
-  ) {
-    return this.webService.get(
-      `cases/cited_acts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
-    );
-  }
+
 
   getLists() {
     return this.webService.get('lists');

@@ -1205,7 +1205,7 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getCitedActs(
         this.query,
-        this.court,
+        this.courts,
         this.judgement,
         this.bench,
         this.petitioner,
@@ -1215,15 +1215,14 @@ export class CasesComponent implements OnInit {
       )
       .subscribe((data: any) => {
         try {
-          this.CitedActCorrectedDataNames = [];
-          data.map((item: any) => {
-            if (!this.CitedActCorrectedDataNames.includes(item.group))
-              this.CitedActCorrectedDataNames.push(item.group);
-          });
-          this.CitedActCorrectedData = data;
-          // console.log(this.CitedActCorrectedData);
+          this.CitedProvisions= data;
+          // this.CitedActCorrectedDataNames = [];
+          // data.map((item: any) => {
+          //   if (!this.CitedActCorrectedDataNames.includes(item.group))
+          //     this.CitedActCorrectedDataNames.push(item.group);
+          // });
+          // this.CitedActCorrectedData = data;
         } catch (error) {
-          // console.log(error);
         }
       });
   }
@@ -1248,7 +1247,6 @@ export class CasesComponent implements OnInit {
             if (!this.CitedActNames.includes(item.y))
               this.CitedActNames.push(item.y);
           });
-          // console.log(this.CitedActNames);
           var sums: any = [];
           var sections: any = [];
           var section_occurrences: any = [];
@@ -1259,13 +1257,11 @@ export class CasesComponent implements OnInit {
             section_occurrences[i] = [];
             for (var j = 0; j < data.length; j++) {
               if (data[j].y === this.CitedActNames[i]) {
-                // sums[i] = sums[i] + data[j].x;
                 sections[i].push(data[j].color);
                 section_occurrences[i].push(data[j].x);
               }
             }
             while (this.CitedActCorrectedData.length == 0) {
-              // console.log('waiting');
             }
             var temp = this.CitedActCorrectedData.find(
               (el: any) => el.group === this.CitedActNames[i]
@@ -1290,10 +1286,6 @@ export class CasesComponent implements OnInit {
             sections[i] = sections[i].slice(0, 5);
             section_occurrences[i] = section_occurrences[i].slice(0, 5);
           }
-          // console.log(sums);
-          // console.log(sums);
-          // console.log(sections);
-          // console.log(section_occurrences);
           for (var z = 0; z < this.CitedActNames.length; z++) {
             this.CitedProvisions.push({
               act_name: this.CitedActNames[z],
@@ -1302,12 +1294,9 @@ export class CasesComponent implements OnInit {
               section_sums: section_occurrences[z],
             });
           }
-          // console.log(this.CitedProvisions);
         } catch (error) {
-          // console.log(error);
         }
         this.loading = false;
-        // console.log('getCitedLaws end - loading: ', this.loading);
       });
   }
 

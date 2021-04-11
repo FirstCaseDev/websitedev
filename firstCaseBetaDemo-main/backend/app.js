@@ -273,3 +273,115 @@ app.get("/api/cases/cited_cases=:query", (req, res) => {
             return res.status(500).json({ "message": "Error" })
         })
 })
+
+app.get("/api/cases/cited_provisions=:query", (req, res) => {
+    const searchText = req.params.query;
+    var courts = req.query.courts.split(",");
+    var judgements = req.query.judgement.split(",");
+    for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
+    for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
+    // var page = req.query.page;
+    // var limit = req.query.limit;
+    // var sortBy = req.query.sortBy;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
+    // var startIndex = (page - 1) * limit;
+    // var endIndex = page * limit;
+    var judge = req.query.bench;
+    if (judge.length == 0) judge = "@"
+    var ptnr = req.query.ptn;
+    if (ptnr.length == 0) ptnr = "@"
+    var resp = req.query.rsp;
+    if (resp.length == 0) resp = "@"
+        // var sort_options = ["_score"];
+        // if (sortBy === "year") {
+        //     sort_options = [{ "date": "desc" }, "_score"];
+        // }
+    esClient.search({
+            index: "indian_court_data.cases",
+            body: {
+                "track_total_hits": true,
+                size: 0,
+                query: {
+                    bool: {
+                        must: [{
+                                terms: {
+                                    "source.keyword": courts
+                                }
+                            },
+                            {
+                                multi_match: {
+                                    query: searchText.trim(),
+                                    fields: [
+                                        "judgement_text",
+                                        "title"
+                                    ]
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "bench": judge
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "petitioner": ptnr
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "respondent": resp
+                                }
+                            }
+                        ],
+                        filter: [{
+                                range: {
+                                    "year": { gte: y_floor, lte: y_ceil }
+                                }
+                            },
+                            {
+                                terms: {
+                                    "judgement.keyword": judgements
+                                }
+                            },
+
+                        ]
+                    }
+                },
+                aggs: {
+                    act_names: {
+                        terms: { field: "provisions_referred.act_name.keyword", size: 10 },
+                        aggs: {
+                            act_sections: {
+                                terms: { field: "provisions_referred.act_name.keyword", size: 5 }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        .then(response => {
+            res.send(response.aggregations.act_names.buckets.map(function(i) {
+                act_name = i['key'];
+                act_sums = i['doc_count'];
+                sections = i['act_sections'].buckets.map(function(j) {
+                    names = j['key'];
+                    return names;
+                })
+                section_sums = i['act_sections'].buckets.map(function(j) {
+                    values = j['doc_count'];
+                    return values;
+                })
+                return {
+                    'act_name': act_name,
+                    'act_sums': act_sums,
+                    'sections': sections,
+                    'section_sums': section_sums
+                };
+
+            }));
+        })
+        .catch(err => {
+            return res.status(500).json({ "message": "Error" })
+        })
+})
