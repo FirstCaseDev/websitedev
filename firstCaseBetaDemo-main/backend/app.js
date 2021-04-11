@@ -353,7 +353,7 @@ app.get("/api/cases/cited_provisions=:query", (req, res) => {
                         terms: { field: "provisions_referred.act_name.keyword", size: 10 },
                         aggs: {
                             act_sections: {
-                                terms: { field: "provisions_referred.act_name.keyword", size: 5 }
+                                terms: { field: "provisions_referred.act_sections.keyword", size: 5 }
                             }
                         }
                     }
