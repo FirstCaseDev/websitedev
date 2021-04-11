@@ -107,11 +107,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                                     "judgement.keyword": judgements
                                 }
                             },
-                            // {
-                            //     terms: {
-                            //         "source.keyword": courts
-                            //     }
-                            // }
+
                         ]
                     }
                 },
@@ -152,6 +148,38 @@ app.get("/api/cases/query=:query", (req, res) => {
 })
 
 app.get("/api/cases/:object_id", (req, res) => {
+    esClient.search({
+            index: "indian_court_data.cases",
+            body: {
+                query: {
+                    match: {
+                        "_id": req.params.object_id
+                    }
+                },
+            }
+        }).then((response) => {
+            // var case_date = new Date();
+            // console.log(case_date);
+            var case_date = new Date(response.hits.hits[0]._source.date);
+            // console.log(case_date);
+            var day = case_date.getUTCDate();
+            // console.log(day);
+            var month = case_date.getUTCMonth() + 1;
+            var year = case_date.getUTCFullYear();
+            // console.log(day, month, year);
+            date = response.hits.hits[0]._source.date;
+            res.json({
+                case: response.hits.hits[0]._source,
+                date: day,
+                month: month,
+                year: year,
+                msg: "Success",
+            });
+        })
+        .catch((error) => console.log(error));
+})
+
+app.get("/api/cases/cited_cases=:query", (req, res) => {
     esClient.search({
             index: "indian_court_data.cases",
             body: {
