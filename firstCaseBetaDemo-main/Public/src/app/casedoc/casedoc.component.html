@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div class="top-bar">
+      <div class="top-bar" style="position:fixed; z-index:50; right:0px; border-bottom: none">
         <div
           id="search-bar"
           style="display: flex; margin: 10px 0; align-items: center"
@@ -56,7 +56,7 @@
               type="text"
               placeholder="Search In Page"
               [(ngModel)]="query"
-              style="border: none"
+              style="border: none; background-color: rgba(0,0,0,0)"
             />
             <div
               *ngIf="!searched"
@@ -90,6 +90,7 @@
         </div>
         <div *ngIf="searched">Search Results: {{ results_count }}</div>
       </div>
+      <br />
       <br />
       <br />
       <div
@@ -134,12 +135,12 @@
 
     <!-- <div style="margin: 0 5em"> -->
     <div>
-      <div style="display: flex; justify-content: space-evenly; margin: 0 30px">
+      <div style="display: flex; justify-content: space-evenly; margin: 0 30px ">
         <div
           id="slides-container"
           style="padding: 100px; margin-top: 0 !important"
         >
-          <div class="slide" id="judgment-page" *ngIf="view_tab == 1">
+          <div class="slide" id="judgment-page" *ngIf="view_tab == 1" style="width:50%">
             <br />
             <p class="case-title">{{ case.petitioner }}</p>
             <p class="case-title">vs</p>
@@ -171,8 +172,8 @@
               [innerHTML]="case.judgement_text"
               style="text-align: justify"
             ></div> -->
-            <div>
-              <pre style="font-size: large">{{ first_para }}</pre>
+            <div >
+              <pre style="font-size: medium ;white-space: pre-wrap;">{{ first_para }}</pre>
               <div
                 style="text-align: justify"
                 *ngFor="let item of judgement_text_paragraphs"
@@ -262,7 +263,7 @@
         <h2 style="text-align: center">Right panel</h2>
       </div> -->
 
-      <div
+      <!--<div
         style="
           margin: 100px 20px 20px 20px;
           background-color: #19212f;
@@ -286,7 +287,7 @@
           quae rem ipsa quibusdam eveniet assumenda recusandae! Voluptatem
           tempore totam praesentium nostrum nemo.
         </p>
-      </div>
+      </div>-->
     </div>
     <!-- <button id="topLink" (click)="sendToTop()" style="text-align: center">
     Back to Top

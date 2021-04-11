@@ -77,6 +77,7 @@ export class CasesComponent implements OnInit {
     'Madras High Court',
     'Calcutta High Court',
     'Allahabad High Court',
+    'National Company Law Appellate Tribunal'
   ];
   bench: string = '';
   petitioner: string = '';
@@ -379,6 +380,7 @@ export class CasesComponent implements OnInit {
     { item_id: 4, item_text: 'Madras High Court' },
     { item_id: 5, item_text: 'Calcutta High Court' },
     { item_id: 6, item_text: 'Allahabad High Court' },
+    { item_id: 7, item_text: 'National Company Law Appellate Tribunal' },
   ];
 
   courtdata: any = [
@@ -388,6 +390,7 @@ export class CasesComponent implements OnInit {
     { id: 'Madras High Court', name: 'Madras High Court' },
     { id: 'Calcutta High Court', name: 'Calcutta High Court' },
     { id: 'Allahabad High Court', name: 'Allahabad High Court' },
+    { id: 'National Company Law Appellate Tribunal', name: 'National Company Law Appellate Tribunal' },
     // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];

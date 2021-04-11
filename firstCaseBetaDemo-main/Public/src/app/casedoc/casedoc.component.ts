@@ -358,7 +358,11 @@ export class CasedocComponent implements OnInit {
     } else {
       document
         .getElementById('marked' + String(this.marked_url_idx))
-        ?.scrollIntoView();
+        ?.scrollIntoView({
+          behavior: 'auto',
+          block: 'center',
+          inline: 'center'
+      });
     }
     document.getElementById('search-bar')?.scrollIntoView();
   }
@@ -372,11 +376,17 @@ export class CasedocComponent implements OnInit {
         alert('Reached end of the document!');
       }, 1000);
     } else {
+      console.log(document
+        .getElementById('marked' + String(this.marked_url_idx)));
       document
         .getElementById('marked' + String(this.marked_url_idx))
-        ?.scrollIntoView();
+        ?.scrollIntoView({
+          behavior: 'auto',
+          block: 'center',
+          inline: 'center'
+      });
     }
-    document.getElementById('search-bar')?.scrollIntoView();
+    // document.getElementById('search-bar')?.scrollIntoView();
   }
 
   toggle_right_menu = false;
