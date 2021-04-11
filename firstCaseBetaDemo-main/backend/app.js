@@ -147,7 +147,7 @@ app.get("/api/cases/query=:query", (req, res) => {
         })
 })
 
-app.get("/api/cases/:object_id", (req, res) => {
+app.get("/api/cases/_id=:object_id", (req, res) => {
     esClient.search({
             index: "indian_court_data.cases",
             body: {
@@ -180,20 +180,96 @@ app.get("/api/cases/:object_id", (req, res) => {
 })
 
 app.get("/api/cases/cited_cases=:query", (req, res) => {
+    const searchText = req.params.query;
+    var courts = req.query.courts.split(",");
+    var judgements = req.query.judgement.split(",");
+    for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
+    for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
+    // var page = req.query.page;
+    // var limit = req.query.limit;
+    // var sortBy = req.query.sortBy;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
+    // var startIndex = (page - 1) * limit;
+    // var endIndex = page * limit;
+    var judge = req.query.bench;
+    if (judge.length == 0) judge = "@"
+    var ptnr = req.query.ptn;
+    if (ptnr.length == 0) ptnr = "@"
+    var resp = req.query.rsp;
+    if (resp.length == 0) resp = "@"
+        // var sort_options = ["_score"];
+        // if (sortBy === "year") {
+        //     sort_options = [{ "date": "desc" }, "_score"];
+        // }
     esClient.search({
             index: "indian_court_data.cases",
             body: {
+                "track_total_hits": true,
+                size: 0,
                 query: {
-                    match: {
-                        "_id": req.params.object_id
+                    bool: {
+                        must: [{
+                                terms: {
+                                    "source.keyword": courts
+                                }
+                            },
+                            {
+                                multi_match: {
+                                    query: searchText.trim(),
+                                    fields: [
+                                        "judgement_text",
+                                        "title"
+                                    ]
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "bench": judge
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "petitioner": ptnr
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "respondent": resp
+                                }
+                            }
+                        ],
+                        filter: [{
+                                range: {
+                                    "year": { gte: y_floor, lte: y_ceil }
+                                }
+                            },
+                            {
+                                terms: {
+                                    "judgement.keyword": judgements
+                                }
+                            },
+
+                        ]
                     }
                 },
+                aggs: {
+                    frequent_tag: {
+                        terms: {
+                            field: "cases_referred.keyword"
+                        }
+                    }
+                }
             }
-        }).then((response) => {
-            res.json({
-                case: response.hits.hits[0]._source,
-                msg: "Success",
-            });
         })
-        .catch((error) => console.log(error));
+        .then(response => {
+            res.send(response.aggregations.frequent_tag.buckets.map(function(i) {
+                group = i['key'];
+                value = i['doc_count'];
+                return { 'group': group, 'value': value };
+            }));
+        })
+        .catch(err => {
+            return res.status(500).json({ "message": "Error" })
+        })
 })

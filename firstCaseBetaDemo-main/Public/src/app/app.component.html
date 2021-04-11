@@ -1,115 +1,88 @@
 <div class="home-screen-size-large" *ngIf="!isMobile">
-  <header *ngIf="router.url !== '/home'">
-    <nav>
-      <div style="text-align: center">
-        <a href="/home">
-          <img
-            id="icon_white"
-            style="margin-right: 100px"
-            src="../assets/img/White_Logo.png"
-          />
-        </a>
-      </div>
-      <ul
-        style="
+    <header *ngIf="router.url !== '/home'">
+        <nav>
+            <div style="text-align: center">
+                <a href="/home">
+                    <img id="icon_white" style="margin-right: 100px" src="../assets/img/White_Logo.png" />
+                </a>
+            </div>
+            <ul style="
           display: flex;
           list-style-type: none;
           align-items: center;
           justify-content: space-evenly;
-        "
-      >
-        <li><a href="/home">Home</a></li>
-        <li><a href="/cases">Demo</a></li>
-        <li><a href="/home">Contact</a></li>
-        <li
-          *ngIf="isLoggedIn"
-          style="background-color: #597c94; border-radius: 5px"
-        >
-          <a href="" (click)="logout()">Log Out</a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+        ">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/cases">Demo</a></li>
+                <li><a href="/home">Contact</a></li>
+                <li *ngIf="isLoggedIn" style="background-color: #597c94; border-radius: 5px">
+                    <a href="" (click)="logout()">Log Out</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-  <div class="pages">
-    <router-outlet></router-outlet>
-  </div>
+    <div class="pages">
+        <router-outlet></router-outlet>
+    </div>
 
-  <br />
-  <br />
-  <footer class="footer" *ngIf="router.url !== '/home'">
-    <div>
-      <ul class="footer-list">
-        <h2 class="footer-list-title">Company<br /></h2>
-        <li class="footer-list-item">Our Team</li>
-        <li class="footer-list-item">Gallery</li>
-        <li class="footer-list-item">Contact us</li>
-      </ul>
-    </div>
-    <div>
-      <ul class="footer-list">
-        <h2 class="footer-list-title">Information<br /></h2>
-        <li class="footer-list-item">Legal Services</li>
-        <li class="footer-list-item">Terms and Conditions</li>
-        <li class="footer-list-item">FAQ</li>
-      </ul>
-    </div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </footer>
+    <br />
+    <br />
+    <footer class="footer" *ngIf="router.url !== '/home'">
+        <div>
+            <ul class="footer-list">
+                <h2 class="footer-list-title">Company<br /></h2>
+                <li class="footer-list-item">Our Team</li>
+                <li class="footer-list-item">Gallery</li>
+                <li class="footer-list-item">Contact us</li>
+            </ul>
+        </div>
+        <div>
+            <ul class="footer-list">
+                <h2 class="footer-list-title">Information<br /></h2>
+                <li class="footer-list-item">Legal Services</li>
+                <li class="footer-list-item">Terms and Conditions</li>
+                <li class="footer-list-item">FAQ</li>
+            </ul>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </footer>
 </div>
 
 <!-- ===========================================Mobile Site==================================================== -->
 
 <div class="home-screen-size-small" *ngIf="isMobile">
-  <div
-    *ngIf="router.url !== '/home'"
-    style="
+    <div *ngIf="router.url !== '/home'" style="
       display: grid;
       grid-template-columns: 33% 34% 33%;
       padding: 2px;
       max-height: 68px;
       background-color: #212125;
-    "
-  >
-    <div>
-      <a (click)="show_mobile_menu()">
-        <img
-          *ngIf="!mobile_menu_open"
-          id="icon_hamburger"
-          src="../assets/img/hamburger.svg"
-        />
-      </a>
-      <a (click)="close_mobile_menu()">
-        <img
-          *ngIf="mobile_menu_open"
-          id="icon_cancel"
-          src="../assets/img/cancel-24px.svg"
-        />
-      </a>
-    </div>
+    ">
+        <div>
+            <a (click)="show_mobile_menu()">
+                <img *ngIf="!mobile_menu_open" id="icon_hamburger" src="../assets/img/hamburger.svg" />
+            </a>
+            <a (click)="close_mobile_menu()">
+                <img *ngIf="mobile_menu_open" id="icon_cancel" src="../assets/img/cancel-24px.svg" />
+            </a>
+        </div>
 
-    <div style="display: flex; justify-content: center; padding: 5px">
-      <img style="height: 50px" src="../assets/img/logo.svg" />
+        <div style="display: flex; justify-content: center; padding: 5px">
+            <img style="height: 50px" src="../assets/img/logo.svg" />
+        </div>
     </div>
-  </div>
-  <div
-    *ngIf="mobile_menu_open"
-    style="padding: 10px; background-color: #212125; z-index: 2"
-  >
-    <ul>
-      <li class="mobile-menu-list-item">Home</li>
-      <li class="mobile-menu-list-item">Demo</li>
-      <li class="mobile-menu-list-item">Contact</li>
-      <li class="mobile-menu-list-item" *ngIf="isLoggedIn">
-        <a
-          href=""
-          style="text-decoration: none; color: white"
-          (click)="logout()"
-          >Log Out</a
+    <div *ngIf="mobile_menu_open" style="padding: 10px; background-color: #212125; z-index: 2">
+        <ul>
+            <li class="mobile-menu-list-item">Home</li>
+            <li class="mobile-menu-list-item">Demo</li>
+            <li class="mobile-menu-list-item">Contact</li>
+            <li class="mobile-menu-list-item" *ngIf="isLoggedIn">
+                <a href="" style="text-decoration: none; color: white" (click)="logout()">Log Out</a
         >
       </li>
     </ul>
