@@ -38,6 +38,7 @@ export class CasesComponent implements OnInit {
   rvb_data: any = [];
   myForm: any;
   courtForm: any;
+  selectedCountry: any = "India";
   disabled = false;
   ShowFilter = false;
   limitSelection = false;
@@ -1181,7 +1182,7 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getCitedCases(
         this.query,
-        this.court,
+        this.courts,
         this.judgement,
         this.bench,
         this.petitioner,
@@ -1192,6 +1193,8 @@ export class CasesComponent implements OnInit {
       .subscribe((data: any) => {
         try {
           this.cited_cases = data;
+          console.log(this.cited_cases);
+          this.loading = false;
         } catch (error) {
           // console.log(error);
         }
@@ -1483,6 +1486,61 @@ export class CasesComponent implements OnInit {
     if (this.tags_list.length == 0) this.view_tags = false;
     else this.IdTags();
     this.no_of_tags = this.no_of_tags - 1;
+  }
+
+  select_in(){
+    this.selectedCountry="India";
+    this.courts = [
+      'Supreme Court of India',
+      'Delhi High Court',
+      'Bombay High Court',
+      'Madras High Court',
+      'Calcutta High Court',
+      'Allahabad High Court',
+      'National Company Law Appellate Tribunal'
+    ];
+
+    this.court_options = [
+      { item_id: 1, item_text: 'Supreme Court of India' },
+      { item_id: 2, item_text: 'Delhi High Court' },
+      { item_id: 3, item_text: 'Bombay High Court' },
+      { item_id: 4, item_text: 'Madras High Court' },
+      { item_id: 5, item_text: 'Calcutta High Court' },
+      { item_id: 6, item_text: 'Allahabad High Court' },
+      { item_id: 7, item_text: 'National Company Law Appellate Tribunal' },
+    ];
+  
+    this.courtdata = [
+      { id: 'Supreme Court of India', name: 'Supreme Court of India' },
+      { id: 'Delhi High Court', name: 'Delhi High Court' },
+      { id: 'Bombay High Court', name: 'Bombay High Court' },
+      { id: 'Madras High Court', name: 'Madras High Court' },
+      { id: 'Calcutta High Court', name: 'Calcutta High Court' },
+      { id: 'Allahabad High Court', name: 'Allahabad High Court' },
+      { id: 'National Company Law Appellate Tribunal', name: 'National Company Law Appellate Tribunal' },
+    ];
+    console.log("courts",this.courts);
+    console.log("court_options",this.court_options);
+    this.ngOnInit()
+
+  }
+
+  select_sg(){
+    this.selectedCountry="Singapore";
+    this.courts = [
+      'Supreme Court of Singapore',
+    ];
+    
+    this.court_options = [
+      { item_id: 1, item_text: 'Supreme Court of Singapore' },
+    ];
+  
+    this.courtdata = [
+      { id: 'Supreme Court of Singapore', name: 'Supreme Court of Singapore' }
+    ];
+    console.log("courts",this.courts);
+    console.log("court_options",this.court_options);  
+    this.ngOnInit()
   }
 
   check_curr_data() {
