@@ -3,7 +3,7 @@ const app = express();
 var host = process.env.HOST || "0.0.0.0";
 var port = process.env.PORT || 3000;
 var router = express.Router();
-
+var lineChartArr = [];
 const bodyParser = require("body-parser");
 const elasticsearch = require("elasticsearch")
 require("dotenv/config");
@@ -494,6 +494,130 @@ app.get("/api/cases/piecharts=:query", (req, res) => {
 
             }));
         })
+        .catch(err => {
+            return res.status(500).json({ "message": "Error" })
+        })
+})
+
+app.get("/api/cases/charts=:query", (req, res) => {
+    const searchText = req.params.query;
+    var courts = req.query.courts.split(",");
+    var judgements = req.query.judgement.split(",");
+    for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
+    for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
+    // var page = req.query.page;
+    // var limit = req.query.limit;
+    // var sortBy = req.query.sortBy;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
+    // var startIndex = (page - 1) * limit;
+    // var endIndex = page * limit;
+    var judge = req.query.bench;
+    if (judge.length == 0) judge = "@"
+    var ptnr = req.query.ptn;
+    if (ptnr.length == 0) ptnr = "@"
+    var resp = req.query.rsp;
+    if (resp.length == 0) resp = "@"
+        // var sort_options = ["_score"];
+        // if (sortBy === "year") {
+        //     sort_options = [{ "date": "desc" }, "_score"];
+        // }
+    esClient.search({
+            index: "indian_court_data.cases",
+            body: {
+                "track_total_hits": true,
+                size: 0,
+                query: {
+                    bool: {
+                        must: [{
+                                terms: {
+                                    "source.keyword": courts
+                                }
+                            },
+                            {
+                                simple_query_string: {
+                                    query: searchText.trim(),
+                                    fields: [
+                                        "title^5",
+                                        "judgement_text^3"
+                                    ]
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "bench": judge
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "petitioner": ptnr
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "respondent": resp
+                                }
+                            }
+                        ],
+                        filter: [{
+                                range: {
+                                    "year": { gte: y_floor, lte: y_ceil }
+                                }
+                            },
+                            {
+                                terms: {
+                                    "judgement.keyword": judgements
+                                }
+                            },
+
+                        ]
+                    }
+                },
+                collapse: {
+                    field: "url.keyword"
+                },
+                aggs: {
+                    judgements: {
+                        terms: {
+                            field: "judgement.keyword",
+                            size: 5
+                        },
+                        aggs: {
+                            years: {
+                                terms: {
+                                    field: "year.keyword",
+                                    size: 1000,
+                                    order: { _term: "asc" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        .then(response => {
+            lineChartArr = [];
+            response.aggregations.judgements.buckets.map(function(i) {
+                i.years.buckets.map(function(j) {
+                    lineChartArr.push({
+                        'color': i['key'],
+                        'x': j['key'],
+                        'y': j['doc_count']
+                    })
+                })
+            })
+            res.send(lineChartArr.sort((a, b) => a.x - b.x));
+        })
+        // .then(response => {
+        //     res.send(response.aggregations.judgements.buckets.years.buckets.map(function(i) {
+        //         lineChartArr.push({
+        //             'color': i['key'],
+        //             'x': j['key'],
+        //             'y': j['doc_count']
+        //         })
+        //         return lineChartArr;
+        //     }));
+        // })
         .catch(err => {
             return res.status(500).json({ "message": "Error" })
         })
