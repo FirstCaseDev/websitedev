@@ -771,6 +771,7 @@ export class CasesComponent implements OnInit {
 
     if (Boolean(this.view_search) == false) this.show_search();
     this.createArray(this.results_count);
+    this.show_search();
   }
 
   getLineCharts() {
@@ -869,7 +870,8 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getPetitionerChart(
         this.query,
-        this.court,
+        this.courts,
+        this.judgement,
         this.bench,
         this.petitioner,
         this.respondent,
@@ -973,7 +975,8 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getRespondentChart(
         this.query,
-        this.court,
+        this.courts,
+        this.judgement,
         this.bench,
         this.petitioner,
         this.respondent,
@@ -1075,7 +1078,8 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getPtn_v_BenchChart(
         this.query,
-        this.court,
+        this.courts,
+        this.judgement,
         this.bench,
         this.petitioner,
         this.respondent,
@@ -1131,7 +1135,8 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getRsp_v_BenchChart(
         this.query,
-        this.court,
+        this.courts,
+        this.judgement,
         this.bench,
         this.petitioner,
         this.respondent,

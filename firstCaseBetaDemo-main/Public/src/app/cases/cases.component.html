@@ -493,20 +493,14 @@
                                     <div class="graphs-grid-item">
                                         <canvas height="180px" baseChart [datasets]="respondentChartData" [labels]="respondentChartLabels" [options]="respondentChartOptions" [legend]="respondentChartLegend" [chartType]="respondentChartType"></canvas>
                                     </div>
-                                    <!-- <div class="graphs-grid-item">
-                      <highcharts-chart
-                        [Highcharts]="Highcharts"
-                        [options]="pvbChartOptions"
-                      >
-                      </highcharts-chart>
-                    </div>
-                    <div class="graphs-grid-item">
-                      <highcharts-chart
-                        [Highcharts]="Highcharts"
-                        [options]="rvbChartOptions"
-                      >
-                      </highcharts-chart>
-                    </div> -->
+                                    <div class="graphs-grid-item">
+                                        <highcharts-chart [Highcharts]="Highcharts" [options]="pvbChartOptions">
+                                        </highcharts-chart>
+                                    </div>
+                                    <div class="graphs-grid-item">
+                                        <highcharts-chart [Highcharts]="Highcharts" [options]="rvbChartOptions">
+                                        </highcharts-chart>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -863,22 +857,14 @@
                         <div>
                             <canvas style="width: fit-content" height="180px" baseChart [datasets]="respondentChartData" [labels]="respondentChartLabels" [options]="respondentChartOptions" [legend]="respondentChartLegend" [chartType]="respondentChartType"></canvas>
                         </div>
-                        <!-- <div>
-              <highcharts-chart
-                style="width: fit-content"
-                [Highcharts]="Highcharts"
-                [options]="pvbChartOptions"
-              >
-              </highcharts-chart>
-            </div>
-            <div>
-              <highcharts-chart
-                style="width: fit-content"
-                [Highcharts]="Highcharts"
-                [options]="rvbChartOptions"
-              >
-              </highcharts-chart>
-            </div> -->
+                        <div>
+                            <highcharts-chart style="width: fit-content" [Highcharts]="Highcharts" [options]="pvbChartOptions">
+                            </highcharts-chart>
+                        </div>
+                        <div>
+                            <highcharts-chart style="width: fit-content" [Highcharts]="Highcharts" [options]="rvbChartOptions">
+                            </highcharts-chart>
+                        </div>
                     </div>
                 </div>
             </div>
