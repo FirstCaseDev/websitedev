@@ -84,7 +84,7 @@ export class CaseService {
 
   getLineCharts(
     query: string,
-    court: string,
+    court: Array<string>,
     judgement: Array<string>,
     bench: string,
     petitioner: string,
@@ -93,7 +93,7 @@ export class CaseService {
     y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/charts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+      `cases/charts=${query}?courts=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 

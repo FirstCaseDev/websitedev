@@ -602,6 +602,7 @@ export class CasesComponent implements OnInit {
     element2!.className = 'tab';
     let element3 = document.getElementById('citation_tab');
     element3!.className = 'tab';
+    this.loading = false;
     // console.log('show_analytics end - loading: ', this.loading);
 
     // console.log('view_search ' + this.view_search);
@@ -632,6 +633,7 @@ export class CasesComponent implements OnInit {
     element2!.className = 'tab';
     let element3 = document.getElementById('analytics_tab');
     element3!.className = 'tab ';
+    this.loading = false;
 
     // console.log('view_search ' + this.view_search);
   }
@@ -654,6 +656,7 @@ export class CasesComponent implements OnInit {
     let element3 = document.getElementById('citation_tab');
     element3!.className = 'tab';
     // console.log('view_search ' + this.view_search);
+    this.loading = false;
   }
 
   toggle_filters() {
@@ -774,7 +777,7 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getLineCharts(
         this.query,
-        this.court,
+        this.courts,
         this.judgement,
         this.bench,
         this.petitioner,
@@ -783,7 +786,8 @@ export class CasesComponent implements OnInit {
         this.y_ceil
       )
       .subscribe((data: any) => {
-        // console.log(data);
+        // data = data[0];
+        console.log(data);
         this.chartLabels.length = 0;
         this.Datalabels.length = 0;
         try {
