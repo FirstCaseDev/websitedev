@@ -73,11 +73,11 @@ app.get("/api/cases/query=:query", (req, res) => {
                                 }
                             },
                             {
-                                multi_match: {
+                                simple_query_string: {
                                     query: searchText.trim(),
                                     fields: [
-                                        "judgement_text",
-                                        "title"
+                                        "title^5",
+                                        "judgement_text^3"
                                     ]
                                 }
                             },
@@ -219,11 +219,11 @@ app.get("/api/cases/cited_cases=:query", (req, res) => {
                                 }
                             },
                             {
-                                multi_match: {
+                                simple_query_string: {
                                     query: searchText.trim(),
                                     fields: [
-                                        "judgement_text",
-                                        "title"
+                                        "title^5",
+                                        "judgement_text^3"
                                     ]
                                 }
                             },
@@ -317,11 +317,11 @@ app.get("/api/cases/cited_provisions=:query", (req, res) => {
                                 }
                             },
                             {
-                                multi_match: {
+                                simple_query_string: {
                                     query: searchText.trim(),
                                     fields: [
-                                        "judgement_text",
-                                        "title"
+                                        "title^5",
+                                        "judgement_text^3"
                                     ]
                                 }
                             },
