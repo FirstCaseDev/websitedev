@@ -392,6 +392,8 @@ button:hover,
     padding: 0 20px;
     align-items: center;
     border-bottom: 1px solid #ccc;
+    border-radius: 10px 0px 0px 10px;
+    background-color: whitesmoke
 }
 
 table,
