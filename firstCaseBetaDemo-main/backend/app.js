@@ -111,6 +111,9 @@ app.get("/api/cases/query=:query", (req, res) => {
                         ]
                     }
                 },
+                collapse: {
+                    field: "url.keyword"
+                },
                 script_fields: {
                     "_id ": {
                         script: {
@@ -124,6 +127,7 @@ app.get("/api/cases/query=:query", (req, res) => {
         })
         .then(response => {
             if (response.hits.total.value > 0) {
+                // return res.json(response);
                 return res.json({
                     result_count: response.hits.total.value,
                     case_list: response.hits.hits.map(function(i) {
@@ -253,6 +257,9 @@ app.get("/api/cases/cited_cases=:query", (req, res) => {
                         ]
                     }
                 },
+                collapse: {
+                    field: "url.keyword"
+                },
                 aggs: {
                     frequent_tag: {
                         terms: {
@@ -347,6 +354,9 @@ app.get("/api/cases/cited_provisions=:query", (req, res) => {
 
                         ]
                     }
+                },
+                collapse: {
+                    field: "url.keyword"
                 },
                 aggs: {
                     act_names: {

@@ -178,7 +178,7 @@
                 style="text-align: justify"
                 *ngFor="let item of judgement_text_paragraphs"
               >
-                <p *ngIf="!searched" style="text-align: justify">
+                <p *ngIf="!searched" style="text-align: left; word-wrap: break-word; -ms-hyphens: auto">
                   {{ item }}
                 </p>
 

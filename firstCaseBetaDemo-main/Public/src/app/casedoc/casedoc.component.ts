@@ -128,7 +128,10 @@ export class CasedocComponent implements OnInit {
 
       // Uncomment for processing paragraphs from judgement text
       // console.log('data.case.judgement_text: ', data.case.judgement_text);
-      this.judgement_text_paragraphs = data.case.judgement_text.split('>>>>');
+      this.judgement_text_paragraphs = data.case.judgement_text.split('>>>>').map(function(i: any){
+        var para = i.replace(/[^\S+\r\n]{2,}/g," ");
+        return para;
+      });
       this.first_para = this.judgement_text_paragraphs[0];
       delete this.judgement_text_paragraphs[0];
       // console.log('this.case.url: ', this.case.url);
@@ -358,11 +361,7 @@ export class CasedocComponent implements OnInit {
     } else {
       document
         .getElementById('marked' + String(this.marked_url_idx))
-        ?.scrollIntoView({
-          behavior: 'auto',
-          block: 'center',
-          inline: 'center'
-      });
+        ?.scrollIntoView();
     }
     document.getElementById('search-bar')?.scrollIntoView();
   }
@@ -376,17 +375,11 @@ export class CasedocComponent implements OnInit {
         alert('Reached end of the document!');
       }, 1000);
     } else {
-      console.log(document
-        .getElementById('marked' + String(this.marked_url_idx)));
       document
         .getElementById('marked' + String(this.marked_url_idx))
-        ?.scrollIntoView({
-          behavior: 'auto',
-          block: 'center',
-          inline: 'center'
-      });
+        ?.scrollIntoView();
     }
-    // document.getElementById('search-bar')?.scrollIntoView();
+    document.getElementById('search-bar')?.scrollIntoView();
   }
 
   toggle_right_menu = false;
