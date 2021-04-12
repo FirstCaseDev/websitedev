@@ -1464,8 +1464,7 @@ export class CasesComponent implements OnInit {
   }
 
   service_down = false;
-  service_unavailable(){
+  service_unavailable() {
     this.service_down = true;
   }
 }
-

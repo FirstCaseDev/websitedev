@@ -7,6 +7,7 @@ var mongoose = require("mongoose");
 var jwt = require("njwt");
 
 module.exports = (router) => {
+
     router.get("/cases/query=:query", (req, res) => {
         var squery = req.params.query;
         // var judgement = req.params.judgement;
