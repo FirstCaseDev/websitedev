@@ -24,7 +24,7 @@ export class CasesComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private componentTitle: Title
-  ) {}
+  ) { }
 
   isMobile = false;
   Highcharts = Highcharts;
@@ -37,6 +37,8 @@ export class CasesComponent implements OnInit {
   pvb_data: any = [];
   rvb_data: any = [];
   myForm: any;
+  courtForm: any;
+  selectedCountry: any = "India";
   disabled = false;
   ShowFilter = false;
   limitSelection = false;
@@ -48,6 +50,7 @@ export class CasesComponent implements OnInit {
   view_tags: boolean = false;
   view_tags_mobile: boolean = false;
   selectedJudgements: any = [];
+  selectedCourts: any = [];
   dropdownSettings: any = {};
   rows: Case[] = [];
   cited_cases: any = [];
@@ -67,6 +70,15 @@ export class CasesComponent implements OnInit {
     'tied / unclear',
     'partly allowed',
     'partly dismissed',
+  ];
+  courts: Array<string> = [
+    'Supreme Court of India',
+    'Delhi High Court',
+    'Bombay High Court',
+    'Madras High Court',
+    'Calcutta High Court',
+    'Allahabad High Court',
+    'National Company Law Appellate Tribunal'
   ];
   bench: string = '';
   petitioner: string = '';
@@ -355,11 +367,21 @@ export class CasesComponent implements OnInit {
   ];
 
   judgement_options = [
-    { item_id: 1, item_text: 'Allowed' },
-    { item_id: 2, item_text: 'Dismissed' },
-    { item_id: 3, item_text: 'Tied or Unclear' },
-    { item_id: 4, item_text: 'Partly Allowed' },
-    { item_id: 5, item_text: 'Partly Dismissed' },
+    { item_id: 1, item_text: 'allowed' },
+    { item_id: 2, item_text: 'dismissed' },
+    { item_id: 3, item_text: 'tied / unclear' },
+    { item_id: 4, item_text: 'partly allowed' },
+    { item_id: 5, item_text: 'partly dismissed' },
+  ];
+
+  court_options = [
+    { item_id: 1, item_text: 'Supreme Court of India' },
+    { item_id: 2, item_text: 'Delhi High Court' },
+    { item_id: 3, item_text: 'Bombay High Court' },
+    { item_id: 4, item_text: 'Madras High Court' },
+    { item_id: 5, item_text: 'Calcutta High Court' },
+    { item_id: 6, item_text: 'Allahabad High Court' },
+    { item_id: 7, item_text: 'National Company Law Appellate Tribunal' },
   ];
 
   courtdata: any = [
@@ -369,6 +391,7 @@ export class CasesComponent implements OnInit {
     { id: 'Madras High Court', name: 'Madras High Court' },
     { id: 'Calcutta High Court', name: 'Calcutta High Court' },
     { id: 'Allahabad High Court', name: 'Allahabad High Court' },
+    { id: 'National Company Law Appellate Tribunal', name: 'National Company Law Appellate Tribunal' },
     // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
@@ -452,6 +475,7 @@ export class CasesComponent implements OnInit {
     this.sortBy = this.sort_options[0];
     this.court = this.courtdata[0].name;
     this.selectedJudgements = this.judgement_options;
+    this.selectedCourts = this.court_options;
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -464,7 +488,9 @@ export class CasesComponent implements OnInit {
     this.myForm = this.fb.group({
       city: [this.selectedJudgements],
     });
-
+    this.courtForm = this.fb.group({
+      city: [this.selectedCourts],
+    });
     // if (localStorage.getItem('token_exp')) {
     //   var exp = parseInt(localStorage.token_exp);
     //   var curr_time = new Date().getTime();
@@ -682,7 +708,7 @@ export class CasesComponent implements OnInit {
     this.chartLabels = [1990, 2000, 2010, 2020];
     this.doughnutChartData = [[350, 450, 100]];
     this.doughnutChartLabels = ['Allowed', 'Dismissed', 'Tied or Unclear'];
-    this.selectedJudgements = this.judgement_options;
+    // this.selectedJudgements = this.judgement_options;
   }
 
   search() {
@@ -704,11 +730,14 @@ export class CasesComponent implements OnInit {
     this.selectedJudgements.map((item: any) => {
       this.judgement.push(item.item_text);
     });
-
+    this.courts = [];
+    this.selectedCourts.map((item: any) => {
+      this.courts.push(item.item_text);
+    });
     this.caseService
       .getSearchedCases(
         this.query,
-        this.court,
+        this.courts,
         this.judgement,
         this.bench,
         this.petitioner,
@@ -800,7 +829,7 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getPieCharts(
         this.query,
-        this.court,
+        this.courts,
         this.judgement,
         this.bench,
         this.petitioner,
@@ -825,6 +854,7 @@ export class CasesComponent implements OnInit {
         }
 
         this.doughnutChartData = arr;
+        this.loading=false;
       });
   }
 
@@ -1153,7 +1183,7 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getCitedCases(
         this.query,
-        this.court,
+        this.courts,
         this.judgement,
         this.bench,
         this.petitioner,
@@ -1164,6 +1194,8 @@ export class CasesComponent implements OnInit {
       .subscribe((data: any) => {
         try {
           this.cited_cases = data;
+          console.log(this.cited_cases);
+          this.loading = false;
         } catch (error) {
           // console.log(error);
         }
@@ -1174,7 +1206,7 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getCitedActs(
         this.query,
-        this.court,
+        this.courts,
         this.judgement,
         this.bench,
         this.petitioner,
@@ -1184,15 +1216,14 @@ export class CasesComponent implements OnInit {
       )
       .subscribe((data: any) => {
         try {
-          this.CitedActCorrectedDataNames = [];
-          data.map((item: any) => {
-            if (!this.CitedActCorrectedDataNames.includes(item.group))
-              this.CitedActCorrectedDataNames.push(item.group);
-          });
-          this.CitedActCorrectedData = data;
-          // console.log(this.CitedActCorrectedData);
+          this.CitedProvisions= data;
+          // this.CitedActCorrectedDataNames = [];
+          // data.map((item: any) => {
+          //   if (!this.CitedActCorrectedDataNames.includes(item.group))
+          //     this.CitedActCorrectedDataNames.push(item.group);
+          // });
+          // this.CitedActCorrectedData = data;
         } catch (error) {
-          // console.log(error);
         }
       });
   }
@@ -1217,7 +1248,6 @@ export class CasesComponent implements OnInit {
             if (!this.CitedActNames.includes(item.y))
               this.CitedActNames.push(item.y);
           });
-          // console.log(this.CitedActNames);
           var sums: any = [];
           var sections: any = [];
           var section_occurrences: any = [];
@@ -1228,13 +1258,11 @@ export class CasesComponent implements OnInit {
             section_occurrences[i] = [];
             for (var j = 0; j < data.length; j++) {
               if (data[j].y === this.CitedActNames[i]) {
-                // sums[i] = sums[i] + data[j].x;
                 sections[i].push(data[j].color);
                 section_occurrences[i].push(data[j].x);
               }
             }
             while (this.CitedActCorrectedData.length == 0) {
-              // console.log('waiting');
             }
             var temp = this.CitedActCorrectedData.find(
               (el: any) => el.group === this.CitedActNames[i]
@@ -1259,10 +1287,6 @@ export class CasesComponent implements OnInit {
             sections[i] = sections[i].slice(0, 5);
             section_occurrences[i] = section_occurrences[i].slice(0, 5);
           }
-          // console.log(sums);
-          // console.log(sums);
-          // console.log(sections);
-          // console.log(section_occurrences);
           for (var z = 0; z < this.CitedActNames.length; z++) {
             this.CitedProvisions.push({
               act_name: this.CitedActNames[z],
@@ -1271,12 +1295,9 @@ export class CasesComponent implements OnInit {
               section_sums: section_occurrences[z],
             });
           }
-          // console.log(this.CitedProvisions);
         } catch (error) {
-          // console.log(error);
         }
         this.loading = false;
-        // console.log('getCitedLaws end - loading: ', this.loading);
       });
   }
 
@@ -1315,6 +1336,7 @@ export class CasesComponent implements OnInit {
     this.doughnutChartData = [[350, 450, 100]];
     this.doughnutChartLabels = ['allowed', 'dismissed', 'tied / unclear'];
     this.selectedJudgements = this.judgement_options;
+    this.selectedCourts = this.court_options;
   }
 
   sendNextPage() {
@@ -1397,21 +1419,21 @@ export class CasesComponent implements OnInit {
         case 'judgeName': {
           elem[idx].className = 'tags-list-item tag-judgeName';
           var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.bench == '') this.bench = elem_h3[0].textContent!;
+          if (this.bench == '') this.bench = elem_h3[0].textContent!.toLowerCase().replace(/\s/g, '');
           else
             this.bench = this.bench
-              .concat(' || ')
-              .concat(elem_h3[0].textContent!);
+              .concat('|')
+              .concat(elem_h3[0].textContent!).toLowerCase().replace(/\s/g, '');
           break;
         }
         case 'petitionerName': {
           elem[idx].className = 'tags-list-item tag-petitionerName';
           var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.petitioner == '') this.petitioner = elem_h3[0].textContent!;
+          if (this.petitioner == '') this.petitioner = elem_h3[0].textContent!.toLowerCase().replace(/\s/g, '');
           else
             this.petitioner = this.petitioner
-              .concat(' || ')
-              .concat(elem_h3[0].textContent!);
+              .concat('|')
+              .concat(elem_h3[0].textContent!).toLowerCase().replace(/\s/g, '');
           break;
         }
         case 'petitionerCounsel': {
@@ -1421,11 +1443,11 @@ export class CasesComponent implements OnInit {
         case 'respondentName': {
           elem[idx].className = 'tags-list-item tag-respondentName';
           var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.respondent == '') this.respondent = elem_h3[0].textContent!;
+          if (this.respondent == '') this.respondent = elem_h3[0].textContent!.toLowerCase().replace(/\s/g, '');
           else
             this.respondent = this.respondent
-              .concat(' || ')
-              .concat(elem_h3[0].textContent!);
+              .concat('|')
+              .concat(elem_h3[0].textContent!).toLowerCase().replace(/\s/g, '');
           break;
         }
         case 'respondentCounsel': {
@@ -1454,6 +1476,61 @@ export class CasesComponent implements OnInit {
     if (this.tags_list.length == 0) this.view_tags = false;
     else this.IdTags();
     this.no_of_tags = this.no_of_tags - 1;
+  }
+
+  select_in(){
+    this.selectedCountry="India";
+    this.courts = [
+      'Supreme Court of India',
+      'Delhi High Court',
+      'Bombay High Court',
+      'Madras High Court',
+      'Calcutta High Court',
+      'Allahabad High Court',
+      'National Company Law Appellate Tribunal'
+    ];
+
+    this.court_options = [
+      { item_id: 1, item_text: 'Supreme Court of India' },
+      { item_id: 2, item_text: 'Delhi High Court' },
+      { item_id: 3, item_text: 'Bombay High Court' },
+      { item_id: 4, item_text: 'Madras High Court' },
+      { item_id: 5, item_text: 'Calcutta High Court' },
+      { item_id: 6, item_text: 'Allahabad High Court' },
+      { item_id: 7, item_text: 'National Company Law Appellate Tribunal' },
+    ];
+  
+    this.courtdata = [
+      { id: 'Supreme Court of India', name: 'Supreme Court of India' },
+      { id: 'Delhi High Court', name: 'Delhi High Court' },
+      { id: 'Bombay High Court', name: 'Bombay High Court' },
+      { id: 'Madras High Court', name: 'Madras High Court' },
+      { id: 'Calcutta High Court', name: 'Calcutta High Court' },
+      { id: 'Allahabad High Court', name: 'Allahabad High Court' },
+      { id: 'National Company Law Appellate Tribunal', name: 'National Company Law Appellate Tribunal' },
+    ];
+    console.log("courts",this.courts);
+    console.log("court_options",this.court_options);
+    this.ngOnInit()
+
+  }
+
+  select_sg(){
+    this.selectedCountry="Singapore";
+    this.courts = [
+      'Supreme Court of Singapore',
+    ];
+    
+    this.court_options = [
+      { item_id: 1, item_text: 'Supreme Court of Singapore' },
+    ];
+  
+    this.courtdata = [
+      { id: 'Supreme Court of Singapore', name: 'Supreme Court of Singapore' }
+    ];
+    console.log("courts",this.courts);
+    console.log("court_options",this.court_options);  
+    this.ngOnInit()
   }
 
   check_curr_data() {

@@ -20,7 +20,7 @@ export class CaseService {
 
   getSearchedCases(
     query: string,
-    court: string,
+    courts: Array<string>,
     judgement: Array<string>,
     bench: string,
     petitioner: string,
@@ -31,8 +31,54 @@ export class CaseService {
     y_floor: Number,
     y_ceil: Number
   ) {
+    // console.log("courts",courts);
     return this.webService.get(
-      `cases/query=${query}?&court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}&sortBy=${curr_sort}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+      `cases/query=${query}?&courts=${courts}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}&sortBy=${curr_sort}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+    );
+  }
+
+  getCitedCases(
+    query: string,
+    court: Array<string>,
+    judgement: Array<string>,
+    bench: string,
+    petitioner: string,
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
+  ) {
+    return this.webService.get(
+      `cases/cited_cases=${query}?courts=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+    );
+  }
+
+  getCitedActs(
+    query: string,
+    court: Array<string>,
+    judgement: Array<string>,
+    bench: string,
+    petitioner: string,
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
+  ) {
+    return this.webService.get(
+      `cases/cited_provisions=${query}?courts=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+    );
+  }
+
+  getPieCharts(
+    query: string,
+    court: Array<string>,
+    judgement: Array<string>,
+    bench: string,
+    petitioner: string,
+    respondent: string,
+    y_floor: Number,
+    y_ceil: Number
+  ) {
+    return this.webService.get(
+      `cases/piecharts=${query}?courts=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
@@ -51,20 +97,7 @@ export class CaseService {
     );
   }
 
-  getPieCharts(
-    query: string,
-    court: string,
-    judgement: Array<string>,
-    bench: string,
-    petitioner: string,
-    respondent: string,
-    y_floor: Number,
-    y_ceil: Number
-  ) {
-    return this.webService.get(
-      `cases/piecharts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
-    );
-  }
+  
 
   getPetitionerChart(
     query: string,
@@ -122,20 +155,7 @@ export class CaseService {
     );
   }
 
-  getCitedCases(
-    query: string,
-    court: string,
-    judgement: Array<string>,
-    bench: string,
-    petitioner: string,
-    respondent: string,
-    y_floor: Number,
-    y_ceil: Number
-  ) {
-    return this.webService.get(
-      `cases/cited_cases=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
-    );
-  }
+
 
   getCitedLaws(
     query: string,
@@ -152,20 +172,7 @@ export class CaseService {
     );
   }
 
-  getCitedActs(
-    query: string,
-    court: string,
-    judgement: Array<string>,
-    bench: string,
-    petitioner: string,
-    respondent: string,
-    y_floor: Number,
-    y_ceil: Number
-  ) {
-    return this.webService.get(
-      `cases/cited_acts=${query}?court=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
-    );
-  }
+
 
   getLists() {
     return this.webService.get('lists');
