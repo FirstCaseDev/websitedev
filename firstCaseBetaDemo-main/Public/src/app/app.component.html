@@ -1,8 +1,8 @@
 <div class="home-screen-size-large" *ngIf="!isMobile">
   <header *ngIf="router.url !== '/home'">
     <nav>
-      <div id="logo" style="display: flex; margin: 0 2em; align-items: center">
-        <img width="40px" src="../../assets/img/logo.svg" />
+      <div id="logo" style="display: flex; margin: 0 1em; align-items: center">
+        <img width="40px" src="../../assets/img/logo dark.svg" />
         <p
           style="
             font-family: PopMedium;
@@ -13,17 +13,29 @@
           First Case
         </p>
       </div>
-
+      <div
+        class="search_div"
+        style="display: flex; margin: 0 2em; align-items: center"
+      >
+        <input class="default-searchbox" placeholder="Search the site" />
+        <img
+          style="cursor: pointer"
+          width="18px"
+          src="../../assets/img/search_icon.svg"
+        />
+      </div>
       <div>
         <ul>
           <li>
-            <a style="text-decoration: none" href="/home">Home</a>
+            <a style="text-decoration: none; color: #000" href="/home">Home</a>
           </li>
           <li>
-            <a style="text-decoration: none" href="/cases">Demo</a>
+            <a style="text-decoration: none; color: #000" href="/cases">Demo</a>
           </li>
           <li>
-            <a style="text-decoration: none" href="/home">Contact</a>
+            <a style="text-decoration: none; color: #000" href="/home"
+              >Contact</a
+            >
           </li>
         </ul>
       </div>
@@ -37,9 +49,32 @@
   <br />
   <br />
   <footer>
-    <img width="100px" src="../assets/img/logo.svg" />
-    <p style="font-size: xx-large">FIRST CASE</p>
-    <p style="font-size: 1em">Big Data for Big Law</p>
+    <div
+      style="
+        display: flex;
+        justify-content: space-around;
+        padding: 0 10vw;
+        align-items: center;
+      "
+    >
+      <div>
+        <img width="100px" src="../assets/img/logo.svg" />
+        <p style="font-size: xx-large">FIRST CASE</p>
+        <p style="font-size: 1em">Big Data for Big Law</p>
+      </div>
+      <div style="width: 40vw; text-align: left">
+        <b>Disclaimer: </b>
+        <p style="font-size: 1em; border-left: linea">
+          The content of this website are for informational purposes only and
+          for the reader’s personal non-commercial use. The views expressed are
+          not the personal view of FirstCase and do not constitute legal advice.
+          The contents are intended, but not guaranteed, to be correct,
+          complete, or up to date. FirstCase disclaims all liability to any
+          person for any loss or damage caused by errors or omissions, whether
+          arising from negligence, accident or any other cause.
+        </p>
+      </div>
+    </div>
     <br />
     <br />
     <div style="display: flex; justify-content: space-evenly">

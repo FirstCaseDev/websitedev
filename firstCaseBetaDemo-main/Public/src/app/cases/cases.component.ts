@@ -24,7 +24,7 @@ export class CasesComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private componentTitle: Title
-  ) { }
+  ) {}
 
   isMobile = false;
   Highcharts = Highcharts;
@@ -38,7 +38,7 @@ export class CasesComponent implements OnInit {
   rvb_data: any = [];
   myForm: any;
   courtForm: any;
-  selectedCountry: any = "India";
+  selectedCountry: any = 'India';
   disabled = false;
   ShowFilter = false;
   limitSelection = false;
@@ -78,7 +78,7 @@ export class CasesComponent implements OnInit {
     'Madras High Court',
     'Calcutta High Court',
     'Allahabad High Court',
-    'National Company Law Appellate Tribunal'
+    'National Company Law Appellate Tribunal',
   ];
   bench: string = '';
   petitioner: string = '';
@@ -391,7 +391,10 @@ export class CasesComponent implements OnInit {
     { id: 'Madras High Court', name: 'Madras High Court' },
     { id: 'Calcutta High Court', name: 'Calcutta High Court' },
     { id: 'Allahabad High Court', name: 'Allahabad High Court' },
-    { id: 'National Company Law Appellate Tribunal', name: 'National Company Law Appellate Tribunal' },
+    {
+      id: 'National Company Law Appellate Tribunal',
+      name: 'National Company Law Appellate Tribunal',
+    },
     // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
@@ -513,7 +516,7 @@ export class CasesComponent implements OnInit {
     // console.log('onSelectAll', this.selectedJudgements);
   }
 
-  toogleShowFilter() {
+  toggleShowFilter() {
     this.ShowFilter = !this.ShowFilter;
     this.dropdownSettings = Object.assign({}, this.dropdownSettings, {
       allowSearchFilter: this.ShowFilter,
@@ -854,7 +857,7 @@ export class CasesComponent implements OnInit {
         }
 
         this.doughnutChartData = arr;
-        this.loading=false;
+        this.loading = false;
       });
   }
 
@@ -1216,15 +1219,14 @@ export class CasesComponent implements OnInit {
       )
       .subscribe((data: any) => {
         try {
-          this.CitedProvisions= data;
+          this.CitedProvisions = data;
           // this.CitedActCorrectedDataNames = [];
           // data.map((item: any) => {
           //   if (!this.CitedActCorrectedDataNames.includes(item.group))
           //     this.CitedActCorrectedDataNames.push(item.group);
           // });
           // this.CitedActCorrectedData = data;
-        } catch (error) {
-        }
+        } catch (error) {}
       });
   }
 
@@ -1262,8 +1264,7 @@ export class CasesComponent implements OnInit {
                 section_occurrences[i].push(data[j].x);
               }
             }
-            while (this.CitedActCorrectedData.length == 0) {
-            }
+            while (this.CitedActCorrectedData.length == 0) {}
             var temp = this.CitedActCorrectedData.find(
               (el: any) => el.group === this.CitedActNames[i]
             );
@@ -1295,8 +1296,7 @@ export class CasesComponent implements OnInit {
               section_sums: section_occurrences[z],
             });
           }
-        } catch (error) {
-        }
+        } catch (error) {}
         this.loading = false;
       });
   }
@@ -1419,21 +1419,31 @@ export class CasesComponent implements OnInit {
         case 'judgeName': {
           elem[idx].className = 'tags-list-item tag-judgeName';
           var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.bench == '') this.bench = elem_h3[0].textContent!.toLowerCase().replace(/\s/g, '');
+          if (this.bench == '')
+            this.bench = elem_h3[0]
+              .textContent!.toLowerCase()
+              .replace(/\s/g, '');
           else
             this.bench = this.bench
               .concat('|')
-              .concat(elem_h3[0].textContent!).toLowerCase().replace(/\s/g, '');
+              .concat(elem_h3[0].textContent!)
+              .toLowerCase()
+              .replace(/\s/g, '');
           break;
         }
         case 'petitionerName': {
           elem[idx].className = 'tags-list-item tag-petitionerName';
           var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.petitioner == '') this.petitioner = elem_h3[0].textContent!.toLowerCase().replace(/\s/g, '');
+          if (this.petitioner == '')
+            this.petitioner = elem_h3[0]
+              .textContent!.toLowerCase()
+              .replace(/\s/g, '');
           else
             this.petitioner = this.petitioner
               .concat('|')
-              .concat(elem_h3[0].textContent!).toLowerCase().replace(/\s/g, '');
+              .concat(elem_h3[0].textContent!)
+              .toLowerCase()
+              .replace(/\s/g, '');
           break;
         }
         case 'petitionerCounsel': {
@@ -1443,11 +1453,16 @@ export class CasesComponent implements OnInit {
         case 'respondentName': {
           elem[idx].className = 'tags-list-item tag-respondentName';
           var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.respondent == '') this.respondent = elem_h3[0].textContent!.toLowerCase().replace(/\s/g, '');
+          if (this.respondent == '')
+            this.respondent = elem_h3[0]
+              .textContent!.toLowerCase()
+              .replace(/\s/g, '');
           else
             this.respondent = this.respondent
               .concat('|')
-              .concat(elem_h3[0].textContent!).toLowerCase().replace(/\s/g, '');
+              .concat(elem_h3[0].textContent!)
+              .toLowerCase()
+              .replace(/\s/g, '');
           break;
         }
         case 'respondentCounsel': {
@@ -1478,8 +1493,8 @@ export class CasesComponent implements OnInit {
     this.no_of_tags = this.no_of_tags - 1;
   }
 
-  select_in(){
-    this.selectedCountry="India";
+  select_in() {
+    this.selectedCountry = 'India';
     this.courts = [
       'Supreme Court of India',
       'Delhi High Court',
@@ -1487,7 +1502,7 @@ export class CasesComponent implements OnInit {
       'Madras High Court',
       'Calcutta High Court',
       'Allahabad High Court',
-      'National Company Law Appellate Tribunal'
+      'National Company Law Appellate Tribunal',
     ];
 
     this.court_options = [
@@ -1499,7 +1514,7 @@ export class CasesComponent implements OnInit {
       { item_id: 6, item_text: 'Allahabad High Court' },
       { item_id: 7, item_text: 'National Company Law Appellate Tribunal' },
     ];
-  
+
     this.courtdata = [
       { id: 'Supreme Court of India', name: 'Supreme Court of India' },
       { id: 'Delhi High Court', name: 'Delhi High Court' },
@@ -1507,30 +1522,30 @@ export class CasesComponent implements OnInit {
       { id: 'Madras High Court', name: 'Madras High Court' },
       { id: 'Calcutta High Court', name: 'Calcutta High Court' },
       { id: 'Allahabad High Court', name: 'Allahabad High Court' },
-      { id: 'National Company Law Appellate Tribunal', name: 'National Company Law Appellate Tribunal' },
+      {
+        id: 'National Company Law Appellate Tribunal',
+        name: 'National Company Law Appellate Tribunal',
+      },
     ];
-    console.log("courts",this.courts);
-    console.log("court_options",this.court_options);
-    this.ngOnInit()
-
+    console.log('courts', this.courts);
+    console.log('court_options', this.court_options);
+    this.ngOnInit();
   }
 
-  select_sg(){
-    this.selectedCountry="Singapore";
-    this.courts = [
-      'Supreme Court of Singapore',
-    ];
-    
+  select_sg() {
+    this.selectedCountry = 'Singapore';
+    this.courts = ['Supreme Court of Singapore'];
+
     this.court_options = [
       { item_id: 1, item_text: 'Supreme Court of Singapore' },
     ];
-  
+
     this.courtdata = [
-      { id: 'Supreme Court of Singapore', name: 'Supreme Court of Singapore' }
+      { id: 'Supreme Court of Singapore', name: 'Supreme Court of Singapore' },
     ];
-    console.log("courts",this.courts);
-    console.log("court_options",this.court_options);  
-    this.ngOnInit()
+    console.log('courts', this.courts);
+    console.log('court_options', this.court_options);
+    this.ngOnInit();
   }
 
   check_curr_data() {

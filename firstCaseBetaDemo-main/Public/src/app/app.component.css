@@ -8,6 +8,7 @@
   ::ng-deep * {
     margin: 0;
     padding: 0;
+    outline: none;
   }
 
   :root {
@@ -35,16 +36,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(to right, #212125, #2c3a52, #212125);
+    /* background: linear-gradient(to right, #212125, #2c3a52, #212125); */
     padding: 10px;
-    color: white;
     text-transform: uppercase;
   }
 
   nav > div > ul {
     list-style-type: none;
     display: flex;
-    color: white;
     padding: 0 10px;
     justify-content: space-evenly;
   }
@@ -67,7 +66,7 @@
     bottom: 0;
     left: 0;
     border-radius: 2px;
-    background-color: #fff;
+    background-color: #000;
     transform-origin: bottom left;
     transition: transform 0.25s ease-out;
   }
@@ -75,6 +74,10 @@
   nav > div > ul > li:hover:after {
     transform: scaleX(1);
     transform-origin: bottom left;
+  }
+
+  .default-searchbox {
+    background: transparent;
   }
 
   #login {
