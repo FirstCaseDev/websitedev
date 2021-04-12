@@ -2,10 +2,19 @@
   *,
   *::before,
   *::after {
-    /* margin: 0; */
-    z-index: 20;
-    padding: 0;
     box-sizing: border-box;
+    outline: none;
+  }
+  ::ng-deep * {
+    margin: 0;
+    padding: 0;
+    outline: none;
+  }
+
+  :root {
+    --select-border: #777;
+    --select-focus: blue;
+    --select-arrow: var(--select-border);
   }
 
   @font-face {
@@ -23,85 +32,130 @@
     src: url("../assets/fonts/Poppins-Medium.ttf");
   }
 
-  html {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-
-  body {
-    font-family: PopLight;
-    border-radius: 50px;
-  }
-
   nav {
-    font-family: PopLight;
-    background-color: #212125;
-    display: grid;
-    align-content: center;
-    grid-template-columns: 45% 55%;
-    padding: 0 10px;
-    width: 100%;
-    color: white;
-    border-bottom: 1px solid rgb(179, 179, 179);
-    box-shadow: 0px 5px 15px rgb(172, 172, 172);
-  }
-
-  nav ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background: linear-gradient(to right, #212125, #2c3a52, #212125); */
     padding: 10px;
-  }
-
-  nav ul li a {
-    color: white;
-    text-decoration: none;
     text-transform: uppercase;
-    font-weight: 1000;
-    margin: 12px;
   }
 
-  #icon_white {
-    padding: 10px;
-    border-radius: 15px;
-    height: 80px;
-    margin-left: 30px;
+  nav > div > ul {
+    list-style-type: none;
+    display: flex;
+    padding: 0 10px;
+    justify-content: space-evenly;
   }
 
-  #help {
-    padding: 7px;
-    background-color: #555;
-    color: #fff;
-  }
-
-  .top-menu {
+  nav > div > ul > li {
+    padding: 1em 20px;
+    cursor: pointer;
+    width: 8em;
     text-align: center;
-    color: white;
-    border: 2px solid #fff;
-    margin: 15px;
-    padding-top: 10px;
-    padding-bottom: 6px;
-    /* padding-left: 18px;
-  padding-right: 18px; */
-    border-radius: 50px;
+    display: inline-block;
     position: relative;
-    transition: 1s;
   }
-  .top-menu:hover {
-    background: #fff;
+
+  nav > div > ul > li:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    border-radius: 2px;
+    background-color: #000;
+    transform-origin: bottom left;
+    transition: transform 0.25s ease-out;
   }
-  .top-menu a {
-    padding: 20px 40px;
-    text-decoration: none;
-    transition: 1s;
-    color: white;
+
+  nav > div > ul > li:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
   }
-  .top-menu a:hover {
-    color: #080f19;
-    transition: 1s;
+
+  .default-searchbox {
+    background: transparent;
+  }
+
+  #login {
+    padding: 1em;
+    cursor: pointer;
+    font-weight: bolder;
+  }
+
+  #contact-us {
+    background-color: #fff;
+    padding: 1em;
+    border-radius: 2em;
+    font-weight: bolder;
+    cursor: pointer;
+  }
+
+  .search_div {
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  .search_div > input {
+    border: none;
+    margin: 0 10px;
+    width: 30vw;
+  }
+
+  .box-shadow {
+    box-shadow: 0px 5px 10px #aaa;
+    margin: 0 10px;
+    padding: 1em;
+    border-radius: 10px;
   }
 
   .pages {
     min-height: 60vh;
+  }
+
+  footer {
+    text-align: center;
+    padding: 5em;
+    font-family: PopLight;
+    padding-bottom: 1em !important;
+    color: white;
+    background: url("../assets/img/app-background.jpg") repeat center;
+    /* background: linear-gradient(to right, #212125, #2c3a52, #212125); */
+    box-shadow: 0px 5px 15px #111;
+  }
+
+  footer > div > ul {
+    list-style-type: none;
+    text-align: left;
+  }
+
+  a {
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+  }
+
+  .break-line {
+    height: 1px;
+    margin: 3em 0 1em 0;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1) 0,
+      rgba(255, 255, 255, 0.6) 50%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+  }
+
+  .follow {
+    width: 24px;
+    margin: 0 10px;
+    cursor: pointer;
   }
 
   .footer {
