@@ -396,7 +396,6 @@ app.get("/api/cases/cited_provisions=:query", (req, res) => {
         })
 })
 
-
 app.get("/api/cases/piecharts=:query", (req, res) => {
     const searchText = req.params.query;
     var courts = req.query.courts.split(",");

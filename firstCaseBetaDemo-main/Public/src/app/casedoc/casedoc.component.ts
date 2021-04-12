@@ -132,7 +132,7 @@ export class CasedocComponent implements OnInit {
         var para = i.replace(/[^\S+\r\n]{2,}/g," ");
         return para;
       });
-      this.first_para = this.judgement_text_paragraphs[0];
+      this.first_para = this.judgement_text_paragraphs[0].replace(/\n{2,}/g," ");
       delete this.judgement_text_paragraphs[0];
       // console.log('this.case.url: ', this.case.url);
       this.case_source_url = this.case.url.split('/')[2];
