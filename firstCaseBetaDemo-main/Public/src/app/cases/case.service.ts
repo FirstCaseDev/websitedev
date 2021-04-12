@@ -101,7 +101,8 @@ export class CaseService {
 
   getPetitionerChart(
     query: string,
-    court: string,
+    court: Array<string>,
+    judgement: Array<string>,
     bench: string,
     petitioner: string,
     respondent: string,
@@ -109,13 +110,14 @@ export class CaseService {
     y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/ptncharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+      `cases/ptncharts=${query}?courts=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
   getRespondentChart(
     query: string,
-    court: string,
+    court: Array<string>,
+    judgement: Array<string>,
     bench: string,
     petitioner: string,
     respondent: string,
@@ -123,13 +125,14 @@ export class CaseService {
     y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/respcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+      `cases/respcharts=${query}?courts=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
   getPtn_v_BenchChart(
     query: string,
-    court: string,
+    court: Array<string>,
+    judgement: Array<string>,
     bench: string,
     petitioner: string,
     respondent: string,
@@ -137,13 +140,14 @@ export class CaseService {
     y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/pvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+      `cases/pvbcharts=${query}?courts=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
   getRsp_v_BenchChart(
     query: string,
-    court: string,
+    court: Array<string>,
+    judgement: Array<string>,
     bench: string,
     petitioner: string,
     respondent: string,
@@ -151,7 +155,7 @@ export class CaseService {
     y_ceil: Number
   ) {
     return this.webService.get(
-      `cases/rvbcharts=${query}?court=${court}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+      `cases/rvbcharts=${query}?courts=${court}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 

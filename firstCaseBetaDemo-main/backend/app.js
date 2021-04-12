@@ -4,6 +4,8 @@ var host = process.env.HOST || "0.0.0.0";
 var port = process.env.PORT || 3000;
 var router = express.Router();
 var lineChartArr = [];
+var ptnChartArr = [];
+var respChartArr = [];
 const bodyParser = require("body-parser");
 const elasticsearch = require("elasticsearch")
 require("dotenv/config");
@@ -78,7 +80,8 @@ app.get("/api/cases/query=:query", (req, res) => {
                                     fields: [
                                         "title^5",
                                         "judgement_text^3"
-                                    ]
+                                    ],
+                                    default_operator: "and"
                                 }
                             },
                             {
@@ -224,7 +227,8 @@ app.get("/api/cases/cited_cases=:query", (req, res) => {
                                     fields: [
                                         "title^5",
                                         "judgement_text^3"
-                                    ]
+                                    ],
+                                    default_operator: "and"
                                 }
                             },
                             {
@@ -322,7 +326,8 @@ app.get("/api/cases/cited_provisions=:query", (req, res) => {
                                     fields: [
                                         "title^5",
                                         "judgement_text^3"
-                                    ]
+                                    ],
+                                    default_operator: "and"
                                 }
                             },
                             {
@@ -437,7 +442,8 @@ app.get("/api/cases/piecharts=:query", (req, res) => {
                                     fields: [
                                         "title^5",
                                         "judgement_text^3"
-                                    ]
+                                    ],
+                                    default_operator: "and"
                                 }
                             },
                             {
@@ -540,7 +546,8 @@ app.get("/api/cases/charts=:query", (req, res) => {
                                     fields: [
                                         "title^5",
                                         "judgement_text^3"
-                                    ]
+                                    ],
+                                    default_operator: "and"
                                 }
                             },
                             {
@@ -617,6 +624,244 @@ app.get("/api/cases/charts=:query", (req, res) => {
         //         })
         //         return lineChartArr;
         //     }));
+        // })
+        .catch(err => {
+            return res.status(500).json({ "message": "Error" })
+        })
+})
+
+app.get("/api/cases/ptncharts=:query", (req, res) => {
+    const searchText = req.params.query;
+    var courts = req.query.courts.split(",");
+    var judgements = req.query.judgement.split(",");
+    for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
+    for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
+    // var page = req.query.page;
+    // var limit = req.query.limit;
+    // var sortBy = req.query.sortBy;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
+    // var startIndex = (page - 1) * limit;
+    // var endIndex = page * limit;
+    var judge = req.query.bench;
+    if (judge.length == 0) judge = "@"
+    var ptnr = req.query.ptn;
+    if (ptnr.length == 0) ptnr = "@"
+    var resp = req.query.rsp;
+    if (resp.length == 0) resp = "@"
+        // var sort_options = ["_score"];
+        // if (sortBy === "year") {
+        //     sort_options = [{ "date": "desc" }, "_score"];
+        // }
+    esClient.search({
+            index: "indian_court_data.cases",
+            body: {
+                "track_total_hits": true,
+                size: 0,
+                query: {
+                    bool: {
+                        must: [{
+                                terms: {
+                                    "source.keyword": courts
+                                }
+                            },
+                            {
+                                simple_query_string: {
+                                    query: searchText.trim(),
+                                    fields: [
+                                        "title^5",
+                                        "judgement_text^3"
+                                    ],
+                                    default_operator: "and"
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "bench": judge
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "petitioner": ptnr
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "respondent": resp
+                                }
+                            }
+                        ],
+                        filter: [{
+                                range: {
+                                    "year": { gte: y_floor, lte: y_ceil }
+                                }
+                            },
+                            {
+                                terms: {
+                                    "judgement.keyword": judgements
+                                }
+                            },
+
+                        ]
+                    }
+                },
+                collapse: {
+                    field: "url.keyword"
+                },
+                aggs: {
+                    petitioner_counsels: {
+                        terms: {
+                            field: "petitioner_counsel.keyword",
+                            size: 20
+                        },
+                        aggs: {
+                            judgements: {
+                                terms: {
+                                    field: "judgement.keyword",
+                                    size: 5,
+                                    order: { _term: "desc" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        .then(response => {
+            ptnChartArr = [];
+            response.aggregations.petitioner_counsels.buckets.map(function(i) {
+                i.judgements.buckets.map(function(j) {
+                    ptnChartArr.push({
+                        'group': i['key'],
+                        'dynamicColumns': j['key'],
+                        'value': j['doc_count']
+                    })
+                })
+            })
+            res.send(ptnChartArr);
+            // res.send(ptnChartArr.sort((a, b) => a.x - b.x));
+        })
+        // .then(response => {
+        //     res.send(response);
+        // })
+        .catch(err => {
+            return res.status(500).json({ "message": "Error" })
+        })
+})
+
+app.get("/api/cases/respcharts=:query", (req, res) => {
+    const searchText = req.params.query;
+    var courts = req.query.courts.split(",");
+    var judgements = req.query.judgement.split(",");
+    for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
+    for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
+    // var page = req.query.page;
+    // var limit = req.query.limit;
+    // var sortBy = req.query.sortBy;
+    var y_floor = req.query.y_floor;
+    var y_ceil = req.query.y_ceil;
+    // var startIndex = (page - 1) * limit;
+    // var endIndex = page * limit;
+    var judge = req.query.bench;
+    if (judge.length == 0) judge = "@"
+    var ptnr = req.query.ptn;
+    if (ptnr.length == 0) ptnr = "@"
+    var resp = req.query.rsp;
+    if (resp.length == 0) resp = "@"
+        // var sort_options = ["_score"];
+        // if (sortBy === "year") {
+        //     sort_options = [{ "date": "desc" }, "_score"];
+        // }
+    esClient.search({
+            index: "indian_court_data.cases",
+            body: {
+                "track_total_hits": true,
+                size: 0,
+                query: {
+                    bool: {
+                        must: [{
+                                terms: {
+                                    "source.keyword": courts
+                                }
+                            },
+                            {
+                                simple_query_string: {
+                                    query: searchText.trim(),
+                                    fields: [
+                                        "title^5",
+                                        "judgement_text^3"
+                                    ],
+                                    default_operator: "and"
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "bench": judge
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "petitioner": ptnr
+                                }
+                            },
+                            {
+                                regexp: {
+                                    "respondent": resp
+                                }
+                            }
+                        ],
+                        filter: [{
+                                range: {
+                                    "year": { gte: y_floor, lte: y_ceil }
+                                }
+                            },
+                            {
+                                terms: {
+                                    "judgement.keyword": judgements
+                                }
+                            },
+
+                        ]
+                    }
+                },
+                collapse: {
+                    field: "url.keyword"
+                },
+                aggs: {
+                    petitioner_counsels: {
+                        terms: {
+                            field: "respondent_counsel.keyword",
+                            size: 20
+                        },
+                        aggs: {
+                            judgements: {
+                                terms: {
+                                    field: "judgement.keyword",
+                                    size: 5,
+                                    order: { _term: "desc" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        .then(response => {
+            respChartArr = [];
+            response.aggregations.petitioner_counsels.buckets.map(function(i) {
+                i.judgements.buckets.map(function(j) {
+                    respChartArr.push({
+                        'group': i['key'],
+                        'dynamicColumns': j['key'],
+                        'value': j['doc_count']
+                    })
+                })
+            })
+            res.send(respChartArr);
+            // res.send(ptnChartArr.sort((a, b) => a.x - b.x));
+        })
+        // .then(response => {
+        //     res.send(response);
         // })
         .catch(err => {
             return res.status(500).json({ "message": "Error" })
