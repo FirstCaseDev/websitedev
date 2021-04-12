@@ -829,7 +829,7 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getPieCharts(
         this.query,
-        this.court,
+        this.courts,
         this.judgement,
         this.bench,
         this.petitioner,
@@ -854,6 +854,7 @@ export class CasesComponent implements OnInit {
         }
 
         this.doughnutChartData = arr;
+        this.loading=false;
       });
   }
 
