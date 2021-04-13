@@ -133,6 +133,7 @@
                                 <p *ngIf="!searched" style="text-align: left; word-wrap: break-word; -ms-hyphens: auto; hyphens:auto">
                                     {{ item }}
                                 </p>
+                                <br>
 
                                 <div *ngIf="searched" [innerHTML]="item | highlight: query"></div>
                             </div>
