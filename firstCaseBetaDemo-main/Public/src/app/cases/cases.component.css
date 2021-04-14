@@ -588,7 +588,7 @@ button:hover {
 .tables-grid-container {
     display: grid;
     table-layout: auto;
-    grid-template-columns: auto auto;
+    grid-template-columns: 50% 50%;
     padding: 10px;
 }
 

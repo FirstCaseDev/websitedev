@@ -867,3 +867,28 @@ app.get("/api/cases/respcharts=:query", (req, res) => {
             return res.status(500).json({ "message": "Error" })
         })
 })
+
+app.get("/api/cases/case_table_item=:title_text", (req, res) => {
+    var query = req.params.title_text;
+    esClient.search({
+            index: "indian_court_data.cases",
+            _source: "_id",
+            track_total_hits: true,
+            size: 1,
+            body: {
+                query: {
+                    match: {
+                        "title": query
+                    }
+                },
+            }
+        }).then((response) => {
+            res.send({ 'url': response.hits.hits[0]._id });
+            // res.send(response);
+            console.log(response.hits.hits[0]._id);
+        })
+        .catch((error) => {
+            res.send({ 'url': null });
+            console.log(null);
+        });
+})

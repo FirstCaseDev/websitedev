@@ -121,7 +121,7 @@ export class CasedocComponent implements OnInit {
       this.petitioner_arr = this.case.petitioner_counsel;
       this.respondent_arr = this.case.respondent_counsel;
 
-      this.componentTitle.setTitle('FirstCase | ' + data.case.title);
+      this.componentTitle.setTitle(data.case.title);
       this.provisions_referred_arr = this.case.provisions_referred;
 
       // console.log(this.bench_arr);

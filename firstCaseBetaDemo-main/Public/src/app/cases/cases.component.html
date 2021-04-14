@@ -498,9 +498,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Act Name</th>
-                                                        <th>Occurence</th>
+                                                        <!-- <th>Occurence</th> -->
                                                         <th style="width: 180px">Section Name</th>
-                                                        <th style="width: 180px">Occurence</th>
+                                                        <!-- <th style="width: 180px">Occurence</th> -->
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -516,16 +516,16 @@
                                 ">
                                                                 {{ provision.act_name }}
                                                             </td>
-                                                            <td rowspan="6" style="font-size: larger; font-weight: bolder">
+                                                            <!-- <td rowspan="6" style="font-size: larger; font-weight: bolder">
                                                                 {{ provision.act_sums }}
-                                                            </td>
+                                                            </td> -->
                                                         </tr>
                                                         <tr *ngFor="
                                 let section of provision.sections;
                                 index as i
                               ">
                                                             <td>{{ section }}</td>
-                                                            <td>{{ provision.section_sums[i] }}</td>
+                                                            <!-- <td>{{ provision.section_sums[i] }}</td> -->
                                                         </tr>
                                                         <tr *ngFor="
                                 let item of [].constructor(
@@ -544,26 +544,33 @@
 
                                     <div class="tables-grid-item" style="display: flexbox">
                                         <div>
-                                            <h2 style="text-align: center">Most Relevant Cases</h2>
+                                            <h2 style="text-align: center">Most important Cases</h2>
                                             <table class="table" id="table-cited-cases" style="width: 100%">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col ">#</th>
+                                                        <!-- <th scope="col ">#</th> -->
                                                         <th scope="col " style="width: 250px">
-                                                            Relevant Case
+                                                            Case Title
                                                         </th>
-                                                        <th scope=" col ">Times Cited</th>
+                                                        <!-- <th scope=" col ">Times Cited</th> -->
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody *ngIf="cited_cases_url[0]!==0">
                                                     <tr *ngFor="let item of cited_cases; index as i">
-                                                        <th scope="row ">{{ i + 1 }}</th>
-                                                        <td style="width: 250px">{{ item.group }}</td>
-                                                        <td id=" values ">{{ item.value | number }}</td>
+                                                        <!-- <th scope="row ">{{ i + 1 }}</th> -->
+                                                        <td style="width: 250p x">
+                                                            <a href="https://firstcase.io/casedoc/{{cited_cases_url[i]}}" target="_blank">
+                                                                <div>{{ item.group }}</div>
+                                                            </a>
+                                                        </td>
+                                                        <!-- <td id=" values ">{{ item.value | number }}</td> -->
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
+                                    </div>
+                                    <div class="graphs-grid-item">
+
                                     </div>
                                 </div>
                             </div>
@@ -571,20 +578,20 @@
                     </div>
                 </div>
 
-                <div class="tags-bar" *ngIf="!searched" style="display: grid; grid-template-columns: 60% auto; align-items:start">
-                    <div class="explainer-grid">
-                        <div class="explainer-item" id="intro-text"></div>
+                <div class="tags-bar " *ngIf="!searched " style="display: grid; grid-template-columns: 60% auto; align-items:start ">
+                    <div class="explainer-grid ">
+                        <div class="explainer-item " id="intro-text "></div>
                         <br>
-                        <div class="explainer-item" id="search-operators">
+                        <div class="explainer-item " id="search-operators ">
                             <h3>Use following search operators in your query for narrowing down search:</h3>
-                            <ul style="-webkit-columns: 2; -moz-columns: 2; columns: 2; list-style-position: inside; display:inline-block">
-                                <ul style="list-style-type: circle;">
+                            <ul style="-webkit-columns: 2; -moz-columns: 2; columns: 2; list-style-position: inside; display:inline-block ">
+                                <ul style="list-style-type: circle; ">
                                     <li> Use qoutes for exact phrase match</li>
                                     <li> Use <b>|</b> operator before terms for optionally including it</li>
                                     <li> Use <b>-</b> operator before terms for excluding them</li>
                                     <li> Use <b>*</b> for results with variation of 1 character</li>
                                 </ul>
-                                <ul style="list-style-type: none">
+                                <ul style="list-style-type: none ">
                                     <li> : <b> "</b>medical negligence<b>"</b> </li>
                                     <li> : medical negligence <b>|</b>ignorance</li>
                                     <li> : Homebuyers <b>-</b>bankruptcy</li>
@@ -664,6 +671,7 @@
                                     <li>Authority Tribunal</li>
                                 </ul>
                             </li>
+                            <h4>And expanding ...</h4>
                         </ul>
                     </div>
                 </div>

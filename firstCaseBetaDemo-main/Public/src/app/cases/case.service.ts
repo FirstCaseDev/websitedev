@@ -181,4 +181,12 @@ export class CaseService {
   getLists() {
     return this.webService.get('lists');
   }
+
+  getCaseURL(
+    title: string
+  ){
+    return this.webService.get(
+      `cases/case_table_item=${title}?`
+    );
+  }
 }

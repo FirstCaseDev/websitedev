@@ -9,8 +9,11 @@ import HC_heatmap from 'highcharts/modules/heatmap';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { GoogleAnalyticsService } from '../google-analytics.service';
+// import { title } from 'process';
 //import { Console } from 'console';
 
+// const Wordcloud = require('highcharts/modules/wordcloud');
+// Wordcloud(Highcharts);
 HC_heatmap(Highcharts);
 
 @Component({
@@ -28,7 +31,37 @@ export class CasesComponent implements OnInit {
 
   isMobile = false;
   Highcharts = Highcharts;
+  
   pvbChartOptions: Highcharts.Options = {};
+  casesWordCloudOptions: Highcharts.Options = {
+    accessibility: {
+      screenReaderSection: {
+          beforeChartFormat: '<h5>{chartTitle}</h5>' +
+              '<div>{chartSubtitle}</div>' +
+              '<div>{chartLongdesc}</div>' +
+              '<div>{viewTableButton}</div>'
+      }
+  },
+  series: [{
+      type: 'wordcloud',
+      data: [
+        {'name':"ABCD", 'weight': 20},
+        {'name':"PQRS",'weight':10},
+        {'name':"XYZ",'weight':10},
+        {'name':"LMN",'weight':3},
+      ],
+      name: 'Occurrences',
+      colors: ['#000000'],
+      rotation: {
+        from: 0,
+        to: 0,
+        orientations: 1
+      }
+  }],
+  title: {
+      text: ''
+  }
+  };
   rvbChartOptions: Highcharts.Options = {};
   pvb_Bench: any = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   rvb_Bench: any = [];
@@ -54,6 +87,7 @@ export class CasesComponent implements OnInit {
   dropdownSettings: any = {};
   rows: Case[] = [];
   cited_cases: any = [];
+  cited_cases_url:any =[];
   query: string = '\"medical negligence\"';
   results_count: number = 0;
   arrayOne: Array<number> = [];
@@ -352,6 +386,8 @@ export class CasesComponent implements OnInit {
       },
     },
   };
+  
+
   public respondentChartLabels: Label[] = [
     '2005',
     '2007',
@@ -777,7 +813,7 @@ export class CasesComponent implements OnInit {
         this.y_ceil
       )
       .subscribe((data: any) => {
-        console.log(data.case_list);
+        // console.log(data.case_list);
         if (data.success) {
           this.rows = data.case_list;
           // console.log(this.rows);
@@ -810,7 +846,7 @@ export class CasesComponent implements OnInit {
       )
       .subscribe((data: any) => {
         // data = data[0];
-        console.log(data);
+        // console.log(data);
         this.chartLabels.length = 0;
         this.Datalabels.length = 0;
         try {
@@ -1228,12 +1264,31 @@ export class CasesComponent implements OnInit {
       .subscribe((data: any) => {
         try {
           this.cited_cases = data;
-          console.log(this.cited_cases);
+          // console.log(this.cited_cases);
           this.loading = false;
+          this.getCitedCaseURLs()
         } catch (error) {
           // console.log(error);
         }
       });
+  }
+
+  getCitedCaseURLs(){
+    setTimeout(() => {
+      try
+      {for(var i=0;i<10;i++){
+        this.caseService.getCaseURL(this.cited_cases[i].group)
+        .subscribe((data:any) => {
+          // this.cited_cases[i].url=data.url;
+          this.cited_cases_url.push(data.url);
+          console.log(this.cited_cases_url.length);
+          // console.log("url",this.cited_cases_url[i]);
+        });
+       }}
+       catch (error) { console.log(error)}
+       console.log(this.cited_cases_url);
+      }, 500);
+    
   }
 
   getCitedActs() {
