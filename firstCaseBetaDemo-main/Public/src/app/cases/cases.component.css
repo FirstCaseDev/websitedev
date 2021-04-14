@@ -215,7 +215,7 @@ div.loading_animation {
     margin-left: 0px;
     display: grid;
     align-items: center;
-    grid-template-columns: 10% 70% 10% 10%;
+    grid-template-columns: 10% 66% 14% 10%;
 }
 
 #search-title {
@@ -324,6 +324,10 @@ select {
 
 .input-group:hover {
     box-shadow: 0 14px 44px 0 rgba(0, 0, 0, 0.077);
+}
+
+ul>li {
+    margin-left: 20px;
 }
 
 .input-group input {

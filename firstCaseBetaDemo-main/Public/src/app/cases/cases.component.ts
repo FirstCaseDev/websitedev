@@ -54,7 +54,7 @@ export class CasesComponent implements OnInit {
   dropdownSettings: any = {};
   rows: Case[] = [];
   cited_cases: any = [];
-  query: string = '';
+  query: string = '\"medical negligence\"';
   results_count: number = 0;
   arrayOne: Array<number> = [];
   page: number = 1;
@@ -79,8 +79,12 @@ export class CasesComponent implements OnInit {
     'Andhra High Court',
     'Calcutta High Court',
     'Allahabad High Court',
+    'Orissa High Court',
+    'Patna High Court',
     'National Company Law Appellate Tribunal',
     'Appellate Tribunal For Electricity',
+    'Authority Tribunal',
+
   ];
   bench: string = '';
   petitioner: string = '';
@@ -381,11 +385,14 @@ export class CasesComponent implements OnInit {
     { item_id: 2, item_text: 'Delhi High Court' },
     { item_id: 3, item_text: 'Bombay High Court' },
     { item_id: 4, item_text: 'Madras High Court' },
-    { item_id: 4, item_text: 'Andhra High Court' },
-    { item_id: 5, item_text: 'Calcutta High Court' },
-    { item_id: 6, item_text: 'Allahabad High Court' },
-    { item_id: 7, item_text: 'National Company Law Appellate Tribunal' },
-    { item_id: 7, item_text: 'Appellate Tribunal For Electricity' },
+    { item_id: 5, item_text: 'Andhra High Court' },
+    { item_id: 6, item_text: 'Calcutta High Court' },
+    { item_id: 7, item_text: 'Allahabad High Court' },
+    { item_id: 8, item_text: 'Orissa High Court' },
+    { item_id: 9, item_text: 'Patna High Court' },
+    { item_id: 10, item_text: 'National Company Law Appellate Tribunal' },
+    { item_id: 11, item_text: 'Appellate Tribunal For Electricity' },
+    { item_id: 12, item_text: 'Authority Tribunal' },
   ];
 
   courtdata: any = [
@@ -396,6 +403,8 @@ export class CasesComponent implements OnInit {
     { id: 'Andhra High Court', name: 'Andhra High Court' },
     { id: 'Calcutta High Court', name: 'Calcutta High Court' },
     { id: 'Allahabad High Court', name: 'Allahabad High Court' },
+    { id: 'Orissa High Court', name: 'Orissa High Court' },
+    { id: 'Patna High Court', name: 'Patna High Court' },
     {
       id: 'National Company Law Appellate Tribunal',
       name: 'National Company Law Appellate Tribunal',
@@ -403,6 +412,10 @@ export class CasesComponent implements OnInit {
     {
       id: 'Appellate Tribunal For Electricity',
       name: 'Appellate Tribunal For Electricity',
+    },
+    {
+      id: 'Authority Tribunal',
+      name: 'Authority Tribunal',
     },
     // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
@@ -1521,8 +1534,11 @@ export class CasesComponent implements OnInit {
       'Andhra High Court',
       'Calcutta High Court',
       'Allahabad High Court',
+      'Orissa High Court',
+      'Patna High Court',
       'National Company Law Appellate Tribunal',
       'Appellate Tribunal For Electricity',
+      'Authority Tribunal',
     ];
 
     this.court_options = [
@@ -1530,11 +1546,14 @@ export class CasesComponent implements OnInit {
       { item_id: 2, item_text: 'Delhi High Court' },
       { item_id: 3, item_text: 'Bombay High Court' },
       { item_id: 4, item_text: 'Madras High Court' },
-      { item_id: 4, item_text: 'Andhra High Court' },
-      { item_id: 5, item_text: 'Calcutta High Court' },
-      { item_id: 6, item_text: 'Allahabad High Court' },
-      { item_id: 7, item_text: 'National Company Law Appellate Tribunal' },
-      { item_id: 7, item_text: 'Appellate Tribunal For Electricity' },
+      { item_id: 5, item_text: 'Andhra High Court' },
+      { item_id: 6, item_text: 'Calcutta High Court' },
+      { item_id: 7, item_text: 'Allahabad High Court' },
+      { item_id: 8, item_text: 'Orissa High Court' },
+      { item_id: 9, item_text: 'Patna High Court' },
+      { item_id: 10, item_text: 'National Company Law Appellate Tribunal' },
+      { item_id: 11, item_text: 'Appellate Tribunal For Electricity' },
+      { item_id: 12, item_text: 'Authority Tribunal' },
     ];
 
     this.courtdata = [
@@ -1545,6 +1564,8 @@ export class CasesComponent implements OnInit {
       { id: 'Andhra High Court', name: 'Andhra High Court' },
       { id: 'Calcutta High Court', name: 'Calcutta High Court' },
       { id: 'Allahabad High Court', name: 'Allahabad High Court' },
+      { id: 'Orissa High Court', name: 'Orissa High Court' },
+      { id: 'Patna High Court', name: 'Patna High Court' },
       {
         id: 'National Company Law Appellate Tribunal',
         name: 'National Company Law Appellate Tribunal',
@@ -1552,6 +1573,10 @@ export class CasesComponent implements OnInit {
       {
         id: 'Appellate Tribunal For Electricity',
         name: 'Appellate Tribunal For Electricity',
+      },
+      {
+        id: 'Authority Tribunal',
+        name: 'Authority Tribunal',
       },
     ];
     console.log('courts', this.courts);

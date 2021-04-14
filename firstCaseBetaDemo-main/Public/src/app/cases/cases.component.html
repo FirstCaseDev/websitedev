@@ -31,31 +31,16 @@
             <div class="country-selector">
                 <div class="dropdown">
                     <button class="dropbtn">
-          <a
-            *ngIf="selectedCountry === 'India'"
-            style="display: flex; vertical-align: middle; align-items: center"
-          >
-            <img
-              src="../../assets/img/ind_flg.svg"
-              width="20"
-              height="15"
-              style="padding-right: 5px"
-            />
-            India
-          </a>
-          <a
-            *ngIf="selectedCountry === 'Singapore'"
-            style="display: flex; vertical-align: middle; align-items: center"
-          >
-            <img
-              src="../../assets/img/sg_flg.svg"
-              width="20"
-              height="15"
-              style="padding-right: 5px"
-            />
-            Singapore
-          </a>
-        </button>
+            <a *ngIf="selectedCountry === 'India'" style="display: flex; vertical-align: middle; align-items: center">
+              <img src="../../assets/img/ind_flg.svg" width="20" height="15" style="padding-right: 5px" />
+              India
+            </a>
+            <a *ngIf="selectedCountry === 'Singapore'"
+              style="display: flex; vertical-align: middle; align-items: center">
+              <img src="../../assets/img/sg_flg.svg" width="20" height="15" style="padding-right: 5px" />
+              Singapore
+            </a>
+          </button>
                     <div class="dropdown-content">
                         <a role="button" (click)="select_in()">
                             <img src="../../assets/img/ind_flg.svg" width="20" height="15" /> India
@@ -77,6 +62,8 @@
                     <button id="first-search-button" (click)="first_search()">
             Search
           </button>
+                    <button (click)="reset()">Reset</button>
+
                 </div>
                 <!-- <div class="searchbar-buttons-item">
           <button (click)="reset()">Reset</button>
@@ -84,8 +71,9 @@
             </div>
             <div class="filters-button" (click)="toggleShowFilter()">
                 <button type="button" onclick="toggleShowFilter">
-                <img style="text-align: center" src="../../assets/img/filter_list_black_24dp.svg" height="15" width="20"/> Filters
-                </button>
+          <img style="text-align: center" src="../../assets/img/filter_list_black_24dp.svg" height="15" width="20" />
+          Filters
+        </button>
             </div>
 
         </div>
@@ -427,7 +415,7 @@
                                     <h2 id="search-desc " name="desc " style="margin-block-end: 0.4em">
                                         <a href="/casedoc/{{ data._id }}" target="_blank">{{
                       data.title
-                    }}</a>
+                      }}</a>
                                     </h2>
                                 </li>
                                 <li>
@@ -435,20 +423,16 @@
                                         Source:
                                         <strong style="font-weight: 300"> {{ data.source }}</strong> | Date:
                                         <strong style="font-weight: 300">
-                      {{ data.day }} {{ data.month }} {{ data.year }}</strong
-                    >
-                  </h4>
-                </li>
+                      {{ data.day }} {{ data.month }} {{ data.year }}</strong>
+                                    </h4>
+                                </li>
 
-                <li>
-                  <h4
-                    class="judgement"
-                    style="margin-block-start: 0.5em; margin-block-end: 0.5em"
-                  >
-                    Judgement:
-                    <strong style="font-weight: 300">{{
+                                <li>
+                                    <h4 class="judgement" style="margin-block-start: 0.5em; margin-block-end: 0.5em">
+                                        Judgement:
+                                        <strong style="font-weight: 300">{{
                       data.judgement
-                    }}</strong> | Bench:
+                      }}</strong> | Bench:
                                         <strong style="font-weight: 300">{{ data.bench }}</strong>
                                     </h4>
                                 </li>
@@ -584,6 +568,103 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="tags-bar" *ngIf="!searched" style="display: grid; grid-template-columns: 60% auto; align-items:start">
+                    <div class="explainer-grid">
+                        <div class="explainer-item" id="intro-text"></div>
+                        <br>
+                        <div class="explainer-item" id="search-operators">
+                            <h3>Use following search operators in your query for narrowing down search:</h3>
+                            <ul style="-webkit-columns: 2; -moz-columns: 2; columns: 2; list-style-position: inside; display:inline-block">
+                                <ul style="list-style-type: circle;">
+                                    <li> Use qoutes for exact phrase match</li>
+                                    <li> Use <b>|</b> operator before terms for optionally including it</li>
+                                    <li> Use <b>-</b> operator before terms for excluding them</li>
+                                    <li> Use <b>*</b> for results with variation of 1 character</li>
+                                </ul>
+                                <ul style="list-style-type: none">
+                                    <li> : <b> "</b>medical negligence<b>"</b> </li>
+                                    <li> : medical negligence <b>|</b>ignorance</li>
+                                    <li> : Homebuyers <b>-</b>bankruptcy</li>
+                                    <li> : Copyright 202<b>*</b></li>
+                                </ul>
+                            </ul>
+                        </div>
+                        <br>
+                        <div class="explainer-item" id="filters-usage">
+                            <h3>Use <img height="25px" src="../../assets/img/filters_button.png" alt="filters button" style="vertical-align: middle;"> for narrowing results by court sources, range of years and result of judgments</h3>
+                        </div>
+                        <br>
+                        <div class="explainer-item" id="search-tags">
+                            <h3>Add search tags for filtering results by names of parties, counsels and bench</h3>
+                            <img height="35px" src="../../assets/img/search_tag_btn.png" alt="search tags">
+                        </div>
+                        <br>
+                        <div class="explainer-item" id="tabs-contents">
+                            <h3>Explore a rich set of insights in the following tabs:</h3>
+                            <br>
+                            <div class="tabs-explainer-grid-container" style="display:grid;grid-template-columns: 32% 30%; ">
+                                <div class="analytics-tab-explainer" style="align-items: center; padding-right:20px">
+                                    <button class="tab" id="analytics_tab" style="display: flex !important;  
+                                    justify-content: center !important;  
+                                    margin: auto;
+                                    padding: auto;
+                                    ">
+                                  Analytics
+                                </button>
+                                    <ul style="list-style-type: none; border-right: 1px solid #bbb;">
+                                        <br>
+                                        <li>Trend of judgement over years</li>
+                                        <li>Distribution of total judgements</li>
+                                        <li>Statistics for counsels for parties</li>
+                                    </ul>
+                                </div>
+                                <div class="legal-output-tab-explainer">
+                                    <button class="tab" id="analytics_tab" style="display: flex !important;  
+                                    justify-content: center !important;  
+                                    margin: auto;
+                                    padding: auto;
+                                    ">
+                                  Intelligent Legal Output
+                                </button>
+                                    <ul style="list-style-type: none;">
+                                        <br>
+                                        <li>Most relevant acts and sections</li>
+                                        <li>Most relevant cases for the query</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br>
+                    </div>
+                    <div class="courts-list">
+                        <br>
+                        <h3>Comprehensive legal database of Indian courts</h3>
+                        <ul>
+                            <li>Supreme Court of India</li>
+                            <li>High Courts:
+                                <ul>
+                                    <li>Delhi High Court</li>
+                                    <li>Bombay High Court</li>
+                                    <li>Madras High Court</li>
+                                    <li>Andhra High Court</li>
+                                    <li>Calcutta High Court</li>
+                                    <li>Patna High Court</li>
+                                    <li>Orissa High Court</li>
+                                    <li>Allahabad High Court</li>
+                                </ul>
+                            </li>
+                            <li>Tribunals
+                                <ul>
+                                    <li>National Company Law Appellate Tribunal </li>
+                                    <li>Appellate Tribunal for Electricity</li>
+                                    <li>Authority Tribunal</li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -882,7 +963,7 @@
                             <br /> Date:
                             <strong style="font-weight: 300">{{
                 data.date.toLocaleString()
-              }}</strong>
+                }}</strong>
                         </h4>
                     </li>
                     <li>
