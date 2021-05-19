@@ -63,4 +63,14 @@ export class AppComponent implements OnInit {
   close_mobile_menu() {
     this.mobile_menu_open = false;
   }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    let element = document.querySelector('#header') as HTMLElement;
+    if (window.pageYOffset > element.clientHeight) {
+      element.classList.add('header-scrolled');
+    } else {
+      element.classList.remove('header-scrolled');
+    }
+  }
 }
