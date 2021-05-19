@@ -870,10 +870,12 @@ app.get("/api/cases/respcharts=:query", (req, res) => {
 
 app.get("/api/cases/case_table_item=:title_text", (req, res) => {
     var query = req.params.title_text;
+    var index = req.query.index;
     esClient.search({
             index: "indian_court_data.cases",
             _source: "_id",
             track_total_hits: true,
+            // min_score: a,
             size: 1,
             body: {
                 query: {
@@ -883,9 +885,7 @@ app.get("/api/cases/case_table_item=:title_text", (req, res) => {
                 },
             }
         }).then((response) => {
-            res.send({ 'url': response.hits.hits[0]._id });
-            // res.send(response);
-            console.log(response.hits.hits[0]._id);
+            res.send({ 'url': response.hits.hits[0]._id, 'index': index });
         })
         .catch((error) => {
             res.send({ 'url': null });
