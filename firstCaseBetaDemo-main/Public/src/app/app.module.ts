@@ -19,6 +19,11 @@ import { MatSliderModule } from '@angular/material/slider';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AboutComponent } from './about/about.component';
 import { GoogleAnalyticsService } from './google-analytics.service';
+import { TeamComponent } from './team/team.component';
+import { BlogComponent } from './blog/blog.component';
+import { SingleBlogComponent } from './single-blog/single-blog.component';
+import { PortfolioDetailsComponent } from './portfolio-details/portfolio-details.component';
+import { PortfolioComponent } from './portfolio/portfolio.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +36,11 @@ import { GoogleAnalyticsService } from './google-analytics.service';
     CasedocComponent,
     UserProfileComponent,
     AboutComponent,
+    TeamComponent,
+    BlogComponent,
+    SingleBlogComponent,
+    PortfolioDetailsComponent,
+    PortfolioComponent,
   ],
   imports: [
     BrowserModule,
