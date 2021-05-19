@@ -1,30 +1,4 @@
-<script src="node_modules/chart.js/src/chart.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@0.1.3/dist/chartjs-chart-matrix.js"></script> -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-<!-- <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" /> -->
-<!-- search part with filters and pagination -->
-
-<div style="margin-top: 100px" ng-init="rows" *ngIf="!isMobile">
-  <!-- <div class="grid-container">
-      <div class="grid-item" id="filter-button">
-        <img
-          *ngIf="view_filters"
-          (click)="toggle_filters()"
-          width="30px"
-          src="../../assets/img/arrow-left-circle-fill.svg"
-        />
-        <img
-          *ngIf="!view_filters"
-          (click)="toggle_filters()"
-          width="40px"
-          src="../../assets/img/filter-left.svg"
-        />
-      </div>
-    </div> -->
-
+<div style="margin-top: 100px" ng-init="rows">
   <div class="search-bar">
     <div class="country-selector">
       <div class="dropdown">
@@ -65,7 +39,6 @@
           </a>
         </div>
       </div>
-      <!-- <img id="country-flag" height="40px" src="../../assets/img/ind_flg.svg" /> -->
     </div>
     <div class="input-group">
       <input
@@ -77,7 +50,6 @@
         [(ngModel)]="query"
       />
       <label for="text-1542372332072">Type in your query</label>
-      <!-- <div class="req-mark"></div> -->
     </div>
     <div class="searchbar-buttons">
       <div class="searchbar-buttons-item">
@@ -86,9 +58,6 @@
         </button>
         <button (click)="reset()">Reset</button>
       </div>
-      <!-- <div class="searchbar-buttons-item">
-          <button (click)="reset()">Reset</button>
-        </div> -->
     </div>
     <div class="filters-button" (click)="toggleShowFilter()">
       <button type="button" onclick="toggleShowFilter">
@@ -102,191 +71,7 @@
       </button>
     </div>
   </div>
-  <!-- <button (click)="check_curr_data()">check data</button> -->
   <div class="page-columns">
-    <!-- <div class="left" *ngIf="view_filters">
-        <div>
-          <button (click)="reset_filters()">Clear Filters</button>
-          <div class="sort-option" style="margin: 20px 0px">
-            <span>Sort By</span>
-            <span>
-              <select [(ngModel)]="sortBy" (change)="selected()">
-                <option *ngFor="let item of sort_options" [ngValue]="item">
-                  {{ item.name }}
-                </option>
-              </select>
-            </span>
-          </div>
-        </div>
-        <div class="filter-option">
-          <p>Judgements</p>
-          <form [formGroup]="myForm">
-            <ng-multiselect-dropdown
-              [placeholder]="'Select one or more...'"
-              [(ngModel)]="selectedJudgements"
-              [settings]="dropdownSettings"
-              [data]="judgement_options"
-              (onSelect)="onItemSelect($event)"
-              (onSelectAll)="onSelectAll($event)"
-              [ngModelOptions]="{ standalone: true }"
-            >
-            </ng-multiselect-dropdown>
-          </form>
-        </div>
-        <div class="filter-option">
-          <span>Court</span>
-          <span>
-            <select [(ngModel)]="courtlevel" (change)="selected()">
-              <option *ngFor="let item of courtdata" [ngValue]="item">
-                {{ item.name }}
-              </option>
-            </select>
-          </span>
-        </div>
-        <br />
-        <div style="text-align: center; margin-top: 10px">
-          <span *ngIf="!year_range_selected">Select year range</span>
-          <span *ngIf="year_range_selected">{{ year_range_msg }}</span>
-        </div>
-        <div>
-          <section class="range-slider">
-            <span class="rangeValues"></span>
-            <input
-              class="year-range-slider"
-              value="{{ y_floor }}"
-              min="1900"
-              max="2020"
-              step="1"
-              type="range"
-              (change)="getSliderValue1($event)"
-              (oninput)="getSliderValue1($event)"
-            />
-            <input
-              class="year-range-slider"
-              value="{{ y_ceil }}"
-              min="1901"
-              max="2021"
-              step="1"
-              type="range"
-              (change)="getSliderValue2($event)"
-              (oninput)="getSliderValue2($event)"
-            />
-          </section>
-        </div>
-        <br />
-        <div class="filter-option">
-          <div class="input-group-2">
-            <input
-              class="form-control"
-              type="text"
-              id="judgeInput"
-              name="judgeName"
-              required="required"
-              placeholder="Judge"
-              [(ngModel)]="bench"
-            />
-            <label for="judgeName">Judge Name</label>
-          </div>
-        </div>
-        <div class="filter-option">
-          <div class="input-group-2">
-            <input
-              type="text"
-              id="petitionerInput"
-              name="petitionerName"
-              placeholder="Petitioner"
-              [(ngModel)]="petitioner"
-            />
-            <label for="petitionerName">Petitioner Name</label>
-          </div>
-        </div>
-        <div class="filter-option">
-          <div class="input-group-2">
-            <input
-              type="text"
-              id="pttcounselInput"
-              name="petitionerCounsel"
-              placeholder="Petitioner Counsel"
-              [(ngModel)]="petitioner_counsel"
-            />
-            <label for="petitionerCounsel">Petitioner Counsel</label>
-          </div>
-        </div>
-        <div class="filter-option">
-          <div class="input-group-2">
-            <input
-              type="text"
-              id="respondentInput"
-              name="respondentName"
-              placeholder="Respondent"
-              [(ngModel)]="respondent"
-            />
-            <label for="respondentName">Respondent Name</label>
-          </div>
-        </div>
-        <div class="filter-option">
-          <div class="input-group-2">
-            <input
-              type="text"
-              id="respcounselInput"
-              name="respondentCounsel"
-              placeholder="Respondent Counsel"
-              [(ngModel)]="respondent_counsel"
-            />
-            <label for="respondentCounsel">Respondent Counsel</label>
-          </div>
-        </div>
-      </div>
-      <div class="right">
-        <div class="instruction-logo">
-            <img src="../../assets/img/White_Logo.png">
-        </div>
-        <div class="instructions" *ngIf="!searched">
-            <div class="instruction-element">
-              <h1>
-                Search Query
-              </h1>
-              <p>
-                Search by entering text in query box
-              </p>
-            </div>
-            <div class="instruction-element">
-              <h1>
-                Query Operators
-              </h1>
-              <p>
-                You can use '+' or '-' to search specific terms
-              </p>
-            </div>
-            <div class="instruction-element">
-              <h1>
-                Analytics
-              </h1>
-              <p>
-                The specific analytics of a case is present under analytics tab
-              </p>
-            </div>
-            <div class="instruction-element">
-              <h1>
-                Filter
-              </h1>
-              <p>
-                You can filter specific cases using filter option
-              </p>
-            </div>
-        </div>
-        <div style="margin: 10px 20px">
-          <div id="tags-bar">
-            <h3>Search Tags</h3>
-            <div>
-              <input
-                type="text"
-                id="addTag"
-                placeholder="Add Tag"
-                [(ngModel)]="add_tag"
-              />
-              <button style="margin-left: 20px" (click)="addTag()">Add</button>
-      </div> -->
     <div class="page">
       <div class="tags-bar" *ngIf="ShowFilter">
         <div
@@ -331,20 +116,6 @@
               />
             </section>
           </div>
-          <!-- <li
-              style="
-                background-color: #4a7feb;
-                border-radius: 5px;
-                padding: 0.7em 1.5em;
-                margin-left: 10px;
-                cursor: pointer;
-                text-decoration: none;
-                color: white;
-              "
-              (click)="addTag()"
-            >
-              <h3 style="margin: 0">Add</h3>
-            </li> -->
         </div>
         <div
           style="
@@ -627,14 +398,6 @@
                     [chartType]="respondentChartType"
                   ></canvas>
                 </div>
-                <!-- <div class="graphs-grid-item">
-                                        <highcharts-chart [Highcharts]="Highcharts" [options]="pvbChartOptions">
-                                        </highcharts-chart>
-                                    </div>
-                                    <div class="graphs-grid-item">
-                                        <highcharts-chart [Highcharts]="Highcharts" [options]="rvbChartOptions">
-                                        </highcharts-chart>
-                                    </div> -->
               </div>
             </div>
           </div>
@@ -652,9 +415,7 @@
                       <thead>
                         <tr>
                           <th>Act Name</th>
-                          <!-- <th>Occurence</th> -->
                           <th style="width: 180px">Section Name</th>
-                          <!-- <th style="width: 180px">Occurence</th> -->
                         </tr>
                       </thead>
                       <tbody>
@@ -672,9 +433,6 @@
                             >
                               {{ provision.act_name }}
                             </td>
-                            <!-- <td rowspan="6" style="font-size: larger; font-weight: bolder">
-                                                                {{ provision.act_sums }}
-                                                            </td> -->
                           </tr>
                           <tr
                             *ngFor="
@@ -683,7 +441,6 @@
                             "
                           >
                             <td>{{ section }}</td>
-                            <!-- <td>{{ provision.section_sums[i] }}</td> -->
                           </tr>
                           <tr
                             *ngFor="
@@ -712,14 +469,11 @@
                     >
                       <thead>
                         <tr>
-                          <!-- <th scope="col ">#</th> -->
                           <th scope="col " style="width: 250px">Case Title</th>
-                          <!-- <th scope=" col ">Times Cited</th> -->
                         </tr>
                       </thead>
                       <tbody *ngIf="cited_cases_url[0] !== 0">
                         <tr *ngFor="let item of cited_cases; index as i">
-                          <!-- <th scope="row ">{{ i + 1 }}</th> -->
                           <td style="width: 250p x">
                             <a
                               href="https://firstcase.io/casedoc/{{
@@ -730,7 +484,6 @@
                               <div>{{ item.group }}</div>
                             </a>
                           </td>
-                          <!-- <td id=" values ">{{ item.value | number }}</td> -->
                         </tr>
                       </tbody>
                     </table>
@@ -898,469 +651,11 @@
     </div>
   </div>
   <br />
-  <div *ngIf="service_down" class="loading_animation" style="display: flex">
-    <div
-      style="
-        background: white;
-        opacity: 1;
-        border-radius: 2em;
-        width: 20vw;
-        height: 20vw;
-        position: absolute;
-        padding: 20px;
-        top: 35%;
-        left: 40%;
-        text-align: center;
-      "
-    >
-      <img width="100px" src="../../assets/img/service_unavailable.png" />
-      <h1>Service is currently unavailable!</h1>
-      <p>Please try again later</p>
-    </div>
-    <style type="text/css ">
-      @keyframes ldio-9faui0bm4nl {
-        0% {
-          top: 104.16px;
-          left: 104.16px;
-          width: 0;
-          height: 0;
-          opacity: 1;
-        }
-        100% {
-          top: 19.53px;
-          left: 19.53px;
-          width: 169.26px;
-          height: 169.26px;
-          opacity: 0;
-        }
-      }
-
-      .ldio-9faui0bm4nl div {
-        position: absolute;
-        border-width: 4.34px;
-        border-style: solid;
-        opacity: 1;
-        border-radius: 50%;
-        animation: ldio-9faui0bm4nl 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-      }
-
-      .ldio-9faui0bm4nl div:nth-child(1) {
-        border-color: #93dbe9;
-      }
-
-      .ldio-9faui0bm4nl div:nth-child(2) {
-        border-color: #689cc5;
-        animation-delay: -0.5s;
-      }
-
-      .loadingio-spinner-ripple-0klw6wjchhb {
-        width: 217px;
-        height: 217px;
-        display: block;
-        overflow: hidden;
-        background: rgba(255, 255, 255, 0);
-      }
-
-      .ldio-9faui0bm4nl {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        transform: translateZ(0) scale(1);
-        backface-visibility: hidden;
-        transform-origin: 0 0;
-        right: 0;
-        position: fixed;
-        /* or absolute */
-        top: 38%;
-        left: 43%;
-        margin: auto;
-        /* see note above */
-      }
-
-      .ldio-9faui0bm4nl div {
-        box-sizing: content-box;
-      }
-      /* generated by https://loading.io/ */
-    </style>
-  </div>
   <div *ngIf="loading" class="loading_animation" style="display: flex">
     <div class="loadingio-spinner-ripple-0klw6wjchhb">
       <div class="ldio-9faui0bm4nl">
         <div></div>
         <div></div>
-      </div>
-    </div>
-    <style type="text/css ">
-      @keyframes ldio-9faui0bm4nl {
-        0% {
-          top: 104.16px;
-          left: 104.16px;
-          width: 0;
-          height: 0;
-          opacity: 1;
-        }
-        100% {
-          top: 19.53px;
-          left: 19.53px;
-          width: 169.26px;
-          height: 169.26px;
-          opacity: 0;
-        }
-      }
-
-      .ldio-9faui0bm4nl div {
-        position: absolute;
-        border-width: 4.34px;
-        border-style: solid;
-        opacity: 1;
-        border-radius: 50%;
-        animation: ldio-9faui0bm4nl 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-      }
-
-      .ldio-9faui0bm4nl div:nth-child(1) {
-        border-color: #93dbe9;
-      }
-
-      .ldio-9faui0bm4nl div:nth-child(2) {
-        border-color: #689cc5;
-        animation-delay: -0.5s;
-      }
-
-      .loadingio-spinner-ripple-0klw6wjchhb {
-        width: 217px;
-        height: 217px;
-        display: block;
-        overflow: hidden;
-        background: rgba(255, 255, 255, 0);
-      }
-
-      .ldio-9faui0bm4nl {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        transform: translateZ(0) scale(1);
-        backface-visibility: hidden;
-        transform-origin: 0 0;
-        right: 0;
-        position: fixed;
-        /* or absolute */
-        top: 38%;
-        left: 43%;
-        margin: auto;
-        /* see note above */
-      }
-
-      .ldio-9faui0bm4nl div {
-        box-sizing: content-box;
-      }
-      /* generated by https://loading.io/ */
-    </style>
-  </div>
-</div>
-
-<!-- ================================================Mobile Site================================================ -->
-
-<div ng-init="rows" *ngIf="isMobile">
-  <div style="border-bottom: 1px solid #222">
-    <div class="input-group-mobile">
-      <input
-        class="input-mobile"
-        type="text"
-        required="required"
-        placeholder="Type in your query"
-        [(ngModel)]="query"
-      />
-    </div>
-    <div style="display: grid; grid-template-columns: 33% 33% 33%">
-      <div class="searchbar-buttons-item">
-        <button (click)="reset()">Reset</button>
-      </div>
-      <div class="searchbar-buttons-item">
-        <button (click)="toggle_filters()">Filters</button>
-      </div>
-      <div *ngIf="!searched" class="searchbar-buttons-item">
-        <button (click)="first_search()">Search</button>
-      </div>
-      <div *ngIf="searched" class="searchbar-buttons-item">
-        <button (click)="toggle_analytics_mobile()">Analytics</button>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div *ngIf="view_tags_mobile">
-      <div>
-        <button (click)="reset_filters()">Clear Filters</button>
-        <div class="sort-option" style="margin: 20px 0px">
-          <span>Sort By</span>
-          <span>
-            <select [(ngModel)]="sortBy" (change)="selected()">
-              <option *ngFor="let item of sort_options" [ngValue]="item">
-                {{ item.name }}
-              </option>
-            </select>
-          </span>
-        </div>
-      </div>
-      <div class="filter-option">
-        <p>Judgements</p>
-        <form [formGroup]="myForm">
-          <ng-multiselect-dropdown
-            [placeholder]="'Select one or more...'"
-            [(ngModel)]="selectedJudgements"
-            [settings]="dropdownSettings"
-            [data]="judgement_options"
-            (onSelect)="onItemSelect($event)"
-            (onSelectAll)="onSelectAll($event)"
-            [ngModelOptions]="{ standalone: true }"
-          >
-          </ng-multiselect-dropdown>
-        </form>
-      </div>
-      <div class="filter-option">
-        <span>Court</span>
-        <form [formGroup]="courtForm">
-          <ng-multiselect-dropdown
-            style="width: 100px"
-            [placeholder]="'Select one or more...'"
-            [(ngModel)]="selectedCourts"
-            [settings]="dropdownSettings"
-            [data]="court_options"
-            (onSelect)="onItemSelect($event)"
-            (onSelectAll)="onSelectAll($event)"
-            [ngModelOptions]="{ standalone: true }"
-          >
-          </ng-multiselect-dropdown>
-        </form>
-      </div>
-      <br />
-      <div style="text-align: center; margin-top: 10px">
-        <span *ngIf="!year_range_selected">Select year range</span>
-        <span *ngIf="year_range_selected">{{ year_range_msg }}</span>
-      </div>
-      <div>
-        <section class="range-slider">
-          <span class="rangeValues"></span>
-          <input
-            class="year-range-slider"
-            value="{{ y_floor }}"
-            min="1900"
-            max="2020"
-            step="1"
-            type="range"
-            (change)="getSliderValue1($event)"
-            (oninput)="getSliderValue1($event)"
-          />
-          <input
-            class="year-range-slider"
-            value="{{ y_ceil }}"
-            min="1901"
-            max="2021"
-            step="1"
-            type="range"
-            (change)="getSliderValue2($event)"
-            (oninput)="getSliderValue2($event)"
-          />
-        </section>
-      </div>
-      <br />
-      <div class="filter-option">
-        <div class="input-group-2">
-          <input
-            class="form-control"
-            type="text"
-            id="judgeInput"
-            name="judgeName"
-            required="required"
-            placeholder="Judge"
-            [(ngModel)]="bench"
-          />
-          <label for="judgeName">Judge Name</label>
-        </div>
-      </div>
-      <div class="filter-option">
-        <div class="input-group-2">
-          <input
-            type="text"
-            id="petitionerInput"
-            name="petitionerName"
-            placeholder="Petitioner"
-            [(ngModel)]="petitioner"
-          />
-          <label for="petitionerName">Petitioner Name</label>
-        </div>
-      </div>
-      <div class="filter-option">
-        <div class="input-group-2">
-          <input
-            type="text"
-            id="pttcounselInput"
-            name="petitionerCounsel"
-            placeholder="Petitioner Counsel"
-            [(ngModel)]="petitioner_counsel"
-          />
-          <label for="petitionerCounsel">Petitioner Counsel</label>
-        </div>
-      </div>
-      <div class="filter-option">
-        <div class="input-group-2">
-          <input
-            type="text"
-            id="respondentInput"
-            name="respondentName"
-            placeholder="Respondent"
-            [(ngModel)]="respondent"
-          />
-          <label for="respondentName">Respondent Name</label>
-        </div>
-      </div>
-      <div class="filter-option">
-        <div class="input-group-2">
-          <input
-            type="text"
-            id="respcounselInput"
-            name="respondentCounsel"
-            placeholder="Respondent Counsel"
-            [(ngModel)]="respondent_counsel"
-          />
-          <label for="respondentCounsel">Respondent Counsel</label>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="view_analytics_mobile">
-      <div *ngIf="searched">
-        <div style="display: grid; grid-template-columns: 50% 50%">
-          <div>
-            <canvas
-              style="width: fit-content"
-              baseChart
-              [chartType]="'line'"
-              [datasets]="chartData"
-              [labels]="chartLabels"
-              [options]="linechartOptions"
-              [legend]="true"
-            ></canvas>
-          </div>
-          <div>
-            <canvas
-              style="width: fit-content"
-              baseChart
-              [data]="doughnutChartData"
-              [labels]="doughnutChartLabels"
-              [options]="doughnutChartOptions"
-              [chartType]="doughnutChartType"
-            ></canvas>
-          </div>
-          <div>
-            <canvas
-              style="width: fit-content"
-              height="180px"
-              baseChart
-              [datasets]="petitionerChartData"
-              [labels]="petitionerChartLabels"
-              [options]="petitionerChartOptions"
-              [legend]="petitionerChartLegend"
-              [chartType]="petitionerChartType"
-            ></canvas>
-          </div>
-          <div>
-            <canvas
-              style="width: fit-content"
-              height="180px"
-              baseChart
-              [datasets]="respondentChartData"
-              [labels]="respondentChartLabels"
-              [options]="respondentChartOptions"
-              [legend]="respondentChartLegend"
-              [chartType]="respondentChartType"
-            ></canvas>
-          </div>
-          <div>
-            <highcharts-chart
-              style="width: fit-content"
-              [Highcharts]="Highcharts"
-              [options]="pvbChartOptions"
-            >
-            </highcharts-chart>
-          </div>
-          <div>
-            <highcharts-chart
-              style="width: fit-content"
-              [Highcharts]="Highcharts"
-              [options]="rvbChartOptions"
-            >
-            </highcharts-chart>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <ul class="search-repeater-mobile" *ngFor="let data of rows">
-        <li>
-          <h2
-            id="search-title-mobile"
-            name="desc"
-            style="margin-block-end: 0.4em"
-          >
-            <a href="/casedoc/{{ data._id }}">{{ data.title }}</a>
-          </h2>
-        </li>
-        <li>
-          <h4
-            id="search-category-mobile"
-            name="category"
-            style="margin-block-start: 0.5em; margin-block-end: 0.5em"
-          >
-            Source:
-            <strong style="font-weight: 300"> {{ data.source }}</strong>
-            <br />
-            Date:
-            <strong style="font-weight: 300">{{
-              data.date.toLocaleString()
-            }}</strong>
-          </h4>
-        </li>
-        <li>
-          <h4
-            class="judgement"
-            style="margin-block-start: 0.5em; margin-block-end: 0.5em"
-          >
-            Judgement:
-            <strong style="font-weight: 300">{{ data.judgement }}</strong>
-            <br />
-            Bench:
-            <strong style="font-weight: 300">{{ data.bench }}</strong>
-          </h4>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div>
-    <div
-      *ngIf="searched"
-      style="display: grid; grid-template-columns: 33% 34% 33%"
-    >
-      <div>
-        <div *ngIf="page > 1">
-          <button
-            class="pagination-button"
-            id="pagination_pre"
-            (click)="sendPreviousPage()"
-          >
-            Previous
-          </button>
-        </div>
-      </div>
-      <div style="text-align: center; margin: 10px">Page: {{ page }}</div>
-      <div>
-        <div *ngIf="page < results_count / limit">
-          <button
-            class="pagination-button"
-            id="pagination_next"
-            (click)="sendNextPage()"
-          >
-            Next
-          </button>
-        </div>
       </div>
     </div>
   </div>

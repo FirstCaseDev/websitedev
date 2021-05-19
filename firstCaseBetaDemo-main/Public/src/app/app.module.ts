@@ -17,13 +17,13 @@ import { CasedocComponent } from './casedoc/casedoc.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { AboutComponent } from './about/about.component';
 import { GoogleAnalyticsService } from './google-analytics.service';
 import { TeamComponent } from './team/team.component';
 import { BlogComponent } from './blog/blog.component';
 import { SingleBlogComponent } from './single-blog/single-blog.component';
 import { PortfolioDetailsComponent } from './portfolio-details/portfolio-details.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
+import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,6 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
     UsersComponent,
     CasedocComponent,
     UserProfileComponent,
-    AboutComponent,
     TeamComponent,
     BlogComponent,
     SingleBlogComponent,
@@ -54,6 +53,7 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
     NgMultiSelectDropDownModule.forRoot(),
     HighchartsChartModule,
     BrowserAnimationsModule,
+    NgxUsefulSwiperModule,
   ],
   providers: [Title, User, UsersComponent, GoogleAnalyticsService],
   bootstrap: [AppComponent],

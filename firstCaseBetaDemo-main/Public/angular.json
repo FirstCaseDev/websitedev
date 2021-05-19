@@ -36,7 +36,8 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "src/styles.css",
+              "./node_modules/swiper/swiper-bundle.css"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": ["chart.js"]
@@ -98,7 +99,8 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "src/styles.css",
+              "./node_modules/swiper/swiper-bundle.css"
             ],
             "scripts": []
           }

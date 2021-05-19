@@ -10,15 +10,6 @@ declare let gtag: Function;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  // scrHeight: any;
-  // scrWidth: any;
-
-  // @HostListener('window:resize', ['$event'])
-  // getScreenSize(event?) {
-  //   this.scrWidth = window.innerWidth;
-  //   this.scrHeight = window.innerHeight;
-  //   console.log('width = ' + this.scrWidth);
-  // }
   isMobile = false;
   mobile_menu_open = false;
 

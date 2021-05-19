@@ -28,7 +28,9 @@
     "highcharts-angular": "^2.9.0",
     "ng-multiselect-dropdown": "^0.2.14",
     "ng2-charts": "^2.4.2",
+    "ngx-useful-swiper": "^10.0.1",
     "rxjs": "~6.6.0",
+    "swiper": "^6.6.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

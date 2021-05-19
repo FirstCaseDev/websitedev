@@ -4,7 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 import { CasedocComponent } from './casedoc/casedoc.component';
 import { CasesComponent } from './cases/cases.component';
-import { AboutComponent } from './about/about.component';
 import { TeamComponent } from './team/team.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BlogComponent } from './blog/blog.component';
@@ -14,12 +13,8 @@ import { PortfolioDetailsComponent } from './portfolio-details/portfolio-details
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  // { path: '**', redirectTo: '/home', pathMatch: 'full' },
-  // { path: '/', redirectTo: '/home', pathMatch: 'full' },
-
   { path: 'home', component: HomeComponent },
   { path: 'cases', component: CasesComponent },
-  { path: 'about', component: AboutComponent },
   { path: 'users', component: UsersComponent },
   { path: 'team', component: TeamComponent },
   { path: 'casedoc/:caseid', component: CasedocComponent },
@@ -28,6 +23,9 @@ const routes: Routes = [
   { path: 'blog/:blogID', component: SingleBlogComponent },
   { path: 'portfolio', component: PortfolioComponent },
   { path: 'portfolio/:portfolioID', component: PortfolioDetailsComponent },
+
+  // This one should be in last of the list
+  { path: '**', redirectTo: '/home' },
 ];
 
 @NgModule({

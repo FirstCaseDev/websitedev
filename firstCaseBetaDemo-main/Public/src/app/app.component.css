@@ -19,11 +19,13 @@
   font-family: PopMedium;
   src: url("../assets/fonts/Poppins-Medium.ttf");
 }
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
+
 :root {
   scroll-behavior: smooth;
+}
+
+* {
+  outline: none;
 }
 
 body {
@@ -51,8 +53,8 @@ h6 {
 }
 
 /*--------------------------------------------------------------
-# Sections
---------------------------------------------------------------*/
+    # Sections
+    --------------------------------------------------------------*/
 section {
   padding: 60px 0;
   overflow: hidden;
@@ -89,8 +91,8 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Breadcrumbs
---------------------------------------------------------------*/
+    # Breadcrumbs
+    --------------------------------------------------------------*/
 .breadcrumbs {
   padding: 15px 0;
   background: #090e19;
@@ -140,11 +142,11 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Back to top button
---------------------------------------------------------------*/
+    # Back to top button
+    --------------------------------------------------------------*/
 .back-to-top {
   position: fixed;
-  visibility: hidden;
+  visibility: visible;
   opacity: 0;
   right: 15px;
   bottom: 15px;
@@ -173,8 +175,8 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Disable aos animation delay on mobile devices
---------------------------------------------------------------*/
+    # Disable aos animation delay on mobile devices
+    --------------------------------------------------------------*/
 @media screen and (max-width: 768px) {
   [data-aos-delay] {
     transition-delay: 0 !important;
@@ -182,8 +184,8 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Header
---------------------------------------------------------------*/
+    # Header
+    --------------------------------------------------------------*/
 .header {
   transition: all 0.5s;
   z-index: 997;
@@ -206,20 +208,20 @@ section {
 }
 
 .header .logo span {
-  font-size: 1em;
-  font-family: PopLight;
-  letter-spacing: 3px;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 1px;
   color: #090e19;
   font-family: "Poppins", sans-serif;
   margin-top: 3px;
 }
 
 /*--------------------------------------------------------------
-# Navigation Menu
---------------------------------------------------------------*/
+    # Navigation Menu
+    --------------------------------------------------------------*/
 /**
-* Desktop Navigation 
-*/
+    * Desktop Navigation 
+    */
 .navbar {
   padding: 0;
 }
@@ -340,8 +342,8 @@ section {
 }
 
 /**
-* Mobile Navigation 
-*/
+    * Mobile Navigation 
+    */
 .mobile-nav-toggle {
   color: #090e19;
   font-size: 28px;
@@ -446,8 +448,12 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Footer
---------------------------------------------------------------*/
+    # Index Page
+    --------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+    # Footer
+    --------------------------------------------------------------*/
 .footer {
   background: #f6f9ff;
   padding: 0 0 30px 0;
@@ -505,7 +511,7 @@ section {
 }
 
 .footer .footer-top {
-  background: white url(../assets/img/footer-bg.png) no-repeat right top;
+  background: white url(/assets/img/footer-bg.png) no-repeat right top;
   background-size: contain;
   border-top: 1px solid #e1ecff;
   border-bottom: 1px solid #e1ecff;
@@ -533,7 +539,7 @@ section {
 }
 
 .footer .footer-top .footer-info .logo span {
-  font-size: 1em;
+  font-size: 30px;
   font-weight: 700;
   letter-spacing: 1px;
   color: #090e19;
