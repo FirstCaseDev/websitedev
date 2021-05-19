@@ -87,6 +87,7 @@ export class CasesComponent implements OnInit {
   dropdownSettings: any = {};
   rows: Case[] = [];
   cited_cases: any = [];
+  cited_cases_url_unsorted:any = [];
   cited_cases_url:any =[];
   query: string = '\"medical negligence\"';
   results_count: number = 0;
@@ -1276,19 +1277,20 @@ export class CasesComponent implements OnInit {
   getCitedCaseURLs(){
     setTimeout(() => {
       try
-      {for(var i=0;i<10;i++){
-        this.caseService.getCaseURL(this.cited_cases[i].group)
+      {
+        for(var i=0;i<10;i++){
+        this.caseService.getCaseURL(this.cited_cases[i].group,i)
         .subscribe((data:any) => {
-          // this.cited_cases[i].url=data.url;
-          this.cited_cases_url.push(data.url);
-          console.log(this.cited_cases_url.length);
-          // console.log("url",this.cited_cases_url[i]);
+          this.cited_cases_url[data.index]=(data.url);
         });
-       }}
+       }
+      console.log("sorted array:", this.cited_cases_url);
+      }
        catch (error) { console.log(error)}
-       console.log(this.cited_cases_url);
+       console.log("unsorted json", this.cited_cases_url_unsorted);
+      
       }, 500);
-    
+      
   }
 
   getCitedActs() {

@@ -183,10 +183,11 @@ export class CaseService {
   }
 
   getCaseURL(
-    title: string
+    title: string,
+    index: number
   ){
     return this.webService.get(
-      `cases/case_table_item=${title}?`
+      `cases/case_table_item=${title}?index=${index}`
     );
   }
 }
