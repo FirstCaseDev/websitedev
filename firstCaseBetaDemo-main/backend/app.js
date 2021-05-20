@@ -83,8 +83,9 @@ app.get("/api/cases/query=:query", (req, res) => {
                                     ],
                                     default_operator: "and"
                                 }
-                            },
-                            {
+                            }
+                        ],
+                        should: [{
                                 regexp: {
                                     "bench": judge
                                 }
@@ -110,7 +111,6 @@ app.get("/api/cases/query=:query", (req, res) => {
                                     "judgement.keyword": judgements
                                 }
                             },
-
                         ]
                     }
                 },
@@ -230,8 +230,9 @@ app.get("/api/cases/cited_cases=:query", (req, res) => {
                                     ],
                                     default_operator: "and"
                                 }
-                            },
-                            {
+                            }
+                        ],
+                        should: [{
                                 regexp: {
                                     "bench": judge
                                 }
@@ -257,7 +258,6 @@ app.get("/api/cases/cited_cases=:query", (req, res) => {
                                     "judgement.keyword": judgements
                                 }
                             },
-
                         ]
                     }
                 },
@@ -329,8 +329,9 @@ app.get("/api/cases/cited_provisions=:query", (req, res) => {
                                     ],
                                     default_operator: "and"
                                 }
-                            },
-                            {
+                            }
+                        ],
+                        should: [{
                                 regexp: {
                                     "bench": judge
                                 }
@@ -356,7 +357,6 @@ app.get("/api/cases/cited_provisions=:query", (req, res) => {
                                     "judgement.keyword": judgements
                                 }
                             },
-
                         ]
                     }
                 },
@@ -445,8 +445,9 @@ app.get("/api/cases/piecharts=:query", (req, res) => {
                                     ],
                                     default_operator: "and"
                                 }
-                            },
-                            {
+                            }
+                        ],
+                        should: [{
                                 regexp: {
                                     "bench": judge
                                 }
@@ -472,7 +473,6 @@ app.get("/api/cases/piecharts=:query", (req, res) => {
                                     "judgement.keyword": judgements
                                 }
                             },
-
                         ]
                     }
                 },
@@ -549,8 +549,9 @@ app.get("/api/cases/charts=:query", (req, res) => {
                                     ],
                                     default_operator: "and"
                                 }
-                            },
-                            {
+                            }
+                        ],
+                        should: [{
                                 regexp: {
                                     "bench": judge
                                 }
@@ -576,7 +577,6 @@ app.get("/api/cases/charts=:query", (req, res) => {
                                     "judgement.keyword": judgements
                                 }
                             },
-
                         ]
                     }
                 },
@@ -674,8 +674,9 @@ app.get("/api/cases/ptncharts=:query", (req, res) => {
                                     ],
                                     default_operator: "and"
                                 }
-                            },
-                            {
+                            }
+                        ],
+                        should: [{
                                 regexp: {
                                     "bench": judge
                                 }
@@ -701,7 +702,6 @@ app.get("/api/cases/ptncharts=:query", (req, res) => {
                                     "judgement.keyword": judgements
                                 }
                             },
-
                         ]
                     }
                 },
@@ -793,8 +793,9 @@ app.get("/api/cases/respcharts=:query", (req, res) => {
                                     ],
                                     default_operator: "and"
                                 }
-                            },
-                            {
+                            }
+                        ],
+                        should: [{
                                 regexp: {
                                     "bench": judge
                                 }
@@ -820,7 +821,6 @@ app.get("/api/cases/respcharts=:query", (req, res) => {
                                     "judgement.keyword": judgements
                                 }
                             },
-
                         ]
                     }
                 },

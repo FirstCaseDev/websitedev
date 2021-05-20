@@ -692,7 +692,6 @@ export class CasesComponent implements OnInit {
     element2!.className = 'tab';
     let element3 = document.getElementById('analytics_tab');
     element3!.className = 'tab ';
-    this.loading = false;
 
     // console.log('view_search ' + this.view_search);
   }
