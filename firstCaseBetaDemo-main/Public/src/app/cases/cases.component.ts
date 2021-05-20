@@ -1644,14 +1644,14 @@ export class CasesComponent implements OnInit {
 
   select_sg() {
     this.selectedCountry = 'Singapore';
-    this.courts = ['Supreme Court Singapore'];
+    this.courts = ['Supreme Court of Singapore'];
 
     this.court_options = [
-      { item_id: 1, item_text: 'Supreme Court Singapore' },
+      { item_id: 1, item_text: 'Supreme Court of Singapore' },
     ];
 
     this.courtdata = [
-      { id: 'Supreme Court Singapore', name: 'Supreme Court Singapore' },
+      { id: 'Supreme Court of Singapore', name: 'Supreme Court of Singapore' },
     ];
     console.log('courts', this.courts);
     console.log('court_options', this.court_options);
