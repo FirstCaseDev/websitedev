@@ -86,6 +86,38 @@ div.loading_animation {
   flex-direction: row-reverse;
 }
 
+.tags-list-item {
+  margin: 5px 10px 5px 0;
+  padding: 2px 10px;
+  text-align: center;
+  font-size: medium;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.source-tag {
+  background-color: #a4c2f4ff;
+}
+
+.judgement-tag {
+  background-color: #f9cb9cff;
+}
+
+.date-tag {
+  background-color: #a4c2f4ff;
+}
+
+.bench-tag {
+  background-color: #ffe599ff;
+}
+
+.query-term-tag {
+  background-color: rgba(0, 0, 0, 0.25);
+  font-size: small !important;
+}
+
 .page-columns {
   /* grid-template-columns: 25% 75%; */
   border-bottom: 1px solid #ddd;
@@ -129,8 +161,7 @@ div.loading_animation {
   list-style-type: none;
   margin-top: 10px;
   box-shadow: 0px 5px 15px #ddd;
-  border: 1px solid #aaa;
-  padding: 20px 0px 20px 20px;
+  padding: 20px 20px 20px 20px;
 }
 
 .dropdown {
@@ -203,12 +234,14 @@ div.loading_animation {
 
 #search-desc {
   color: rgba(0, 0, 0, 0.705);
-  margin-top: 5px;
   font-weight: 100;
+  margin: 0 !important;
+  padding: 0;
 }
 
 .pagination-bar {
   display: flex;
+  margin: 20px 0;
   justify-content: space-around;
 }
 

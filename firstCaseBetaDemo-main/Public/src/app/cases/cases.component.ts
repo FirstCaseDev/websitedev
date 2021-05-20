@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import Case from '../models/case';
 import { CaseService } from './case.service';
@@ -28,6 +28,8 @@ export class CasesComponent implements OnInit {
     private router: Router,
     private componentTitle: Title
   ) {}
+
+  tags_colors = ['#a4c2f4ff', '#b6d7a8ff', '#f9cb9cff', '#ffe599ff'];
 
   isMobile = false;
   Highcharts = Highcharts;
@@ -1424,11 +1426,16 @@ export class CasesComponent implements OnInit {
     this.selectedCourts = this.court_options;
   }
 
+  scrollToTop() {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+  }
+
   sendNextPage() {
     this.page = this.page + 1;
 
     this.search();
     this.view_search = true;
+    this.scrollToTop();
   }
 
   sendPreviousPage() {
@@ -1436,6 +1443,7 @@ export class CasesComponent implements OnInit {
 
     this.search();
     this.view_search = true;
+    this.scrollToTop();
   }
 
   createArray(count: number) {
