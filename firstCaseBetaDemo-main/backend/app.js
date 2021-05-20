@@ -142,7 +142,12 @@ app.get("/api/cases/query=:query", (req, res) => {
                     case_list: response.hits.hits.map(function(i) {
                         source = i['_source'];
                         source._id = i['_id'];
-                        source.highlights = i['highlight']['judgement_text'];
+                        var highlight = "";
+                        for (var j = 0; j < i['highlight']['judgement_text'].length; j++) {
+                            highlight = highlight.concat(i['highlight']['judgement_text'][j]);
+                            highlight = highlight.concat("...");
+                        }
+                        source.highlight = highlight;
                         return source
                     }),
                     success: true,
