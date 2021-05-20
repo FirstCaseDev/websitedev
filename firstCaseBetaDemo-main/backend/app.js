@@ -114,6 +114,11 @@ app.get("/api/cases/query=:query", (req, res) => {
                         ]
                     }
                 },
+                highlight: {
+                    fields: {
+                        judgement_text: {}
+                    }
+                },
                 collapse: {
                     field: "url.keyword"
                 },
@@ -137,6 +142,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                     case_list: response.hits.hits.map(function(i) {
                         source = i['_source'];
                         source._id = i['_id'];
+                        source.highlights = i['highlight']['judgement_text'];
                         return source
                     }),
                     success: true,
