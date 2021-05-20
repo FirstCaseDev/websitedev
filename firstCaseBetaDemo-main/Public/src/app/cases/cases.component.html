@@ -1,5 +1,14 @@
-<div style="margin-top: 100px" ng-init="rows">
-  <div class="search-bar">
+<div>
+  <img
+    style="position: absolute; top: 0; z-index: -1"
+    src="../../assets/img/hero-bg.png"
+    class="img-fluid"
+    alt=""
+  />
+</div>
+
+<div style="margin: 20vh 8vw; background-color: transparent">
+  <div class="input-search">
     <div class="country-selector">
       <div class="dropdown">
         <button class="dropbtn">
@@ -40,6 +49,271 @@
         </div>
       </div>
     </div>
+    <input
+      type="text"
+      id="search-box"
+      (keyup)="search_on_enter_press($event)"
+      required="required"
+      placeholder="Full Text Search"
+      [(ngModel)]="query"
+    />
+    <img
+      src="../../assets/img/search_icon_white.svg"
+      (click)="first_search()"
+    />
+  </div>
+
+  <div class="input-search" style="display: flex">
+    <div class="filter-btn" (click)="toggleShowFilter()">
+      <img src="../../assets/img/filter1_white.svg" width="40px" />
+      <p>Filters</p>
+    </div>
+    <div class="tags-bar">
+      <ul
+        style="
+          margin: 0;
+          padding: 0;
+          display: flex;
+          list-style-type: none;
+          align-items: center;
+          justify-content: space-evenly;
+        "
+      >
+        <li>
+          <input
+            class="input-box"
+            type="text"
+            id="addTag"
+            placeholder="Add Tag"
+            [(ngModel)]="add_tag"
+          />
+        </li>
+        <li>
+          <select [(ngModel)]="tagType" (change)="selected_tag()">
+            <option *ngFor="let item of tagCategory" [ngValue]="item">
+              {{ item.name }}
+            </option>
+          </select>
+        </li>
+        <li
+          style="
+            background-color: #012970;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+          "
+          (click)="addTag()"
+        >
+          <p style="margin: 0">Add</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div
+    style="
+      display: flex;
+      border-top: 1px solid #bbb;
+      flex-wrap: wrap;
+      -webkit-flex-wrap: wrap;
+    "
+    *ngIf="view_tags"
+  >
+    <div
+      class="tags-list-item"
+      style="margin-top: 10px; text-align: center"
+      *ngFor="let tag of tags_list"
+    >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          <h3 style="margin: 0; padding: 0">
+            {{ tag.value }}
+          </h3>
+          <p style="font-size: xx-small; margin: 0">
+            {{ tag.type }}
+          </p>
+        </div>
+        <img
+          style="margin-left: 10px; cursor: pointer"
+          width="10px"
+          height="10px"
+          class="remove-tag"
+          (click)="removeTag($event)"
+          src="../../assets/img/x-cross.svg"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div style="background-color: #f2f4fd">
+    <div *ngIf="ShowFilter">
+      <div
+        style="
+          padding: 10px 10vw;
+          display: flex;
+          justify-content: space-between;
+        "
+      >
+        <div>
+          <p>Sort By</p>
+          <select [(ngModel)]="sortBy" (change)="selected()">
+            <option *ngFor="let item of sort_options" [ngValue]="item">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div style="text-align: center; padding-right: 50px">
+          <p *ngIf="!year_range_selected">Select year range</p>
+          <p *ngIf="year_range_selected">{{ year_range_msg }}</p>
+          <section class="range-slider">
+            <span class="rangeValues"></span>
+            <input
+              class="year-range-slider"
+              value="{{ y_floor }}"
+              min="1900"
+              max="2020"
+              step="1"
+              type="range"
+              (change)="getSliderValue1($event)"
+              (oninput)="getSliderValue1($event)"
+            />
+            <input
+              class="year-range-slider"
+              value="{{ y_ceil }}"
+              min="1901"
+              max="2021"
+              step="1"
+              type="range"
+              (change)="getSliderValue2($event)"
+              (oninput)="getSliderValue2($event)"
+            />
+          </section>
+        </div>
+      </div>
+      <div
+        style="
+          padding: 10px 10vw;
+          display: block;
+          justify-content: space-between;
+        "
+      >
+        <div style="margin-bottom: 1em">
+          <p>Court</p>
+          <form [formGroup]="courtForm">
+            <ng-multiselect-dropdown
+              style="width: 100px"
+              [placeholder]="'Select one or more...'"
+              [(ngModel)]="selectedCourts"
+              [settings]="dropdownSettings"
+              [data]="court_options"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              [ngModelOptions]="{ standalone: true }"
+            >
+            </ng-multiselect-dropdown>
+          </form>
+        </div>
+        <div style="margin-bottom: 20px">
+          <p>Judgements</p>
+          <form [formGroup]="myForm">
+            <ng-multiselect-dropdown
+              style="width: 100px"
+              [placeholder]="'Select one or more...'"
+              [(ngModel)]="selectedJudgements"
+              [settings]="dropdownSettings"
+              [data]="judgement_options"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              [ngModelOptions]="{ standalone: true }"
+            >
+            </ng-multiselect-dropdown>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div style="background-color: #f2f4fd; padding-top: 10px" *ngIf="searched"> -->
+  <div style="background-color: #f2f4fd; padding-top: 10px">
+    <div id="tabs">
+      <button class="tab active" id="search_tab" (click)="show_search()">
+        Search Results
+      </button>
+      <button class="tab" id="analytics_tab" (click)="show_analytics()">
+        Analytics
+      </button>
+      <button class="tab" id="citation_tab" (click)="show_citations()">
+        Intelligent Legal Output
+      </button>
+    </div>
+  </div>
+
+  <div style="padding: 10px 10vw">
+    <p *ngIf="results_time" style="margin: 10px 0">
+      {{ results_count }} results found in {{ results_time }} seconds
+    </p>
+    <ul class="search-repeater" *ngFor="let data of rows">
+      <li>
+        <p
+          id="search-desc "
+          name="desc "
+          style="
+            margin-block-end: 0.4em;
+            font-size: 25px;
+            font-family: PopMedium;
+            max-lines: 1;
+          "
+        >
+          <a
+            href="/casedoc/{{ data._id }}"
+            target="_blank"
+            style="text-decoration: none; color: #012970"
+            >{{ data.title }}</a
+          >
+        </p>
+      </li>
+      <!-- <li>
+        <h4
+          id="search-category "
+          name="category "
+          style="margin-block-start: 0.5em; margin-block-end: 0.5em"
+        >
+          Source:
+          <strong style="font-weight: 300"> {{ data.source }}</strong> | Date:
+          <strong style="font-weight: 300">
+            {{ data.day }} {{ data.month }} {{ data.year }}</strong
+          >
+        </h4>
+      </li>
+
+      <li>
+        <h4
+          class="judgement"
+          style="margin-block-start: 0.5em; margin-block-end: 0.5em"
+        >
+          Judgement:
+          <strong style="font-weight: 300">{{ data.judgement }}</strong>
+          | Bench:
+          <strong style="font-weight: 300">{{ data.bench }}</strong>
+        </h4>
+      </li> -->
+      <li>
+        <p class="blog-post" [innerHtml]="data.highlight"></p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div style="margin-top: 100px" ng-init="rows">
+  <div class="search-bar">
     <div class="input-group">
       <input
         type="text"
@@ -82,7 +356,7 @@
           "
         >
           <div>
-            <h3>Sort By</h3>
+            <p>Sort By</p>
             <select [(ngModel)]="sortBy" (change)="selected()">
               <option *ngFor="let item of sort_options" [ngValue]="item">
                 {{ item.name }}
@@ -90,8 +364,8 @@
             </select>
           </div>
           <div style="text-align: center; padding-right: 50px">
-            <h3 *ngIf="!year_range_selected">Select year range</h3>
-            <h3 *ngIf="year_range_selected">{{ year_range_msg }}</h3>
+            <p *ngIf="!year_range_selected">Select year range</p>
+            <p *ngIf="year_range_selected">{{ year_range_msg }}</p>
             <section class="range-slider">
               <span class="rangeValues"></span>
               <input
@@ -125,7 +399,7 @@
           "
         >
           <div style="margin-bottom: 1em">
-            <h3>Court</h3>
+            <p>Court</p>
             <form [formGroup]="courtForm">
               <ng-multiselect-dropdown
                 style="width: 100px"
@@ -141,7 +415,7 @@
             </form>
           </div>
           <div style="margin-bottom: 20px">
-            <h3>Judgements</h3>
+            <p>Judgements</p>
             <form [formGroup]="myForm">
               <ng-multiselect-dropdown
                 style="width: 100px"
@@ -316,6 +590,9 @@
                   | Bench:
                   <strong style="font-weight: 300">{{ data.bench }}</strong>
                 </h4>
+              </li>
+              <li>
+                <p class="blog-post" [innerHtml]="data.highlight"></p>
               </li>
             </ul>
 

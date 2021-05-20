@@ -47,11 +47,14 @@ export class CasedocComponent implements OnInit {
     day: '',
     month: '',
     year: '',
+    highlight: '',
+    query_terms: [],
     doc_author: '',
     bench: '',
     judgement_text: '',
     judgement_html: '',
     title: '',
+    case_id: '',
     provisions_referred: [],
     cases_referred: [],
   };
@@ -128,11 +131,16 @@ export class CasedocComponent implements OnInit {
 
       // Uncomment for processing paragraphs from judgement text
       // console.log('data.case.judgement_text: ', data.case.judgement_text);
-      this.judgement_text_paragraphs = data.case.judgement_text.split('>>>>').map(function(i: any){
-        var para = i.replace(/[^\S+\r\n]{2,}/g," ");
-        return para;
-      });
-      this.first_para = this.judgement_text_paragraphs[0].replace(/\n{2,}/g," ");
+      this.judgement_text_paragraphs = data.case.judgement_text
+        .split('>>>>')
+        .map(function (i: any) {
+          var para = i.replace(/[^\S+\r\n]{2,}/g, ' ');
+          return para;
+        });
+      this.first_para = this.judgement_text_paragraphs[0].replace(
+        /\n{2,}/g,
+        ' '
+      );
       delete this.judgement_text_paragraphs[0];
       // console.log('this.case.url: ', this.case.url);
       this.case_source_url = this.case.url.split('/')[2];

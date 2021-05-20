@@ -14,10 +14,13 @@ export default class Case {
   day!: String;
   month!: String;
   year!: String;
+  highlight!: String;
+  query_terms!: Array<string>;
   doc_author!: String;
   bench!: String;
   judgement_text!: String;
   title!: String;
+  case_id!: String;
   judgement_html!: String;
   provisions_referred!: Array<provisions_referred_object>;
 }

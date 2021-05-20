@@ -31,36 +31,39 @@ export class CasesComponent implements OnInit {
 
   isMobile = false;
   Highcharts = Highcharts;
-  
+
   pvbChartOptions: Highcharts.Options = {};
   casesWordCloudOptions: Highcharts.Options = {
     accessibility: {
       screenReaderSection: {
-          beforeChartFormat: '<h5>{chartTitle}</h5>' +
-              '<div>{chartSubtitle}</div>' +
-              '<div>{chartLongdesc}</div>' +
-              '<div>{viewTableButton}</div>'
-      }
-  },
-  series: [{
-      type: 'wordcloud',
-      data: [
-        {'name':"ABCD", 'weight': 20},
-        {'name':"PQRS",'weight':10},
-        {'name':"XYZ",'weight':10},
-        {'name':"LMN",'weight':3},
-      ],
-      name: 'Occurrences',
-      colors: ['#000000'],
-      rotation: {
-        from: 0,
-        to: 0,
-        orientations: 1
-      }
-  }],
-  title: {
-      text: ''
-  }
+        beforeChartFormat:
+          '<h5>{chartTitle}</h5>' +
+          '<div>{chartSubtitle}</div>' +
+          '<div>{chartLongdesc}</div>' +
+          '<div>{viewTableButton}</div>',
+      },
+    },
+    series: [
+      {
+        type: 'wordcloud',
+        data: [
+          { name: 'ABCD', weight: 20 },
+          { name: 'PQRS', weight: 10 },
+          { name: 'XYZ', weight: 10 },
+          { name: 'LMN', weight: 3 },
+        ],
+        name: 'Occurrences',
+        colors: ['#000000'],
+        rotation: {
+          from: 0,
+          to: 0,
+          orientations: 1,
+        },
+      },
+    ],
+    title: {
+      text: '',
+    },
   };
   rvbChartOptions: Highcharts.Options = {};
   pvb_Bench: any = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -87,9 +90,9 @@ export class CasesComponent implements OnInit {
   dropdownSettings: any = {};
   rows: Case[] = [];
   cited_cases: any = [];
-  cited_cases_url_unsorted:any = [];
-  cited_cases_url:any =[];
-  query: string = '\"medical negligence\"';
+  cited_cases_url_unsorted: any = [];
+  cited_cases_url: any = [];
+  query: string = '"medical negligence"';
   results_count: number = 0;
   results_time: number = 0;
   arrayOne: Array<number> = [];
@@ -120,7 +123,6 @@ export class CasesComponent implements OnInit {
     'National Company Law Appellate Tribunal',
     'Appellate Tribunal For Electricity',
     'Authority Tribunal',
-
   ];
   bench: string = '';
   petitioner: string = '';
@@ -388,7 +390,6 @@ export class CasesComponent implements OnInit {
       },
     },
   };
-  
 
   public respondentChartLabels: Label[] = [
     '2005',
@@ -818,7 +819,7 @@ export class CasesComponent implements OnInit {
         if (data.success) {
           this.rows = data.case_list;
           this.results_time = data.result_time;
-          // console.log(this.rows);
+          console.log(this.rows[1].highlight.length);
           this.results_count = data.result_count;
         } else {
           alert(data.msg);
@@ -997,15 +998,13 @@ export class CasesComponent implements OnInit {
               if (sums[j] > sums[j - 1]) {
                 for (var k = 0; k < this.petitionerDatalabels.length; k++) {
                   var temp = this.petitionerChartData[k].data![j];
-                  this.petitionerChartData[k].data![
-                    j
-                  ] = this.petitionerChartData[k].data![j - 1];
+                  this.petitionerChartData[k].data![j] =
+                    this.petitionerChartData[k].data![j - 1];
                   this.petitionerChartData[k].data![j - 1] = temp;
                 }
                 var temp2 = this.petitionerChartLabels[j];
-                this.petitionerChartLabels[j] = this.petitionerChartLabels[
-                  j - 1
-                ];
+                this.petitionerChartLabels[j] =
+                  this.petitionerChartLabels[j - 1];
                 this.petitionerChartLabels[j - 1] = temp2;
                 var temp3;
                 temp3 = sums[j];
@@ -1102,15 +1101,13 @@ export class CasesComponent implements OnInit {
               if (sums[j] > sums[j - 1]) {
                 for (var k = 0; k < this.respondentDatalabels.length; k++) {
                   var temp = this.respondentChartData[k].data![j];
-                  this.respondentChartData[k].data![
-                    j
-                  ] = this.respondentChartData[k].data![j - 1];
+                  this.respondentChartData[k].data![j] =
+                    this.respondentChartData[k].data![j - 1];
                   this.respondentChartData[k].data![j - 1] = temp;
                 }
                 var temp2 = this.respondentChartLabels[j];
-                this.respondentChartLabels[j] = this.respondentChartLabels[
-                  j - 1
-                ];
+                this.respondentChartLabels[j] =
+                  this.respondentChartLabels[j - 1];
                 this.respondentChartLabels[j - 1] = temp2;
                 var temp3;
                 temp3 = sums[j];
@@ -1268,30 +1265,29 @@ export class CasesComponent implements OnInit {
           this.cited_cases = data;
           // console.log(this.cited_cases);
           this.loading = false;
-          this.getCitedCaseURLs()
+          this.getCitedCaseURLs();
         } catch (error) {
           // console.log(error);
         }
       });
   }
 
-  getCitedCaseURLs(){
+  getCitedCaseURLs() {
     setTimeout(() => {
-      try
-      {
-        for(var i=0;i<10;i++){
-        this.caseService.getCaseURL(this.cited_cases[i].group,i)
-        .subscribe((data:any) => {
-          this.cited_cases_url[data.index]=(data.url);
-        });
-       }
-      console.log("sorted array:", this.cited_cases_url);
+      try {
+        for (var i = 0; i < 10; i++) {
+          this.caseService
+            .getCaseURL(this.cited_cases[i].group, i)
+            .subscribe((data: any) => {
+              this.cited_cases_url[data.index] = data.url;
+            });
+        }
+        console.log('sorted array:', this.cited_cases_url);
+      } catch (error) {
+        console.log(error);
       }
-       catch (error) { console.log(error)}
-       console.log("unsorted json", this.cited_cases_url_unsorted);
-      
-      }, 500);
-      
+      console.log('unsorted json', this.cited_cases_url_unsorted);
+    }, 500);
   }
 
   getCitedActs() {
@@ -1644,14 +1640,12 @@ export class CasesComponent implements OnInit {
 
   select_sg() {
     this.selectedCountry = 'Singapore';
-    this.courts = ['Supreme Court of Singapore'];
+    this.courts = ['Supreme Court Singapore'];
 
-    this.court_options = [
-      { item_id: 1, item_text: 'Supreme Court of Singapore' },
-    ];
+    this.court_options = [{ item_id: 1, item_text: 'Supreme Court Singapore' }];
 
     this.courtdata = [
-      { id: 'Supreme Court of Singapore', name: 'Supreme Court of Singapore' },
+      { id: 'Supreme Court Singapore', name: 'Supreme Court Singapore' },
     ];
     console.log('courts', this.courts);
     console.log('court_options', this.court_options);
