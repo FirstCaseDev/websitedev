@@ -65,7 +65,8 @@ app.get("/api/cases/query=:query", (req, res) => {
                     "petitioner",
                     "respondent",
                     "bench",
-                    "source"
+                    "source",
+                    "query_terms"
                 ],
                 query: {
                     bool: {
