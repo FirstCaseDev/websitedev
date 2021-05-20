@@ -133,6 +133,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                 // return res.json(response);
                 return res.json({
                     result_count: response.hits.total.value,
+                    result_time: response.took / 1000,
                     case_list: response.hits.hits.map(function(i) {
                         source = i['_source'];
                         source._id = i['_id'];
@@ -141,6 +142,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                     success: true,
                     msg: "Success",
                     day: response.hits.hits[0].day,
+                    // response
                 })
             } else {
                 return res.json({

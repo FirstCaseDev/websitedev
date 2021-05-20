@@ -91,6 +91,7 @@ export class CasesComponent implements OnInit {
   cited_cases_url:any =[];
   query: string = '\"medical negligence\"';
   results_count: number = 0;
+  results_time: number = 0;
   arrayOne: Array<number> = [];
   page: number = 1;
   limit: number = 5;
@@ -816,6 +817,7 @@ export class CasesComponent implements OnInit {
         // console.log(data.case_list);
         if (data.success) {
           this.rows = data.case_list;
+          this.results_time = data.result_time;
           // console.log(this.rows);
           this.results_count = data.result_count;
         } else {
