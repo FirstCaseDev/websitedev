@@ -44,6 +44,7 @@ app.get("/api/cases/query=:query", (req, res) => {
     if (sortBy === "year") {
         sort_options = [{ date: "desc" }, "_score"];
     }
+    console.log(searchText.trim());
     esClient
         .search({
             index: "indian_court_data.cases",
@@ -118,7 +119,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                     },
                 },
                 collapse: {
-                    field: "url.keyword",
+                    field: "title.keyword",
                 },
                 script_fields: {
                     "_id ": {
@@ -142,17 +143,24 @@ app.get("/api/cases/query=:query", (req, res) => {
                         source._id = i["_id"];
                         source.match_count = i["_explanation"].details[1].details[0].details[0].details[2].details[0].value;
                         var highlight = "";
-                        for (var j = 0; j < i["highlight"]["judgement_text"].length; j++) {
-                            highlight = highlight
-                                .concat(i["highlight"]["judgement_text"][j])
-                                .replace(/<em>/g, "<b>")
-                                .replace(/<\/em>/g, "</b>")
-                                .replace(/<br>/g, "")
-                                .replace(/<\/br>/g, "")
-                                .replace(/>>>>/g, "")
-                                .replace(/\n/g, "");
-                            // .substring(0, 100);
-                            highlight = highlight.concat(" ... ");
+                        if (i["highlight"] !== undefined) {
+                            try {
+                                for (var j = 0; j < i["highlight"]["judgement_text"].length; j++) {
+                                    highlight = highlight
+                                        .concat(i["highlight"]["judgement_text"][j])
+                                        .replace(/<em>/g, "<b>")
+                                        .replace(/<\/em>/g, "</b>")
+                                        .replace(/<br>/g, "")
+                                        .replace(/<\/br>/g, "")
+                                        .replace(/>>>>/g, "")
+                                        .replace(/\n/g, "");
+                                    // .substring(0, 100);
+                                    highlight = highlight.concat(" ... ");
+                                }
+                                console.log(j, "th highlight: ", highlight);
+                            } catch (err) {
+
+                            }
                         }
                         source.highlight = highlight;
                         return source;
