@@ -83,6 +83,7 @@ export class CasesComponent implements OnInit {
   searched: boolean = false;
   view_search: boolean = false;
   view_analytics: boolean = false;
+  grid_view: boolean = true;
   view_analytics_mobile: boolean = false;
   view_citations: boolean = false;
   view_tags: boolean = false;
@@ -134,6 +135,7 @@ export class CasesComponent implements OnInit {
   courtlevel: any;
   tagType: any;
   sortBy: any;
+  chartsView: any;
   defaultcourt: any;
   loading: boolean = false;
   CitedActNames: any = [];
@@ -480,6 +482,7 @@ export class CasesComponent implements OnInit {
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
 
+  charts_views: any = [{ view: 'Grid' }, { view: 'List' }];
   sort_options: any = [
     { id: 'relevance', name: 'Most Relevant' },
     { id: 'year', name: 'Most Recent' },
@@ -538,6 +541,7 @@ export class CasesComponent implements OnInit {
     this.rvb_init();
     this.courtlevel = this.courtdata[0];
     this.tagType = this.tagCategory[0];
+    this.chartsView = this.charts_views[0];
     this.sortBy = this.sort_options[0];
     this.court = this.courtdata[0].name;
     this.selectedJudgements = this.judgement_options;
@@ -638,23 +642,25 @@ export class CasesComponent implements OnInit {
   }
 
   show_analytics() {
-    this.loading = true;
-    GoogleAnalyticsService.eventEmitter(
-      'Analytics_tab',
-      'button',
-      'click',
-      'Analytics Tab',
-      this.results_count
-    );
-
     if (this.charts_unloaded) {
-      this.getLineCharts();
-      this.getPetitionerChart();
-      this.getPieCharts();
-      this.getPtn_v_BenchChart();
-      this.getRespondentChart();
-      this.getRsp_v_BenchChart();
-      this.charts_unloaded = false;
+      this.loading = true;
+      GoogleAnalyticsService.eventEmitter(
+        'Analytics_tab',
+        'button',
+        'click',
+        'Analytics Tab',
+        this.results_count
+      );
+
+      if (this.charts_unloaded) {
+        this.getLineCharts();
+        this.getPetitionerChart();
+        this.getPieCharts();
+        this.getPtn_v_BenchChart();
+        this.getRespondentChart();
+        this.getRsp_v_BenchChart();
+        this.charts_unloaded = false;
+      }
     }
     this.view_search = false;
     this.view_citations = false;
@@ -671,22 +677,31 @@ export class CasesComponent implements OnInit {
     // console.log('view_search ' + this.view_search);
   }
 
+  toggle_charts_view() {
+    this.grid_view = !this.grid_view;
+    if (this.grid_view) this.chartsView = this.charts_views[0];
+    else this.chartsView = this.charts_views[1];
+  }
+
   show_citations() {
-    this.loading = true;
-    GoogleAnalyticsService.eventEmitter(
-      'citations_tab',
-      'button',
-      'click',
-      'Citations Tab',
-      this.results_count
-    );
-    // console.log('show_citations start - loading: ', this.loading);
     if (this.citations_unloaded) {
-      this.getCitedActs();
-      this.getCitedCases();
-      this.getCitedLaws();
-      this.citations_unloaded = false;
+      this.loading = true;
+      GoogleAnalyticsService.eventEmitter(
+        'citations_tab',
+        'button',
+        'click',
+        'Citations Tab',
+        this.results_count
+      );
+      // console.log('show_citations start - loading: ', this.loading);
+      if (this.citations_unloaded) {
+        this.getCitedActs();
+        this.getCitedCases();
+        this.getCitedLaws();
+        this.citations_unloaded = false;
+      }
     }
+
     this.view_search = false;
     this.view_analytics = false;
     this.view_citations = true;

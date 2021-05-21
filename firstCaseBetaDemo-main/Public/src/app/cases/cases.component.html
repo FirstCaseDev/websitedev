@@ -8,7 +8,16 @@
 </div>
 
 <div style="background-image: url(../../assets/img/hero-bg.png) no-repeat">
-  <div style="margin-top: 20vh; padding: 0 8vw; background-color: #f2f4fd">
+  <div
+    style="
+      margin: 20vh 50px 0 50px;
+      padding: 0 8vw;
+      background-color: #f2f4fd;
+      border-width: 2px;
+      border-style: dashed;
+      border-color: rgba(0, 0, 0, 0.507);
+    "
+  >
     <div class="input-search">
       <div class="country-selector">
         <div class="dropdown">
@@ -258,7 +267,7 @@
     </div>
   </div>
   <div style="padding: 0 8vw">
-    <div style="padding: 10px 10vw">
+    <div id="slide-1" *ngIf="view_search" style="padding: 10px 10vw">
       <p *ngIf="results_time" style="margin: 10px 0">
         {{ results_count }} results found in {{ results_time }} seconds
       </p>
@@ -329,7 +338,143 @@
         </div>
       </div>
     </div>
-    <div *ngIf="results_count" class="pagination-bar">
+    <div id="slide-2" *ngIf="view_analytics" style="padding: 10px 5vw">
+      <!-- Analytics part with graphs -->
+      <div *ngIf="searched">
+        <div style="display: flex; flex-direction: row-reverse">
+          <select [(ngModel)]="chartsView" (change)="toggle_charts_view()">
+            <option *ngFor="let item of charts_views" [ngValue]="item">
+              {{ item.view }}
+            </option>
+          </select>
+        </div>
+        <div class="graphs-container">
+          <div class="graphs-item">
+            <canvas
+              baseChart
+              [chartType]="'line'"
+              [datasets]="chartData"
+              [labels]="chartLabels"
+              [options]="linechartOptions"
+              [legend]="true"
+            ></canvas>
+          </div>
+          <div class="graphs-item">
+            <canvas
+              baseChart
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [options]="doughnutChartOptions"
+              [chartType]="doughnutChartType"
+            ></canvas>
+          </div>
+          <div class="graphs-item">
+            <canvas
+              baseChart
+              [datasets]="petitionerChartData"
+              [labels]="petitionerChartLabels"
+              [options]="petitionerChartOptions"
+              [legend]="petitionerChartLegend"
+              [chartType]="petitionerChartType"
+            ></canvas>
+          </div>
+          <div class="graphs-item">
+            <canvas
+              baseChart
+              [datasets]="respondentChartData"
+              [labels]="respondentChartLabels"
+              [options]="respondentChartOptions"
+              [legend]="respondentChartLegend"
+              [chartType]="respondentChartType"
+            ></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="slide-3" *ngIf="view_citations" style="padding: 10px 10vw">
+      <div *ngIf="searched" style="display: flex">
+        <div class="tables-grid-container">
+          <div class="tables-grid-item">
+            <div>
+              <h2 style="text-align: center">Most Relevant Laws</h2>
+              <table
+                class="table"
+                id="table-cited-provisions"
+                style="table-layout: fixed"
+              >
+                <thead>
+                  <tr>
+                    <th>Act Name</th>
+                    <th style="width: 180px">Section Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container
+                    *ngFor="let provision of CitedProvisions; index as i"
+                  >
+                    <tr>
+                      <td
+                        rowspan="6"
+                        style="
+                          font-size: larger;
+                          font-weight: bolder;
+                          width: 250px;
+                        "
+                      >
+                        {{ provision.act_name }}
+                      </td>
+                    </tr>
+                    <tr *ngFor="let section of provision.sections; index as i">
+                      <td>{{ section }}</td>
+                    </tr>
+                    <tr
+                      *ngFor="
+                        let item of [].constructor(
+                          5 - provision.section_sums.length
+                        );
+                        index as i
+                      "
+                    >
+                      <td style="border: 0px"></td>
+                      <td style="border: 0px"></td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tables-grid-item" style="display: flexbox">
+            <div>
+              <h2 style="text-align: center">Most important Cases</h2>
+              <table class="table" id="table-cited-cases" style="width: 100%">
+                <thead>
+                  <tr>
+                    <th scope="col " style="width: 250px">Case Title</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="cited_cases_url[0] !== 0">
+                  <tr *ngFor="let item of cited_cases; index as i">
+                    <td style="width: 250p x">
+                      <a
+                        href="https://firstcase.io/casedoc/{{
+                          cited_cases_url[i]
+                        }}"
+                        target="_blank"
+                      >
+                        <div>{{ item.group }}</div>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="graphs-grid-item"></div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="results_count && view_search" class="pagination-bar">
       <div style="min-width: 150px">
         <div *ngIf="page > 1">
           <button
@@ -363,151 +508,7 @@
   <div class="page-columns">
     <div class="page">
       <div class="x">
-        <div class="slides" *ngIf="searched">
-          <div id="slide-1" *ngIf="view_search">
-            <br />
-          </div>
-          <div id="slide-2" *ngIf="view_analytics">
-            <!-- Analytics part with graphs -->
-            <div *ngIf="searched">
-              <div class="graphs-grid-container">
-                <div class="graphs-grid-item">
-                  <canvas
-                    baseChart
-                    [chartType]="'line'"
-                    [datasets]="chartData"
-                    [labels]="chartLabels"
-                    [options]="linechartOptions"
-                    [legend]="true"
-                  ></canvas>
-                </div>
-                <div class="graphs-grid-item">
-                  <canvas
-                    baseChart
-                    [data]="doughnutChartData"
-                    [labels]="doughnutChartLabels"
-                    [options]="doughnutChartOptions"
-                    [chartType]="doughnutChartType"
-                  ></canvas>
-                </div>
-                <div class="graphs-grid-item">
-                  <canvas
-                    height="180px"
-                    baseChart
-                    [datasets]="petitionerChartData"
-                    [labels]="petitionerChartLabels"
-                    [options]="petitionerChartOptions"
-                    [legend]="petitionerChartLegend"
-                    [chartType]="petitionerChartType"
-                  ></canvas>
-                </div>
-                <div class="graphs-grid-item">
-                  <canvas
-                    height="180px"
-                    baseChart
-                    [datasets]="respondentChartData"
-                    [labels]="respondentChartLabels"
-                    [options]="respondentChartOptions"
-                    [legend]="respondentChartLegend"
-                    [chartType]="respondentChartType"
-                  ></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="slide-3" *ngIf="view_citations">
-            <div *ngIf="searched" style="display: flex">
-              <div class="tables-grid-container">
-                <div class="tables-grid-item">
-                  <div>
-                    <h2 style="text-align: center">Most Relevant Laws</h2>
-                    <table
-                      class="table"
-                      id="table-cited-provisions"
-                      style="table-layout: fixed"
-                    >
-                      <thead>
-                        <tr>
-                          <th>Act Name</th>
-                          <th style="width: 180px">Section Name</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <ng-container
-                          *ngFor="let provision of CitedProvisions; index as i"
-                        >
-                          <tr>
-                            <td
-                              rowspan="6"
-                              style="
-                                font-size: larger;
-                                font-weight: bolder;
-                                width: 250px;
-                              "
-                            >
-                              {{ provision.act_name }}
-                            </td>
-                          </tr>
-                          <tr
-                            *ngFor="
-                              let section of provision.sections;
-                              index as i
-                            "
-                          >
-                            <td>{{ section }}</td>
-                          </tr>
-                          <tr
-                            *ngFor="
-                              let item of [].constructor(
-                                5 - provision.section_sums.length
-                              );
-                              index as i
-                            "
-                          >
-                            <td style="border: 0px"></td>
-                            <td style="border: 0px"></td>
-                          </tr>
-                        </ng-container>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div class="tables-grid-item" style="display: flexbox">
-                  <div>
-                    <h2 style="text-align: center">Most important Cases</h2>
-                    <table
-                      class="table"
-                      id="table-cited-cases"
-                      style="width: 100%"
-                    >
-                      <thead>
-                        <tr>
-                          <th scope="col " style="width: 250px">Case Title</th>
-                        </tr>
-                      </thead>
-                      <tbody *ngIf="cited_cases_url[0] !== 0">
-                        <tr *ngFor="let item of cited_cases; index as i">
-                          <td style="width: 250p x">
-                            <a
-                              href="https://firstcase.io/casedoc/{{
-                                cited_cases_url[i]
-                              }}"
-                              target="_blank"
-                            >
-                              <div>{{ item.group }}</div>
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="graphs-grid-item"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="slides" *ngIf="searched"></div>
       </div>
 
       <div
