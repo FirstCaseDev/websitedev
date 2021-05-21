@@ -157,7 +157,6 @@ app.get("/api/cases/query=:query", (req, res) => {
                                     // .substring(0, 100);
                                     highlight = highlight.concat(" ... ");
                                 }
-                                console.log(j, "th highlight: ", highlight);
                             } catch (err) {
 
                             }
