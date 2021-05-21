@@ -50,6 +50,7 @@ app.get("/api/cases/query=:query", (req, res) => {
             body: {
                 track_total_hits: true,
                 from: startIndex,
+                explain: true,
                 size: 10,
                 _source: [
                     "title",
@@ -139,8 +140,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                     case_list: response.hits.hits.map(function(i) {
                         source = i["_source"];
                         source._id = i["_id"];
-                        // source.count = i["hits"]["hits"][0]["_explanation"]["details"][0]["details"][0]["details"][0]["details"][0]["details"][2]["details"][0]["value"];
-                        // x.hits.hits[0]._explanation.details[0].details[0].details[0].details[0].details[2].details[0].value
+                        source.match_count = i["_explanation"].details[1].details[0].details[0].details[2].details[0].value;
                         var highlight = "";
                         for (var j = 0; j < i["highlight"]["judgement_text"].length; j++) {
                             highlight = highlight
