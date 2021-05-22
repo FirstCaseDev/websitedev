@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import Case from '../models/case';
 import { CaseService } from './case.service';
@@ -28,6 +28,20 @@ export class CasesComponent implements OnInit {
     private router: Router,
     private componentTitle: Title
   ) {}
+
+  judgement_options: any = [
+    { item_id: 1, item_text: 'allowed', item_name: 'Allowed' },
+    { item_id: 2, item_text: 'dismissed', item_name: 'Dismissed' },
+    { item_id: 3, item_text: 'tied / unclear', item_name: 'Tied or unclear' },
+    { item_id: 4, item_text: 'partly allowed', item_name: 'Partly Allowed' },
+    {
+      item_id: 5,
+      item_text: 'partly dismissed',
+      item_name: 'Partly Dismissed',
+    },
+  ];
+  selectedJudgements: any = [];
+  dropdownSettings: any = {};
 
   tags_colors = ['#a4c2f4ff', '#b6d7a8ff', '#f9cb9cff', '#ffe599ff'];
 
@@ -88,9 +102,7 @@ export class CasesComponent implements OnInit {
   view_citations: boolean = false;
   view_tags: boolean = false;
   view_tags_mobile: boolean = false;
-  selectedJudgements: any = [];
   selectedCourts: any = [];
-  dropdownSettings: any = {};
   rows: Case[] = [];
   cited_cases: any = [];
   cited_cases_url_unsorted: any = [];
@@ -415,14 +427,6 @@ export class CasesComponent implements OnInit {
     { data: [], label: '', stack: 'a' },
   ];
 
-  judgement_options = [
-    { item_id: 1, item_text: 'allowed' },
-    { item_id: 2, item_text: 'dismissed' },
-    { item_id: 3, item_text: 'tied / unclear' },
-    { item_id: 4, item_text: 'partly allowed' },
-    { item_id: 5, item_text: 'partly dismissed' },
-  ];
-
   court_options = [
     { item_id: 1, item_text: 'Supreme Court of India' },
     { item_id: 2, item_text: 'Delhi High Court' },
@@ -544,17 +548,43 @@ export class CasesComponent implements OnInit {
     this.chartsView = this.charts_views[0];
     this.sortBy = this.sort_options[0];
     this.court = this.courtdata[0].name;
-    this.selectedJudgements = this.judgement_options;
     this.selectedCourts = this.court_options;
+
+    this.selectedJudgements = this.judgement_options;
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
       textField: 'item_text',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 5,
+      itemsShowLimit: 2,
       allowSearchFilter: this.ShowFilter,
     };
+
+    this.selectedJudgements = this.judgement_options;
+
+    // this.dropdownSettings = {
+    //   singleSelection: false,
+    //   idField: 'item_id',
+    //   textField: 'item_text',
+    //   selectAllText: 'Select All',
+    //   unSelectAllText: 'UnSelect All',
+    //   itemsShowLimit: 5,
+    //   allowSearchFilter: this.ShowFilter,
+    // };
+
+    this.date_floor = {
+      year: 1900,
+      month: 1,
+      day: 1,
+    };
+
+    this.date_ceil = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth(),
+      day: new Date().getDay(),
+    };
+
     this.myForm = this.fb.group({
       city: [this.selectedJudgements],
     });
@@ -576,11 +606,18 @@ export class CasesComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    // console.log('onItemSelect', this.selectedJudgements);
+    console.log(item);
+    // console.log(this.selectedJudgements);
   }
-
+  OnItemDeSelect(item: any) {
+    console.log(item);
+    // console.log(this.selectedJudgements);
+  }
   onSelectAll(items: any) {
-    // console.log('onSelectAll', this.selectedJudgements);
+    // console.log(items);
+  }
+  onDeSelectAll(items: any) {
+    // console.log(items);
   }
 
   toggleShowFilter() {
@@ -753,8 +790,6 @@ export class CasesComponent implements OnInit {
     this.respondent = '';
     this.petitioner_counsel = '';
     this.respondent_counsel = '';
-    this.y_floor = 1900;
-    this.y_ceil = new Date().getFullYear();
   }
 
   reset_on_search_change() {
@@ -828,8 +863,8 @@ export class CasesComponent implements OnInit {
         this.page,
         this.limit,
         this.curr_sort,
-        this.y_floor,
-        this.y_ceil
+        1900,
+        2021
       )
       .subscribe((data: any) => {
         // console.log(data.case_list);
@@ -861,8 +896,8 @@ export class CasesComponent implements OnInit {
         this.bench,
         this.petitioner,
         this.respondent,
-        this.y_floor,
-        this.y_ceil
+        this.date_floor.year,
+        this.date_ceil.year
       )
       .subscribe((data: any) => {
         // data = data[0];
@@ -920,8 +955,8 @@ export class CasesComponent implements OnInit {
         this.bench,
         this.petitioner,
         this.respondent,
-        this.y_floor,
-        this.y_ceil
+        this.date_floor.year,
+        this.date_ceil.year
       )
       .subscribe((data: any) => {
         var arr: any = [];
@@ -953,8 +988,8 @@ export class CasesComponent implements OnInit {
         this.bench,
         this.petitioner,
         this.respondent,
-        this.y_floor,
-        this.y_ceil
+        this.date_floor.year,
+        this.date_ceil.year
       )
       .subscribe((data: any) => {
         this.petitionerChartLabels.length = 0;
@@ -1056,8 +1091,8 @@ export class CasesComponent implements OnInit {
         this.bench,
         this.petitioner,
         this.respondent,
-        this.y_floor,
-        this.y_ceil
+        this.date_floor.year,
+        this.date_ceil.year
       )
       .subscribe((data: any) => {
         this.respondentChartLabels.length = 0;
@@ -1157,8 +1192,8 @@ export class CasesComponent implements OnInit {
         this.bench,
         this.petitioner,
         this.respondent,
-        this.y_floor,
-        this.y_ceil
+        this.date_floor.year,
+        this.date_ceil.year
       )
       .subscribe((data: any) => {
         try {
@@ -1214,8 +1249,8 @@ export class CasesComponent implements OnInit {
         this.bench,
         this.petitioner,
         this.respondent,
-        this.y_floor,
-        this.y_ceil
+        this.date_floor.year,
+        this.date_ceil.year
       )
       .subscribe((data: any) => {
         try {
@@ -1274,8 +1309,8 @@ export class CasesComponent implements OnInit {
         this.bench,
         this.petitioner,
         this.respondent,
-        this.y_floor,
-        this.y_ceil
+        this.date_floor.year,
+        this.date_ceil.year
       )
       .subscribe((data: any) => {
         try {
@@ -1316,8 +1351,8 @@ export class CasesComponent implements OnInit {
         this.bench,
         this.petitioner,
         this.respondent,
-        this.y_floor,
-        this.y_ceil
+        this.date_floor.year,
+        this.date_ceil.year
       )
       .subscribe((data: any) => {
         try {
@@ -1341,8 +1376,8 @@ export class CasesComponent implements OnInit {
         this.bench,
         this.petitioner,
         this.respondent,
-        this.y_floor,
-        this.y_ceil
+        this.date_floor.year,
+        this.date_ceil.year
       )
       .subscribe((data: any) => {
         try {
@@ -1465,34 +1500,39 @@ export class CasesComponent implements OnInit {
     this.arrayOne = new Array<number>(count);
   }
 
-  y_floor: Number = 1900;
-  y_ceil: Number = new Date().getFullYear();
+  curr_date: any = new Date();
+
+  date_floor: any;
+  date_ceil: any;
+
   year_range_msg: string = '';
   year_range_selected: boolean = false;
 
-  getSliderValue1(event: any) {
-    this.y_floor = event.target.value;
-    if (this.y_floor > this.y_ceil) {
-      this.year_range_msg = 'Select valid range';
-      this.y_floor = 1900;
-      this.y_ceil = new Date().getFullYear();
-    } else {
-      this.year_range_msg = String(this.y_floor) + ' to ' + String(this.y_ceil);
-    }
-    this.year_range_selected = true;
-  }
+  // getSliderValue1(event: any) {
+  //   this.date_floor.year = event.target.value;
+  //   if (this.date_floor.year > this.date_ceil.year) {
+  //     this.year_range_msg = 'Select valid range';
+  //     this.date_floor.year = 1900;
+  //     this.date_ceil.year = new Date().getFullYear();
+  //   } else {
+  //     this.year_range_msg =
+  //       String(this.date_floor.year) + ' to ' + String(this.date_ceil.year);
+  //   }
+  //   this.year_range_selected = true;
+  // }
 
-  getSliderValue2(event: any) {
-    this.y_ceil = event.target.value;
-    if (this.y_floor > this.y_ceil) {
-      this.year_range_msg = 'Select valid range';
-      this.y_floor = 1900;
-      this.y_ceil = new Date().getFullYear();
-    } else {
-      this.year_range_msg = String(this.y_floor) + ' to ' + String(this.y_ceil);
-    }
-    this.year_range_selected = true;
-  }
+  // getSliderValue2(event: any) {
+  //   this.date_ceil.year = event.target.value;
+  //   if (this.date_floor.year > this.date_ceil.year) {
+  //     this.year_range_msg = 'Select valid range';
+  //     this.date_floor.year = 1900;
+  //     this.date_ceil.year = new Date().getFullYear();
+  //   } else {
+  //     this.year_range_msg =
+  //       String(this.date_floor.year) + ' to ' + String(this.date_ceil.year);
+  //   }
+  //   this.year_range_selected = true;
+  // }
 
   tags_list: Array<any> = [];
   add_tag: string = '';
@@ -1675,15 +1715,13 @@ export class CasesComponent implements OnInit {
     this.ngOnInit();
   }
 
-  check_curr_data() {
-    // console.log('bench: ', this.bench);
-    // console.log('petitioner: ', this.petitioner);
-    // console.log('respondent: ', this.respondent);
-    // console.log('tags_list: ', this.tags_list);
-  }
-
   service_down = false;
   service_unavailable() {
     this.service_down = true;
+  }
+
+  showDates() {
+    console.log(this.date_floor);
+    console.log(this.date_ceil);
   }
 }

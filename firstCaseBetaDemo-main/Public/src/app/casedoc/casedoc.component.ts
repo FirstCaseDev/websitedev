@@ -48,6 +48,7 @@ export class CasedocComponent implements OnInit {
     month: '',
     year: '',
     highlight: '',
+    match_count: 0,
     query_terms: [],
     doc_author: '',
     bench: '',

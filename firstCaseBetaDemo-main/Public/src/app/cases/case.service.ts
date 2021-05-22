@@ -31,7 +31,8 @@ export class CaseService {
     y_floor: Number,
     y_ceil: Number
   ) {
-    // console.log("courts",courts);
+    console.log('y_floor', typeof y_floor);
+    console.log('y_ceil', y_ceil);
     return this.webService.get(
       `cases/query=${query}?&courts=${courts}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}&sortBy=${curr_sort}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
@@ -97,8 +98,6 @@ export class CaseService {
     );
   }
 
-  
-
   getPetitionerChart(
     query: string,
     court: Array<string>,
@@ -159,8 +158,6 @@ export class CaseService {
     );
   }
 
-
-
   getCitedLaws(
     query: string,
     court: string,
@@ -176,18 +173,11 @@ export class CaseService {
     );
   }
 
-
-
   getLists() {
     return this.webService.get('lists');
   }
 
-  getCaseURL(
-    title: string,
-    index: number
-  ){
-    return this.webService.get(
-      `cases/case_table_item=${title}?index=${index}`
-    );
+  getCaseURL(title: string, index: number) {
+    return this.webService.get(`cases/case_table_item=${title}?index=${index}`);
   }
 }

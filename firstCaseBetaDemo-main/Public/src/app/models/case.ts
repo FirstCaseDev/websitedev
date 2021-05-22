@@ -16,6 +16,7 @@ export default class Case {
   year!: String;
   highlight!: String;
   query_terms!: Array<string>;
+  match_count!: Number;
   doc_author!: String;
   bench!: String;
   judgement_text!: String;

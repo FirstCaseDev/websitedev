@@ -24,6 +24,7 @@ import { SingleBlogComponent } from './single-blog/single-blog.component';
 import { PortfolioDetailsComponent } from './portfolio-details/portfolio-details.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
     HighchartsChartModule,
     BrowserAnimationsModule,
     NgxUsefulSwiperModule,
+    NgbModule,
   ],
   providers: [Title, User, UsersComponent, GoogleAnalyticsService],
   bootstrap: [AppComponent],
