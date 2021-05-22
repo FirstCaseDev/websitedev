@@ -8,6 +8,10 @@ import { Title } from '@angular/platform-browser';
 import * as copy from 'copy-to-clipboard';
 import { stringify } from '@angular/compiler/src/util';
 import { GoogleAnalyticsService } from '../google-analytics.service';
+import domtoimage from 'dom-to-image';
+// import * as FileSaver from 'file-saver';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-casedoc',
@@ -409,6 +413,48 @@ export class CasedocComponent implements OnInit {
         el.className = 'slide';
       });
     }
+  }
+
+  downloadAsPDF(){
+    console.log("in funct");
+//     const elementToPrint = document.getElementById('slides-container')!; //The html element to become a pdf
+//     const pdf = new jsPDF('p', 'pt', 'a4');
+//     pdf.html(elementToPrint,  {
+//       callback: (pdf)=>{
+// pdf.output("dataurlnewwindow")
+//       }
+        
+//     });
+console.log(document.getElementById('slides-container')!);
+// domtoimage.toPng(document.getElementById('slides-container')!)
+//     .then(function (blob: any) {
+//         var pdf = new jsPDF('l', 'pt', 'a4');
+//         pdf.setFontSize(20);
+//         var width = pdf.internal.pageSize.getWidth();
+//         var height = pdf.internal.pageSize.getHeight();
+//         var y = 500;
+//         var options = {
+//           pagesplit: true
+//      };
+//         pdf.addImage(blob, 'PNG', 15, 15, width, height);
+//         pdf.save(`file.pdf`);
+//     });
+var data = document.getElementById('slides-container')!;
+html2canvas(data).then(canvas => {
+// Few necessary setting options
+
+// var imgWidth = 208;
+// var pageHeight = 295;
+// var imgHeight = canvas.height * imgWidth / canvas.width;
+// var heightLeft = imgHeight;
+ 
+// const contentDataURL = canvas.toDataURL('image/png');
+// let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+// var position = 0;
+// pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+// pdf.save('MYPdf.pdf'); // Generated PDF
+window.print()
+});
   }
 
   right_menu_btn_visible = true;
