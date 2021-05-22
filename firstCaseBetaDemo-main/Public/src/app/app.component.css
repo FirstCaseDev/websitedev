@@ -608,6 +608,15 @@ section {
   display: inline-block;
   line-height: 1;
 }
+.subscribe {
+  display: flex;
+}
+
+@media (max-width: 600px) {
+  .subscribe {
+    display: block;
+  }
+}
 
 .footer .footer-top .footer-links ul a:hover {
   color: #012970;
