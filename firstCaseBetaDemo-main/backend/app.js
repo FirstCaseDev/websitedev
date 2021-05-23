@@ -918,3 +918,47 @@ app.get("/api/cases/case_table_item=:title_text", (req, res) => {
             console.log(null);
         });
 });
+
+app.get("/api/total_count", (req, res) => {
+    esClient
+        .search({
+            index: "indian_court_data.cases",
+            body: {
+                size: 0,
+                track_total_hits: true,
+                query: {
+                    match_all: {}
+                }
+            },
+        })
+        .then((response) => {
+            res.json({
+                total: response.hits.total.value,
+            });
+        })
+        .catch((error) => console.log(error));
+});
+
+app.get("/api/court_count", (req, res) => {
+    esClient
+        .search({
+            index: "indian_court_data.cases",
+            body: {
+                size: 0,
+                aggs: {
+                    court_count: {
+                        cardinality: {
+                            field: "source.keyword",
+                            precision_threshold: 10000,
+                        }
+                    }
+                }
+            },
+        })
+        .then((response) => {
+            res.json({
+                total: response.aggregations.court_count.value,
+            });
+        })
+        .catch((error) => console.log(error));
+});

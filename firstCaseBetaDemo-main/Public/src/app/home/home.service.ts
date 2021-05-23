@@ -15,4 +15,12 @@ export class HomeService {
   getLists() {
     return this.webService.get('lists');
   }
+
+  getTotalCount() {
+    return this.webService.get(`total_count`);
+  }
+  
+  getCourtCount() {
+    return this.webService.get('court_count')
+  }
 }

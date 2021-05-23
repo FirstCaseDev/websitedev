@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SwiperOptions } from 'swiper';
+import {interval} from 'rxjs';
+import { Subscription } from 'rxjs';
+import { HomeService } from './home.service';
+
 
 @Component({
   selector: 'app-home',
@@ -7,7 +11,22 @@ import { SwiperOptions } from 'swiper';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  data_subscription: Subscription;
+    constructor(private homeService: HomeService) {
+    this.data_subscription= interval(500).subscribe((x =>{
+      this.get_counts();
+  }));
+}
+get_counts(){
+this.homeService.getTotalCount().subscribe((data:any)=>{
+this.total_counter = data.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+});
+this.homeService.getCourtCount().subscribe((data:any)=>{
+  this.court_counter = data.total;
+  });
+}
+  total_counter: any = 0;
+  court_counter: any = 0;
   testimonials: any[] = [
     {
       name: 'Saul Goodman',
@@ -69,9 +88,11 @@ export class HomeComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    document.getElementById('redirect')?.click();
+    // document.getElementById('redirect')?.click();
+    this.get_counts();
   }
 
+ 
   config: SwiperOptions = {
     navigation: {
       nextEl: '.swiper-button-next',
