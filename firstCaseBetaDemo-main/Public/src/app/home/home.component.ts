@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SwiperOptions } from 'swiper';
-import {interval} from 'rxjs';
+import { interval } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { HomeService } from './home.service';
-
 
 @Component({
   selector: 'app-home',
@@ -12,19 +11,21 @@ import { HomeService } from './home.service';
 })
 export class HomeComponent implements OnInit {
   data_subscription: Subscription;
-    constructor(private homeService: HomeService) {
-    this.data_subscription= interval(500).subscribe((x =>{
+  constructor(private homeService: HomeService) {
+    this.data_subscription = interval(500).subscribe((x) => {
       this.get_counts();
-  }));
-}
-get_counts(){
-this.homeService.getTotalCount().subscribe((data:any)=>{
-this.total_counter = data.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
-});
-this.homeService.getCourtCount().subscribe((data:any)=>{
-  this.court_counter = data.total;
-  });
-}
+    });
+  }
+  get_counts() {
+    this.homeService.getTotalCount().subscribe((data: any) => {
+      this.total_counter = data.total
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    });
+    this.homeService.getCourtCount().subscribe((data: any) => {
+      this.court_counter = data.total;
+    });
+  }
   total_counter: any = 0;
   court_counter: any = 0;
   testimonials: any[] = [
@@ -92,14 +93,13 @@ this.homeService.getCourtCount().subscribe((data:any)=>{
     this.get_counts();
   }
 
- 
   config: SwiperOptions = {
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     },
     spaceBetween: 100,
-    slidesPerView: 1,
+    slidesPerView: 3,
     observer: false, // Set to to true to enable automatic update calls.
     // spaceBetween: 30,              // Space in pixels between the Swiper items (Default: 0).
     // slidesPerView: 2,             // Number of the items per view or 'auto' (Default: 1).

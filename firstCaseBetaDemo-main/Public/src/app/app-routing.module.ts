@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'cases', component: CasesComponent },
   { path: 'users', component: UsersComponent },
-  { path: 'team', component: TeamComponent },
+  { path: 'about-us', component: TeamComponent },
   { path: 'casedoc/:caseid', component: CasedocComponent },
   { path: 'my', component: UserProfileComponent },
   { path: 'blog', component: BlogComponent },
