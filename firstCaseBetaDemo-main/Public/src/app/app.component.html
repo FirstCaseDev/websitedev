@@ -1,187 +1,207 @@
 <body>
-    <!-- ======= Header ======= -->
-    <header id="header" class="header fixed-top" (scroll)="onWindowScroll()">
-        <div class="
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top" (scroll)="onWindowScroll()">
+    <div
+      class="
         container-fluid container-xl
         d-flex
         align-items-center
         justify-content-between
-      ">
-            <a href="/home" class="logo d-flex align-items-center">
-                <img src="../assets/img/logo.svg" alt="" />
-                <div class="logo-grid" style="display: inline; height:100%; margin:0; ">
-                    <span class="First" style="font-size: large; font-family: 'Caudex', serif; font-weight:700; ">FIRST</span>
-                    <span class="Case" style="font-size: large; font-family: 'Caudex', serif; font-weight:400; ">CASE</span>
-                </div>
-            </a>
+      "
+    >
+      <a href="/home" class="logo d-flex align-items-center">
+        <img src="../assets/img/logo.svg" alt="" />
+        <div class="logo-grid" style="display: inline; height: 100%; margin: 0">
+          <span
+            class="First"
+            style="
+              font-size: large;
+              font-family: 'Caudex', serif;
+              font-weight: 700;
+            "
+            >FIRST</span
+          >
+          <span
+            class="Case"
+            style="
+              font-size: large;
+              font-family: 'Caudex', serif;
+              font-weight: 400;
+            "
+            >CASE</span
+          >
+        </div>
+      </a>
 
-            <nav id="navbar" class="navbar">
-                <ul>
-                    <li>
-                        <a id="home-top" class="nav-link scrollto active" href="/home#hero">Home</a
-            >
-          </li>
+      <nav id="navbar" class="navbar">
+        <ul>
           <li>
-            <a id="about-top" class="nav-link scrollto" href="/home#about"
-              >About</a
+            <a id="home-top" class="nav-link scrollto active" href="/home#hero"
+              >Home</a
             >
           </li>
-          <li>
-            <a id="services-top" class="nav-link scrollto" href="/home#services"
-              >Services</a
-            >
-          </li>
-          <!-- <li>
-            <a class="nav-link scrollto" href="/home#portfolio">Portfolio</a>
-                    </li> -->
-                    <li><a class="nav-link scrollto" href="/team">Team</a></li>
-                    <li><a href="/blog">Blog</a></li>
-                    <!-- <li class="dropdown">
+          <li class="dropdown">
             <a href="#"
-              ><span>Drop Down</span> <i class="bi bi-chevron-down"></i
+              ><span>Services</span> <i class="bi bi-chevron-down"></i
             ></a>
             <ul>
-              <li><a href="#">Drop Down 1</a></li>
+              <li><a href="#">Intelligent Legal Search Assistant</a></li>
               <li class="dropdown">
                 <a href="#"
-                  ><span>Deep Drop Down</span>
+                  ><span>Data Management System</span>
                   <i class="bi bi-chevron-right"></i
                 ></a>
                 <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
+                  <li><a href="#">Coming Soon</a></li>
+                  <!-- <li><a href="#">Deep Drop Down 2</a></li>
                   <li><a href="#">Deep Drop Down 3</a></li>
                   <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
+                  <li><a href="#">Deep Drop Down 5</a></li> -->
                 </ul>
               </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
+              <!-- <li><a href="#">Drop Down 3</a></li>
+              <li><a href="#">Drop Down 4</a></li> -->
             </ul>
-          </li> -->
-                    <li><a class="nav-link scrollto" href="/home#contact">Contact</a></li>
-                    <li>
-                        <a class="getstarted scrollto" href="/cases">Test Demo</a>
-                    </li>
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav>
-            <!-- .navbar -->
+          </li>
+          <li>
+            <a id="about-top" class="nav-link scrollto" href="/about-us"
+              >About Us</a
+            >
+          </li>
+          <li><a href="/blog">Blog</a></li>
+
+          <li>
+            <a class="nav-link scrollto" href="/about-us#contact"
+              >Work With Us</a
+            >
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+      <!-- .navbar -->
+    </div>
+  </header>
+  <!-- End Header -->
+
+  <router-outlet></router-outlet>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="footer-newsletter">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-12 text-center">
+            <h4>We will keep you updated!</h4>
+          </div>
+          <div class="col-lg-6">
+            <form action="" method="post">
+              <input type="email" name="email" />
+              <input type="submit" value="Subscribe" />
+            </form>
+          </div>
         </div>
-    </header>
-    <!-- End Header -->
+        <br />
 
-    <router-outlet></router-outlet>
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer">
-        <div class="footer-newsletter">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-12 text-center">
-                        <h4>We will keep you updated!</h4>
-                    </div>
-                    <div class="col-lg-6">
-                        <form action="" method="post">
-                            <input type="email" name="email" />
-                            <input type="submit" value="Subscribe" />
-                        </form>
-                    </div>
+        <div class="footer-top">
+          <div class="container">
+            <div class="row gy-4">
+              <div class="col-lg-5 col-md-12 footer-info">
+                <a href="/home" class="logo d-flex align-items-center">
+                  <img src="../assets/img/logo.svg" alt="" />
+                  <span style="font-size: medium">FIRSTCASE</span>
+                </a>
+                <p style="text-align: justify">
+                  Disclaimer: The content of this website are for informational
+                  purposes only and for the reader’s personal non-commercial
+                  use. The views expressed are not the personal view of
+                  FirstCase and do not constitute legal advice. The contents are
+                  intended, but not guaranteed, to be correct, complete, or up
+                  to date. FirstCase disclaims all liability to any person for
+                  any loss or damage caused by errors or omissions, whether
+                  arising from negligence, accident or any other cause.
+                </p>
+                <div class="social-links mt-3">
+                  <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                  <a href="#" class="facebook"
+                    ><i class="bi bi-facebook"></i
+                  ></a>
+                  <a href="#" class="instagram"
+                    ><i class="bi bi-instagram bx bxl-instagram"></i
+                  ></a>
+                  <a href="#" class="linkedin"
+                    ><i class="bi bi-linkedin bx bxl-linkedin"></i
+                  ></a>
                 </div>
+              </div>
 
-                <div class="footer-top">
-                    <div class="container">
-                        <div class="row gy-4">
-                            <div class="col-lg-5 col-md-12 footer-info">
-                                <a href="/home" class="logo d-flex align-items-center">
-                                    <img src="../assets/img/logo.svg" alt="" />
-                                    <span style="font-size: medium">FIRSTCASE</span>
-                                </a>
-                                <p style="text-align: justify">
-                                    Disclaimer: The content of this website are for informational purposes only and for the reader’s personal non-commercial use. The views expressed are not the personal view of FirstCase and do not constitute legal advice. The contents are intended, but
-                                    not guaranteed, to be correct, complete, or up to date. FirstCase disclaims all liability to any person for any loss or damage caused by errors or omissions, whether arising from negligence, accident or any other cause.
-                                </p>
-                                <div class="social-links mt-3">
-                                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                                    <a href="#" class="instagram"><i class="bi bi-instagram bx bxl-instagram"></i
-              ></a>
-                                    <a href="#" class="linkedin"><i class="bi bi-linkedin bx bxl-linkedin"></i
-              ></a>
-                                </div>
-                            </div>
+              <div class="col-lg-2 col-6 footer-links">
+                <h4>Useful Links</h4>
+                <ul>
+                  <li>
+                    <i class="bi bi-chevron-right"></i>
+                    <a href="/home#hero">Home</a>
+                  </li>
+                  <li>
+                    <i class="bi bi-chevron-right"></i>
+                    <a href="/home#about">About us</a>
+                  </li>
+                  <li>
+                    <i class="bi bi-chevron-right"></i>
+                    <a href="/home#services">Services</a>
+                  </li>
+                  <li>
+                    <i class="bi bi-chevron-right"></i>
+                    <a href="#">Terms of service</a>
+                  </li>
+                  <li>
+                    <i class="bi bi-chevron-right"></i>
+                    <a href="#">Privacy policy</a>
+                  </li>
+                </ul>
+              </div>
 
-                            <div class="col-lg-2 col-6 footer-links">
-                                <h4>Useful Links</h4>
-                                <ul>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="/home#hero">Home</a>
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="/home#about">About us</a>
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="/home#services">Services</a>
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="#">Terms of service</a>
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="#">Privacy policy</a>
-                                    </li>
-                                </ul>
-                            </div>
+              <div class="col-lg-2 col-6 footer-links">
+                <h4>Our Services</h4>
+                <ul>
+                  <li>
+                    <i class="bi bi-chevron-right"></i>
+                    <a href="#">I. L. S. A.</a>
+                  </li>
+                  <li>
+                    <i class="bi bi-chevron-right"></i>
+                    <a href="#">D. M. S.</a>
+                  </li>
+                </ul>
+              </div>
 
-                            <div class="col-lg-2 col-6 footer-links">
-                                <h4>Our Services</h4>
-                                <ul>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i> <a href="#">Service1</a>
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="#">Service2</a>
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="#">Service3</a>
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i> <a href="#">Service4</a>
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="#">Service5</a>
-                                    </li>
-                                </ul>
-                            </div>
+              <div
+                class="
+                  col-lg-3 col-md-12
+                  footer-contact
+                  text-center text-md-start
+                "
+              >
+                <h4>Contact Us</h4>
+                <p>
+                  A108 Adam Street <br />
+                  New York, NY 535022<br />
+                  United States <br /><br />
+                  <strong>Phone:</strong> +1 5589 55488 55<br />
+                  <strong>Email:</strong> info@example.com<br />
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                            <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-                                <h4>Contact Us</h4>
-                                <p>
-                                    A108 Adam Street <br /> New York, NY 535022<br /> United States <br /><br />
-                                    <strong>Phone:</strong> +1 5589 55488 55<br />
-                                    <strong>Email:</strong> info@example.com<br />
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container">
-                    <div class="copyright">
-                        &copy; Copyright <strong><span>FirstCase</span></strong
-        >. All Rights Reserved
+        <div class="container">
+          <div class="copyright">
+            &copy; Copyright <strong><span>FirstCase</span></strong
+            >. All Rights Reserved
+          </div>
+        </div>
       </div>
     </div>
-            </div>
-            </div>
   </footer>
   <!-- End Footer -->
 </body>
