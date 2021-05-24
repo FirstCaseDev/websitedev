@@ -286,12 +286,8 @@ section {
 }
 
 .navbar .getstarted:hover {
-<<<<<<< Updated upstream
-    background: #fff;
-=======
-  background: #5969f3;
-  color: white !important;
->>>>>>> Stashed changes
+    background: #5969f3;
+    color: white !important;
 }
 
 .navbar .dropdown ul {
@@ -632,14 +628,15 @@ section {
     display: inline-block;
     line-height: 1;
 }
+
 .subscribe {
-  display: flex;
+    display: flex;
 }
 
 @media (max-width: 600px) {
-  .subscribe {
-    display: block;
-  }
+    .subscribe {
+        display: block;
+    }
 }
 
 .footer .footer-top .footer-links ul a:hover {
