@@ -25,6 +25,8 @@ import { PortfolioDetailsComponent } from './portfolio-details/portfolio-details
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     NgxUsefulSwiperModule,
     NgbModule,
+    MatChipsModule,
+    MatIconModule,
   ],
   providers: [Title, User, UsersComponent, GoogleAnalyticsService],
   bootstrap: [AppComponent],

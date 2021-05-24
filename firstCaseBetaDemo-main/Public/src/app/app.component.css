@@ -286,7 +286,12 @@ section {
 }
 
 .navbar .getstarted:hover {
+<<<<<<< Updated upstream
     background: #fff;
+=======
+  background: #5969f3;
+  color: white !important;
+>>>>>>> Stashed changes
 }
 
 .navbar .dropdown ul {

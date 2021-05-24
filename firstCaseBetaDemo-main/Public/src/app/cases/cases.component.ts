@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import Case from '../models/case';
 import { CaseService } from './case.service';
@@ -9,6 +9,10 @@ import HC_heatmap from 'highcharts/modules/heatmap';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { GoogleAnalyticsService } from '../google-analytics.service';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { SwiperOptions } from 'swiper';
+
 // import { title } from 'process';
 //import { Console } from 'console';
 
@@ -19,7 +23,10 @@ HC_heatmap(Highcharts);
 @Component({
   selector: 'app-cases',
   templateUrl: './cases.component.html',
-  styleUrls: ['./cases.component.css'],
+  styleUrls: [
+    './cases.component.css',
+    '../../assets/css/bootstrap/bootstrap.css',
+  ],
 })
 export class CasesComponent implements OnInit {
   constructor(
@@ -28,6 +35,101 @@ export class CasesComponent implements OnInit {
     private router: Router,
     private componentTitle: Title
   ) {}
+
+  show_graphs_warning = false;
+
+  @HostListener('window:resize') updateOrientationState() {
+    if (window.innerWidth < 991) {
+      if (window.innerHeight > window.innerWidth) {
+        this.show_graphs_warning = true;
+      } else {
+        this.show_graphs_warning = false;
+      }
+    } else {
+      this.show_graphs_warning = false;
+    }
+  }
+
+  config: SwiperOptions = {
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    observer: false, // Set to to true to enable automatic update calls.
+    spaceBetween: 100, // Space in pixels between the Swiper items (Default: 0).
+    slidesPerView: 1, // Number of the items per view or 'auto' (Default: 1).
+    direction: 'horizontal', // Direction of the Swiper (Default: 'horizontal').
+    threshold: 10, // Distance needed for the swipe action (Default: 0).
+    centeredSlides: false,
+  };
+
+  chip_visible = true;
+  chip_selectable = true;
+  chip_removable = true;
+
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  tags_list: string[] = [];
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value.toString();
+    if ((value || '').trim()) {
+      if (!this.tags_list.includes(value.trim())) {
+        this.tags_list.push(value);
+
+        setTimeout(() => {
+          var array = document.getElementsByTagName('mat-chip');
+          var last_tag = array.item(array.length - 1);
+          switch (this.tagType.id) {
+            case 'judgeName':
+              last_tag?.classList.add('judgeName');
+              this.bench = this.bench.concat(value, ',');
+              console.log(this.bench);
+              console.log(last_tag);
+              break;
+
+            case 'petitionerName':
+              last_tag?.classList.add('petitionerName');
+              this.petitioner = this.petitioner.concat(value, ',');
+              console.log(this.petitioner);
+              console.log(last_tag);
+              break;
+
+            case 'petitionerCounsel':
+              last_tag?.classList.add('petitionerCounsel');
+              console.log(last_tag);
+              break;
+
+            case 'respondentName':
+              last_tag?.classList.add('respondentName');
+              this.respondent = this.respondent.concat(value, ',');
+              console.log(this.respondent);
+              console.log(last_tag);
+              break;
+
+            case 'respondentCounsel':
+              last_tag?.classList.add('respondentCounsel');
+              console.log(last_tag);
+              break;
+
+            default:
+              break;
+          }
+        }, 500);
+      }
+    }
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(tag: string): void {
+    const index = this.tags_list.indexOf(tag);
+    if (index >= 0) {
+      this.tags_list.splice(index, 1);
+    }
+  }
 
   judgement_options: any = [
     { item_id: 1, item_text: 'allowed', item_name: 'Allowed' },
@@ -90,7 +192,7 @@ export class CasesComponent implements OnInit {
   rvb_data: any = [];
   myForm: any;
   courtForm: any;
-  selectedCountry: any = 'India';
+  selectedCountry: any;
   disabled = false;
   ShowFilter = false;
   limitSelection = false;
@@ -125,20 +227,7 @@ export class CasesComponent implements OnInit {
     'partly allowed',
     'partly dismissed',
   ];
-  courts: Array<string> = [
-    'Supreme Court of India',
-    'Delhi High Court',
-    'Bombay High Court',
-    'Madras High Court',
-    'Andhra High Court',
-    'Calcutta High Court',
-    'Allahabad High Court',
-    'Orissa High Court',
-    'Patna High Court',
-    'National Company Law Appellate Tribunal',
-    'Appellate Tribunal For Electricity',
-    'Authority Tribunal',
-  ];
+  courts: any = [];
   bench: string = '';
   petitioner: string = '';
   respondent: string = '';
@@ -327,11 +416,15 @@ export class CasesComponent implements OnInit {
             display: true,
             labelString: 'Number of cases',
           },
+          ticks: {
+            fontSize: 10,
+          },
         },
       ],
       yAxes: [
         {
           ticks: {
+            fontSize: 10,
             callback: function (value: any) {
               if (value.length > 20) {
                 return value.substr(0, 20) + '...'; //truncate
@@ -383,11 +476,15 @@ export class CasesComponent implements OnInit {
             display: true,
             labelString: 'Number of cases',
           },
+          ticks: {
+            fontSize: 10,
+          },
         },
       ],
       yAxes: [
         {
           ticks: {
+            fontSize: 10,
             callback: function (value: any) {
               if (value.length > 20) {
                 return value.substr(0, 20) + '...'; //truncate
@@ -428,18 +525,66 @@ export class CasesComponent implements OnInit {
   ];
 
   court_options = [
-    { item_id: 1, item_text: 'Supreme Court of India' },
-    { item_id: 2, item_text: 'Delhi High Court' },
-    { item_id: 3, item_text: 'Bombay High Court' },
-    { item_id: 4, item_text: 'Madras High Court' },
-    { item_id: 5, item_text: 'Andhra High Court' },
-    { item_id: 6, item_text: 'Calcutta High Court' },
-    { item_id: 7, item_text: 'Allahabad High Court' },
-    { item_id: 8, item_text: 'Orissa High Court' },
-    { item_id: 9, item_text: 'Patna High Court' },
-    { item_id: 10, item_text: 'National Company Law Appellate Tribunal' },
-    { item_id: 11, item_text: 'Appellate Tribunal For Electricity' },
-    { item_id: 12, item_text: 'Authority Tribunal' },
+    {
+      item_id: 1,
+      item_text: 'Supreme Court of India',
+      item_name: 'Supreme Court of India',
+    },
+    {
+      item_id: 2,
+      item_text: 'Delhi High Court',
+      item_name: 'Delhi High Court',
+    },
+    {
+      item_id: 3,
+      item_text: 'Bombay High Court',
+      item_name: 'Bombay High Court',
+    },
+    {
+      item_id: 4,
+      item_text: 'Madras High Court',
+      item_name: 'Madras High Court',
+    },
+    {
+      item_id: 5,
+      item_text: 'Andhra High Court',
+      item_name: 'Andhra High Court',
+    },
+    {
+      item_id: 6,
+      item_text: 'Calcutta High Court',
+      item_name: 'Calcutta High Court',
+    },
+    {
+      item_id: 7,
+      item_text: 'Allahabad High Court',
+      item_name: 'Allahabad High Court',
+    },
+    {
+      item_id: 8,
+      item_text: 'Orissa High Court',
+      item_name: 'Orissa High Court',
+    },
+    {
+      item_id: 9,
+      item_text: 'Patna High Court',
+      item_name: 'Patna High Court',
+    },
+    {
+      item_id: 10,
+      item_text: 'National Company Law Appellate Tribunal',
+      item_name: 'National Company Law Appellate Tribunal',
+    },
+    {
+      item_id: 11,
+      item_text: 'Appellate Tribunal For Electricity',
+      item_name: 'Appellate Tribunal For Electricity',
+    },
+    {
+      item_id: 12,
+      item_text: 'Authority Tribunal',
+      item_name: 'Authority Tribunal',
+    },
   ];
 
   courtdata: any = [
@@ -494,6 +639,13 @@ export class CasesComponent implements OnInit {
     // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
 
+  country_options: any = [
+    { id: 'india', name: 'India' },
+    { id: 'singapore', name: 'Singapore' },
+    // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
+    // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
+  ];
+
   linechartOptions: ChartOptions = {
     title: {
       text: 'Judgement trend over years',
@@ -507,6 +659,9 @@ export class CasesComponent implements OnInit {
             display: true,
             labelString: 'Year',
           },
+          ticks: {
+            fontSize: 10,
+          },
         },
       ],
       yAxes: [
@@ -516,6 +671,9 @@ export class CasesComponent implements OnInit {
             labelString: 'Number of cases',
           },
           // stacked: true
+          ticks: {
+            fontSize: 10,
+          },
         },
       ],
     },
@@ -537,6 +695,8 @@ export class CasesComponent implements OnInit {
   respondentDatalabels: any = [];
 
   ngOnInit() {
+    this.selectedCountry = this.country_options[0];
+    this.updateOrientationState();
     if (localStorage.device_type == 'mobile') this.isMobile = true;
     else this.isMobile = false;
     // if (!localStorage.getItem('token_exp')) this.router.navigate(['/users'])
@@ -554,7 +714,7 @@ export class CasesComponent implements OnInit {
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
-      textField: 'item_text',
+      textField: 'item_name',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 2,
@@ -642,7 +802,18 @@ export class CasesComponent implements OnInit {
   selected() {
     this.court = this.courtlevel.name;
     this.curr_sort = this.sortBy.id;
-    this.first_search();
+    switch (this.selectedCountry.id) {
+      case 'india':
+        this.select_in();
+        break;
+
+      case 'singapore':
+        this.select_sg();
+        break;
+
+      default:
+        break;
+    }
   }
 
   selected_tag() {
@@ -702,6 +873,7 @@ export class CasesComponent implements OnInit {
     this.view_search = false;
     this.view_citations = false;
     this.view_analytics = true;
+    console.log(this.searched);
     let element = document.getElementById('analytics_tab');
     element!.className = 'tab active';
     let element2 = document.getElementById('search_tab');
@@ -852,6 +1024,7 @@ export class CasesComponent implements OnInit {
     this.selectedCourts.map((item: any) => {
       this.courts.push(item.item_text);
     });
+
     this.caseService
       .getSearchedCases(
         this.query,
@@ -863,15 +1036,14 @@ export class CasesComponent implements OnInit {
         this.page,
         this.limit,
         this.curr_sort,
-        1900,
-        2021
+        this.date_floor.year,
+        this.date_ceil.year
       )
       .subscribe((data: any) => {
         // console.log(data.case_list);
         if (data.success) {
           this.rows = data.case_list;
           this.results_time = data.result_time;
-          console.log(this.rows[1].highlight.length);
           this.results_count = data.result_count;
         } else {
           alert(data.msg);
@@ -1534,115 +1706,115 @@ export class CasesComponent implements OnInit {
   //   this.year_range_selected = true;
   // }
 
-  tags_list: Array<any> = [];
   add_tag: string = '';
   no_of_tags = 0;
 
-  addTag() {
-    var object = {
-      value: this.add_tag,
-      type: this.tagType.subtitle,
-    };
-    this.view_tags = true;
-    GoogleAnalyticsService.eventEmitter(
-      'add_tag',
-      this.tagType.subtitle,
-      'click',
-      this.add_tag,
-      this.results_count
-    );
+  // addTag() {
+  //   var object = {
+  //     value: this.add_tag,
+  //     type: this.tagType.subtitle,
+  //   };
+  //   this.view_tags = true;
+  //   GoogleAnalyticsService.eventEmitter(
+  //     'add_tag',
+  //     this.tagType.subtitle,
+  //     'click',
+  //     this.add_tag,
+  //     this.results_count
+  //   );
 
-    if (!this.tags_list.includes(object)) {
-      this.tags_list.push(object);
-      this.no_of_tags = this.no_of_tags + 1;
-    }
-    setTimeout(() => {
-      this.IdTags();
-    }, 500);
-    setTimeout(() => {
-      var elem = document.getElementsByClassName('tags-list-item');
-      // console.log(elem);
-      var idx = elem.length - 1;
-      switch (this.tagType.id) {
-        case 'judgeName': {
-          elem[idx].className = 'tags-list-item tag-judgeName';
-          var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.bench == '')
-            this.bench = elem_h3[0]
-              .textContent!.toLowerCase()
-              .replace(/\s/g, '');
-          else
-            this.bench = this.bench
-              .concat('|')
-              .concat(elem_h3[0].textContent!)
-              .toLowerCase()
-              .replace(/\s/g, '');
-          break;
-        }
-        case 'petitionerName': {
-          elem[idx].className = 'tags-list-item tag-petitionerName';
-          var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.petitioner == '')
-            this.petitioner = elem_h3[0]
-              .textContent!.toLowerCase()
-              .replace(/\s/g, '');
-          else
-            this.petitioner = this.petitioner
-              .concat('|')
-              .concat(elem_h3[0].textContent!)
-              .toLowerCase()
-              .replace(/\s/g, '');
-          break;
-        }
-        case 'petitionerCounsel': {
-          elem[idx].className = 'tags-list-item tag-petitionerCounsel';
-          break;
-        }
-        case 'respondentName': {
-          elem[idx].className = 'tags-list-item tag-respondentName';
-          var elem_h3 = elem[idx].getElementsByTagName('h3');
-          if (this.respondent == '')
-            this.respondent = elem_h3[0]
-              .textContent!.toLowerCase()
-              .replace(/\s/g, '');
-          else
-            this.respondent = this.respondent
-              .concat('|')
-              .concat(elem_h3[0].textContent!)
-              .toLowerCase()
-              .replace(/\s/g, '');
-          break;
-        }
-        case 'respondentCounsel': {
-          elem[idx].className = 'tags-list-item tag-respondentCounsel';
-          break;
-        }
-      }
-      console.log('bench: ', this.bench);
-      console.log('petitioner: ', this.petitioner);
-      console.log('respondent: ', this.respondent);
-    }, 500);
-  }
+  //   if (this.tags_list.indexOf(object) == -1) {
+  //     this.tags_list.push(object);
+  //     this.no_of_tags = this.no_of_tags + 1;
+  //     this.IdTags();
+  //   }
+  //   // setTimeout(() => {
+  //   //   this.IdTags();
+  //   // }, 500);
+  //   setTimeout(() => {
+  //     var elem = document.getElementsByClassName('tags-list-item');
+  //     // console.log(elem);
+  //     var idx = elem.length - 1;
+  //     switch (this.tagType.id) {
+  //       case 'judgeName': {
+  //         elem[idx].className = 'tags-list-item tag-judgeName';
+  //         var elem_h3 = elem[idx].getElementsByTagName('h3');
+  //         if (this.bench == '')
+  //           this.bench = elem_h3[0]
+  //             .textContent!.toLowerCase()
+  //             .replace(/\s/g, '');
+  //         else
+  //           this.bench = this.bench
+  //             .concat('|')
+  //             .concat(elem_h3[0].textContent!)
+  //             .toLowerCase()
+  //             .replace(/\s/g, '');
+  //         break;
+  //       }
+  //       case 'petitionerName': {
+  //         elem[idx].className = 'tags-list-item tag-petitionerName';
+  //         var elem_h3 = elem[idx].getElementsByTagName('h3');
+  //         if (this.petitioner == '')
+  //           this.petitioner = elem_h3[0]
+  //             .textContent!.toLowerCase()
+  //             .replace(/\s/g, '');
+  //         else
+  //           this.petitioner = this.petitioner
+  //             .concat('|')
+  //             .concat(elem_h3[0].textContent!)
+  //             .toLowerCase()
+  //             .replace(/\s/g, '');
+  //         break;
+  //       }
+  //       case 'petitionerCounsel': {
+  //         elem[idx].className = 'tags-list-item tag-petitionerCounsel';
+  //         break;
+  //       }
+  //       case 'respondentName': {
+  //         elem[idx].className = 'tags-list-item tag-respondentName';
+  //         var elem_h3 = elem[idx].getElementsByTagName('h3');
+  //         if (this.respondent == '')
+  //           this.respondent = elem_h3[0]
+  //             .textContent!.toLowerCase()
+  //             .replace(/\s/g, '');
+  //         else
+  //           this.respondent = this.respondent
+  //             .concat('|')
+  //             .concat(elem_h3[0].textContent!)
+  //             .toLowerCase()
+  //             .replace(/\s/g, '');
+  //         break;
+  //       }
+  //       case 'respondentCounsel': {
+  //         elem[idx].className = 'tags-list-item tag-respondentCounsel';
+  //         break;
+  //       }
+  //     }
+  //     console.log('bench: ', this.bench);
+  //     console.log('petitioner: ', this.petitioner);
+  //     console.log('respondent: ', this.respondent);
+  //   }, 500);
+  // }
 
-  IdTags() {
-    var elem = document.getElementsByClassName('tags-list-item');
-    for (var i = 0; i < elem.length; i++) {
-      var child_img = elem[i].getElementsByTagName('img');
-      child_img[0].setAttribute('id', 'remtag' + String(i));
-    }
-  }
+  // IdTags() {
+  //   var elem = document.getElementsByClassName('tags-list-item');
+  //   for (var i = 0; i < elem.length; i++) {
+  //     var child_img = elem[i].getElementsByTagName('img');
+  //     child_img[0].setAttribute('id', 'remtag' + String(i));
+  //   }
+  // }
 
-  removeTag(event: any) {
-    var id = event.target.attributes.id.value;
-    var idx = Number(id.charAt(id.length - 1));
-    this.tags_list.splice(idx, 1);
-    if (this.tags_list.length == 0) this.view_tags = false;
-    else this.IdTags();
-    this.no_of_tags = this.no_of_tags - 1;
-  }
+  // removeTag(event: any) {
+  //   var id = event.target.attributes.id.value;
+  //   var idx = Number(id.charAt(id.length - 1));
+  //   this.tags_list.splice(idx, 1);
+  //   if (this.tags_list.length == 0) this.view_tags = false;
+  //   else this.IdTags();
+  //   this.no_of_tags = this.no_of_tags - 1;
+  // }
 
   select_in() {
-    this.selectedCountry = 'India';
+    this.selectedCountry = this.country_options[0];
     this.courts = [
       'Supreme Court of India',
       'Delhi High Court',
@@ -1659,18 +1831,66 @@ export class CasesComponent implements OnInit {
     ];
 
     this.court_options = [
-      { item_id: 1, item_text: 'Supreme Court of India' },
-      { item_id: 2, item_text: 'Delhi High Court' },
-      { item_id: 3, item_text: 'Bombay High Court' },
-      { item_id: 4, item_text: 'Madras High Court' },
-      { item_id: 5, item_text: 'Andhra High Court' },
-      { item_id: 6, item_text: 'Calcutta High Court' },
-      { item_id: 7, item_text: 'Allahabad High Court' },
-      { item_id: 8, item_text: 'Orissa High Court' },
-      { item_id: 9, item_text: 'Patna High Court' },
-      { item_id: 10, item_text: 'National Company Law Appellate Tribunal' },
-      { item_id: 11, item_text: 'Appellate Tribunal For Electricity' },
-      { item_id: 12, item_text: 'Authority Tribunal' },
+      {
+        item_id: 1,
+        item_text: 'Supreme Court of India',
+        item_name: 'Supreme Court of India',
+      },
+      {
+        item_id: 2,
+        item_text: 'Delhi High Court',
+        item_name: 'Delhi High Court',
+      },
+      {
+        item_id: 3,
+        item_text: 'Bombay High Court',
+        item_name: 'Bombay High Court',
+      },
+      {
+        item_id: 4,
+        item_text: 'Madras High Court',
+        item_name: 'Madras High Court',
+      },
+      {
+        item_id: 5,
+        item_text: 'Andhra High Court',
+        item_name: 'Andhra High Court',
+      },
+      {
+        item_id: 6,
+        item_text: 'Calcutta High Court',
+        item_name: 'Calcutta High Court',
+      },
+      {
+        item_id: 7,
+        item_text: 'Allahabad High Court',
+        item_name: 'Allahabad High Court',
+      },
+      {
+        item_id: 8,
+        item_text: 'Orissa High Court',
+        item_name: 'Orissa High Court',
+      },
+      {
+        item_id: 9,
+        item_text: 'Patna High Court',
+        item_name: 'Patna High Court',
+      },
+      {
+        item_id: 10,
+        item_text: 'National Company Law Appellate Tribunal',
+        item_name: 'National Company Law Appellate Tribunal',
+      },
+      {
+        item_id: 11,
+        item_text: 'Appellate Tribunal For Electricity',
+        item_name: 'Appellate Tribunal For Electricity',
+      },
+      {
+        item_id: 12,
+        item_text: 'Authority Tribunal',
+        item_name: 'Authority Tribunal',
+      },
     ];
 
     this.courtdata = [
@@ -1702,10 +1922,16 @@ export class CasesComponent implements OnInit {
   }
 
   select_sg() {
-    this.selectedCountry = 'Singapore';
+    this.selectedCountry = this.country_options[1];
     this.courts = ['Supreme Court Singapore'];
 
-    this.court_options = [{ item_id: 1, item_text: 'Supreme Court Singapore' }];
+    this.court_options = [
+      {
+        item_id: 1,
+        item_text: 'Supreme Court Singapore',
+        item_name: 'Supreme Court Singapore',
+      },
+    ];
 
     this.courtdata = [
       { id: 'Supreme Court Singapore', name: 'Supreme Court Singapore' },
@@ -1718,10 +1944,5 @@ export class CasesComponent implements OnInit {
   service_down = false;
   service_unavailable() {
     this.service_down = true;
-  }
-
-  showDates() {
-    console.log(this.date_floor);
-    console.log(this.date_ceil);
   }
 }

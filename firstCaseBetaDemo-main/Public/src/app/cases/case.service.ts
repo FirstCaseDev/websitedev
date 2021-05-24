@@ -19,7 +19,7 @@ export class CaseService {
   }
 
   getSearchedCases(
-    query: string,
+    totalquery: string,
     courts: Array<string>,
     judgement: Array<string>,
     bench: string,
@@ -31,10 +31,8 @@ export class CaseService {
     y_floor: Number,
     y_ceil: Number
   ) {
-    console.log('y_floor', typeof y_floor);
-    console.log('y_ceil', y_ceil);
     return this.webService.get(
-      `cases/query=${query}?&courts=${courts}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}&sortBy=${curr_sort}&y_floor=${y_floor}&y_ceil=${y_ceil}`
+      `cases/query=${totalquery}?&courts=${courts}&judgement=${judgement}&bench=${bench}&ptn=${petitioner}&rsp=${respondent}&page=${page}&limit=${limit}&sortBy=${curr_sort}&y_floor=${y_floor}&y_ceil=${y_ceil}`
     );
   }
 
