@@ -134,7 +134,7 @@ export class CasedocComponent implements OnInit {
       this.componentTitle.setTitle(data.case.title);
       this.provisions_referred_arr = this.case.provisions_referred;
 
-      // console.log(this.bench_arr);
+      console.log(this.bench_arr);
 
       // Uncomment for processing paragraphs from judgement text
       // console.log('data.case.judgement_text: ', data.case.judgement_text);

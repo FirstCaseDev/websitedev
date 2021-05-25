@@ -87,7 +87,7 @@
     <br />
     <br />
     <br />
-    <div class="container-elem">
+    <div class="container-elem" style="display: flex">
       <div style="display: flex">
         <button class="tab active" (click)="tab1()" id="show_judgement">
           Judgement
@@ -209,60 +209,60 @@
             </div>
             <div id="page-end"></div>
           </div>
-          <div class="slide" id="bench-counsels-page" *ngIf="view_tab == 2">
-            <div style="display: flex; justify-content: space-around">
-              <table>
-                <tr>
-                  <th style="width: 20vw">Bench</th>
-                </tr>
-                <tr *ngFor="let item of bench_arr">
-                  <td style="width: 20vw">{{ item }}</td>
-                </tr>
-              </table>
-              <table>
-                <tr>
-                  <th style="width: 20vw">Petitioner Counsel</th>
-                </tr>
-                <tr *ngFor="let item of petitioner_arr">
-                  <td style="width: 20vw">{{ item }}</td>
-                </tr>
-              </table>
-              <table>
-                <tr>
-                  <th style="width: 20vw">Respondent Counsel</th>
-                </tr>
-                <tr *ngFor="let item of respondent_arr">
-                  <td style="width: 20vw">{{ item }}</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-          <div class="slide" id="act-law-citation-page" *ngIf="view_tab == 3">
-            <table style="width: 100%">
+        </div>
+        <div class="slide" id="bench-counsels-page" *ngIf="view_tab == 2">
+          <div style="display: flex; justify-content: space-around">
+            <table>
               <tr>
-                <th style="width: 70%">Act</th>
-                <th>Sections</th>
+                <th style="width: 20vw">Bench</th>
               </tr>
-              <tr *ngFor="let item of provisions_referred_arr">
-                <td style="width: 70%">{{ item.act_name }}</td>
-                <td>
-                  <div *ngFor="let section of item.act_sections">
-                    {{ section }} <br />
-                  </div>
-                </td>
+              <tr *ngFor="let item of bench_arr">
+                <td style="width: 20vw">{{ item }}</td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <th style="width: 20vw">Petitioner Counsel</th>
+              </tr>
+              <tr *ngFor="let item of petitioner_arr">
+                <td style="width: 20vw">{{ item }}</td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <th style="width: 20vw">Respondent Counsel</th>
+              </tr>
+              <tr *ngFor="let item of respondent_arr">
+                <td style="width: 20vw">{{ item }}</td>
               </tr>
             </table>
           </div>
-          <div class="slide" id="case-citation-page" *ngIf="view_tab == 4">
-            <table style="width: 100%">
-              <tr>
-                <th style="width: 100%; text-align: left">Cases Referred</th>
-              </tr>
-              <tr *ngFor="let case of case.cases_referred">
-                <td style="width: 100%">{{ case }}</td>
-              </tr>
-            </table>
-          </div>
+        </div>
+        <div class="slide" id="act-law-citation-page" *ngIf="view_tab == 3">
+          <table style="width: 100%">
+            <tr>
+              <th style="width: 70%">Act</th>
+              <th>Sections</th>
+            </tr>
+            <tr *ngFor="let item of provisions_referred_arr">
+              <td style="width: 70%">{{ item.act_name }}</td>
+              <td>
+                <div *ngFor="let section of item.act_sections">
+                  {{ section }} <br />
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="slide" id="case-citation-page" *ngIf="view_tab == 4">
+          <table style="width: 100%">
+            <tr>
+              <th style="width: 100%; text-align: left">Cases Referred</th>
+            </tr>
+            <tr *ngFor="let case of case.cases_referred">
+              <td style="width: 100%">{{ case }}</td>
+            </tr>
+          </table>
         </div>
         <div
           *ngIf="toggle_right_menu && right_menu_btn_visible"
