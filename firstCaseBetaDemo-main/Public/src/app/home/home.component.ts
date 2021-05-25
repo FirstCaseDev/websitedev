@@ -26,28 +26,32 @@ export class HomeComponent implements OnInit {
       this.court_counter = data.total;
     });
     this.homeService.getIndSCCount().subscribe((data: any) => {
-      this.ind_sc_total_counter = data.total.toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      this.ind_sc_total_counter = data.total
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     });
     this.homeService.getIndHCCount().subscribe((data: any) => {
-      this.ind_hc_total_counter = data.total.toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      this.ind_hc_total_counter = data.total
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     });
     this.homeService.getIndTribunalCount().subscribe((data: any) => {
-      this.ind_tribunal_total_counter = data.total.toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      this.ind_tribunal_total_counter = data.total
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     });
     this.homeService.getSgSCCount().subscribe((data: any) => {
-      this.sg_sc_total_counter = data.total.toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      this.sg_sc_total_counter = data.total
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     });
   }
   total_counter: any = 0;
   court_counter: any = 0;
-  ind_sc_total_counter:any=0;
-  ind_hc_total_counter:any=0;
-  ind_tribunal_total_counter:any=0;
-  sg_sc_total_counter:any=0;
+  ind_sc_total_counter: any = 0;
+  ind_hc_total_counter: any = 0;
+  ind_tribunal_total_counter: any = 0;
+  sg_sc_total_counter: any = 0;
   testimonials: any[] = [
     {
       name: 'Saul Goodman',
@@ -81,30 +85,18 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  clients: any[] = [
+  technologies: any[] = [
     {
-      src: '../../assets/img/clients/client-1.png',
+      src: '../../assets/img/logos/aws.png',
     },
     {
-      src: '../../assets/img/clients/client-2.png',
+      src: '../../assets/img/logos/digitalOcean.png',
     },
     {
-      src: '../../assets/img/clients/client-3.png',
+      src: '../../assets/img/logos/elasticSearch.png',
     },
     {
-      src: '../../assets/img/clients/client-4.png',
-    },
-    {
-      src: '../../assets/img/clients/client-5.png',
-    },
-    {
-      src: '../../assets/img/clients/client-6.png',
-    },
-    {
-      src: '../../assets/img/clients/client-7.png',
-    },
-    {
-      src: '../../assets/img/clients/client-8.png',
+      src: '../../assets/img/logos/mongodb.png',
     },
   ];
 

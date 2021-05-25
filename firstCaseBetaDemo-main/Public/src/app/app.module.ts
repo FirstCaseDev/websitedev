@@ -27,6 +27,7 @@ import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+// import {createPopper} from '@popperjs/core';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { MatIconModule } from '@angular/material/icon';
     NgbModule,
     MatChipsModule,
     MatIconModule,
+    // createPopper
   ],
   providers: [Title, User, UsersComponent, GoogleAnalyticsService],
   bootstrap: [AppComponent],
