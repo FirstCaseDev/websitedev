@@ -79,6 +79,8 @@ export class CasedocComponent implements OnInit {
   file: any = '';
   text: any = '';
   first_para = '';
+  first_para_items = [];
+  first_para_judgement_items = [];
   page_url = 'https://firstcase.io';
   // page_url = 'http://localhost:4200';
   url = this.router.url;
@@ -142,10 +144,43 @@ export class CasedocComponent implements OnInit {
           var para = i.replace(/[^\S+\r\n]{2,}/g, ' ');
           return para;
         });
-      this.first_para = this.judgement_text_paragraphs[0].replace(
-        /\n{2,}/g,
-        ' '
-      );
+
+      const items: any = this.judgement_text_paragraphs[0]
+        .trim()
+        .split(/\n/)
+        .map((el: any) => `<p>${el}</p>`);
+
+      var idx =
+        items.indexOf('<p>JUDGMENT</p>') || items.indexOf('<p> JUDGMENT</p>');
+      console.log(idx);
+      if (idx != -1) {
+        this.first_para_items = this.judgement_text_paragraphs[0]
+          .trim()
+          .split(/\n/)
+          .map((el: any) => `<p>${el}</p>`)
+          .splice(0, idx)
+          .join('');
+
+        this.first_para_judgement_items = this.judgement_text_paragraphs[0]
+          .trim()
+          .split(/\n/)
+          .map((el: any) => `<p>${el}</p>`)
+          .splice(idx, items.length - idx - 1)
+          .join('');
+        console.log(this.first_para_items);
+        console.log(this.first_para_judgement_items);
+      } else {
+        this.first_para_items = this.judgement_text_paragraphs[0]
+          .trim()
+          .split(/\n/)
+          .map((el: any) => `<p>${el}</p>`)
+          .join('');
+      }
+
+      // this.first_para = this.judgement_text_paragraphs[0].replace(
+      //   /\n{2,}/g,
+      //   ' '
+      // );
       delete this.judgement_text_paragraphs[0];
       // console.log('this.case.url: ', this.case.url);
       this.case_source_url = this.case.url.split('/')[2];
