@@ -85,32 +85,32 @@ export class CasesComponent implements OnInit {
             case 'judgeName':
               last_tag?.classList.add('judgeName');
               this.bench = this.bench.concat(value, ',');
-              console.log(this.bench);
-              console.log(last_tag);
+              // console.log(this.bench);
+              // console.log(last_tag);
               break;
 
             case 'petitionerName':
               last_tag?.classList.add('petitionerName');
               this.petitioner = this.petitioner.concat(value, ',');
-              console.log(this.petitioner);
-              console.log(last_tag);
+              // console.log(this.petitioner);
+              // console.log(last_tag);
               break;
 
             case 'petitionerCounsel':
               last_tag?.classList.add('petitionerCounsel');
-              console.log(last_tag);
+              // console.log(last_tag);
               break;
 
             case 'respondentName':
               last_tag?.classList.add('respondentName');
               this.respondent = this.respondent.concat(value, ',');
-              console.log(this.respondent);
-              console.log(last_tag);
+              // console.log(this.respondent);
+              // console.log(last_tag);
               break;
 
             case 'respondentCounsel':
               last_tag?.classList.add('respondentCounsel');
-              console.log(last_tag);
+              // console.log(last_tag);
               break;
 
             default:
@@ -766,11 +766,11 @@ export class CasesComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    console.log(item);
+    // console.log(item);
     // console.log(this.selectedJudgements);
   }
   OnItemDeSelect(item: any) {
-    console.log(item);
+    // console.log(item);
     // console.log(this.selectedJudgements);
   }
   onSelectAll(items: any) {
@@ -836,6 +836,8 @@ export class CasesComponent implements OnInit {
       this.results_count
     );
     this.page = 1;
+    this.loading=true;
+    // console.log(this.loading);
     this.search();
   }
 
@@ -873,7 +875,7 @@ export class CasesComponent implements OnInit {
     this.view_search = false;
     this.view_citations = false;
     this.view_analytics = true;
-    console.log(this.searched);
+    // console.log(this.searched);
     let element = document.getElementById('analytics_tab');
     element!.className = 'tab active';
     let element2 = document.getElementById('search_tab');
@@ -1506,11 +1508,11 @@ export class CasesComponent implements OnInit {
               this.cited_cases_url[data.index] = data.url;
             });
         }
-        console.log('sorted array:', this.cited_cases_url);
+        // console.log('sorted array:', this.cited_cases_url);
       } catch (error) {
         console.log(error);
       }
-      console.log('unsorted json', this.cited_cases_url_unsorted);
+      // console.log('unsorted json', this.cited_cases_url_unsorted);
     }, 500);
   }
 
@@ -1916,8 +1918,8 @@ export class CasesComponent implements OnInit {
         name: 'Authority Tribunal',
       },
     ];
-    console.log('courts', this.courts);
-    console.log('court_options', this.court_options);
+    // console.log('courts', this.courts);
+    // console.log('court_options', this.court_options);
     this.ngOnInit();
   }
 
@@ -1936,8 +1938,8 @@ export class CasesComponent implements OnInit {
     this.courtdata = [
       { id: 'Supreme Court Singapore', name: 'Supreme Court Singapore' },
     ];
-    console.log('courts', this.courts);
-    console.log('court_options', this.court_options);
+    // console.log('courts', this.courts);
+    // console.log('court_options', this.court_options);
     this.ngOnInit();
   }
 

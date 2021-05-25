@@ -25,7 +25,8 @@
         "mongoose": "^5.4.11",
         "mongoose-aggregate-paginate-v2": "^1.0.42",
         "ng2-charts": "^2.4.2",
-        "njwt": "^1.0.0"
+        "njwt": "^1.0.0",
+        "request": "^2.88.2"
     },
     "devDependencies": {},
     "keywords": [],

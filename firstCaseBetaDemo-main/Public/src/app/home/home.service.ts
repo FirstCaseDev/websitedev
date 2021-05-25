@@ -40,4 +40,8 @@ export class HomeService {
     return this.webService.get('singapore_court_count')
   }
 
+  getViews() {
+    return this.webService.get('ga_views')
+  }
+
 }

@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+var request = require("request");
 var host = process.env.HOST || "0.0.0.0";
 var port = process.env.PORT || 3000;
 var router = express.Router();
@@ -19,6 +20,38 @@ app.listen(port, () => {
 
 const esClient = elasticsearch.Client({
     host: "https://search-firstcasecourtdata-fhx2m5ssjtso7lmalxrhhzrkmy.us-east-2.es.amazonaws.com/",
+});
+
+var options = {
+    'method': 'POST',
+    'url': 'https://analyticsdata.googleapis.com/v1beta/properties/259877184:runReport',
+    'headers': {
+        'Authorization': 'Bearer ya29.a0AfH6SMBkoQn07Sc7N9f94ftT2SaeR5duL3yjZSsopUfuzWcaelS_NCp6nGHCv7XLAKRr-FN2Egi0q9WttgBh7cIq0qE520VIC7o7a436ZkpfRUERboILcgLnPPi9YQu5M8iypj_31IkdmrtCLaGmArhxgnB9',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        "metrics": [{
+            "name": "views",
+            "expression": "screenPageViews"
+        }],
+        "dateRanges": [{
+            "startDate": "1000daysAgo",
+            "endDate": "today"
+        }]
+    })
+
+};
+
+app.get("/api/ga_views", (req, res) => {
+    request(options, function(error, response) {
+        if (error) throw new Error(error);
+        // console.log((JSON.parse(response.body).rows[0]).metricValues[0].value);
+        res.json({
+            total: (JSON.parse(response.body).rows[0]).metricValues[0].value
+        });
+    });
+
 });
 
 app.get("/api/cases/query=:query", (req, res) => {
@@ -44,7 +77,7 @@ app.get("/api/cases/query=:query", (req, res) => {
     if (sortBy === "year") {
         sort_options = [{ date: "desc" }, "_score"];
     }
-    console.log(searchText.trim());
+    // console.log(searchText.trim());
     esClient
         .search({
             index: "indian_court_data.cases",
@@ -141,7 +174,13 @@ app.get("/api/cases/query=:query", (req, res) => {
                     case_list: response.hits.hits.map(function(i) {
                         source = i["_source"];
                         source._id = i["_id"];
-                        source.match_count = i["_explanation"].details[1].details[0].details[0].details[2].details[0].value;
+                        try {
+                            // console.log(i["_explanation"].details[1].details[0].details[0].details[0].details[2].details[0].value);
+                            source.match_count = i["_explanation"].details[1].details[0].details[0].details[2].details[0].value;
+
+                        } catch (err) {
+                            source.match_count = i["_explanation"].details[1].details[0].details[0].details[0].details[2].details[0].value;
+                        }
                         var highlight = "";
                         if (i["highlight"] !== undefined) {
                             try {
@@ -158,7 +197,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                                     highlight = highlight.concat(" ... ");
                                 }
                             } catch (err) {
-
+                                console.log(err);
                             }
                         }
                         source.highlight = highlight;

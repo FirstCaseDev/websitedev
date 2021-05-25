@@ -12,7 +12,7 @@ import { HomeService } from './home.service';
 export class HomeComponent implements OnInit {
   data_subscription: Subscription;
   constructor(private homeService: HomeService) {
-    this.data_subscription = interval(500).subscribe((x) => {
+    this.data_subscription = interval(1000).subscribe((x) => {
       this.get_counts();
     });
   }
@@ -52,6 +52,7 @@ export class HomeComponent implements OnInit {
   ind_hc_total_counter: any = 0;
   ind_tribunal_total_counter: any = 0;
   sg_sc_total_counter: any = 0;
+  page_views: any=0;
   testimonials: any[] = [
     {
       name: 'Saul Goodman',
@@ -102,6 +103,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // document.getElementById('redirect')?.click();
+    this.homeService.getViews().subscribe((data: any) => {
+      this.page_views = data.total
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        console.log(this.page_views);
+    });
+   
     this.get_counts();
   }
 
