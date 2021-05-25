@@ -24,7 +24,9 @@
         <div class="container" data-aos="fade-up">
             <header class="section-header">
                 <h2>FirstCase's</h2>
-                <p>Intelligent Legal Search Assistant</p>
+                <p href="/cases">
+                    <a href="/cases" style="text-decoration: none;"> Intelligent Legal Search Assistant</a>
+                </p>
                 <hr style="
           width: 50%;
           margin: auto;
@@ -32,21 +34,7 @@
           margin-bottom: 10px;
         " />
                 <h3><b> Accurate </b> |<b> Comprehensive</b> |<b> Powerful</b></h3>
-                <div class="text-center text-lg-start">
-                    <a href="/cases" class="
-            btn-test-demo
-            scrollto
-            d-inline-flex
-            align-items-center
-            justify-content-center
-            align-self-center
-          ">
-                        <span>
-            <a href="/cases">Test Demo</a>
-          </span>
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
+
             </header>
 
             <!-- Feature Tabs -->
@@ -56,515 +44,499 @@
                     <ul class="nav nav-pills mb-3">
                         <li>
                             <a class="nav-link active" data-bs-toggle="pill" href="#tab1">Accurate Results
-            </a>
+              </a>
                         </li>
                         <li>
-                            <a class="nav-link" data-bs-toggle="pill" href="#tab2">Comprehensive Database</a
-            >
-          </li>
-          <li>
-            <a class="nav-link" data-bs-toggle="pill" href="#tab3"
-              >Powerful Tools</a
-            >
-          </li>
-        </ul>
-        <!-- End Tabs -->
+                            <a class="nav-link" data-bs-toggle="pill" href="#tab2">Comprehensive Database</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" data-bs-toggle="pill" href="#tab3">Powerful Tools</a>
+                        </li>
+                    </ul>
+                    <!-- End Tabs -->
 
-        <!-- Tab Content -->
-        <div class="tab-content">
-          <div class="tab-pane fade show active" id="tab1">
-            <p>
-              Consequuntur inventore voluptates consequatur aut vel et. Eos
-              doloribus expedita. Sapiente atque consequatur minima nihil quae
-              aspernatur quo suscipit voluptatem.
-            </p>
-            <div class="d-flex align-items-center mb-2">
-              <i class="bi bi-check2"></i>
-              <h4>Repudiandae rerum velit modi et officia quasi facilis</h4>
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tab1">
+                            <p style="text-align: justify!important; ">
+                                Our search engine maps your search context to a granular mapping of legal information, allowing you to significantly save time on legal research, utilize data-driven perspectives and practical visualisations.
+                            </p>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-check2"></i>
+                                <h4>All the information you need, within seconds</h4>
+                            </div>
+                            <p>
+                                Quickly determine how your search term is used in case texts, most important clauses quoted across cases, and search terms that are relevant to your research.
+                            </p>
+                            <!-- </div> -->
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-check2"></i>
+                                <h4>Intelligent Legal Assistant for mapping cases and laws</h4>
+                            </div>
+                            <p>
+                                Our knowledge aggregation services search millions of cases, acts, laws, and legal articles to provide a mapping of the most relevant acts, parts, and cited cases, significantly reducing the amount of time spent manually reading legal articles and judgements.
+                            </p>
+
+                        </div>
+                        <!-- End Tab 1 Content -->
+
+                        <div class="tab-pane fade show" id="tab2">
+                            <p>
+                                Our intelligent legal knowledge aggregation services goes through court judgements, acts, laws and legal articles from various sources to compile <br> a granular mapping of law.
+                            </p>
+                            <br>
+                            <div class="d-flex align-items-center mb-2">
+                                <!-- <i class="bi bi-check2"></i> -->
+                                <img src="..\..\assets\img\ind_flg.svg" alt="" height="20px" style="vertical-align:middle; display:inline; border-radius:3px; margin-right:10px;">
+                                <h4> Legal Database for India</h4>
+                            </div>
+                            <div style="display:grid; grid-template-columns:25% 34% 20%;">
+                                <p><b>Supreme Court</b></p>
+                                <p style="text-align: center;">{{ind_sc_total_counter}}</p>
+                                <div style="text-align: center;">
+                                    <p class="keyword-list-item" style="margin: 0; padding: 0; display:inline-flex; padding-right: 10%;">
+                                        <i class="bi bi-check"></i> Up-to-date
+                                    </p>
+                                </div>
+                                <p><b>High Courts</b></p>
+                                <p style="text-align: center;">{{ind_hc_total_counter}}</p>
+                                <div style="text-align: center;">
+                                    <p class="keyword-list-item" style="margin: 0; padding: 0; display:inline-flex; padding-right: 10%;">
+                                        <i class="bi bi-check"></i> Up-to-date
+                                    </p>
+                                </div>
+                                <p><b>Tribunals</b></p>
+                                <p style="text-align: center;">{{ind_tribunal_total_counter}}</p>
+                                <div style="text-align: center;">
+                                    <p class="keyword-list-item" style="margin: 0; padding: 0; display:inline-flex; padding-right: 10%;">
+                                        <i class="bi bi-check"></i> Up-to-date
+                                    </p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class=" d-flex align-items-center mb-2 ">
+                                <!-- <i class="bi bi-check2 "></i> -->
+                                <img src="..\..\assets\img\sg_flg.svg " alt=" " height="20px " style="vertical-align:middle; display:inline; border-radius:3px; margin-right:10px; ">
+                                <h4>Legal Database for Singapore</h4>
+                            </div>
+                            <div style="display:grid; grid-template-columns:25% 34% 20%;">
+                                <p><b>Supreme Court</b></p>
+                                <p style="text-align: center;">{{sg_sc_total_counter}}</p>
+                                <div style="text-align: center;">
+                                    <p class="keyword-list-item" style="margin: 0; padding: 0; display:inline-flex; padding-right: 10%;">
+                                        <i class="bi bi-check"></i> Up-to-date
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End Tab 2 Content -->
+
+                        <div class="tab-pane fade show " id="tab3">
+                            <p>
+                                Take control over your research with powerful contextual search tools.
+                            </p>
+                            <div class="d-flex align-items-center mb-2 ">
+                                <i class="bi bi-check2 "></i>
+                                <h4>Use search operators to add context to your search</h4>
+                            </div>
+                            <p>
+                                Support for simple and effective search operators to add <br> conditionalityand flexibility to your search.
+                            </p>
+                            <div class="d-flex align-items-center mb-2 ">
+                                <i class="bi bi-check2 "></i>
+                                <h4>Narrow down using smart filters and search tags</h4>
+                            </div>
+                            <p>
+                                Filter and sort search results on useful parameters like court<br> sources, judgement results, case citations and laws.
+                            </p>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-check2"></i>
+                                <h4>Useful Analytics on case parameters</h4>
+                            </div>
+                            <p>
+                                Get just the most up-to-date and reliable analytics about <br>how decisions have evolved over time, counsels, and benches.
+                            </p>
+
+                        </div>
+                        <!-- End Tab 3 Content -->
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6 ">
+                    <img src="../../assets/img/features-2.png " class="img-fluid " alt=" " />
+                </div>
+                <div class="text-center text-lg-start">
+                    <a href="/cases" class="
+  btn-test-demo
+  scrollto
+  d-inline-flex
+  align-items-center
+  justify-content-center
+  align-self-center
+" style="margin: auto; text-decoration: none !important;">
+                        <span>
+              <a href="/cases" style="text-decoration: none !important;">Get Started</a>
+            </span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
             </div>
-            <p>
-              Laborum omnis voluptates voluptas qui sit aliquam blanditiis.
-              Sapiente minima commodi dolorum non eveniet magni quaerat nemo
-              et.
-            </p>
-            <div class="d-flex align-items-center mb-2">
-              <i class="bi bi-check2"></i>
-              <h4>Incidunt non veritatis illum ea ut nisi</h4>
+            <!-- End Feature Tabs -->
+            <!-- ======= Counts Section ======= -->
+            <section id="counts " class="counts ">
+                <div class="container " data-aos="fade-up ">
+                    <div class="row gy-4 ">
+                        <div class="col-lg-3 col-md-6 ">
+                            <div class="count-box ">
+                                <i class="bi bi-file-earmark-text "></i>
+                                <div>
+                                    <span class="purecounter ">{{ total_counter }}</span>
+                                    <p>Court Cases</p>
+                                </div>
+                                <!-- <p>{{total_counter}}</p> -->
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 ">
+                            <div class="count-box ">
+                                <i class="bi bi-building " style="color: #ee6c20 "></i>
+                                <div>
+                                    <span class="purecounter ">{{ court_counter }}</span>
+                                    <p>Courts Covered</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 ">
+                            <div class="count-box ">
+                                <i class="bi bi-people " style="color: #15be56 "></i>
+                                <div>
+                                    <span data-purecounter-start="0 " data-purecounter-end="1463 " data-purecounter-duration="1 " class="purecounter ">{{sg_sc_total_counter}}</span>
+                                    <p>Visitors</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 ">
+                            <div class="count-box " style="padding-bottom: 37px; padding-top: 37px;">
+                                <i class="bi bi-journals " style="color: #bb0852 "></i>
+                                <div>
+                                    <span data-purecounter-start="0 " data-purecounter-end="15 " data-purecounter-duration="1 " class="purecounter " style="font-size:162%; "> Coming Soon</span>
+                                    <p>Acts and Laws</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End Counts Section -->
+
+            <br />
+            <br />
+            <br />
+
+            <div class="row ">
+                <div class="col-lg-6 ">
+                    <img src="../../assets/img/features.png " class="img-fluid " alt=" " />
+                </div>
+
+                <div class="col-lg-6 mt-5 mt-lg-0 d-flex ">
+                    <div class="row align-self-center gy-4 ">
+                        <div class="col-md-6 " data-aos="zoom-out " data-aos-delay="200 ">
+                            <div class="feature-box d-flex align-items-center ">
+                                <i class="bi bi-check "></i>
+                                <h3>
+                                    Comprehensive and <br />
+                                    <b> Up-To-Date Database</b>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 " data-aos="zoom-out " data-aos-delay="300 ">
+                            <div class="feature-box d-flex align-items-center ">
+                                <i class="bi bi-check "></i>
+                                <h3>Powerful and Accurate <b> Contextual Search</b></h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 " data-aos="zoom-out " data-aos-delay="400 ">
+                            <div class="feature-box d-flex align-items-center ">
+                                <i class="bi bi-check "></i>
+                                <h3>
+                                    Granular<b>
+                    Legal <br />
+                    Knowledge Mapping</b>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 " data-aos="zoom-out " data-aos-delay="500 ">
+                            <div class="feature-box d-flex align-items-center ">
+                                <i class="bi bi-check "></i>
+                                <h3>
+                                    Important<b>
+                    Legal<br />
+                    Principles Extraction</b>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 " data-aos="zoom-out " data-aos-delay="600 ">
+                            <div class="feature-box d-flex align-items-center ">
+                                <i class="bi bi-check "></i>
+                                <h3>Practical and <br /><b> Valuable Analytics</b></h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 " data-aos="zoom-out " data-aos-delay="700 ">
+                            <div class="feature-box d-flex align-items-center ">
+                                <i class="bi bi-check "></i>
+                                <h3>
+                                    Rich
+                                    <b>
+                    Document Study <br />
+                    and Sharing</b> Features
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p>
-              Non quod totam minus repellendus autem sint velit. Rerum debitis
-              facere soluta tenetur. Iure molestiae assumenda sunt qui
-              inventore eligendi voluptates nisi at. Dolorem quo tempora. Quia
-              et perferendis.
-            </p>
-          </div>
-          <!-- End Tab 1 Content -->
+            <!-- / row -->
 
-          <div class="tab-pane fade show" id="tab2">
-            <p>
-              Our intelligent legal knowledge aggregation services goes through court judgements, acts, laws and legal articles from various sources to compile <br> a granular mapping of law.
-          </p>
-          <div class="d-flex align-items-center mb-2">
-              <!-- <i class="bi bi-check2"></i> -->
-              <img src="..\..\assets\img\ind_flg.svg" alt="" height="20px" style="vertical-align:middle; display:inline; border-radius:3px; margin-right:10px;">
-              <h4> Legal Database for India</h4>
-          </div>
-          <p>
-          </p>
+            <!-- Feature Icons -->
+            <div class="row feature-icons " data-aos="fade-up ">
 
-          <div class="row">
-              <div class="column">
-                  Supreme Court
-              </div>
-              <div class="column">123213</div>
-          </div>
-          High Courts Tribunals
-          <div class="d-flex align-items-center mb-2">
-              <!-- <i class="bi bi-check2"></i> -->
-              <img src="..\..\assets\img\sg_flg.svg" alt="" height="20px" style="vertical-align:middle; display:inline; border-radius:3px; margin-right:10px;">
-              <h4>Legal Database for Singapore</h4>
-          </div>
-          <p>
-              Supreme Court
-          </p>
-           
+                <header class="section-header">
+                    <h2 style="padding-top: 80px;">FirstCase's</h2>
+                    <p href="/cases">
+                        <a href="/cases" style="text-decoration: none;"> Legal Knowledge Management Assistant</a>
+                    </p>
+                    <hr style="
+    width: 50%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  " />
+                    <h3><b> Coming Soon</b></h3>
+
+                </header>
+
+                <div class="row ">
+                    <div class="col-xl-4 text-center " data-aos="fade-right " data-aos-delay="100 ">
+                        <img src="../../assets/img/features-3.png " class="img-fluid p-4 " alt=" " />
+                    </div>
+
+                    <div class="col-xl-8 d-flex content ">
+                        <div class="row align-self-center gy-4 ">
+                            <div class="col-md-6 icon-box " data-aos="fade-up ">
+                                <i class="ri-line-chart-line "></i>
+                                <div>
+                                    <h4>Knowledge Aggregation</h4>
+                                    <p>
+                                        Conversation search powered by taxonomically mapping your documents
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 icon-box " data-aos="fade-up " data-aos-delay="100 ">
+                                <i class="ri-stack-line "></i>
+                                <div>
+                                    <h4>Document Redaction</h4>
+                                    <p>
+                                        Utilize automate privacy redaction suggestions for documents before storage
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 icon-box " data-aos="fade-up " data-aos-delay="200 ">
+                                <i class="ri-brush-4-line "></i>
+                                <div>
+                                    <h4>Secure Storage</h4>
+                                    <p>
+                                        Data security and privacy ensured with ISO compliant security management features
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 icon-box " data-aos="fade-up " data-aos-delay="300 ">
+                                <i class="ri-magic-line "></i>
+                                <div>
+                                    <h4>Document Event Tracking</h4>
+                                    <p>
+                                        Automatically track legal document expiration and other reminders through notifications
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 icon-box " data-aos="fade-up " data-aos-delay="400 ">
+                                <i class="ri-command-line "></i>
+                                <div>
+                                    <h4>Sharing and Activity Monitoring</h4>
+                                    <p>
+                                        Share file access through the platform and monitor usage, readily available security logs
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 icon-box " data-aos="fade-up " data-aos-delay="500 ">
+                                <i class="ri-radar-line "></i>
+                                <div>
+                                    <h4>Document Version Control</h4>
+                                    <p>
+                                        Discover how your documents has evolved and automate text comparison for monitoring edits
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Feature Icons -->
         </div>
-          <!-- End Tab 2 Content -->
-
-          <div class="tab-pane fade show" id="tab3">
-            <p>
-              Take control over your research with powerful contextual search tools.
-          </p>
-          <div class="d-flex align-items-center mb-2">
-              <i class="bi bi-check2"></i>
-              <h4>Use search operators to add context to your search</h4>
-          </div>
-          <p>
-              Support for simple and effective search operators to add <br> conditionalityand flexibility to your search.
-          </p>
-          <div class="d-flex align-items-center mb-2">
-              <i class="bi bi-check2"></i>
-              <h4>Narrow down using smart filters and search tags</h4>
-          </div>
-          <p>
-              Filter and sort search results on useful parameters like court<br> sources, judgement results, case citations and laws.
-          </p>
-
-
-        </div>
-          <!-- End Tab 3 Content -->
-          
-        </div>
-      </div>
-
-      <div class="col-lg-6">
-        <img src="../../assets/img/features-2.png" class="img-fluid" alt="" />
-      </div>
-    </div>
-    <!-- End Feature Tabs -->
-    <!-- ======= Counts Section ======= -->
-    <section id="counts" class="counts">
-      <div class="container" data-aos="fade-up">
-        <div class="row gy-4">
-          <div class="col-lg-3 col-md-6">
-            <div class="count-box">
-              <i class="bi bi-file-earmark-text"></i>
-              <div>
-                <span class="purecounter">{{ total_counter }}</span>
-                <p>Court Cases</p>
-              </div>
-              <!-- <p>{{total_counter}}</p> -->
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="count-box">
-              <i class="bi bi-building" style="color: #ee6c20"></i>
-              <div>
-                <span class="purecounter">{{ court_counter }}</span>
-                <p>Courts Covered</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="count-box">
-              <i class="bi bi-headset" style="color: #15be56"></i>
-              <div>
-                <span
-                  data-purecounter-start="0"
-                  data-purecounter-end="1463"
-                  data-purecounter-duration="1"
-                  class="purecounter"
-                ></span>
-                <p>Hours Of Support</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="count-box">
-              <i class="bi bi-people" style="color: #bb0852"></i>
-              <div>
-                <span
-                  data-purecounter-start="0"
-                  data-purecounter-end="15"
-                  data-purecounter-duration="1"
-                  class="purecounter"
-                ></span>
-                <p>Hard Workers</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
-    <!-- End Counts Section -->
+    <!-- End Features Section -->
 
     <br />
-    <br />
-    <br />
 
-    <div class="row">
-      <div class="col-lg-6">
-        <img src="../../assets/img/features.png" class="img-fluid" alt="" />
-      </div>
-
-      <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
-        <div class="row align-self-center gy-4">
-          <div class="col-md-6" data-aos="zoom-out" data-aos-delay="200">
-            <div class="feature-box d-flex align-items-center">
-              <i class="bi bi-check"></i>
-              <h3>
-                Comprehensive and <br />
-                <b> Up-To-Date Database</b>
-              </h3>
-            </div>
-          </div>
-
-          <div class="col-md-6" data-aos="zoom-out" data-aos-delay="300">
-            <div class="feature-box d-flex align-items-center">
-              <i class="bi bi-check"></i>
-              <h3>Powerful and Accurate <b> Contextual Search</b></h3>
-            </div>
-          </div>
-
-          <div class="col-md-6" data-aos="zoom-out" data-aos-delay="400">
-            <div class="feature-box d-flex align-items-center">
-              <i class="bi bi-check"></i>
-              <h3>
-                Granular<b>
-                  Legal <br />
-                  Knowledge Mapping</b
-                >
-              </h3>
-            </div>
-          </div>
-
-          <div class="col-md-6" data-aos="zoom-out" data-aos-delay="500">
-            <div class="feature-box d-flex align-items-center">
-              <i class="bi bi-check"></i>
-              <h3>
-                Important<b>
-                  Legal<br />
-                  Principles Extraction</b
-                >
-              </h3>
-            </div>
-          </div>
-
-          <div class="col-md-6" data-aos="zoom-out" data-aos-delay="600">
-            <div class="feature-box d-flex align-items-center">
-              <i class="bi bi-check"></i>
-              <h3>Practical and <br /><b> Valuable Analytics</b></h3>
-            </div>
-          </div>
-
-          <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
-            <div class="feature-box d-flex align-items-center">
-              <i class="bi bi-check"></i>
-              <h3>
-                Rich
-                <b>
-                  Document Study <br />
-                  and Sharing</b
-                >
-                Features
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- / row -->
-
-    <!-- Feature Icons -->
-    <div class="row feature-icons" data-aos="fade-up">
-      <h3>Ratione mollitia eos ab laudantium rerum beatae quo</h3>
-
-      <div class="row">
-        <div
-          class="col-xl-4 text-center"
-          data-aos="fade-right"
-          data-aos-delay="100"
-        >
-          <img
-            src="../../assets/img/features-3.png"
-            class="img-fluid p-4"
-            alt=""
-          />
-        </div>
-
-        <div class="col-xl-8 d-flex content">
-          <div class="row align-self-center gy-4">
-            <div class="col-md-6 icon-box" data-aos="fade-up">
-              <i class="ri-line-chart-line"></i>
-              <div>
-                <h4>Corporis voluptates sit</h4>
-                <p>
-                  Consequuntur sunt aut quasi enim aliquam quae harum pariatur
-                  laboris nisi ut aliquip
-                </p>
-              </div>
-            </div>
-
-            <div
-              class="col-md-6 icon-box"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <i class="ri-stack-line"></i>
-              <div>
-                <h4>Ullamco laboris nisi</h4>
-                <p>
-                  Excepteur sint occaecat cupidatat non proident, sunt in
-                  culpa qui officia deserunt
-                </p>
-              </div>
-            </div>
-
-            <div
-              class="col-md-6 icon-box"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <i class="ri-brush-4-line"></i>
-              <div>
-                <h4>Labore consequatur</h4>
-                <p>
-                  Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut
-                  maiores omnis facere
-                </p>
-              </div>
-            </div>
-
-            <div
-              class="col-md-6 icon-box"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
-              <i class="ri-magic-line"></i>
-              <div>
-                <h4>Beatae veritatis</h4>
-                <p>
-                  Expedita veritatis consequuntur nihil tempore laudantium
-                  vitae denat pacta
-                </p>
-              </div>
-            </div>
-
-            <div
-              class="col-md-6 icon-box"
-              data-aos="fade-up"
-              data-aos-delay="400"
-            >
-              <i class="ri-command-line"></i>
-              <div>
-                <h4>Molestiae dolor</h4>
-                <p>
-                  Et fuga et deserunt et enim. Dolorem architecto ratione
-                  tensa raptor marte
-                </p>
-              </div>
-            </div>
-
-            <div
-              class="col-md-6 icon-box"
-              data-aos="fade-up"
-              data-aos-delay="500"
-            >
-              <i class="ri-radar-line"></i>
-              <div>
-                <h4>Explicabo consectetur</h4>
-                <p>
-                  Est autem dicta beatae suscipit. Sint veritatis et sit quasi
-                  ab aut inventore
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Feature Icons -->
-  </div>
-</section>
-<!-- End Features Section -->
-
-<br />
-
-<!-- ======= Services Section ======= -->
-<section id="services" class="services">
-  <div class="container" data-aos="fade-up">
-    <header class="section-header">
+    <!-- ======= Services Section ======= -->
+    <!-- <section id="services " class="services ">
+  <div class="container " data-aos="fade-up ">
+    <header class="section-header ">
       <h2>Services</h2>
       <p>Veritatis et dolores facere numquam et praesentium</p>
     </header>
 
-    <div class="row gy-4">
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="service-box blue">
-          <i class="ri-discuss-line icon"></i>
+    <div class="row gy-4 ">
+      <div class="col-lg-4 col-md-6 " data-aos="fade-up " data-aos-delay="200 ">
+        <div class="service-box blue ">
+          <i class="ri-discuss-line icon "></i>
           <h3>Nesciunt Mete</h3>
           <p>
             Provident nihil minus qui consequatur non omnis maiores. Eos
             accusantium minus dolores iure perferendis tempore et consequatur.
           </p>
-          <a href="#" class="read-more"
-            ><span>Read More</span> <i class="bi bi-arrow-right"></i
+          <a href="# " class="read-more "
+            ><span>Read More</span> <i class="bi bi-arrow-right "></i
           ></a>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                <div class="service-box orange">
-                    <i class="ri-discuss-line icon"></i>
+            <div class="col-lg-4 col-md-6 " data-aos="fade-up " data-aos-delay="300 ">
+                <div class="service-box orange ">
+                    <i class="ri-discuss-line icon "></i>
                     <h3>Eosle Commodi</h3>
                     <p>
                         Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic non ut nesciunt dolorem.
                     </p>
-                    <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i
+                    <a href="# " class="read-more "><span>Read More</span> <i class="bi bi-arrow-right "></i
           ></a>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="service-box green">
-                    <i class="ri-discuss-line icon"></i>
+            <div class="col-lg-4 col-md-6 " data-aos="fade-up " data-aos-delay="400 ">
+                <div class="service-box green ">
+                    <i class="ri-discuss-line icon "></i>
                     <h3>Ledo Markt</h3>
                     <p>
                         Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id voluptas adipisci eos earum corrupti.
                     </p>
-                    <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i
+                    <a href="# " class="read-more "><span>Read More</span> <i class="bi bi-arrow-right "></i
           ></a>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-                <div class="service-box red">
-                    <i class="ri-discuss-line icon"></i>
+            <div class="col-lg-4 col-md-6 " data-aos="fade-up " data-aos-delay="500 ">
+                <div class="service-box red ">
+                    <i class="ri-discuss-line icon "></i>
                     <h3>Asperiores Commodi</h3>
                     <p>
                         Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident adipisci neque.
                     </p>
-                    <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i
+                    <a href="# " class="read-more "><span>Read More</span> <i class="bi bi-arrow-right "></i
           ></a>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-                <div class="service-box purple">
-                    <i class="ri-discuss-line icon"></i>
+            <div class="col-lg-4 col-md-6 " data-aos="fade-up " data-aos-delay="600 ">
+                <div class="service-box purple ">
+                    <i class="ri-discuss-line icon "></i>
                     <h3>Velit Doloremque.</h3>
                     <p>
                         Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at autem alias eius labore.
                     </p>
-                    <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i
+                    <a href="# " class="read-more "><span>Read More</span> <i class="bi bi-arrow-right "></i
           ></a>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
-                <div class="service-box pink">
-                    <i class="ri-discuss-line icon"></i>
+            <div class="col-lg-4 col-md-6 " data-aos="fade-up " data-aos-delay="700 ">
+                <div class="service-box pink ">
+                    <i class="ri-discuss-line icon "></i>
                     <h3>Dolori Architecto</h3>
                     <p>
                         Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti recusandae ducimus enim.
                     </p>
-                    <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i
+                    <a href="# " class="read-more "><span>Read More</span> <i class="bi bi-arrow-right "></i
           ></a>
                 </div>
             </div>
         </div>
         </div>
-    </section>
+    </section> -->
     <!-- End Services Section -->
 
-    <br />
+    <!-- <br /> -->
 
     <!-- ======= Pricing Section ======= -->
-    <section id="pricing" class="pricing">
-        <div class="container" data-aos="fade-up">
-            <header class="section-header">
+    <!-- <section id="pricing " class="pricing ">
+        <div class="container " data-aos="fade-up ">
+            <header class="section-header ">
                 <h2>Pricing</h2>
                 <p>Check our Pricing</p>
             </header>
 
-            <div class="row gy-4" data-aos="fade-left">
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="box">
-                        <h3 style="color: #07d5c0">Free Plan</h3>
-                        <div class="price"><sup>$</sup>0<span> / mo</span></div>
-                        <img src="../../assets/img/pricing-free.png" class="img-fluid" alt="" />
+            <div class="row gy-4 " data-aos="fade-left ">
+                <div class="col-lg-3 col-md-6 " data-aos="zoom-in " data-aos-delay="100 ">
+                    <div class="box ">
+                        <h3 style="color: #07d5c0 ">Free Plan</h3>
+                        <div class="price "><sup>$</sup>0<span> / mo</span></div>
+                        <img src="../../assets/img/pricing-free.png " class="img-fluid " alt=" " />
                         <ul>
                             <li>Aida dere</li>
                             <li>Nec feugiat nisl</li>
                             <li>Nulla at volutpat dola</li>
-                            <li class="na">Pharetra massa</li>
-                            <li class="na">Massa ultricies mi</li>
+                            <li class="na ">Pharetra massa</li>
+                            <li class="na ">Massa ultricies mi</li>
                         </ul>
-                        <a href="#" class="btn-buy">Buy Now</a>
+                        <a href="# " class="btn-buy ">Buy Now</a>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="box">
-                        <span class="featured">Featured</span>
-                        <h3 style="color: #65c600">Starter Plan</h3>
-                        <div class="price"><sup>$</sup>19<span> / mo</span></div>
-                        <img src="../../assets/img/pricing-starter.png" class="img-fluid" alt="" />
-                        <ul>
-                            <li>Aida dere</li>
-                            <li>Nec feugiat nisl</li>
-                            <li>Nulla at volutpat dola</li>
-                            <li>Pharetra massa</li>
-                            <li class="na">Massa ultricies mi</li>
-                        </ul>
-                        <a href="#" class="btn-buy">Buy Now</a>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="box">
-                        <h3 style="color: #ff901c">Business Plan</h3>
-                        <div class="price"><sup>$</sup>29<span> / mo</span></div>
-                        <img src="../../assets/img/pricing-business.png" class="img-fluid" alt="" />
+                <div class="col-lg-3 col-md-6 " data-aos="zoom-in " data-aos-delay="200 ">
+                    <div class="box ">
+                        <span class="featured ">Featured</span>
+                        <h3 style="color: #65c600 ">Starter Plan</h3>
+                        <div class="price "><sup>$</sup>19<span> / mo</span></div>
+                        <img src="../../assets/img/pricing-starter.png " class="img-fluid " alt=" " />
                         <ul>
                             <li>Aida dere</li>
                             <li>Nec feugiat nisl</li>
                             <li>Nulla at volutpat dola</li>
                             <li>Pharetra massa</li>
-                            <li>Massa ultricies mi</li>
+                            <li class="na ">Massa ultricies mi</li>
                         </ul>
-                        <a href="#" class="btn-buy">Buy Now</a>
+                        <a href="# " class="btn-buy ">Buy Now</a>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="box">
-                        <h3 style="color: #ff0071">Ultimate Plan</h3>
-                        <div class="price"><sup>$</sup>49<span> / mo</span></div>
-                        <img src="../../assets/img/pricing-ultimate.png" class="img-fluid" alt="" />
+                <div class="col-lg-3 col-md-6 " data-aos="zoom-in " data-aos-delay="300 ">
+                    <div class="box ">
+                        <h3 style="color: #ff901c ">Business Plan</h3>
+                        <div class="price "><sup>$</sup>29<span> / mo</span></div>
+                        <img src="../../assets/img/pricing-business.png " class="img-fluid " alt=" " />
                         <ul>
                             <li>Aida dere</li>
                             <li>Nec feugiat nisl</li>
@@ -572,67 +544,82 @@
                             <li>Pharetra massa</li>
                             <li>Massa ultricies mi</li>
                         </ul>
-                        <a href="#" class="btn-buy">Buy Now</a>
+                        <a href="# " class="btn-buy ">Buy Now</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 " data-aos="zoom-in " data-aos-delay="400 ">
+                    <div class="box ">
+                        <h3 style="color: #ff0071 ">Ultimate Plan</h3>
+                        <div class="price "><sup>$</sup>49<span> / mo</span></div>
+                        <img src="../../assets/img/pricing-ultimate.png " class="img-fluid " alt=" " />
+                        <ul>
+                            <li>Aida dere</li>
+                            <li>Nec feugiat nisl</li>
+                            <li>Nulla at volutpat dola</li>
+                            <li>Pharetra massa</li>
+                            <li>Massa ultricies mi</li>
+                        </ul>
+                        <a href="# " class="btn-buy ">Buy Now</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- End Pricing Section -->
 
+    <!-- <br />
     <br />
-    <br />
-    <br />
+    <br /> -->
 
     <!-- ======= F.A.Q Section ======= -->
-    <section id="faq" class="faq">
-        <div class="container" data-aos="fade-up">
-            <header class="section-header">
+    <!-- <section id="faq " class="faq ">
+        <div class="container " data-aos="fade-up ">
+            <header class="section-header ">
                 <h2>F.A.Q</h2>
                 <p>Frequently Asked Questions</p>
             </header>
 
-            <div class="row">
-                <div class="col-lg-6">
-                    <!-- F.A.Q List 1-->
-                    <div class="accordion accordion-flush" id="faqlist1">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
+            <div class="row ">
+                <div class="col-lg-6 ">
+                    <div class="accordion accordion-flush " id="faqlist1 ">
+                        <div class="accordion-item ">
+                            <h2 class="accordion-header ">
+                                <button class="accordion-button collapsed " type="button " data-bs-toggle="collapse " data-bs-target="#faq-content-1 ">
                 Non consectetur a erat nam at lectus urna duis?
               </button>
                             </h2>
-                            <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
-                                <div class="accordion-body">
+                            <div id="faq-content-1 " class="accordion-collapse collapse " data-bs-parent="#faqlist1 ">
+                                <div class="accordion-body ">
                                     Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
                                 </div>
                             </div>
                         </div>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
+                        <div class="accordion-item ">
+                            <h2 class="accordion-header ">
+                                <button class="accordion-button collapsed " type="button " data-bs-toggle="collapse " data-bs-target="#faq-content-2 ">
                 Feugiat scelerisque varius morbi enim nunc faucibus a
                 pellentesque?
               </button>
                             </h2>
-                            <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
-                                <div class="accordion-body">
+                            <div id="faq-content-2 " class="accordion-collapse collapse " data-bs-parent="#faqlist1 ">
+                                <div class="accordion-body ">
                                     Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in
                                     cursus turpis massa tincidunt dui.
                                 </div>
                             </div>
                         </div>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
+                        <div class="accordion-item ">
+                            <h2 class="accordion-header ">
+                                <button class="accordion-button collapsed " type="button " data-bs-toggle="collapse " data-bs-target="#faq-content-3 ">
                 Dolor sit amet consectetur adipiscing elit pellentesque
                 habitant morbi?
               </button>
                             </h2>
-                            <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
-                                <div class="accordion-body">
+                            <div id="faq-content-3 " class="accordion-collapse collapse " data-bs-parent="#faqlist1 ">
+                                <div class="accordion-body ">
                                     Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna
                                     molestie at elementum eu facilisis sed odio morbi quis
                                 </div>
@@ -641,45 +628,44 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6">
-                    <!-- F.A.Q List 2-->
-                    <div class="accordion accordion-flush" id="faqlist2">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2-content-1">
+                <div class="col-lg-6 ">
+                    <div class="accordion accordion-flush " id="faqlist2 ">
+                        <div class="accordion-item ">
+                            <h2 class="accordion-header ">
+                                <button class="accordion-button collapsed " type="button " data-bs-toggle="collapse " data-bs-target="#faq2-content-1 ">
                 Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?
               </button>
                             </h2>
-                            <div id="faq2-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
-                                <div class="accordion-body">
+                            <div id="faq2-content-1 " class="accordion-collapse collapse " data-bs-parent="#faqlist2 ">
+                                <div class="accordion-body ">
                                     Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in
                                     cursus turpis massa tincidunt dui.
                                 </div>
                             </div>
                         </div>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2-content-2">
+                        <div class="accordion-item ">
+                            <h2 class="accordion-header ">
+                                <button class="accordion-button collapsed " type="button " data-bs-toggle="collapse " data-bs-target="#faq2-content-2 ">
                 Tempus quam pellentesque nec nam aliquam sem et tortor
                 consequat?
               </button>
                             </h2>
-                            <div id="faq2-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
-                                <div class="accordion-body">
+                            <div id="faq2-content-2 " class="accordion-collapse collapse " data-bs-parent="#faqlist2 ">
+                                <div class="accordion-body ">
                                     Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
                                 </div>
                             </div>
                         </div>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2-content-3">
+                        <div class="accordion-item ">
+                            <h2 class="accordion-header ">
+                                <button class="accordion-button collapsed " type="button " data-bs-toggle="collapse " data-bs-target="#faq2-content-3 ">
                 Varius vel pharetra vel turpis nunc eget lorem dolor?
               </button>
                             </h2>
-                            <div id="faq2-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
-                                <div class="accordion-body">
+                            <div id="faq2-content-3 " class="accordion-collapse collapse " data-bs-parent="#faqlist2 ">
+                                <div class="accordion-body ">
                                     Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque. Pellentesque
                                     diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Nibh tellus molestie nunc non blandit massa enim nec.
                                 </div>
@@ -689,34 +675,34 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- End F.A.Q Section -->
 
-    <br />
+    <!-- <br /> -->
 
     <!-- ======= Testimonials Section ======= -->
-    <section id="testimonials" class="testimonials">
-        <div class="container" data-aos="fade-up">
-            <header class="section-header">
+    <!-- <section id="testimonials " class="testimonials ">
+        <div class="container " data-aos="fade-up ">
+            <header class="section-header ">
                 <h2>Testimonials</h2>
                 <p>What they are saying about us</p>
             </header>
 
-            <div class="testimonials-slider swiper-container" data-aos="fade-up" data-aos-delay="200">
-                <swiper style="margin: auto" [config]="config">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" *ngFor="let elem of testimonials">
-                            <div class="testimonial-item">
-                                <div class="stars">
-                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i
-                ><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i
-                ><i class="bi bi-star-fill"></i>
+            <div class="testimonials-slider swiper-container " data-aos="fade-up " data-aos-delay="200 ">
+                <swiper style="margin: auto " [config]="config ">
+                    <div class="swiper-wrapper ">
+                        <div class="swiper-slide " *ngFor="let elem of testimonials ">
+                            <div class="testimonial-item ">
+                                <div class="stars ">
+                                    <i class="bi bi-star-fill "></i><i class="bi bi-star-fill "></i
+                ><i class="bi bi-star-fill "></i><i class="bi bi-star-fill "></i
+                ><i class="bi bi-star-fill "></i>
                                 </div>
                                 <p>
                                     Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
                                 </p>
-                                <div class="profile mt-auto">
-                                    <img [src]="elem.src" class="testimonial-img" [alt]="elem.alt" />
+                                <div class="profile mt-auto ">
+                                    <img [src]="elem.src " class="testimonial-img " [alt]="elem.alt " />
                                     <h3>{{ elem.name }}</h3>
                                     <h4>{{ elem.title }}</h4>
                                 </div>
@@ -724,36 +710,35 @@
                         </div>
                     </div>
 
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination "></div>
+                    <div class="swiper-button-next "></div>
+                    <div class="swiper-button-prev "></div>
                 </swiper>
 
-                <!-- End testimonial item -->
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- End Testimonials Section -->
 
-    <br />
+    <!-- <br /> -->
 
     <!-- ======= Clients Section ======= -->
-    <section id="clients" class="clients">
-        <div class="container" data-aos="fade-up">
-            <header class="section-header">
+    <section id="clients " class="clients ">
+        <div class="container " data-aos="fade-up ">
+            <header class="section-header ">
                 <h2>Our Clients</h2>
                 <p>Temporibus omnis officia</p>
             </header>
 
-            <swiper style="margin: auto" [config]="config">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide" *ngFor="let elem of clients">
-                        <img [src]="elem.src" style="padding: 0 50px" class="img-fluid" alt="" />
+            <swiper style="margin: auto " [config]="config ">
+                <div class="swiper-wrapper ">
+                    <div class="swiper-slide " *ngFor="let elem of clients ">
+                        <img [src]="elem.src " style="padding: 0 50px " class="img-fluid " alt=" " />
                     </div>
                 </div>
 
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next "></div>
+                <div class="swiper-button-prev "></div>
             </swiper>
         </div>
     </section>
@@ -762,51 +747,51 @@
     <br />
 
     <!-- ======= Recent Blog Posts Section ======= -->
-    <section id="recent-blog-posts" class="recent-blog-posts">
-        <div class="container" data-aos="fade-up">
-            <header class="section-header">
+    <section id="recent-blog-posts " class="recent-blog-posts ">
+        <div class="container " data-aos="fade-up ">
+            <header class="section-header ">
                 <h2>Blog</h2>
                 <p>Recent posts from our Blog</p>
             </header>
 
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="post-box">
-                        <div class="post-img">
-                            <img src="../../assets/img/blog/blog-1.jpg" class="img-fluid" alt="" />
+            <div class="row ">
+                <div class="col-lg-4 ">
+                    <div class="post-box ">
+                        <div class="post-img ">
+                            <img src="../../assets/img/blog/blog-1.jpg " class="img-fluid " alt=" " />
                         </div>
-                        <span class="post-date">Tue, September 15</span>
-                        <h3 class="post-title">
+                        <span class="post-date ">Tue, September 15</span>
+                        <h3 class="post-title ">
                             Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur sit
                         </h3>
-                        <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i class="bi bi-arrow-right"></i
-          ></a>
+                        <a href="blog-singe.html " class="readmore stretched-link mt-auto "><span>Read More</span><i
+                class="bi bi-arrow-right "></i></a>
                     </div>
                 </div>
 
-                <div class="col-lg-4">
-                    <div class="post-box">
-                        <div class="post-img">
-                            <img src="../../assets/img/blog/blog-2.jpg" class="img-fluid" alt="" />
+                <div class="col-lg-4 ">
+                    <div class="post-box ">
+                        <div class="post-img ">
+                            <img src="../../assets/img/blog/blog-2.jpg " class="img-fluid " alt=" " />
                         </div>
-                        <span class="post-date">Fri, August 28</span>
-                        <h3 class="post-title">
+                        <span class="post-date ">Fri, August 28</span>
+                        <h3 class="post-title ">
                             Et repellendus molestiae qui est sed omnis voluptates magnam
                         </h3>
-                        <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i class="bi bi-arrow-right"></i
-          ></a>
+                        <a href="blog-singe.html " class="readmore stretched-link mt-auto "><span>Read More</span><i
+                class="bi bi-arrow-right "></i></a>
                     </div>
                 </div>
 
-                <div class="col-lg-4">
-                    <div class="post-box">
-                        <div class="post-img">
-                            <img src="../../assets/img/blog/blog-3.jpg" class="img-fluid" alt="" />
+                <div class="col-lg-4 ">
+                    <div class="post-box ">
+                        <div class="post-img ">
+                            <img src="../../assets/img/blog/blog-3.jpg " class="img-fluid " alt=" " />
                         </div>
-                        <span class="post-date">Mon, July 11</span>
-                        <h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>
-                        <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i class="bi bi-arrow-right"></i
-          ></a>
+                        <span class="post-date ">Mon, July 11</span>
+                        <h3 class="post-title ">Quia assumenda est et veritatis aut quae</h3>
+                        <a href="blog-singe.html " class="readmore stretched-link mt-auto "><span>Read More</span><i
+                class="bi bi-arrow-right "></i></a>
                     </div>
                 </div>
             </div>

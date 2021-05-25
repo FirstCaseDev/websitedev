@@ -25,9 +25,29 @@ export class HomeComponent implements OnInit {
     this.homeService.getCourtCount().subscribe((data: any) => {
       this.court_counter = data.total;
     });
+    this.homeService.getIndSCCount().subscribe((data: any) => {
+      this.ind_sc_total_counter = data.total.toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    });
+    this.homeService.getIndHCCount().subscribe((data: any) => {
+      this.ind_hc_total_counter = data.total.toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    });
+    this.homeService.getIndTribunalCount().subscribe((data: any) => {
+      this.ind_tribunal_total_counter = data.total.toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    });
+    this.homeService.getSgSCCount().subscribe((data: any) => {
+      this.sg_sc_total_counter = data.total.toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    });
   }
   total_counter: any = 0;
   court_counter: any = 0;
+  ind_sc_total_counter:any=0;
+  ind_hc_total_counter:any=0;
+  ind_tribunal_total_counter:any=0;
+  sg_sc_total_counter:any=0;
   testimonials: any[] = [
     {
       name: 'Saul Goodman',

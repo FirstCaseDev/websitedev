@@ -962,3 +962,91 @@ app.get("/api/court_count", (req, res) => {
         })
         .catch((error) => console.log(error));
 });
+
+app.get("/api/ind_supreme_court_count", (req, res) => {
+    esClient
+        .search({
+            index: "indian_court_data.cases",
+            body: {
+                size: 0,
+                track_total_hits: true,
+                query: {
+                    terms: {
+                        "source.keyword": ["Supreme Court of India"]
+                    }
+                }
+            },
+        })
+        .then((response) => {
+            res.json({
+                total: response.hits.total.value,
+            });
+        })
+        .catch((error) => console.log(error));
+});
+
+app.get("/api/high_court_count", (req, res) => {
+    esClient
+        .search({
+            index: "indian_court_data.cases",
+            body: {
+                size: 0,
+                track_total_hits: true,
+                query: {
+                    match: {
+                        source: "High Court"
+                    }
+                }
+            },
+        })
+        .then((response) => {
+            res.json({
+                total: response.hits.total.value,
+            });
+        })
+        .catch((error) => console.log(error));
+});
+
+app.get("/api/ind_tribunal_count", (req, res) => {
+    esClient
+        .search({
+            index: "indian_court_data.cases",
+            body: {
+                size: 0,
+                track_total_hits: true,
+                query: {
+                    match: {
+                        source: "Tribunal"
+                    }
+                }
+            },
+        })
+        .then((response) => {
+            res.json({
+                total: response.hits.total.value,
+            });
+        })
+        .catch((error) => console.log(error));
+});
+
+app.get("/api/singapore_court_count", (req, res) => {
+    esClient
+        .search({
+            index: "indian_court_data.cases",
+            body: {
+                size: 0,
+                track_total_hits: true,
+                query: {
+                    match: {
+                        source: "Singapore"
+                    }
+                }
+            },
+        })
+        .then((response) => {
+            res.json({
+                total: response.hits.total.value,
+            });
+        })
+        .catch((error) => console.log(error));
+});
