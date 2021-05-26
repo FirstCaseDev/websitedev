@@ -50,7 +50,7 @@ export class TeamComponent implements OnInit {
       {
         name: 'Pushpak Ladhe',
         img: '../../assets/img/team/team-4-pushpak.jpg',
-        title: 'Database Administrator',
+        title: 'Head of Data Management',
         mail: 'ladhepushpak@gmail.com',
         linkedin: 'https://www.linkedin.com/in/pushpak-ladhe-1a9931146/',
         facebook: 'https://www.facebook.com/pushpak26',
