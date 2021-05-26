@@ -85,7 +85,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                 track_total_hits: true,
                 from: startIndex,
                 explain: true,
-                size: 10,
+                size: limit,
                 _source: [
                     "title",
                     "url",

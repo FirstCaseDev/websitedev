@@ -214,7 +214,7 @@ export class CasesComponent implements OnInit {
   results_time: number = 0;
   arrayOne: Array<number> = [];
   page: number = 1;
-  limit: number = 5;
+  limit: number = 10;
   judge: string = '';
   court: string = '';
   tagTypeValue: string = '';
@@ -523,95 +523,28 @@ export class CasesComponent implements OnInit {
     { data: [], label: '', stack: 'a' },
     { data: [], label: '', stack: 'a' },
   ];
+  court_list: any = [];
+  court_items: any = [];
+  court_id_names:any = [];
+  populate_courts(){
+    for(var i=0;i<this.court_list.length;i++){
+      this.court_items.push({
+        item_id: i,
+        item_text: this.court_list[i],
+        item_name: this.court_list[i]
+      });
+      this.court_id_names.push({
+        id: this.court_list[i],
+        name: this.court_list[i],
+      });
+    }
+    this.court_options = this.court_items;
+    this.courtdata = this.court_id_names;
+    this.courts = this.court_list;
+  }
+  court_options:any = [];
 
-  court_options = [
-    {
-      item_id: 1,
-      item_text: 'Supreme Court of India',
-      item_name: 'Supreme Court of India',
-    },
-    {
-      item_id: 2,
-      item_text: 'Delhi High Court',
-      item_name: 'Delhi High Court',
-    },
-    {
-      item_id: 3,
-      item_text: 'Bombay High Court',
-      item_name: 'Bombay High Court',
-    },
-    {
-      item_id: 4,
-      item_text: 'Madras High Court',
-      item_name: 'Madras High Court',
-    },
-    {
-      item_id: 5,
-      item_text: 'Andhra High Court',
-      item_name: 'Andhra High Court',
-    },
-    {
-      item_id: 6,
-      item_text: 'Calcutta High Court',
-      item_name: 'Calcutta High Court',
-    },
-    {
-      item_id: 7,
-      item_text: 'Allahabad High Court',
-      item_name: 'Allahabad High Court',
-    },
-    {
-      item_id: 8,
-      item_text: 'Orissa High Court',
-      item_name: 'Orissa High Court',
-    },
-    {
-      item_id: 9,
-      item_text: 'Patna High Court',
-      item_name: 'Patna High Court',
-    },
-    {
-      item_id: 10,
-      item_text: 'National Company Law Appellate Tribunal',
-      item_name: 'National Company Law Appellate Tribunal',
-    },
-    {
-      item_id: 11,
-      item_text: 'Appellate Tribunal For Electricity',
-      item_name: 'Appellate Tribunal For Electricity',
-    },
-    {
-      item_id: 12,
-      item_text: 'Authority Tribunal',
-      item_name: 'Authority Tribunal',
-    },
-  ];
-
-  courtdata: any = [
-    { id: 'Supreme Court of India', name: 'Supreme Court of India' },
-    { id: 'Delhi High Court', name: 'Delhi High Court' },
-    { id: 'Bombay High Court', name: 'Bombay High Court' },
-    { id: 'Madras High Court', name: 'Madras High Court' },
-    { id: 'Andhra High Court', name: 'Andhra High Court' },
-    { id: 'Calcutta High Court', name: 'Calcutta High Court' },
-    { id: 'Allahabad High Court', name: 'Allahabad High Court' },
-    { id: 'Orissa High Court', name: 'Orissa High Court' },
-    { id: 'Patna High Court', name: 'Patna High Court' },
-    {
-      id: 'National Company Law Appellate Tribunal',
-      name: 'National Company Law Appellate Tribunal',
-    },
-    {
-      id: 'Appellate Tribunal For Electricity',
-      name: 'Appellate Tribunal For Electricity',
-    },
-    {
-      id: 'Authority Tribunal',
-      name: 'Authority Tribunal',
-    },
-    // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
-    // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
-  ];
+  courtdata: any = [];
 
   tagCategory: any = [
     { id: 'judgeName', name: 'Judge Name', subtitle: 'Judge' },
@@ -627,23 +560,17 @@ export class CasesComponent implements OnInit {
       name: 'Respondent Counsel',
       subtitle: 'Respondent Counsel',
     },
-    // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
-    // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
 
   charts_views: any = [{ view: 'Grid' }, { view: 'List' }];
   sort_options: any = [
     { id: 'relevance', name: 'Most Relevant' },
     { id: 'year', name: 'Most Recent' },
-    // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
-    // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
 
   country_options: any = [
     { id: 'india', name: 'India' },
     { id: 'singapore', name: 'Singapore' },
-    // { id: 'California Court of Appeal', name: 'California Court of Appeal' },
-    // { id: 'New York Court of Appeals', name: 'New York Court of Appeals' },
   ];
 
   linechartOptions: ChartOptions = {
@@ -695,6 +622,68 @@ export class CasesComponent implements OnInit {
   respondentDatalabels: any = [];
 
   ngOnInit() {
+    this.court_list = [
+      'Supreme Court of India',
+      'Allahabad High Court',
+      'Andhra High Court',
+      'Andhra Pradesh High Court - Amravati',
+      'Bombay High Court',
+      'Calcutta High Court',
+      'Chattisgarh High Court',
+      'Delhi High Court',
+      'Gauhati High Court',
+      'Gujarat High Court',
+      'Himachal Pradesh High Court',
+      'Jammu & Kashmir High Court',
+      'Jharkhand High Court',
+      'Karnataka High Court',
+      'Madhya Pradesh High Court',
+      'Madras High Court',
+      'Manipur High Court',
+      'Orissa High Court',
+      'Patna High Court',
+      'Punjab-Haryana High Court',
+      'Rajasthan High Court',
+      'Sikkim High Court',
+      'Telangana High Court',
+      'Tripura High Court',
+      'Appellate Tribunal For Electricity',
+      'Authority Tribunal',
+      'Central Administrative Tribunal - Ahmedabad',
+      'Central Administrative Tribunal - Allahabad',
+      'Central Administrative Tribunal - Bangalore',
+      'Central Administrative Tribunal - Chandigarh',
+      'Central Administrative Tribunal - Cuttack',
+      'Central Administrative Tribunal - Delhi',
+      'Central Administrative Tribunal - Ernakulam',
+      'Central Administrative Tribunal - Gauhati',
+      'Central Administrative Tribunal - Gwalior',
+      'Central Administrative Tribunal - Hyderabad',
+      'Central Administrative Tribunal - Jabalpur',
+      'Central Administrative Tribunal - Jaipur',
+      'Central Administrative Tribunal - Jodhpur',
+      'Central Administrative Tribunal - Kolkata',
+      'Central Administrative Tribunal - Lucknow',
+      'Central Administrative Tribunal - Madras',
+      'Central Administrative Tribunal - Mumbai',
+      'Central Administrative Tribunal - Patna',
+      'Central Administrative Tribunal - Ranchi',
+      'Central Electricity Regulatory Commission',
+      'Company Law Board',
+      'Customs, Excise and Gold Tribunal - Ahmedabad',
+      'Customs, Excise and Gold Tribunal - Bangalore',
+      'Customs, Excise and Gold Tribunal - Bhubneswar',
+      'Customs, Excise and Gold Tribunal - Calcutta',
+      'Customs, Excise and Gold Tribunal - Delhi',
+      'Customs, Excise and Gold Tribunal - Hyderabad',
+      'Customs, Excise and Gold Tribunal - Mumbai',
+      'Customs, Excise and Gold Tribunal - Ranchi',
+      'Customs, Excise and Gold Tribunal - Tamil Nadu',
+      'National Company Law Appellate Tribunal',
+      'National Consumer Disputes Redressal',
+      'State Consumer Disputes Redressal Commission',
+      ];
+    this.populate_courts(); 
     this.selectedCountry = this.country_options[0];
     this.updateOrientationState();
     if (localStorage.device_type == 'mobile') this.isMobile = true;
@@ -703,13 +692,16 @@ export class CasesComponent implements OnInit {
     this.componentTitle.setTitle('FirstCase | Search');
     this.pvb_init();
     this.rvb_init();
+    this.selectedCourts = this.court_options;
     this.courtlevel = this.courtdata[0];
+    this.court = this.courtdata[0].name;
+    this.courtForm = this.fb.group({
+      city: [this.selectedCourts],
+    });
     this.tagType = this.tagCategory[0];
     this.chartsView = this.charts_views[0];
     this.sortBy = this.sort_options[0];
-    this.court = this.courtdata[0].name;
-    this.selectedCourts = this.court_options;
-
+    
     this.selectedJudgements = this.judgement_options;
     this.dropdownSettings = {
       singleSelection: false,
@@ -748,9 +740,9 @@ export class CasesComponent implements OnInit {
     this.myForm = this.fb.group({
       city: [this.selectedJudgements],
     });
-    this.courtForm = this.fb.group({
-      city: [this.selectedCourts],
-    });
+    
+
+
     // if (localStorage.getItem('token_exp')) {
     //   var exp = parseInt(localStorage.token_exp);
     //   var curr_time = new Date().getTime();
@@ -1817,113 +1809,23 @@ export class CasesComponent implements OnInit {
 
   select_in() {
     this.selectedCountry = this.country_options[0];
-    this.courts = [
-      'Supreme Court of India',
-      'Delhi High Court',
-      'Bombay High Court',
-      'Madras High Court',
-      'Andhra High Court',
-      'Calcutta High Court',
-      'Allahabad High Court',
-      'Orissa High Court',
-      'Patna High Court',
-      'National Company Law Appellate Tribunal',
-      'Appellate Tribunal For Electricity',
-      'Authority Tribunal',
-    ];
+    this.courts = this.court_list;
 
-    this.court_options = [
-      {
-        item_id: 1,
-        item_text: 'Supreme Court of India',
-        item_name: 'Supreme Court of India',
-      },
-      {
-        item_id: 2,
-        item_text: 'Delhi High Court',
-        item_name: 'Delhi High Court',
-      },
-      {
-        item_id: 3,
-        item_text: 'Bombay High Court',
-        item_name: 'Bombay High Court',
-      },
-      {
-        item_id: 4,
-        item_text: 'Madras High Court',
-        item_name: 'Madras High Court',
-      },
-      {
-        item_id: 5,
-        item_text: 'Andhra High Court',
-        item_name: 'Andhra High Court',
-      },
-      {
-        item_id: 6,
-        item_text: 'Calcutta High Court',
-        item_name: 'Calcutta High Court',
-      },
-      {
-        item_id: 7,
-        item_text: 'Allahabad High Court',
-        item_name: 'Allahabad High Court',
-      },
-      {
-        item_id: 8,
-        item_text: 'Orissa High Court',
-        item_name: 'Orissa High Court',
-      },
-      {
-        item_id: 9,
-        item_text: 'Patna High Court',
-        item_name: 'Patna High Court',
-      },
-      {
-        item_id: 10,
-        item_text: 'National Company Law Appellate Tribunal',
-        item_name: 'National Company Law Appellate Tribunal',
-      },
-      {
-        item_id: 11,
-        item_text: 'Appellate Tribunal For Electricity',
-        item_name: 'Appellate Tribunal For Electricity',
-      },
-      {
-        item_id: 12,
-        item_text: 'Authority Tribunal',
-        item_name: 'Authority Tribunal',
-      },
-    ];
+    this.court_options = this.court_items;
 
-    this.courtdata = [
-      { id: 'Supreme Court of India', name: 'Supreme Court of India' },
-      { id: 'Delhi High Court', name: 'Delhi High Court' },
-      { id: 'Bombay High Court', name: 'Bombay High Court' },
-      { id: 'Madras High Court', name: 'Madras High Court' },
-      { id: 'Andhra High Court', name: 'Andhra High Court' },
-      { id: 'Calcutta High Court', name: 'Calcutta High Court' },
-      { id: 'Allahabad High Court', name: 'Allahabad High Court' },
-      { id: 'Orissa High Court', name: 'Orissa High Court' },
-      { id: 'Patna High Court', name: 'Patna High Court' },
-      {
-        id: 'National Company Law Appellate Tribunal',
-        name: 'National Company Law Appellate Tribunal',
-      },
-      {
-        id: 'Appellate Tribunal For Electricity',
-        name: 'Appellate Tribunal For Electricity',
-      },
-      {
-        id: 'Authority Tribunal',
-        name: 'Authority Tribunal',
-      },
-    ];
-    // console.log('courts', this.courts);
-    // console.log('court_options', this.court_options);
-    this.ngOnInit();
+    this.courtdata = this.court_id_names;
+    // this.ngOnInit();
+    this.selectedCourts = this.court_options;
+    this.courtlevel = this.courtdata[0];
+    this.court = this.courtdata[0].name;
+    this.courtForm = this.fb.group({
+      city: [this.selectedCourts],
+    });
+    console.log(this.selectedCourts);
   }
 
   select_sg() {
+    // console.log("singapore selected");
     this.selectedCountry = this.country_options[1];
     this.courts = ['Supreme Court Singapore'];
 
@@ -1938,9 +1840,16 @@ export class CasesComponent implements OnInit {
     this.courtdata = [
       { id: 'Supreme Court Singapore', name: 'Supreme Court Singapore' },
     ];
-    // console.log('courts', this.courts);
-    // console.log('court_options', this.court_options);
-    this.ngOnInit();
+
+    // this.ngOnInit();
+    this.selectedCourts = this.court_options;
+    this.courtlevel = this.courtdata[0];
+    this.court = this.courtdata[0].name;
+    this.courtForm = this.fb.group({
+      city: [this.selectedCourts],
+    });
+    console.log(this.selectedCourts);
+
   }
 
   service_down = false;
