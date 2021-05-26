@@ -103,12 +103,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // document.getElementById('redirect')?.click();
-    this.homeService.getViews().subscribe((data: any) => {
-      this.page_views = data.total
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        console.log(this.page_views);
-    });
+    // this.homeService.getViews().subscribe((data: any) => {
+    //   this.page_views = data.total
+    //     .toString()
+    //     .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    //     console.log(this.page_views);
+    // });
    
     this.get_counts();
   }

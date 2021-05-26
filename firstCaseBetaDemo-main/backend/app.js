@@ -26,7 +26,7 @@ var options = {
     'method': 'POST',
     'url': 'https://analyticsdata.googleapis.com/v1beta/properties/259877184:runReport',
     'headers': {
-        'Authorization': 'Bearer ya29.a0AfH6SMBkoQn07Sc7N9f94ftT2SaeR5duL3yjZSsopUfuzWcaelS_NCp6nGHCv7XLAKRr-FN2Egi0q9WttgBh7cIq0qE520VIC7o7a436ZkpfRUERboILcgLnPPi9YQu5M8iypj_31IkdmrtCLaGmArhxgnB9',
+        'Authorization': 'Bearer ya29.a0AfH6SMA0F22j45-SanKsfn1Lr7jypdmPWy_4DhhLvLve__G0IrBSLxnsnsCNHMAZoqM922io-8-B4oDUWmicNdOwNchLF6w2Qu287Xi5nV6R84WEUHA3In2I7Z0del8VXeWULjjudM0SSv_Tuxx5V8QDcTCL',
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     },
