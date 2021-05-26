@@ -525,13 +525,13 @@ export class CasesComponent implements OnInit {
   ];
   court_list: any = [];
   court_items: any = [];
-  court_id_names:any = [];
-  populate_courts(){
-    for(var i=0;i<this.court_list.length;i++){
+  court_id_names: any = [];
+  populate_courts() {
+    for (var i = 0; i < this.court_list.length; i++) {
       this.court_items.push({
         item_id: i,
         item_text: this.court_list[i],
-        item_name: this.court_list[i]
+        item_name: this.court_list[i],
       });
       this.court_id_names.push({
         id: this.court_list[i],
@@ -542,7 +542,7 @@ export class CasesComponent implements OnInit {
     this.courtdata = this.court_id_names;
     this.courts = this.court_list;
   }
-  court_options:any = [];
+  court_options: any = [];
 
   courtdata: any = [];
 
@@ -569,8 +569,16 @@ export class CasesComponent implements OnInit {
   ];
 
   country_options: any = [
-    { id: 'india', name: 'India' },
-    { id: 'singapore', name: 'Singapore' },
+    {
+      id: 'india',
+      name: 'India',
+      src: '../../assets/img/ind_flg.svg',
+    },
+    {
+      id: 'singapore',
+      name: 'Singapore',
+      src: '../../assets/img/sg_flg.svg',
+    },
   ];
 
   linechartOptions: ChartOptions = {
@@ -682,8 +690,8 @@ export class CasesComponent implements OnInit {
       'National Company Law Appellate Tribunal',
       'National Consumer Disputes Redressal',
       'State Consumer Disputes Redressal Commission',
-      ];
-    this.populate_courts(); 
+    ];
+    this.populate_courts();
     this.selectedCountry = this.country_options[0];
     this.updateOrientationState();
     if (localStorage.device_type == 'mobile') this.isMobile = true;
@@ -701,7 +709,7 @@ export class CasesComponent implements OnInit {
     this.tagType = this.tagCategory[0];
     this.chartsView = this.charts_views[0];
     this.sortBy = this.sort_options[0];
-    
+
     this.selectedJudgements = this.judgement_options;
     this.dropdownSettings = {
       singleSelection: false,
@@ -740,8 +748,6 @@ export class CasesComponent implements OnInit {
     this.myForm = this.fb.group({
       city: [this.selectedJudgements],
     });
-    
-
 
     // if (localStorage.getItem('token_exp')) {
     //   var exp = parseInt(localStorage.token_exp);
@@ -1523,6 +1529,7 @@ export class CasesComponent implements OnInit {
       .subscribe((data: any) => {
         try {
           this.CitedProvisions = data;
+          console.log(this.CitedProvisions.length);
           // this.CitedActCorrectedDataNames = [];
           // data.map((item: any) => {
           //   if (!this.CitedActCorrectedDataNames.includes(item.group))
@@ -1849,7 +1856,6 @@ export class CasesComponent implements OnInit {
       city: [this.selectedCourts],
     });
     console.log(this.selectedCourts);
-
   }
 
   service_down = false;

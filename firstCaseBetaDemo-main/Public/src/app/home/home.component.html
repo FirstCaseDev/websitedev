@@ -1,31 +1,31 @@
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="hero d-flex align-items-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 d-flex flex-column justify-content-center">
-                <h1 data-aos="fade-up">Where Artificial Intelligence meets Law</h1>
-                <h2 data-aos="fade-up" data-aos-delay="400">
-                    Building smart solutions for legal professionals
-                </h2>
-            </div>
-            <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
-                <img src="../../assets/img/hero-img.png" class="img-fluid" alt="" />
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 d-flex flex-column justify-content-center">
+        <h1 data-aos="fade-up">Where Artificial Intelligence meets Law</h1>
+        <h2 data-aos="fade-up" data-aos-delay="400">
+          Building smart solutions for legal professionals
+        </h2>
+      </div>
+      <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+        <img src="../../assets/img/hero-img.png" class="img-fluid" alt="" />
+      </div>
     </div>
+  </div>
 </section>
 <!-- End Hero -->
 
 <br />
 
 <main id="main">
-    <!-- ======= Features Section ======= -->
-    <section id="features" class="features">
-        <div class="container" data-aos="fade-up">
-            <header class="section-header">
-                <h2>FirstCase's</h2>
-                <p href="/cases">
-                    <a href="/cases" style="text-decoration: none">
+  <!-- ======= Features Section ======= -->
+  <section id="features" class="features">
+    <div class="container" data-aos="fade-up">
+      <header class="section-header">
+        <h2>FirstCase's</h2>
+        <p href="/cases">
+          <a href="/cases" style="text-decoration: none">
             Intelligent Legal Search Assistant</a
           >
         </p>
@@ -49,9 +49,10 @@
               <a class="nav-link active" data-bs-toggle="pill" href="#tab1"
                 >Accurate Results
               </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" data-bs-toggle="pill" href="#tab2">Comprehensive Database</a
+            </li>
+            <li>
+              <a class="nav-link" data-bs-toggle="pill" href="#tab2"
+                >Comprehensive Database</a
               >
             </li>
             <li>
@@ -113,6 +114,7 @@
                     vertical-align: middle;
                     display: inline;
                     border-radius: 3px;
+                    box-shadow: -2px 2px 10px #aaa;
                     margin-right: 10px;
                   "
                 />
@@ -177,6 +179,7 @@
                   style="
                     vertical-align: middle;
                     display: inline;
+                    box-shadow: -2px 2px 10px #aaa;
                     border-radius: 3px;
                     margin-right: 10px;
                   "
@@ -267,55 +270,67 @@
             <i class="bi bi-arrow-right"></i>
           </a>
         </div>
-        </div>
-        <!-- End Feature Tabs -->
-        <!-- ======= Counts Section ======= -->
-        <section id="counts " class="counts">
-            <div class="container" data-aos="fade-up ">
-                <div class="row gy-4">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="count-box">
-                            <i class="bi bi-file-earmark-text"></i>
-                            <div>
-                                <span class="purecounter">{{ total_counter }}</span>
-                                <p>Court Cases</p>
-                            </div>
-                            <!-- <p>{{total_counter}}</p> -->
-                        </div>
-                    </div>
+      </div>
+      <!-- End Feature Tabs -->
+      <!-- ======= Counts Section ======= -->
+      <section id="counts " class="counts">
+        <div class="container" data-aos="fade-up ">
+          <div class="row gy-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="count-box">
+                <i class="bi bi-file-earmark-text"></i>
+                <div>
+                  <span class="purecounter">{{ total_counter }}</span>
+                  <p>Court Cases</p>
+                </div>
+                <!-- <p>{{total_counter}}</p> -->
+              </div>
+            </div>
 
-                    <div class="col-lg-3 col-md-6">
-                        <div class="count-box">
-                            <i class="bi bi-building" style="color: #ee6c20"></i>
-                            <div>
-                                <span class="purecounter">{{ court_counter }}</span>
-                                <p>Courts Covered</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="count-box" style="padding-bottom: 37px; padding-top: 37px">
-                            <i class="bi bi-journals" style="color: #bb0852"></i>
-                            <div>
-                                <span data-purecounter-start="0 " data-purecounter-end="15 " data-purecounter-duration="1 " class="purecounter" style="font-size: 162%">
-                            Coming Soon</span
-                          >
-                          <p>Acts and Laws</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="count-box">
-                            <i class="bi bi-people" style="color: #15be56"></i>
-                            <div>
-                                <span data-purecounter-start="0 " data-purecounter-end="1463 " data-purecounter-duration="1 " class="purecounter">{{ sg_sc_total_counter }}</span
+            <div class="col-lg-3 col-md-6">
+              <div class="count-box">
+                <i class="bi bi-building" style="color: #ee6c20"></i>
+                <div>
+                  <span class="purecounter">{{ court_counter }}</span>
+                  <p>Courts Covered</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div
+                class="count-box"
+                style="padding-bottom: 37px; padding-top: 37px"
+              >
+                <i class="bi bi-journals" style="color: #bb0852"></i>
+                <div>
+                  <span
+                    data-purecounter-start="0 "
+                    data-purecounter-end="15 "
+                    data-purecounter-duration="1 "
+                    class="purecounter"
+                    style="font-size: 162%"
+                  >
+                    Coming Soon</span
+                  >
+                  <p>Acts and Laws</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="count-box">
+                <i class="bi bi-people" style="color: #15be56"></i>
+                <div>
+                  <span
+                    data-purecounter-start="0 "
+                    data-purecounter-end="1463 "
+                    data-purecounter-duration="1 "
+                    class="purecounter"
+                    >{{ sg_sc_total_counter }}</span
                   >
                   <p>Visitors</p>
                 </div>
               </div>
             </div>
-
-            
           </div>
         </div>
       </section>
@@ -614,12 +629,12 @@
                     </div>
                 </div>
         </section> -->
-        <!-- End Services Section -->
+  <!-- End Services Section -->
 
-        <!-- <br /> -->
+  <!-- <br /> -->
 
-        <!-- ======= Pricing Section ======= -->
-        <!-- <section id="pricing " class="pricing ">
+  <!-- ======= Pricing Section ======= -->
+  <!-- <section id="pricing " class="pricing ">
         <div class="container " data-aos="fade-up ">
             <header class="section-header ">
                 <h2>Pricing</h2>
@@ -694,14 +709,14 @@
             </div>
         </div>
     </section> -->
-        <!-- End Pricing Section -->
+  <!-- End Pricing Section -->
 
-        <!-- <br />
+  <!-- <br />
     <br />
     <br /> -->
 
-        <!-- ======= F.A.Q Section ======= -->
-        <!-- <section id="faq " class="faq ">
+  <!-- ======= F.A.Q Section ======= -->
+  <!-- <section id="faq " class="faq ">
         <div class="container " data-aos="fade-up ">
             <header class="section-header ">
                 <h2>F.A.Q</h2>
@@ -804,12 +819,12 @@
             </div>
         </div>
     </section> -->
-        <!-- End F.A.Q Section -->
+  <!-- End F.A.Q Section -->
 
-        <!-- <br /> -->
+  <!-- <br /> -->
 
-        <!-- ======= Testimonials Section ======= -->
-        <!-- <section id="testimonials " class="testimonials ">
+  <!-- ======= Testimonials Section ======= -->
+  <!-- <section id="testimonials " class="testimonials ">
         <div class="container " data-aos="fade-up ">
             <header class="section-header ">
                 <h2>Testimonials</h2>
@@ -846,34 +861,34 @@
             </div>
         </div>
     </section> -->
-        <!-- End Testimonials Section -->
+  <!-- End Testimonials Section -->
 
-        <!-- <br /> -->
+  <!-- <br /> -->
 
-        <!-- ======= Clients Section ======= -->
-        <section id="clients " class="clients">
-            <div class="container" data-aos="fade-up ">
-                <header class="section-header">
-                    <h2>Built With</h2>
-                    <p></p>
-                </header>
+  <!-- ======= Clients Section ======= -->
+  <section id="clients " class="clients">
+    <div class="container" data-aos="fade-up ">
+      <header class="section-header">
+        <h2>Built With</h2>
+        <p></p>
+      </header>
 
-                <div style="align-items: center" class="row mb-3">
-                    <div class="col-md logo-in-center">
-                        <img src="../../assets/img/logos/aws.png" width="100px" />
-                    </div>
-                    <div class="col-md logo-in-center">
-                        <img src="../../assets/img/logos/elasticSearch.png" width="200px" />
-                    </div>
-                    <div class="col-md logo-in-center">
-                        <img src="../../assets/img/logos/digitalOcean.png" width="150px" />
-                    </div>
-                    <div class="col-md logo-in-center">
-                        <img src="../../assets/img/logos/mongodb.png" width="200px" />
-                    </div>
-                </div>
+      <div style="align-items: center" class="row mb-3">
+        <div class="col-md logo-in-center">
+          <img src="../../assets/img/logos/aws.png" width="100px" />
+        </div>
+        <div class="col-md logo-in-center">
+          <img src="../../assets/img/logos/elasticSearch.png" width="200px" />
+        </div>
+        <div class="col-md logo-in-center">
+          <img src="../../assets/img/logos/digitalOcean.png" width="150px" />
+        </div>
+        <div class="col-md logo-in-center">
+          <img src="../../assets/img/logos/mongodb.png" width="200px" />
+        </div>
+      </div>
 
-                <!-- <swiper style="margin: auto" [config]="config">
+      <!-- <swiper style="margin: auto" [config]="config">
         <div class="swiper-wrapper">
           <div class="swiper-slide" *ngFor="let elem of technologies">
             <img
@@ -888,63 +903,79 @@
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
       </swiper> -->
+    </div>
+  </section>
+  <!-- End Clients Section -->
+
+  <br />
+
+  <!-- ======= Recent Blog Posts Section ======= -->
+  <section id="recent-blog-posts " class="recent-blog-posts">
+    <div class="container" data-aos="fade-up ">
+      <header class="section-header">
+        <h2>Blog</h2>
+        <p>Recent posts from our Blog</p>
+      </header>
+
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="post-box">
+            <div class="post-img">
+              <img
+                src="../../assets/img/blog/blog-1.jpg "
+                class="img-fluid"
+                alt=" "
+              />
             </div>
-        </section>
-        <!-- End Clients Section -->
-
-        <br />
-
-        <!-- ======= Recent Blog Posts Section ======= -->
-        <section id="recent-blog-posts " class="recent-blog-posts">
-            <div class="container" data-aos="fade-up ">
-                <header class="section-header">
-                    <h2>Blog</h2>
-                    <p>Recent posts from our Blog</p>
-                </header>
-
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="post-box">
-                            <div class="post-img">
-                                <img src="../../assets/img/blog/blog-1.jpg " class="img-fluid" alt=" " />
-                            </div>
-                            <span class="post-date">Tue, September 15</span>
-                            <h3 class="post-title">
-                                Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur sit
-                            </h3>
-                            <a href="blog-singe.html " class="readmore stretched-link mt-auto"><span>Read More</span><i class="bi bi-arrow-right"></i
+            <span class="post-date">Tue, September 15</span>
+            <h3 class="post-title">
+              Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur
+              sit
+            </h3>
+            <a href="blog-singe.html " class="readmore stretched-link mt-auto"
+              ><span>Read More</span><i class="bi bi-arrow-right"></i
             ></a>
-                        </div>
-                    </div>
+          </div>
+        </div>
 
-                    <div class="col-lg-4">
-                        <div class="post-box">
-                            <div class="post-img">
-                                <img src="../../assets/img/blog/blog-2.jpg " class="img-fluid" alt=" " />
-                            </div>
-                            <span class="post-date">Fri, August 28</span>
-                            <h3 class="post-title">
-                                Et repellendus molestiae qui est sed omnis voluptates magnam
-                            </h3>
-                            <a href="blog-singe.html " class="readmore stretched-link mt-auto"><span>Read More</span><i class="bi bi-arrow-right"></i
-            ></a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="post-box">
-                            <div class="post-img">
-                                <img src="../../assets/img/blog/blog-3.jpg " class="img-fluid" alt=" " />
-                            </div>
-                            <span class="post-date">Mon, July 11</span>
-                            <h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>
-                            <a href="blog-singe.html " class="readmore stretched-link mt-auto"><span>Read More</span><i class="bi bi-arrow-right"></i
-            ></a>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-lg-4">
+          <div class="post-box">
+            <div class="post-img">
+              <img
+                src="../../assets/img/blog/blog-2.jpg "
+                class="img-fluid"
+                alt=" "
+              />
             </div>
-        </section>
-        <!-- End Recent Blog Posts Section -->
+            <span class="post-date">Fri, August 28</span>
+            <h3 class="post-title">
+              Et repellendus molestiae qui est sed omnis voluptates magnam
+            </h3>
+            <a href="blog-singe.html " class="readmore stretched-link mt-auto"
+              ><span>Read More</span><i class="bi bi-arrow-right"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="post-box">
+            <div class="post-img">
+              <img
+                src="../../assets/img/blog/blog-3.jpg "
+                class="img-fluid"
+                alt=" "
+              />
+            </div>
+            <span class="post-date">Mon, July 11</span>
+            <h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>
+            <a href="blog-singe.html " class="readmore stretched-link mt-auto"
+              ><span>Read More</span><i class="bi bi-arrow-right"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Recent Blog Posts Section -->
 </main>
 <!-- End #main -->

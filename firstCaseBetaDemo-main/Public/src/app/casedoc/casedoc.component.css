@@ -25,13 +25,6 @@
   /* background-color: #FFE600; */
 }
 
-body {
-  scroll-behavior: smooth;
-  padding-bottom: 0px;
-  margin: 30px 10px 0px 10px;
-  /* background-color: #ebf3f3; */
-}
-
 .page {
   font-family: PopLight;
   display: block;
@@ -45,13 +38,13 @@ body {
 
 #slides-container {
   height: auto;
-  padding: 10px 10%;
+  padding: 5% 5% !important;
   margin-top: 20px;
   border: 1px solid #ddd;
 }
 
 .slide {
-  padding: 0 5%;
+  padding: 0;
 }
 
 .container-elem {
