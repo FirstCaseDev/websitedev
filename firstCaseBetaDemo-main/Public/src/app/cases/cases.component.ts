@@ -79,7 +79,7 @@ export class CasesComponent implements OnInit {
         this.tags_list.push(value);
 
         setTimeout(() => {
-          var array = document.getElementsByTagName('mat-chip');
+          var array = document.getElementsByClassName('search-chip');
           var last_tag = array.item(array.length - 1);
           switch (this.tagType.id) {
             case 'judgeName':
@@ -836,7 +836,7 @@ export class CasesComponent implements OnInit {
       this.results_count
     );
     this.page = 1;
-    this.loading=true;
+    this.loading = true;
     // console.log(this.loading);
     this.search();
   }
