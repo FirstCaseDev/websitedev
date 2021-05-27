@@ -244,6 +244,14 @@ app.get("/api/cases/query=:query", (req, res) => {
                         },
                     },
                 },
+                aggs: {
+                    court_analytics: {
+                        terms: {
+                            field: "source.keyword",
+                            size: 10
+                        }
+                    }
+                },
                 sort: sort_options,
             },
         })
@@ -286,6 +294,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                         return source;
                     }),
                     success: true,
+                    court_analytics: response.aggregations.court_analytics.buckets,
                     msg: "Success",
                     day: response.hits.hits[0].day,
                     // response

@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import Case from '../models/case';
 import { CaseService } from './case.service';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
-import { Label } from 'ng2-charts';
+import { Label, ThemeService } from 'ng2-charts';
 import * as Highcharts from 'highcharts';
 import HC_heatmap from 'highcharts/modules/heatmap';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { SwiperOptions } from 'swiper';
 
+declare let Chart: any
 HC_heatmap(Highcharts);
 
 @Component({
@@ -24,12 +25,142 @@ HC_heatmap(Highcharts);
   ],
 })
 export class CasesComponent implements OnInit {
+  public barChartOptions: ChartOptions = {
+    defaultColor: '#b6d7a8ff',
+    responsive: true,
+    scales: {
+      xAxes: [{
+        ticks: {
+          min: 0
+        }
+      }],
+      yAxes: [{ticks: { mirror: true}}]
+    }
+  };
+  public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartType: ChartType = 'horizontalBar';
+  public barChartLegend = true;
+  public barChartPlugins = [];
+  public barChartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Cases for your query', backgroundColor:'rgba(182, 215, 168, 0.3)', hoverBackgroundColor:'rgba(182, 215, 168, 0.74)', order: -1 },
+  ];
   constructor(
     private caseService: CaseService,
     private fb: FormBuilder,
     private router: Router,
     private componentTitle: Title
-  ) {}
+  ) {
+    Chart.elements.Rectangle.prototype.draw = function () {
+
+      var ctx = this._chart.ctx;
+      var vm = this._view;
+      var left, right, top, bottom, signX, signY, borderSkipped, radius;
+      var borderWidth = vm.borderWidth;
+      
+      // Set Radius Here
+      // If radius is large enough to cause drawing errors a max radius is imposed
+      var cornerRadius = 10;
+
+        left = vm.base;
+        right = vm.x;
+        top = vm.y - vm.height / 2;
+        bottom = vm.y + vm.height / 2;
+        signX = right > left ? 1 : -1;
+        signY = 1;
+        borderSkipped = vm.borderSkipped || 'left';
+
+      // Canvas doesn't allow us to stroke inside the width so we can
+      // adjust the sizes to fit if we're setting a stroke on the line
+      if (borderWidth) {
+        // borderWidth shold be less than bar width and bar height.
+        var barSize = Math.min(Math.abs(left - right), Math.abs(top - bottom));
+        borderWidth = borderWidth > barSize ? barSize : borderWidth;
+        var halfStroke = borderWidth / 2;
+        // Adjust borderWidth when bar top position is near vm.base(zero).
+        var borderLeft = left + (borderSkipped !== 'left' ? halfStroke * signX : 0);
+        var borderRight = right + (borderSkipped !== 'right' ? -halfStroke * signX : 0);
+        var borderTop = top + (borderSkipped !== 'top' ? halfStroke * signY : 0);
+        var borderBottom = bottom + (borderSkipped !== 'bottom' ? -halfStroke * signY : 0);
+        // not become a vertical line?
+        if (borderLeft !== borderRight) {
+          top = borderTop;
+          bottom = borderBottom;
+        }
+        // not become a horizontal line?
+        if (borderTop !== borderBottom) {
+          left = borderLeft;
+          right = borderRight;
+        }
+      }
+
+      ctx.beginPath();
+      ctx.fillStyle = vm.backgroundColor;
+      ctx.strokeStyle = vm.borderColor;
+      ctx.lineWidth = borderWidth;
+
+      // Corner points, from bottom-left to bottom-right clockwise
+      // | 1 2 |
+      // | 0 3 |
+      var corners = [
+        [left, bottom],
+        [left, top],
+        [right, top],
+        [right, bottom]
+      ];
+
+      // Find first (starting) corner with fallback to 'bottom'
+      var borders = ['bottom', 'left', 'top', 'right'];
+      var startCorner = borders.indexOf(borderSkipped, 0);
+      if (startCorner === -1) {
+        startCorner = 0;
+      }
+
+      function cornerAt(index:any) {
+        return corners[(startCorner + index) % 4];
+      }
+
+      // Draw rectangle from 'startCorner'
+      var corner = cornerAt(0);
+      var width, height, x, y, nextCorner, nextCornerId
+      var x_tl, x_tr, y_tl, y_tr;
+      var x_bl, x_br, y_bl, y_br;
+      ctx.moveTo(corner[0], corner[1]);
+
+      for (var i = 1; i < 4; i++) {
+        corner = cornerAt(i);
+        nextCornerId = i + 1;
+        if (nextCornerId == 4) {
+          nextCornerId = 0
+        }
+
+        nextCorner = cornerAt(nextCornerId);
+
+        width = corners[2][0] - corners[1][0];
+        height = corners[0][1] - corners[1][1];
+        x = corners[1][0];
+        y = corners[1][1];
+        radius = cornerRadius;
+
+        // Fix radius being too large        
+        if (radius > Math.abs(height) / 2) {
+          radius = Math.floor(Math.abs(height) / 2);
+        }
+        if (radius > Math.abs(width) / 2) {
+          radius = Math.floor(Math.abs(width) / 2);
+        }
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x, y + height);
+      }
+      ctx.fill();
+      if (borderWidth) {
+        ctx.stroke();
+      }
+    };
+  }
 
   show_graphs_warning = false;
 
@@ -140,6 +271,8 @@ export class CasesComponent implements OnInit {
 
   isMobile = false;
   Highcharts = Highcharts;
+
+  
 
   pvbChartOptions: Highcharts.Options = {};
   casesWordCloudOptions: Highcharts.Options = {
@@ -1039,6 +1172,15 @@ export class CasesComponent implements OnInit {
           this.rows = data.case_list;
           this.results_time = data.result_time;
           this.results_count = data.result_count;
+          console.log(data.court_analytics);
+          this.barChartData[0].data = [];
+          this.barChartLabels = [];
+          for(var i=0;i<data.court_analytics.length;i++){
+            this.barChartLabels.push(data.court_analytics[i].key);
+            // console.log(this.barChartData);
+            this.barChartData[0].data?.push(data.court_analytics[i].doc_count);
+          }
+          console.log(this.barChartData);
         } else {
           alert(data.msg);
           this.reset();
