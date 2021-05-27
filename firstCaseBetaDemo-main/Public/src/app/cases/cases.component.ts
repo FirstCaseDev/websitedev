@@ -743,8 +743,8 @@ export class CasesComponent implements OnInit {
 
     this.date_ceil = {
       year: new Date().getFullYear(),
-      month: new Date().getMonth(),
-      day: new Date().getDay(),
+      month: new Date().getMonth()+1,
+      day: new Date().getDate(),
     };
 
     this.myForm = this.fb.group({
