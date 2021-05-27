@@ -2,7 +2,13 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AppService } from './app.service';
 import { Meta } from '@angular/platform-browser';
+import { PythonShell } from 'python-shell';
 declare let gtag: Function;
+
+PythonShell.runString('x=1+1;print(x)', undefined, function (err) {
+  if (err) throw err;
+  console.log('finished');
+});
 
 @Component({
   selector: 'app-root',
