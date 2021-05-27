@@ -1112,7 +1112,6 @@ app.get("/api/cases/autocomplete=:text", (req, res) => {
             },
         })
         .then((response) => {
-            console.log(response);
             res.json({
                 result: response.suggest.autocomplete[0].options
             })

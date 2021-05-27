@@ -704,6 +704,7 @@ export class CasesComponent implements OnInit {
     this.selectedCourts = this.court_options;
     this.courtlevel = this.courtdata[0];
     this.court = this.courtdata[0].name;
+    this.courts = 
     this.courtForm = this.fb.group({
       city: [this.selectedCourts],
     });
@@ -762,6 +763,7 @@ export class CasesComponent implements OnInit {
     //   console.log('User not logged in, Login required');
     //   this.router.navigate(['/users']); // navigate to login page
     // }
+    // console.log(this.courts);;
   }
 
   onItemSelect(item: any) {
@@ -1829,7 +1831,9 @@ export class CasesComponent implements OnInit {
     this.courtForm = this.fb.group({
       city: [this.selectedCourts],
     });
-    console.log(this.selectedCourts);
+    // console.log(this.selectedCourts);
+    // console.log(this.courts);
+
   }
 
   select_sg() {
@@ -1856,7 +1860,8 @@ export class CasesComponent implements OnInit {
     this.courtForm = this.fb.group({
       city: [this.selectedCourts],
     });
-    console.log(this.selectedCourts);
+    // console.log(this.selectedCourts);
+    // console.log(this.courts);
   }
 
   service_down = false;
