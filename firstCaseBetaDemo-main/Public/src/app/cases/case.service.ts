@@ -178,4 +178,7 @@ export class CaseService {
   getCaseURL(title: string, index: number) {
     return this.webService.get(`cases/case_table_item=${title}?index=${index}`);
   }
+  getAutocomplete(text: string, ) {
+    return this.webService.get(`cases/autocomplete=${text}`);
+  }
 }

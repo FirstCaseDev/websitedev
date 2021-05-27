@@ -1089,3 +1089,34 @@ app.get("/api/singapore_court_count", (req, res) => {
         })
         .catch((error) => console.log(error));
 });
+
+app.get("/api/cases/autocomplete=:text", (req, res) => {
+    esClient
+        .search({
+            index: "indian_court_data.cases",
+            body: {
+                _source: "suggest",
+                suggest: {
+                    autocomplete: {
+                        prefix: req.params.text,
+                        completion: {
+                            field: "suggest",
+                            size: 5,
+                            fuzzy: {
+                                fuzziness: 1
+                            },
+                            skip_duplicates: true
+                        }
+                    }
+                }
+            },
+        })
+        .then((response) => {
+            console.log(response);
+            res.json({
+                result: response.suggest.autocomplete[0].options
+            })
+
+        })
+        .catch((error) => console.log(error));
+});
