@@ -27,6 +27,9 @@ HC_heatmap(Highcharts);
     './cases.component.css',
     '../../assets/css/bootstrap/bootstrap.css',
   ],
+  host: {
+    '(document:click)': 'onClick($event)',
+  },
 })
 export class CasesComponent implements OnInit {
   constructor(
@@ -35,6 +38,22 @@ export class CasesComponent implements OnInit {
     private router: Router,
     private componentTitle: Title
   ) {}
+
+  clicked_inside = false;
+
+  // onClick(event: any) {
+  //   var target =
+  //     document.getElementById('autocomplete_list') ||
+  //     document.getElementById('search-box');
+  //   if (target !== event.target && !target?.contains(event.target)) {
+  //     this.clicked_inside = false;
+  //     console.log('this.clicked_inside', this.clicked_inside);
+  //   }
+  //   if (target == event.target || target?.contains(event.target)) {
+  //     this.clicked_inside = true;
+  //     console.log('this.clicked_inside', this.clicked_inside);
+  //   }
+  // }
 
   show_graphs_warning = false;
 
@@ -85,15 +104,11 @@ export class CasesComponent implements OnInit {
             case 'judgeName':
               last_tag?.classList.add('judgeName');
               this.bench = this.bench.concat(value, ',');
-              // console.log(this.bench);
-              // console.log(last_tag);
               break;
 
             case 'petitionerName':
               last_tag?.classList.add('petitionerName');
               this.petitioner = this.petitioner.concat(value, ',');
-              // console.log(this.petitioner);
-              // console.log(last_tag);
               break;
 
             case 'petitionerCounsel':
@@ -526,7 +541,7 @@ export class CasesComponent implements OnInit {
   ];
   court_list: any = [];
   court_items: any = [];
-  court_indexes: any =[];
+  court_indexes: any = [];
   court_id_names: any = [];
   populate_courts() {
     for (var i = 0; i < this.court_list.length; i++) {
@@ -698,7 +713,7 @@ export class CasesComponent implements OnInit {
     this.updateOrientationState();
     if (localStorage.device_type == 'mobile') this.isMobile = true;
     else this.isMobile = false;
-    // if (!localStorage.getItem('token_exp')) this.router.navigate(['/users'])
+
     this.componentTitle.setTitle('FirstCase | Search');
     this.pvb_init();
     this.rvb_init();
@@ -724,17 +739,6 @@ export class CasesComponent implements OnInit {
     };
 
     this.selectedJudgements = this.judgement_options;
-
-    // this.dropdownSettings = {
-    //   singleSelection: false,
-    //   idField: 'item_id',
-    //   textField: 'item_text',
-    //   selectAllText: 'Select All',
-    //   unSelectAllText: 'UnSelect All',
-    //   itemsShowLimit: 5,
-    //   allowSearchFilter: this.ShowFilter,
-    // };
-
     this.date_floor = {
       year: 1900,
       month: 1,
@@ -743,27 +747,13 @@ export class CasesComponent implements OnInit {
 
     this.date_ceil = {
       year: new Date().getFullYear(),
-      month: new Date().getMonth()+1,
+      month: new Date().getMonth() + 1,
       day: new Date().getDate(),
     };
 
     this.myForm = this.fb.group({
       city: [this.selectedJudgements],
     });
-
-    // if (localStorage.getItem('token_exp')) {
-    //   var exp = parseInt(localStorage.token_exp);
-    //   var curr_time = new Date().getTime();
-    //   if (curr_time > exp) {
-    //     localStorage.removeItem('token_exp');
-    //     console.log('cases page: Previous token expired, login again!');
-    //     this.router.navigate(['/users']); // navigate to login page
-    //   }
-    // } else {
-    //   console.log('User not logged in, Login required');
-    //   this.router.navigate(['/users']); // navigate to login page
-    // }
-    // console.log(this.courts);;
   }
 
   onItemSelect(item: any) {
@@ -846,6 +836,7 @@ export class CasesComponent implements OnInit {
     if (event.which == 13) {
       this.first_search();
     }
+    this.clicked_inside = false;
   }
 
   toggle_analytics_mobile() {
@@ -1028,7 +1019,7 @@ export class CasesComponent implements OnInit {
     //   this.courts.push(item.item_text);
     //   console.log(item.item_text);
     // });
-    for( var i=0; i<this.selectedCourts.length;i++){
+    for (var i = 0; i < this.selectedCourts.length; i++) {
       this.courts.push(this.selectedCourts[i].item_name);
       console.log(this.selectedCourts[i].item_name);
     }
@@ -1038,15 +1029,14 @@ export class CasesComponent implements OnInit {
     // console.log(this.selectedCourts[1]);
     // console.log(this.selectedCourts[2]);
 
-
     // console.log(this.courts);
-    this.court_indexes=[];
+    this.court_indexes = [];
     console.log(this.court_options[0]);
-    for(var i=0;i<this.courts.length;i++){
-      for (var j=0; j<this.court_options.length;j++){
-        if (this.courts[i]===this.court_options[j].item_name){
-        // console.log(j);
-        this.court_indexes.push(this.court_options[j].item_id);
+    for (var i = 0; i < this.courts.length; i++) {
+      for (var j = 0; j < this.court_options.length; j++) {
+        if (this.courts[i] === this.court_options[j].item_name) {
+          // console.log(j);
+          this.court_indexes.push(this.court_options[j].item_id);
         }
       }
     }
@@ -1865,10 +1855,9 @@ export class CasesComponent implements OnInit {
     this.courtForm = this.fb.group({
       city: [this.selectedCourts],
     });
-    
+
     // console.log(this.selectedCourts);
     // console.log(this.courts);
-
   }
 
   select_sg() {
@@ -1895,7 +1884,7 @@ export class CasesComponent implements OnInit {
     this.courtForm = this.fb.group({
       city: [this.selectedCourts],
     });
-    
+
     // console.log(this.selectedCourts);
     // console.log(this.courts);
   }
@@ -1912,14 +1901,13 @@ export class CasesComponent implements OnInit {
     } else {
       this.caseService.getAutocomplete(val).subscribe((data: any) => {
         this.autocomplete_suggestions = data.result;
+        console.log(this.autocomplete_suggestions);
       });
     }
   }
 
   autocomplete(event: any) {
     this.query = event.path[0].outerText;
-    // console.log(event);
-    console.log(event.path[0].outerText);
     this.autocomplete_suggestions = [];
   }
 }
