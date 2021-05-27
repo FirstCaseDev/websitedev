@@ -124,28 +124,21 @@ app.get("/api/ga_views", (req, res) => {
 
 app.get("/api/cases/query=:query", (req, res) => {
     const searchText = req.params.query;
+    // console.log("in query");
+    // console.log(courts_indexes);
+    // console.log(req.query.country);
     var courts_indexes = req.query.courts.split(',');
-    console.log("in query");
-    console.log(courts_indexes);
-    console.log(req.query.country);
-
     var courts = [];
     if (req.query.country === "India") {
-        console.log(courts_indexes.length);
         for (var i = 0; i < courts_indexes.length; i++) {
             courts.push(this.ind_court_list[Number(courts_indexes[i])]);
-            // console.log(courts_indexes[i]);
         }
     }
     if (req.query.country === "Singapore") {
         for (var i = 0; i < courts_indexes.length; i++) {
-            console.log("in singap")
             courts.push(this.sg_court_list[Number(courts_indexes[i])]);
-            // console.log(this.sg_court_list[Number(courts_indexes[i])]);
-            // console.log(typeof(Number(courts_indexes[i])));
         }
     }
-    console.log(courts);
     var judgements = req.query.judgement.split(",");
     for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
     for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
@@ -345,7 +338,18 @@ app.get("/api/cases/_id=:object_id", (req, res) => {
 
 app.get("/api/cases/cited_cases=:query", (req, res) => {
     const searchText = req.params.query;
-    var courts = req.query.courts.split(",");
+    var courts_indexes = req.query.courts.split(',');
+    var courts = [];
+    if (req.query.country === "India") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.ind_court_list[Number(courts_indexes[i])]);
+        }
+    }
+    if (req.query.country === "Singapore") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.sg_court_list[Number(courts_indexes[i])]);
+        }
+    }
     var judgements = req.query.judgement.split(",");
     for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
     for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
@@ -444,7 +448,18 @@ app.get("/api/cases/cited_cases=:query", (req, res) => {
 
 app.get("/api/cases/cited_provisions=:query", (req, res) => {
     const searchText = req.params.query;
-    var courts = req.query.courts.split(",");
+    var courts_indexes = req.query.courts.split(',');
+    var courts = [];
+    if (req.query.country === "India") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.ind_court_list[Number(courts_indexes[i])]);
+        }
+    }
+    if (req.query.country === "Singapore") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.sg_court_list[Number(courts_indexes[i])]);
+        }
+    }
     var judgements = req.query.judgement.split(",");
     for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
     for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
@@ -562,7 +577,18 @@ app.get("/api/cases/cited_provisions=:query", (req, res) => {
 
 app.get("/api/cases/piecharts=:query", (req, res) => {
     const searchText = req.params.query;
-    var courts = req.query.courts.split(",");
+    var courts_indexes = req.query.courts.split(',');
+    var courts = [];
+    if (req.query.country === "India") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.ind_court_list[Number(courts_indexes[i])]);
+        }
+    }
+    if (req.query.country === "Singapore") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.sg_court_list[Number(courts_indexes[i])]);
+        }
+    }
     var judgements = req.query.judgement.split(",");
     for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
     for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
@@ -665,7 +691,18 @@ app.get("/api/cases/piecharts=:query", (req, res) => {
 
 app.get("/api/cases/charts=:query", (req, res) => {
     const searchText = req.params.query;
-    var courts = req.query.courts.split(",");
+    var courts_indexes = req.query.courts.split(',');
+    var courts = [];
+    if (req.query.country === "India") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.ind_court_list[Number(courts_indexes[i])]);
+        }
+    }
+    if (req.query.country === "Singapore") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.sg_court_list[Number(courts_indexes[i])]);
+        }
+    }
     var judgements = req.query.judgement.split(",");
     for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
     for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
@@ -788,7 +825,18 @@ app.get("/api/cases/charts=:query", (req, res) => {
 
 app.get("/api/cases/ptncharts=:query", (req, res) => {
     const searchText = req.params.query;
-    var courts = req.query.courts.split(",");
+    var courts_indexes = req.query.courts.split(',');
+    var courts = [];
+    if (req.query.country === "India") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.ind_court_list[Number(courts_indexes[i])]);
+        }
+    }
+    if (req.query.country === "Singapore") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.sg_court_list[Number(courts_indexes[i])]);
+        }
+    }
     var judgements = req.query.judgement.split(",");
     for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
     for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);
@@ -905,7 +953,18 @@ app.get("/api/cases/ptncharts=:query", (req, res) => {
 
 app.get("/api/cases/respcharts=:query", (req, res) => {
     const searchText = req.params.query;
-    var courts = req.query.courts.split(",");
+    var courts_indexes = req.query.courts.split(',');
+    var courts = [];
+    if (req.query.country === "India") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.ind_court_list[Number(courts_indexes[i])]);
+        }
+    }
+    if (req.query.country === "Singapore") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.sg_court_list[Number(courts_indexes[i])]);
+        }
+    }
     var judgements = req.query.judgement.split(",");
     for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
     for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);

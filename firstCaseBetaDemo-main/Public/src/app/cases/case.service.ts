@@ -167,7 +167,7 @@ export class CaseService {
 
   getCitedLaws(
     query: string,
-    court: string,
+    court: Array<Number>,
     judgement: Array<string>,
     bench: string,
     petitioner: string,

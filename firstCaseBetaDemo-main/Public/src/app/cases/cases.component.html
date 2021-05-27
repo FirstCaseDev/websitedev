@@ -92,6 +92,7 @@
                     name="search"
                     id="search-box"
                     (keyup)="search_on_enter_press($event)"
+                    (ngModelChange)="queryChange($event)"
                     required="required"
                     placeholder="Full Text Search"
                     [(ngModel)]="query"
@@ -117,7 +118,20 @@
               </div>
             </div>
             <!-- END row -->
-
+            <ul
+            class="list-group search-input"
+            *ngIf="autocomplete_suggestions.length > 0"
+            style="width: 67.5% !important; "
+          >
+            <li *ngFor="let item of autocomplete_suggestions">
+              <div
+                class="list-group-item"
+                (click)="autocomplete($event)"
+              >
+                {{ item.text }}
+              </div>
+            </li>
+          </ul>
             <!-- Row 2 -->
             <div class="row mb-3" *ngIf="ShowFilter">
               <!-- Sort By -->

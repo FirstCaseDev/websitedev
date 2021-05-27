@@ -1581,7 +1581,7 @@ export class CasesComponent implements OnInit {
     this.caseService
       .getCitedLaws(
         this.query,
-        this.court,
+        this.courts,
         this.judgement,
         this.bench,
         this.petitioner,
@@ -1906,6 +1906,7 @@ export class CasesComponent implements OnInit {
   }
 
   queryChange(val: string) {
+    console.log(val);
     if (val.length === 0) {
       this.autocomplete_suggestions = [];
     } else {
