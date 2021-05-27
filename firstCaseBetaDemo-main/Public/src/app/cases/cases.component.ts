@@ -13,11 +13,6 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { SwiperOptions } from 'swiper';
 
-// import { title } from 'process';
-//import { Console } from 'console';
-
-// const Wordcloud = require('highcharts/modules/wordcloud');
-// Wordcloud(Highcharts);
 HC_heatmap(Highcharts);
 
 @Component({
@@ -27,9 +22,6 @@ HC_heatmap(Highcharts);
     './cases.component.css',
     '../../assets/css/bootstrap/bootstrap.css',
   ],
-  host: {
-    '(document:click)': 'onClick($event)',
-  },
 })
 export class CasesComponent implements OnInit {
   constructor(
@@ -38,22 +30,6 @@ export class CasesComponent implements OnInit {
     private router: Router,
     private componentTitle: Title
   ) {}
-
-  clicked_inside = false;
-
-  // onClick(event: any) {
-  //   var target =
-  //     document.getElementById('autocomplete_list') ||
-  //     document.getElementById('search-box');
-  //   if (target !== event.target && !target?.contains(event.target)) {
-  //     this.clicked_inside = false;
-  //     console.log('this.clicked_inside', this.clicked_inside);
-  //   }
-  //   if (target == event.target || target?.contains(event.target)) {
-  //     this.clicked_inside = true;
-  //     console.log('this.clicked_inside', this.clicked_inside);
-  //   }
-  // }
 
   show_graphs_warning = false;
 
@@ -836,7 +812,6 @@ export class CasesComponent implements OnInit {
     if (event.which == 13) {
       this.first_search();
     }
-    this.clicked_inside = false;
   }
 
   toggle_analytics_mobile() {
@@ -1884,9 +1859,6 @@ export class CasesComponent implements OnInit {
     this.courtForm = this.fb.group({
       city: [this.selectedCourts],
     });
-
-    // console.log(this.selectedCourts);
-    // console.log(this.courts);
   }
 
   service_down = false;
@@ -1901,7 +1873,6 @@ export class CasesComponent implements OnInit {
     } else {
       this.caseService.getAutocomplete(val).subscribe((data: any) => {
         this.autocomplete_suggestions = data.result;
-        console.log(this.autocomplete_suggestions);
       });
     }
   }
