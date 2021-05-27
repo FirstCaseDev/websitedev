@@ -207,7 +207,7 @@ export class CasesComponent implements OnInit {
   selectedCourts: any = [];
   rows: Case[] = [];
   cited_cases: any = [];
-  autocomplete_suggestions: any =[];
+  autocomplete_suggestions: any = [];
   cited_cases_url_unsorted: any = [];
   cited_cases_url: any = [];
   query: string = '"medical negligence"';
@@ -825,7 +825,7 @@ export class CasesComponent implements OnInit {
     });
     this.rows = [];
   }
-  
+
   first_search() {
     GoogleAnalyticsService.eventEmitter(
       'Search_button',
@@ -1864,15 +1864,20 @@ export class CasesComponent implements OnInit {
     this.service_down = true;
   }
 
-  queryChange(val:string){
-    if(val.length===0){
+  queryChange(val: string) {
+    if (val.length === 0) {
       this.autocomplete_suggestions = [];
-    }
-    else{
-      this.caseService.getAutocomplete(val).subscribe((data:any)=>{
+    } else {
+      this.caseService.getAutocomplete(val).subscribe((data: any) => {
         this.autocomplete_suggestions = data.result;
-      }); 
+      });
     }
-      
+  }
+
+  autocomplete(event: any) {
+    this.query = event.path[0].outerText;
+    // console.log(event);
+    console.log(event.path[0].outerText);
+    this.autocomplete_suggestions = [];
   }
 }

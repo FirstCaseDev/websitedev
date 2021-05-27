@@ -578,6 +578,18 @@ div.loading_animation {
   position: fixed;
 }
 
+.list-group {
+  margin: 0%;
+  position: absolute;
+  list-style-type: none;
+  display: flex;
+  z-index: 5;
+}
+
+a {
+  color: #012970 !important;
+}
+
 /* ======================================================================================== */
 
 .probootstrap-cover {
