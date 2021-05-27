@@ -7,6 +7,72 @@ var router = express.Router();
 var lineChartArr = [];
 var ptnChartArr = [];
 var respChartArr = [];
+this.ind_court_list = [
+    'Supreme Court of India',
+    'Allahabad High Court',
+    'Andhra High Court',
+    'Andhra Pradesh High Court - Amravati',
+    'Bombay High Court',
+    'Calcutta High Court',
+    'Chattisgarh High Court',
+    'Delhi High Court',
+    'Gauhati High Court',
+    'Gujarat High Court',
+    'Himachal Pradesh High Court',
+    'Jammu & Kashmir High Court',
+    'Jharkhand High Court',
+    'Karnataka High Court',
+    'Madhya Pradesh High Court',
+    'Madras High Court',
+    'Manipur High Court',
+    'Orissa High Court',
+    'Patna High Court',
+    'Punjab-Haryana High Court',
+    'Rajasthan High Court',
+    'Sikkim High Court',
+    'Telangana High Court',
+    'Tripura High Court',
+    'Appellate Tribunal For Electricity',
+    'Authority Tribunal',
+    'Central Administrative Tribunal - Ahmedabad',
+    'Central Administrative Tribunal - Allahabad',
+    'Central Administrative Tribunal - Bangalore',
+    'Central Administrative Tribunal - Chandigarh',
+    'Central Administrative Tribunal - Cuttack',
+    'Central Administrative Tribunal - Delhi',
+    'Central Administrative Tribunal - Ernakulam',
+    'Central Administrative Tribunal - Gauhati',
+    'Central Administrative Tribunal - Gwalior',
+    'Central Administrative Tribunal - Hyderabad',
+    'Central Administrative Tribunal - Jabalpur',
+    'Central Administrative Tribunal - Jaipur',
+    'Central Administrative Tribunal - Jodhpur',
+    'Central Administrative Tribunal - Kolkata',
+    'Central Administrative Tribunal - Lucknow',
+    'Central Administrative Tribunal - Madras',
+    'Central Administrative Tribunal - Mumbai',
+    'Central Administrative Tribunal - Patna',
+    'Central Administrative Tribunal - Ranchi',
+    'Central Electricity Regulatory Commission',
+    'Company Law Board',
+    'Customs, Excise and Gold Tribunal - Ahmedabad',
+    'Customs, Excise and Gold Tribunal - Bangalore',
+    'Customs, Excise and Gold Tribunal - Bhubneswar',
+    'Customs, Excise and Gold Tribunal - Calcutta',
+    'Customs, Excise and Gold Tribunal - Delhi',
+    'Customs, Excise and Gold Tribunal - Hyderabad',
+    'Customs, Excise and Gold Tribunal - Mumbai',
+    'Customs, Excise and Gold Tribunal - Ranchi',
+    'Customs, Excise and Gold Tribunal - Tamil Nadu',
+    'National Company Law Appellate Tribunal',
+    'National Consumer Disputes Redressal',
+    'State Consumer Disputes Redressal Commission',
+];
+this.sg_court_list = [
+    'Supreme Court Singapore',
+];
+
+
 const bodyParser = require("body-parser");
 const elasticsearch = require("elasticsearch");
 require("dotenv/config");
@@ -17,6 +83,8 @@ app.use(bodyParser.json());
 app.listen(port, () => {
     console.log("connected to elasticsearch");
 });
+
+
 
 const esClient = elasticsearch.Client({
     host: "https://search-firstcasecourtdata-fhx2m5ssjtso7lmalxrhhzrkmy.us-east-2.es.amazonaws.com/",
@@ -56,7 +124,28 @@ app.get("/api/ga_views", (req, res) => {
 
 app.get("/api/cases/query=:query", (req, res) => {
     const searchText = req.params.query;
-    var courts = req.query.courts.split(",");
+    var courts_indexes = req.query.courts.split(',');
+    console.log("in query");
+    console.log(courts_indexes);
+    console.log(req.query.country);
+
+    var courts = [];
+    if (req.query.country === "India") {
+        console.log(courts_indexes.length);
+        for (var i = 0; i < courts_indexes.length; i++) {
+            courts.push(this.ind_court_list[Number(courts_indexes[i])]);
+            // console.log(courts_indexes[i]);
+        }
+    }
+    if (req.query.country === "Singapore") {
+        for (var i = 0; i < courts_indexes.length; i++) {
+            console.log("in singap")
+            courts.push(this.sg_court_list[Number(courts_indexes[i])]);
+            // console.log(this.sg_court_list[Number(courts_indexes[i])]);
+            // console.log(typeof(Number(courts_indexes[i])));
+        }
+    }
+    console.log(courts);
     var judgements = req.query.judgement.split(",");
     for (i = 0; i < judgements.length; i++) judgements[i] = String(judgements[i]);
     for (i = 0; i < courts.length; i++) courts[i] = String(courts[i]);

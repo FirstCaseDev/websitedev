@@ -526,6 +526,7 @@ export class CasesComponent implements OnInit {
   ];
   court_list: any = [];
   court_items: any = [];
+  court_indexes: any =[];
   court_id_names: any = [];
   populate_courts() {
     for (var i = 0; i < this.court_list.length; i++) {
@@ -704,7 +705,6 @@ export class CasesComponent implements OnInit {
     this.selectedCourts = this.court_options;
     this.courtlevel = this.courtdata[0];
     this.court = this.courtdata[0].name;
-    this.courts = 
     this.courtForm = this.fb.group({
       city: [this.selectedCourts],
     });
@@ -1024,9 +1024,34 @@ export class CasesComponent implements OnInit {
       this.judgement.push(item.item_text);
     });
     this.courts = [];
-    this.selectedCourts.map((item: any) => {
-      this.courts.push(item.item_text);
-    });
+    // this.selectedCourts.map((item: any) => {
+    //   this.courts.push(item.item_text);
+    //   console.log(item.item_text);
+    // });
+    for( var i=0; i<this.selectedCourts.length;i++){
+      this.courts.push(this.selectedCourts[i].item_name);
+      console.log(this.selectedCourts[i].item_name);
+    }
+    // console.log(this.courts);
+    // // console.log(this.court_options[0]);
+    // console.log(this.selectedCourts[0]);
+    // console.log(this.selectedCourts[1]);
+    // console.log(this.selectedCourts[2]);
+
+
+    // console.log(this.courts);
+    this.court_indexes=[];
+    console.log(this.court_options[0]);
+    for(var i=0;i<this.courts.length;i++){
+      for (var j=0; j<this.court_options.length;j++){
+        if (this.courts[i]===this.court_options[j].item_name){
+        // console.log(j);
+        this.court_indexes.push(this.court_options[j].item_id);
+        }
+      }
+    }
+    this.courts = this.court_indexes;
+    // console.log(this.court_indexes);
 
     this.caseService
       .getSearchedCases(
@@ -1040,7 +1065,8 @@ export class CasesComponent implements OnInit {
         this.limit,
         this.curr_sort,
         this.date_floor.year,
-        this.date_ceil.year
+        this.date_ceil.year,
+        this.selectedCountry.name
       )
       .subscribe((data: any) => {
         // console.log(data.case_list);
@@ -1072,7 +1098,8 @@ export class CasesComponent implements OnInit {
         this.petitioner,
         this.respondent,
         this.date_floor.year,
-        this.date_ceil.year
+        this.date_ceil.year,
+        this.selectedCountry.name
       )
       .subscribe((data: any) => {
         // data = data[0];
@@ -1131,7 +1158,8 @@ export class CasesComponent implements OnInit {
         this.petitioner,
         this.respondent,
         this.date_floor.year,
-        this.date_ceil.year
+        this.date_ceil.year,
+        this.selectedCountry.name
       )
       .subscribe((data: any) => {
         var arr: any = [];
@@ -1164,7 +1192,8 @@ export class CasesComponent implements OnInit {
         this.petitioner,
         this.respondent,
         this.date_floor.year,
-        this.date_ceil.year
+        this.date_ceil.year,
+        this.selectedCountry.name
       )
       .subscribe((data: any) => {
         this.petitionerChartLabels.length = 0;
@@ -1267,7 +1296,8 @@ export class CasesComponent implements OnInit {
         this.petitioner,
         this.respondent,
         this.date_floor.year,
-        this.date_ceil.year
+        this.date_ceil.year,
+        this.selectedCountry.name
       )
       .subscribe((data: any) => {
         this.respondentChartLabels.length = 0;
@@ -1368,7 +1398,8 @@ export class CasesComponent implements OnInit {
         this.petitioner,
         this.respondent,
         this.date_floor.year,
-        this.date_ceil.year
+        this.date_ceil.year,
+        this.selectedCountry.name
       )
       .subscribe((data: any) => {
         try {
@@ -1425,7 +1456,8 @@ export class CasesComponent implements OnInit {
         this.petitioner,
         this.respondent,
         this.date_floor.year,
-        this.date_ceil.year
+        this.date_ceil.year,
+        this.selectedCountry.name
       )
       .subscribe((data: any) => {
         try {
@@ -1485,7 +1517,8 @@ export class CasesComponent implements OnInit {
         this.petitioner,
         this.respondent,
         this.date_floor.year,
-        this.date_ceil.year
+        this.date_ceil.year,
+        this.selectedCountry.name
       )
       .subscribe((data: any) => {
         try {
@@ -1527,7 +1560,8 @@ export class CasesComponent implements OnInit {
         this.petitioner,
         this.respondent,
         this.date_floor.year,
-        this.date_ceil.year
+        this.date_ceil.year,
+        this.selectedCountry.name
       )
       .subscribe((data: any) => {
         try {
@@ -1831,6 +1865,7 @@ export class CasesComponent implements OnInit {
     this.courtForm = this.fb.group({
       city: [this.selectedCourts],
     });
+    
     // console.log(this.selectedCourts);
     // console.log(this.courts);
 
@@ -1843,7 +1878,7 @@ export class CasesComponent implements OnInit {
 
     this.court_options = [
       {
-        item_id: 1,
+        item_id: 0,
         item_text: 'Supreme Court Singapore',
         item_name: 'Supreme Court Singapore',
       },
@@ -1860,6 +1895,7 @@ export class CasesComponent implements OnInit {
     this.courtForm = this.fb.group({
       city: [this.selectedCourts],
     });
+    
     // console.log(this.selectedCourts);
     // console.log(this.courts);
   }
