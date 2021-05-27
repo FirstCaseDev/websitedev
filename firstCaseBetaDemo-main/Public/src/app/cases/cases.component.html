@@ -97,6 +97,7 @@
                     placeholder="Full Text Search"
                     [(ngModel)]="query"
                   />
+                  
                   <div
                     class="search-filter-btn-mobile"
                     (click)="toggleShowFilter()"
@@ -118,9 +119,12 @@
               </div>
             </div>
             <!-- END row -->
-<div *ngFor="let item of autocomplete_suggestions">
-  {{item.text}}
-</div>
+            <ul class="list-group" *ngIf="autocomplete_suggestions.length > 0">
+              <li class="list-group-item" *ngFor="let item of autocomplete_suggestions">
+                {{item.text}}
+              </li>
+            </ul>
+
             <!-- Row 2 -->
             <div class="row mb-3" *ngIf="ShowFilter">
               <!-- Sort By -->

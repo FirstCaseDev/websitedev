@@ -1865,11 +1865,14 @@ export class CasesComponent implements OnInit {
   }
 
   queryChange(val:string){
-    // console.log(this.query);
-    // console.log(val);
+    if(val.length===0){
+      this.autocomplete_suggestions = [];
+    }
+    else{
       this.caseService.getAutocomplete(val).subscribe((data:any)=>{
-      // console.log(data.result);
-      this.autocomplete_suggestions = data.result;
-    });
+        this.autocomplete_suggestions = data.result;
+      }); 
+    }
+      
   }
 }
