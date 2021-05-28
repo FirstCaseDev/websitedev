@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AppService } from './app.service';
+import { Location } from '@angular/common';
 import { Meta } from '@angular/platform-browser';
 declare let gtag: Function;
 
@@ -16,7 +17,8 @@ export class AppComponent implements OnInit {
   constructor(
     public router: Router,
     private metaService: Meta,
-    public appService: AppService
+    public appService: AppService,
+    private location: Location
   ) {
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (this.isMobile) localStorage.setItem('device_type', 'mobile');
@@ -32,6 +34,13 @@ export class AppComponent implements OnInit {
   }
   isLoggedIn: boolean = false;
 
+  navRoutes = [
+    { text: 'Home', path: 'home', anchor: '#hero' },
+    { text: 'About Us', path: 'about-us', anchor: '#about' },
+    { text: 'Blog', path: 'blog', anchor: '#blog' },
+    { text: 'Work With Us', path: 'about-us', anchor: '#contact' },
+  ];
+
   ngOnInit(): void {
     this.metaService.addTags([
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -45,6 +54,32 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('firstcase_user_username');
     localStorage.removeItem('request_url');
     // console.log('User logged out');
+  }
+
+  setActive(event: any) {
+    var elem = event.target;
+    var goto_route = elem.textContent;
+    var path = '',
+      anchor = '';
+    var allElems = document.getElementsByClassName('nav-link');
+    for (let i = 0; i < allElems.length; i++) {
+      var element = allElems[i];
+      element.classList.remove('active');
+    }
+    elem.classList.add('active');
+
+    for (let i = 0; i < this.navRoutes.length; i++) {
+      const element = this.navRoutes[i];
+      if (element.text == goto_route) {
+        path = element.path;
+        anchor = element.anchor;
+        this.router.navigateByUrl(path + anchor);
+        setTimeout(() => {
+          window.location.href = this.router.url;
+        }, 100);
+        break;
+      }
+    }
   }
 
   show_mobile_menu() {

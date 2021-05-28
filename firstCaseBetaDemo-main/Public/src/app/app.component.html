@@ -44,7 +44,10 @@
         </div>
         <ul>
           <li>
-            <a id="home-top" class="nav-link scrollto active" href="/home#hero"
+            <a
+              id="home-top"
+              class="nav-link scrollto active"
+              (click)="setActive($event)"
               >Home</a
             >
           </li>
@@ -73,14 +76,19 @@
             </ul>
           </li>
           <li>
-            <a id="about-top" class="nav-link scrollto" href="/about-us"
+            <a
+              id="about-top"
+              (click)="setActive($event)"
+              class="nav-link scrollto"
               >About Us</a
             >
           </li>
-          <li><a href="/blog">Blog</a></li>
+          <li>
+            <a (click)="setActive($event)" class="nav-link scrollto">Blog</a>
+          </li>
 
           <li>
-            <a class="nav-link scrollto" href="/about-us#contact"
+            <a (click)="setActive($event)" class="nav-link scrollto"
               >Work With Us</a
             >
           </li>
