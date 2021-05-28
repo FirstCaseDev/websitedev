@@ -6,14 +6,14 @@ import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { Label, ThemeService } from 'ng2-charts';
 import * as Highcharts from 'highcharts';
 import HC_heatmap from 'highcharts/modules/heatmap';
-import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { GoogleAnalyticsService } from '../google-analytics.service';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { COMMA, ENTER, UP_ARROW, DOWN_ARROW } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { SwiperOptions } from 'swiper';
+import { stringify } from '@angular/compiler/src/util';
 
-declare let Chart: any
+declare let Chart: any;
 HC_heatmap(Highcharts);
 
 @Component({
@@ -23,51 +23,68 @@ HC_heatmap(Highcharts);
     './cases.component.css',
     '../../assets/css/bootstrap/bootstrap.css',
   ],
+  host: {
+    '(document:click)': 'onClick($event)',
+  },
 })
 export class CasesComponent implements OnInit {
   public barChartOptions: ChartOptions = {
     defaultColor: '#b6d7a8ff',
     responsive: true,
     scales: {
-      xAxes: [{
-        ticks: {
-          min: 0
-        }
-      }],
-      yAxes: [{ticks: { mirror: true}}]
-    }
+      xAxes: [
+        {
+          ticks: {
+            min: 0,
+          },
+        },
+      ],
+      yAxes: [{ ticks: { mirror: true } }],
+    },
   };
-  public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels: Label[] = [
+    '2006',
+    '2007',
+    '2008',
+    '2009',
+    '2010',
+    '2011',
+    '2012',
+  ];
   public barChartType: ChartType = 'horizontalBar';
   public barChartLegend = true;
   public barChartPlugins = [];
   public barChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Cases for your query', backgroundColor:'rgba(182, 215, 168, 0.3)', hoverBackgroundColor:'rgba(182, 215, 168, 0.74)', order: -1 },
+    {
+      data: [65, 59, 80, 81, 56, 55, 40],
+      label: 'Cases for your query',
+      backgroundColor: 'rgba(182, 215, 168, 0.3)',
+      hoverBackgroundColor: 'rgba(182, 215, 168, 0.74)',
+      order: -1,
+    },
   ];
   constructor(
     private caseService: CaseService,
     private fb: FormBuilder,
-    private router: Router,
     private componentTitle: Title
   ) {
     Chart.elements.Rectangle.prototype.draw = function () {
-
       var ctx = this._chart.ctx;
       var vm = this._view;
       var left, right, top, bottom, signX, signY, borderSkipped, radius;
       var borderWidth = vm.borderWidth;
-      
+
       // Set Radius Here
       // If radius is large enough to cause drawing errors a max radius is imposed
       var cornerRadius = 10;
 
-        left = vm.base;
-        right = vm.x;
-        top = vm.y - vm.height / 2;
-        bottom = vm.y + vm.height / 2;
-        signX = right > left ? 1 : -1;
-        signY = 1;
-        borderSkipped = vm.borderSkipped || 'left';
+      left = vm.base;
+      right = vm.x;
+      top = vm.y - vm.height / 2;
+      bottom = vm.y + vm.height / 2;
+      signX = right > left ? 1 : -1;
+      signY = 1;
+      borderSkipped = vm.borderSkipped || 'left';
 
       // Canvas doesn't allow us to stroke inside the width so we can
       // adjust the sizes to fit if we're setting a stroke on the line
@@ -77,10 +94,14 @@ export class CasesComponent implements OnInit {
         borderWidth = borderWidth > barSize ? barSize : borderWidth;
         var halfStroke = borderWidth / 2;
         // Adjust borderWidth when bar top position is near vm.base(zero).
-        var borderLeft = left + (borderSkipped !== 'left' ? halfStroke * signX : 0);
-        var borderRight = right + (borderSkipped !== 'right' ? -halfStroke * signX : 0);
-        var borderTop = top + (borderSkipped !== 'top' ? halfStroke * signY : 0);
-        var borderBottom = bottom + (borderSkipped !== 'bottom' ? -halfStroke * signY : 0);
+        var borderLeft =
+          left + (borderSkipped !== 'left' ? halfStroke * signX : 0);
+        var borderRight =
+          right + (borderSkipped !== 'right' ? -halfStroke * signX : 0);
+        var borderTop =
+          top + (borderSkipped !== 'top' ? halfStroke * signY : 0);
+        var borderBottom =
+          bottom + (borderSkipped !== 'bottom' ? -halfStroke * signY : 0);
         // not become a vertical line?
         if (borderLeft !== borderRight) {
           top = borderTop;
@@ -105,7 +126,7 @@ export class CasesComponent implements OnInit {
         [left, bottom],
         [left, top],
         [right, top],
-        [right, bottom]
+        [right, bottom],
       ];
 
       // Find first (starting) corner with fallback to 'bottom'
@@ -115,13 +136,13 @@ export class CasesComponent implements OnInit {
         startCorner = 0;
       }
 
-      function cornerAt(index:any) {
+      function cornerAt(index: any) {
         return corners[(startCorner + index) % 4];
       }
 
       // Draw rectangle from 'startCorner'
       var corner = cornerAt(0);
-      var width, height, x, y, nextCorner, nextCornerId
+      var width, height, x, y, nextCorner, nextCornerId;
       var x_tl, x_tr, y_tl, y_tr;
       var x_bl, x_br, y_bl, y_br;
       ctx.moveTo(corner[0], corner[1]);
@@ -130,7 +151,7 @@ export class CasesComponent implements OnInit {
         corner = cornerAt(i);
         nextCornerId = i + 1;
         if (nextCornerId == 4) {
-          nextCornerId = 0
+          nextCornerId = 0;
         }
 
         nextCorner = cornerAt(nextCornerId);
@@ -141,7 +162,7 @@ export class CasesComponent implements OnInit {
         y = corners[1][1];
         radius = cornerRadius;
 
-        // Fix radius being too large        
+        // Fix radius being too large
         if (radius > Math.abs(height) / 2) {
           radius = Math.floor(Math.abs(height) / 2);
         }
@@ -152,7 +173,12 @@ export class CasesComponent implements OnInit {
         ctx.lineTo(x + width - radius, y);
         ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
         ctx.lineTo(x + width, y + height - radius);
-        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.quadraticCurveTo(
+          x + width,
+          y + height,
+          x + width - radius,
+          y + height
+        );
         ctx.lineTo(x, y + height);
       }
       ctx.fill();
@@ -220,19 +246,15 @@ export class CasesComponent implements OnInit {
 
             case 'petitionerCounsel':
               last_tag?.classList.add('petitionerCounsel');
-              // console.log(last_tag);
               break;
 
             case 'respondentName':
               last_tag?.classList.add('respondentName');
               this.respondent = this.respondent.concat(value, ',');
-              // console.log(this.respondent);
-              // console.log(last_tag);
               break;
 
             case 'respondentCounsel':
               last_tag?.classList.add('respondentCounsel');
-              // console.log(last_tag);
               break;
 
             default:
@@ -272,8 +294,6 @@ export class CasesComponent implements OnInit {
 
   isMobile = false;
   Highcharts = Highcharts;
-
-  
 
   pvbChartOptions: Highcharts.Options = {};
   casesWordCloudOptions: Highcharts.Options = {
@@ -375,7 +395,6 @@ export class CasesComponent implements OnInit {
   pvb_init() {
     this.pvbChartOptions = {
       chart: {
-        // height: 500,
         type: 'heatmap',
         marginTop: 40,
         marginBottom: 160,
@@ -437,10 +456,6 @@ export class CasesComponent implements OnInit {
           borderColor: '#FFFFFF',
           borderWidth: 4,
           data: this.pvb_data,
-          //   dataLabels: {
-          //     enabled: true,
-          //     color: '#000000'
-          // }
         },
       ],
     };
@@ -449,8 +464,6 @@ export class CasesComponent implements OnInit {
   rvb_init() {
     this.rvbChartOptions = {
       chart: {
-        // height: 500,
-        // width: 614,
         type: 'heatmap',
         marginTop: 40,
         marginBottom: 160,
@@ -512,10 +525,6 @@ export class CasesComponent implements OnInit {
           borderColor: '#FFFFFF',
           borderWidth: 4,
           data: this.rvb_data,
-          //   dataLabels: {
-          //     enabled: true,
-          //     color: '#000000'
-          // }
         },
       ],
     };
@@ -534,7 +543,6 @@ export class CasesComponent implements OnInit {
       display: true,
     },
     responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
     scales: {
       xAxes: [
         {
@@ -553,7 +561,7 @@ export class CasesComponent implements OnInit {
             fontSize: 10,
             callback: function (value: any) {
               if (value.length > 20) {
-                return value.substr(0, 20) + '...'; //truncate
+                return value.substr(0, 20) + '...';
               } else {
                 return value;
               }
@@ -594,7 +602,6 @@ export class CasesComponent implements OnInit {
       display: true,
     },
     responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
     scales: {
       xAxes: [
         {
@@ -613,7 +620,7 @@ export class CasesComponent implements OnInit {
             fontSize: 10,
             callback: function (value: any) {
               if (value.length > 20) {
-                return value.substr(0, 20) + '...'; //truncate
+                return value.substr(0, 20) + '...';
               } else {
                 return value;
               }
@@ -732,7 +739,6 @@ export class CasesComponent implements OnInit {
             display: true,
             labelString: 'Number of cases',
           },
-          // stacked: true
           ticks: {
             fontSize: 10,
           },
@@ -866,20 +872,10 @@ export class CasesComponent implements OnInit {
     });
   }
 
-  onItemSelect(item: any) {
-    // console.log(item);
-    // console.log(this.selectedJudgements);
-  }
-  OnItemDeSelect(item: any) {
-    // console.log(item);
-    // console.log(this.selectedJudgements);
-  }
-  onSelectAll(items: any) {
-    // console.log(items);
-  }
-  onDeSelectAll(items: any) {
-    // console.log(items);
-  }
+  onItemSelect(item: any) {}
+  OnItemDeSelect(item: any) {}
+  onSelectAll(items: any) {}
+  onDeSelectAll(items: any) {}
 
   toggleShowFilter() {
     this.ShowFilter = !this.ShowFilter;
@@ -938,14 +934,9 @@ export class CasesComponent implements OnInit {
     );
     this.page = 1;
     this.loading = true;
-    // console.log(this.loading);
-    this.search();
-  }
+    this.view_focussed = false;
 
-  search_on_enter_press(event: any) {
-    if (event.which == 13) {
-      this.first_search();
-    }
+    this.search();
   }
 
   toggle_analytics_mobile() {
@@ -976,7 +967,6 @@ export class CasesComponent implements OnInit {
     this.view_search = false;
     this.view_citations = false;
     this.view_analytics = true;
-    // console.log(this.searched);
     let element = document.getElementById('analytics_tab');
     element!.className = 'tab active';
     let element2 = document.getElementById('search_tab');
@@ -984,9 +974,6 @@ export class CasesComponent implements OnInit {
     let element3 = document.getElementById('citation_tab');
     element3!.className = 'tab';
     this.loading = false;
-    // console.log('show_analytics end - loading: ', this.loading);
-
-    // console.log('view_search ' + this.view_search);
   }
 
   toggle_charts_view() {
@@ -1005,7 +992,6 @@ export class CasesComponent implements OnInit {
         'Citations Tab',
         this.results_count
       );
-      // console.log('show_citations start - loading: ', this.loading);
       if (this.citations_unloaded) {
         this.getCitedActs();
         this.getCitedCases();
@@ -1023,8 +1009,6 @@ export class CasesComponent implements OnInit {
     element2!.className = 'tab';
     let element3 = document.getElementById('analytics_tab');
     element3!.className = 'tab ';
-
-    // console.log('view_search ' + this.view_search);
   }
 
   show_search() {
@@ -1044,7 +1028,6 @@ export class CasesComponent implements OnInit {
     element2!.className = 'tab';
     let element3 = document.getElementById('citation_tab');
     element3!.className = 'tab';
-    // console.log('view_search ' + this.view_search);
     this.loading = false;
   }
 
@@ -1054,12 +1037,10 @@ export class CasesComponent implements OnInit {
   }
 
   reset_filters() {
-    // this.selectedJudgements = [];
     this.bench = '';
     this.tags_list = [];
     this.tagType = this.tagCategory[0];
     this.no_of_tags = 0;
-    // this.court = '';
     this.sortBy = this.sort_options[0];
     this.petitioner = '';
     this.respondent = '';
@@ -1068,20 +1049,8 @@ export class CasesComponent implements OnInit {
   }
 
   reset_on_search_change() {
-    // this.view_tags = false;
-    // this.tags_list = [];
-    // this.tagType = this.tagCategory[0];
     this.CitedActNames = [];
     this.CitedProvisions = [];
-    // this.searched = false;
-    // this.no_of_tags = 0;
-    // this.view_search = false;
-    // this.sortBy = this.sort_options[0];
-    // this.query = '';
-    // this.add_tag = '';
-    // this.bench = '';
-    // this.petitioner = '';
-    // this.respondent = '';
     this.rows.length = 0;
     this.cited_cases.length = 0;
     this.results_count = 0;
@@ -1101,7 +1070,6 @@ export class CasesComponent implements OnInit {
     this.chartLabels = [1990, 2000, 2010, 2020];
     this.doughnutChartData = [[350, 450, 100]];
     this.doughnutChartLabels = ['Allowed', 'Dismissed', 'Tied or Unclear'];
-    // this.selectedJudgements = this.judgement_options;
   }
 
   search() {
@@ -1118,39 +1086,24 @@ export class CasesComponent implements OnInit {
       }
     }
     this.loading = true;
-    // console.log('search start - loading: ', this.loading);
     this.judgement = [];
     this.selectedJudgements.map((item: any) => {
       this.judgement.push(item.item_text);
     });
     this.courts = [];
-    // this.selectedCourts.map((item: any) => {
-    //   this.courts.push(item.item_text);
-    //   console.log(item.item_text);
-    // });
     for (var i = 0; i < this.selectedCourts.length; i++) {
       this.courts.push(this.selectedCourts[i].item_name);
-      console.log(this.selectedCourts[i].item_name);
     }
-    // console.log(this.courts);
-    // // console.log(this.court_options[0]);
-    // console.log(this.selectedCourts[0]);
-    // console.log(this.selectedCourts[1]);
-    // console.log(this.selectedCourts[2]);
 
-    // console.log(this.courts);
     this.court_indexes = [];
-    console.log(this.court_options[0]);
     for (var i = 0; i < this.courts.length; i++) {
       for (var j = 0; j < this.court_options.length; j++) {
         if (this.courts[i] === this.court_options[j].item_name) {
-          // console.log(j);
           this.court_indexes.push(this.court_options[j].item_id);
         }
       }
     }
     this.courts = this.court_indexes;
-    // console.log(this.court_indexes);
 
     this.caseService
       .getSearchedCases(
@@ -1168,7 +1121,6 @@ export class CasesComponent implements OnInit {
         this.selectedCountry.name
       )
       .subscribe((data: any) => {
-        // console.log(data.case_list);
         if (data.success) {
           this.rows = data.case_list;
           this.results_time = data.result_time;
@@ -1177,7 +1129,7 @@ export class CasesComponent implements OnInit {
           console.log(data.court_analytics);
           this.barChartData[0].data = [];
           this.barChartLabels = [];
-          for(var i=0;i<data.court_analytics.length;i++){
+          for (var i = 0; i < data.court_analytics.length; i++) {
             this.barChartLabels.push(data.court_analytics[i].key);
             // console.log(this.barChartData);
             this.barChartData[0].data?.push(data.court_analytics[i].doc_count);
@@ -1189,7 +1141,6 @@ export class CasesComponent implements OnInit {
           this.reset_filters();
         }
         this.loading = false;
-        // console.log('search end - loading: ', this.loading);
       });
 
     if (Boolean(this.view_search) == false) this.show_search();
@@ -1211,8 +1162,6 @@ export class CasesComponent implements OnInit {
         this.selectedCountry.name
       )
       .subscribe((data: any) => {
-        // data = data[0];
-        // console.log(data);
         this.chartLabels.length = 0;
         this.Datalabels.length = 0;
         try {
@@ -1251,9 +1200,7 @@ export class CasesComponent implements OnInit {
             this.chartData[i].label = this.Datalabels[i];
             this.chartData[i].stack = 'a';
           }
-        } catch (error) {
-          // console.log(error);
-        }
+        } catch (error) {}
       });
   }
 
@@ -1282,9 +1229,7 @@ export class CasesComponent implements OnInit {
             this.doughnutChartLabels.sort();
             arr.push(item.value);
           });
-        } catch (error) {
-          // console.log(error);
-        }
+        } catch (error) {}
 
         this.doughnutChartData = arr;
         this.loading = false;
@@ -1355,8 +1300,6 @@ export class CasesComponent implements OnInit {
             }
             sums[i] = sum;
           }
-          // console.log(this.petitionerChartData);
-          // console.log(sums);
           var n = this.petitionerChartLabels.length;
           for (var i = n; i >= 0; i--) {
             for (var j = n; j > n - i; j--) {
@@ -1387,11 +1330,7 @@ export class CasesComponent implements OnInit {
             0,
             this.petitionerChartLimit
           );
-          // console.log(this.petitionerChartData);
-          // console.log(this.petitionerChartLabels);
-        } catch (error) {
-          // console.log(error);
-        }
+        } catch (error) {}
       });
   }
 
@@ -1424,7 +1363,6 @@ export class CasesComponent implements OnInit {
             }
             this.respondentDatalabels.sort();
           });
-          // this.respondentChartLabels = [...new Set(this.respondentChartLabels)];
           this.respondentChartData = [
             { data: [], label: '', stack: 'a' },
             { data: [], label: '', stack: 'a' },
@@ -1460,7 +1398,6 @@ export class CasesComponent implements OnInit {
             }
             sums[i] = sum;
           }
-          // console.log(sums);
           var n = this.respondentChartLabels.length;
           for (var i = n; i >= 0; i--) {
             for (var j = n; j > n - i; j--) {
@@ -1491,9 +1428,7 @@ export class CasesComponent implements OnInit {
             0,
             this.respondentChartLimit
           );
-        } catch (error) {
-          // console.log(error);
-        }
+        } catch (error) {}
       });
   }
 
@@ -1524,9 +1459,7 @@ export class CasesComponent implements OnInit {
           });
           this.pvb_Bench = this.pvb_Bench.slice(0, this.petitionerChartLimit);
           this.pvb_Counsel = this.petitionerChartLabels;
-          // this.pvb_Counsel = this.pvb_Counsel.slice(0, 7);
           this.pvb_data = [];
-          // this.pvb_data.length=0;
           for (let i = 0; i < this.pvb_Bench.length; i++) {
             for (let j = 0; j < this.pvb_Counsel.length; j++) {
               var temp = 0;
@@ -1547,11 +1480,8 @@ export class CasesComponent implements OnInit {
               });
             }
           }
-          // console.log(this.pvb_data);
           this.pvb_init();
-        } catch (error) {
-          // console.log(error);
-        }
+        } catch (error) {}
       });
   }
 
@@ -1570,7 +1500,6 @@ export class CasesComponent implements OnInit {
       )
       .subscribe((data: any) => {
         try {
-          // console.log(data);
           this.rvb_Bench = [];
           this.rvb_Counsel = [];
           data.map((item: any) => {
@@ -1583,9 +1512,7 @@ export class CasesComponent implements OnInit {
           });
           this.rvb_Bench = this.rvb_Bench.slice(0, this.respondentChartLimit);
           this.rvb_Counsel = this.respondentChartLabels;
-          // this.rvb_Counsel = this.rvb_Counsel.slice(0, 7);
           this.rvb_data = [];
-          // this.pvb_data.length=0;
           for (let i = 0; i < this.rvb_Bench.length; i++) {
             for (let j = 0; j < this.rvb_Counsel.length; j++) {
               var temp = 0;
@@ -1606,13 +1533,9 @@ export class CasesComponent implements OnInit {
               });
             }
           }
-          // console.log(this.rvb_data);
           this.rvb_init();
           this.loading = false;
-          // console.log('getRsp_v_BenchChart end - loading: ', this.loading);
-        } catch (error) {
-          // console.log(error);
-        }
+        } catch (error) {}
       });
   }
 
@@ -1632,12 +1555,9 @@ export class CasesComponent implements OnInit {
       .subscribe((data: any) => {
         try {
           this.cited_cases = data;
-          // console.log(this.cited_cases);
           this.loading = false;
           this.getCitedCaseURLs();
-        } catch (error) {
-          // console.log(error);
-        }
+        } catch (error) {}
       });
   }
 
@@ -1651,11 +1571,9 @@ export class CasesComponent implements OnInit {
               this.cited_cases_url[data.index] = data.url;
             });
         }
-        // console.log('sorted array:', this.cited_cases_url);
       } catch (error) {
         console.log(error);
       }
-      // console.log('unsorted json', this.cited_cases_url_unsorted);
     }, 500);
   }
 
@@ -1675,13 +1593,6 @@ export class CasesComponent implements OnInit {
       .subscribe((data: any) => {
         try {
           this.CitedProvisions = data;
-          console.log(this.CitedProvisions.length);
-          // this.CitedActCorrectedDataNames = [];
-          // data.map((item: any) => {
-          //   if (!this.CitedActCorrectedDataNames.includes(item.group))
-          //     this.CitedActCorrectedDataNames.push(item.group);
-          // });
-          // this.CitedActCorrectedData = data;
         } catch (error) {}
       });
   }
@@ -1827,138 +1738,8 @@ export class CasesComponent implements OnInit {
   year_range_msg: string = '';
   year_range_selected: boolean = false;
 
-  // getSliderValue1(event: any) {
-  //   this.date_floor.year = event.target.value;
-  //   if (this.date_floor.year > this.date_ceil.year) {
-  //     this.year_range_msg = 'Select valid range';
-  //     this.date_floor.year = 1900;
-  //     this.date_ceil.year = new Date().getFullYear();
-  //   } else {
-  //     this.year_range_msg =
-  //       String(this.date_floor.year) + ' to ' + String(this.date_ceil.year);
-  //   }
-  //   this.year_range_selected = true;
-  // }
-
-  // getSliderValue2(event: any) {
-  //   this.date_ceil.year = event.target.value;
-  //   if (this.date_floor.year > this.date_ceil.year) {
-  //     this.year_range_msg = 'Select valid range';
-  //     this.date_floor.year = 1900;
-  //     this.date_ceil.year = new Date().getFullYear();
-  //   } else {
-  //     this.year_range_msg =
-  //       String(this.date_floor.year) + ' to ' + String(this.date_ceil.year);
-  //   }
-  //   this.year_range_selected = true;
-  // }
-
   add_tag: string = '';
   no_of_tags = 0;
-
-  // addTag() {
-  //   var object = {
-  //     value: this.add_tag,
-  //     type: this.tagType.subtitle,
-  //   };
-  //   this.view_tags = true;
-  //   GoogleAnalyticsService.eventEmitter(
-  //     'add_tag',
-  //     this.tagType.subtitle,
-  //     'click',
-  //     this.add_tag,
-  //     this.results_count
-  //   );
-
-  //   if (this.tags_list.indexOf(object) == -1) {
-  //     this.tags_list.push(object);
-  //     this.no_of_tags = this.no_of_tags + 1;
-  //     this.IdTags();
-  //   }
-  //   // setTimeout(() => {
-  //   //   this.IdTags();
-  //   // }, 500);
-  //   setTimeout(() => {
-  //     var elem = document.getElementsByClassName('tags-list-item');
-  //     // console.log(elem);
-  //     var idx = elem.length - 1;
-  //     switch (this.tagType.id) {
-  //       case 'judgeName': {
-  //         elem[idx].className = 'tags-list-item tag-judgeName';
-  //         var elem_h3 = elem[idx].getElementsByTagName('h3');
-  //         if (this.bench == '')
-  //           this.bench = elem_h3[0]
-  //             .textContent!.toLowerCase()
-  //             .replace(/\s/g, '');
-  //         else
-  //           this.bench = this.bench
-  //             .concat('|')
-  //             .concat(elem_h3[0].textContent!)
-  //             .toLowerCase()
-  //             .replace(/\s/g, '');
-  //         break;
-  //       }
-  //       case 'petitionerName': {
-  //         elem[idx].className = 'tags-list-item tag-petitionerName';
-  //         var elem_h3 = elem[idx].getElementsByTagName('h3');
-  //         if (this.petitioner == '')
-  //           this.petitioner = elem_h3[0]
-  //             .textContent!.toLowerCase()
-  //             .replace(/\s/g, '');
-  //         else
-  //           this.petitioner = this.petitioner
-  //             .concat('|')
-  //             .concat(elem_h3[0].textContent!)
-  //             .toLowerCase()
-  //             .replace(/\s/g, '');
-  //         break;
-  //       }
-  //       case 'petitionerCounsel': {
-  //         elem[idx].className = 'tags-list-item tag-petitionerCounsel';
-  //         break;
-  //       }
-  //       case 'respondentName': {
-  //         elem[idx].className = 'tags-list-item tag-respondentName';
-  //         var elem_h3 = elem[idx].getElementsByTagName('h3');
-  //         if (this.respondent == '')
-  //           this.respondent = elem_h3[0]
-  //             .textContent!.toLowerCase()
-  //             .replace(/\s/g, '');
-  //         else
-  //           this.respondent = this.respondent
-  //             .concat('|')
-  //             .concat(elem_h3[0].textContent!)
-  //             .toLowerCase()
-  //             .replace(/\s/g, '');
-  //         break;
-  //       }
-  //       case 'respondentCounsel': {
-  //         elem[idx].className = 'tags-list-item tag-respondentCounsel';
-  //         break;
-  //       }
-  //     }
-  //     console.log('bench: ', this.bench);
-  //     console.log('petitioner: ', this.petitioner);
-  //     console.log('respondent: ', this.respondent);
-  //   }, 500);
-  // }
-
-  // IdTags() {
-  //   var elem = document.getElementsByClassName('tags-list-item');
-  //   for (var i = 0; i < elem.length; i++) {
-  //     var child_img = elem[i].getElementsByTagName('img');
-  //     child_img[0].setAttribute('id', 'remtag' + String(i));
-  //   }
-  // }
-
-  // removeTag(event: any) {
-  //   var id = event.target.attributes.id.value;
-  //   var idx = Number(id.charAt(id.length - 1));
-  //   this.tags_list.splice(idx, 1);
-  //   if (this.tags_list.length == 0) this.view_tags = false;
-  //   else this.IdTags();
-  //   this.no_of_tags = this.no_of_tags - 1;
-  // }
 
   select_in() {
     this.selectedCountry = this.country_options[0];
@@ -1967,20 +1748,15 @@ export class CasesComponent implements OnInit {
     this.court_options = this.court_items;
 
     this.courtdata = this.court_id_names;
-    // this.ngOnInit();
     this.selectedCourts = this.court_options;
     this.courtlevel = this.courtdata[0];
     this.court = this.courtdata[0].name;
     this.courtForm = this.fb.group({
       city: [this.selectedCourts],
     });
-
-    // console.log(this.selectedCourts);
-    // console.log(this.courts);
   }
 
   select_sg() {
-    // console.log("singapore selected");
     this.selectedCountry = this.country_options[1];
     this.courts = ['Supreme Court Singapore'];
 
@@ -1996,7 +1772,6 @@ export class CasesComponent implements OnInit {
       { id: 'Supreme Court Singapore', name: 'Supreme Court Singapore' },
     ];
 
-    // this.ngOnInit();
     this.selectedCourts = this.court_options;
     this.courtlevel = this.courtdata[0];
     this.court = this.courtdata[0].name;
@@ -2010,25 +1785,103 @@ export class CasesComponent implements OnInit {
     this.service_down = true;
   }
 
+  // ======================== Autocomplete functions ========================
+
+  autoComplete_list: string[] = [];
+
   queryChange(val: string) {
-    console.log(val);
     if (val.length === 0) {
       this.autocomplete_suggestions = [];
     } else {
       this.caseService.getAutocomplete(val).subscribe((data: any) => {
         this.autocomplete_suggestions = data.result;
+        if (val.indexOf('"') != -1) {
+          console.log('double quotes present');
+          this.autoComplete_list = [];
+          for (let i = 0; i < this.autocomplete_suggestions.length; i++) {
+            var text = this.autocomplete_suggestions[i].text;
+            if (text.indexOf('"') == -1) {
+              this.autoComplete_list.push('"' + text);
+            } else {
+              this.autoComplete_list.push(text);
+            }
+          }
+        } else {
+          console.log('NO double quotes');
+          this.autoComplete_list = [];
+          for (let i = 0; i < this.autocomplete_suggestions.length; i++) {
+            var text = this.autocomplete_suggestions[i].text;
+            this.autoComplete_list.push(text);
+          }
+        }
       });
     }
   }
 
-  autocomplete(event: any) {
+  // autoComplete_list = document.getElementsByClassName('autoComplete_items');
+
+  // getIndex(value: any) {
+  //   for (let i = 0; i < this.autoComplete_list.length; i++) {
+  //     const element = this.autoComplete_list[i];
+  //     if (element.textContent === value) return i;
+  //   }
+  //   return -1;
+  // }
+
+  // setActive(idx: number) {
+  //   this.autoComplete_list[idx].classList.add('autoComplete_active');
+  // }
+
+  // unsetActive(idx: number) {
+  //   this.autoComplete_list[idx].classList.remove('autoComplete_active');
+  // }
+
+  key_press(event: any) {
+    // var length = this.autoComplete_list.length;
+    // var autoComplete_active = document.getElementsByClassName(
+    //   'autoComplete_active'
+    // )[0];
+    // console.log(autoComplete_active);
+    // var active_idx = 0 || this.getIndex(autoComplete_active?.textContent);
+
+    // if (event.which == 38) {
+    //   if (active_idx != length - 1) {
+    //     this.unsetActive(active_idx);
+    //     active_idx = active_idx - 1;
+    //     this.setActive(active_idx);
+    //   }
+    // }
+    // if (event.which == 40) {
+    //   if (active_idx != length - 1) {
+    //     this.unsetActive(active_idx);
+    //     active_idx = active_idx + 1;
+    //     this.setActive(active_idx);
+    //   }
+    // }
+    if (event.which == ENTER) {
+      this.first_search();
+    }
+  }
+
+  view_focussed = true;
+
+  onClick(event: any) {
+    var focussed = document.getElementById('search-box');
+    if (focussed == document.activeElement) {
+      this.view_focussed = true;
+    } else {
+      this.view_focussed = false;
+    }
+  }
+
+  autoComplete(event: any) {
     this.query = event.path[0].outerText;
     this.autocomplete_suggestions = [];
   }
 
   tag_click(event: any) {
     console.log(event.target.innerHTML);
-    this.query=event.target.innerHTML;
+    this.query = event.target.innerHTML;
     this.search();
   }
 }

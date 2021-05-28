@@ -64,4 +64,15 @@ export class AppComponent implements OnInit {
       element.classList.remove('header-scrolled');
     }
   }
+
+  view_focussed = false;
+
+  onClick(event: any) {
+    var focussed = document.getElementById('mobile_nav');
+    if (focussed == event.target) {
+      this.view_focussed = true;
+    } else {
+      this.view_focussed = false;
+    }
+  }
 }
