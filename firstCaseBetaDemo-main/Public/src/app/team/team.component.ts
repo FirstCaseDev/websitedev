@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { EmailService } from './email.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-team',
@@ -6,8 +8,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./team.component.css'],
 })
 export class TeamComponent implements OnInit {
-  constructor() {}
   members: any;
+  contactForm: FormGroup;
+  disabledSubmitButton: boolean = true;
+  optionsSelect: Array<any> = [];
+
+  @HostListener('input') oninput() {
+    if (this.contactForm.valid) {
+      this.disabledSubmitButton = false;
+    }
+  }
+  constructor(
+    private connectionService: EmailService,
+    private fb: FormBuilder
+  ) {
+    this.contactForm = fb.group({
+      contactFormName: ['', Validators.required],
+      contactFormEmail: [
+        '',
+        Validators.compose([Validators.required, Validators.email]),
+      ],
+      contactFormSubject: ['', Validators.required],
+      contactFormMessage: ['', Validators.required],
+      contactFormCopy: [''],
+    });
+  }
+
+  processForm() {
+    // console.log(this.contactForm.value);
+    this.connectionService.sendMessage(this.contactForm.value).subscribe(
+      (data) => {
+        // console.log(data);
+        alert('Your message has been sent.');
+        this.contactForm.reset();
+        this.disabledSubmitButton = true;
+      },
+      (error) => {
+        console.log('Error', error);
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.members = [

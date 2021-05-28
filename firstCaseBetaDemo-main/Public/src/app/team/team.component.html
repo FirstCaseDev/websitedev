@@ -147,19 +147,20 @@
 
       <div class="col-lg-6">
         <form
-          action="mailto:tej0000001@gmail.com"
-          method="post"
-          class="php-email-form"
-          enctype="text/plain"
+          (ngSubmit)="processForm()"
+          [formGroup]="contactForm"
+          class="email-form"
         >
           <div class="row gy-4">
             <div class="col-md-6">
               <input
                 type="text"
-                name="name"
                 class="form-control"
                 placeholder="Your Name"
                 required
+                formControlName="contactFormName"
+                id="defaultContactFormName"
+                placeholder="Name"
               />
             </div>
 
@@ -167,9 +168,10 @@
               <input
                 type="email"
                 class="form-control"
-                name="email"
                 placeholder="Your Email"
                 required
+                formControlName="contactFormEmail"
+                id="defaultContactFormEmail"
               />
             </div>
 
@@ -177,30 +179,33 @@
               <input
                 type="text"
                 class="form-control"
-                name="subject"
-                placeholder="Subject"
                 required
+                formControlName="contactFormSubject"
+                id="defaultContactFormEmail"
+                placeholder="Subject"
               />
             </div>
 
             <div class="col-md-12">
               <textarea
                 class="form-control"
-                name="message"
                 rows="6"
                 placeholder="Message"
                 required
+                formControlName="contactFormMessage"
+                id="exampleFormControlTextarea2"
+                rows="3"
               ></textarea>
             </div>
 
             <div class="col-md-12 text-center">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">
+              <div class="loading" *ngIf="email_loading">Loading</div>
+              <div class="error-message" *ngIf="email_error"></div>
+              <div class="sent-message" *ngIf="email_sent">
                 Your message has been sent. Thank you!
               </div>
 
-              <button type="submit">Send Message</button>
+              <button class="btn btn-primary" type="submit">Send</button>
             </div>
           </div>
         </form>

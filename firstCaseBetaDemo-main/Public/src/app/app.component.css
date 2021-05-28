@@ -381,6 +381,10 @@ section {
   }
 }
 
+.nav-link {
+  cursor: pointer;
+}
+
 /* .navbar-mobile {
     position: fixed;
     overflow: hidden;
