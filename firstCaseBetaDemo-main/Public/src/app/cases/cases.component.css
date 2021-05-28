@@ -346,6 +346,12 @@ a {
     background-color: #e0bed0;
 }
 
+.suggestions {
+    /* background-color: #d5a6bdff; */
+    /* background-color: #c1bb9e; */
+    background-color: #e0bed0;
+}
+
 .source-keyword {
     background-color: #a4c2f4ff;
 }

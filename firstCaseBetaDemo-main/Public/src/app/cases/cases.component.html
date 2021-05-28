@@ -83,7 +83,7 @@
                         <div class="row mb-3">
                             <!-- Search -->
                             <div class="col-md">
-                                <div class="form-group" id="search-form">
+                                <div class="form-group" id="search-form" style="margin-bottom: -5px !important;">
                                     <label for="search" class="probootstrap-date-wrap">Search</label
                   >
                   <input
@@ -149,6 +149,7 @@
                 </div>
               </div>
             </div>
+            
             <!-- Row 2 -->
             <div class="row mb-3" *ngIf="ShowFilter">
               <!-- Sort By -->
@@ -196,40 +197,58 @@
                             </div>
                         </div>
                         <!-- END row -->
-
-                        <!-- Row 3 -->
-                        <div class="row mb-3" *ngIf="ShowFilter">
-                            <!-- Judgements -->
+                        <div class="row mb-3" *ngIf="related_searches.length > 0">
                             <div class="col-md">
-                                <div class="form-group">
-                                    <label for="judgments" class="probootstrap-date-wrap">Judgements</label
+                                <label for="search" class="probootstrap-date-wrap">Similar queries</label>
+                                <div style="display: grid; grid-template-columns: 100%">
+                                    <div style="display: flex;
+                                    flex-wrap: wrap;
+                                    -webkit-flex-wrap: wrap;
+                                    align-items: center;">
+
+                                        <div class="keyword-list-item suggestions" *ngFor="let item of related_searches">
+                                            <p style=" margin: 0; padding: 0; cursor:pointer" (click)="tag_click($event) ">
+                                                {{item}}
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Row 3 -->
+                        <div class="row mb-3 " *ngIf="ShowFilter ">
+                            <!-- Judgements -->
+                            <div class="col-md ">
+                                <div class="form-group ">
+                                    <label for="judgments " class="probootstrap-date-wrap ">Judgements</label
                   >
                   <ng-multiselect-dropdown
-                    [placeholder]="'Select one or more...'"
-                    [(ngModel)]="selectedJudgements"
-                    [settings]="dropdownSettings"
-                    [data]="judgement_options"
-                    (onSelect)="onItemSelect($event)"
-                    (onSelectAll)="onSelectAll($event)"
-                    [ngModelOptions]="{ standalone: true }"
+                    [placeholder]=" 'Select one or more...' "
+                    [(ngModel)]="selectedJudgements "
+                    [settings]="dropdownSettings "
+                    [data]="judgement_options "
+                    (onSelect)="onItemSelect($event) "
+                    (onSelectAll)="onSelectAll($event) "
+                    [ngModelOptions]="{ standalone: true } "
                   >
                   </ng-multiselect-dropdown>
                 </div>
               </div>
               <!-- Courts -->
-              <div class="col-md">
-                <div class="form-group">
-                  <label for="courts" class="probootstrap-date-wrap"
+              <div class="col-md ">
+                <div class="form-group ">
+                  <label for="courts " class="probootstrap-date-wrap "
                     >Courts</label
                   >
                   <ng-multiselect-dropdown
-                    [placeholder]="'Select one or more...'"
-                    [(ngModel)]="selectedCourts"
-                    [settings]="dropdownSettings"
-                    [data]="court_options"
-                    (onSelect)="onItemSelect($event)"
-                    (onSelectAll)="onSelectAll($event)"
-                    [ngModelOptions]="{ standalone: true }"
+                    [placeholder]=" 'Select one or more...' "
+                    [(ngModel)]="selectedCourts "
+                    [settings]="dropdownSettings "
+                    [data]="court_options "
+                    (onSelect)="onItemSelect($event) "
+                    (onSelectAll)="onSelectAll($event) "
+                    [ngModelOptions]="{ standalone: true } "
                   >
                   </ng-multiselect-dropdown>
                 </div>
@@ -238,24 +257,24 @@
             <!-- END row -->
 
             <!-- Row 4 -->
-            <div class="row mb-3">
-              <div class="search-row-4">
+            <div class="row mb-3 ">
+              <div class="search-row-4 ">
                 <!-- Country -->
-                <div class="form-group">
-                  <label for="id_label_single">Country</label>
-                                    <label for="id_label_single" style="width: 100%">
+                <div class="form-group ">
+                  <label for="id_label_single ">Country</label>
+                                    <label for="id_label_single " style="width: 100% ">
                     <select
-                      class="js-example-basic-single js-states form-control"
-                      id="id_label_single"
-                      name="id_label_single"
-                      style="height: 45px"
-                      [(ngModel)]="selectedCountry"
-                      (change)="selected()"
-                      name="sorting"
+                      class="js-example-basic-single js-states form-control "
+                      id="id_label_single "
+                      name="id_label_single "
+                      style="height: 45px "
+                      [(ngModel)]="selectedCountry "
+                      (change)="selected() "
+                      name="sorting "
                     >
                       <option
-                        *ngFor="let item of country_options"
-                        [ngValue]="item"
+                        *ngFor="let item of country_options "
+                        [ngValue]="item "
                       >
                         {{ item.name }}
                       </option>
@@ -263,33 +282,33 @@
                   </label>
                                 </div>
                                 <!-- Tag Type -->
-                                <div class="search-col-2 form-group">
-                                    <label for="tag_type">Tag Type</label>
-                                    <label for="tag_type" style="width: 100%">
+                                <div class="search-col-2 form-group ">
+                                    <label for="tag_type ">Tag Type</label>
+                                    <label for="tag_type " style="width: 100% ">
                     <select
-                      class="js-example-basic-single js-states form-control"
-                      id="id_label_single"
-                      style="height: 45px"
-                      [(ngModel)]="tagType"
-                      (change)="selected_tag()"
-                      name="tag_type"
+                      class="js-example-basic-single js-states form-control "
+                      id="id_label_single "
+                      style="height: 45px "
+                      [(ngModel)]="tagType "
+                      (change)="selected_tag() "
+                      name="tag_type "
                     >
-                      <option *ngFor="let item of tagCategory" [ngValue]="item">
+                      <option *ngFor="let item of tagCategory " [ngValue]="item ">
                         {{ item.name }}
                       </option>
                     </select>
                   </label>
                                 </div>
                                 <!-- Tags List -->
-                                <div class="search-col-3 form-group">
-                                    <label for="tags" class="probootstrap-date-wrap">Tags</label>
-                                    <mat-chip-list #tagschipList style="width: 100%; height: 45px">
-                                        <mat-chip class="search-chip" *ngFor="let Tag of tags_list" [selectable]="true" [removable]="true" (removed)="remove(Tag)">
+                                <div class="search-col-3 form-group ">
+                                    <label for="tags " class="probootstrap-date-wrap ">Tags</label>
+                                    <mat-chip-list #tagschipList style="width: 100%; height: 45px ">
+                                        <mat-chip class="search-chip " *ngFor="let Tag of tags_list " [selectable]="true " [removable]="true " (removed)="remove(Tag) ">
                                             {{ Tag }}
-                                            <mat-icon matChipRemove *ngIf="true">
-                                                <img src="../../assets/img/x-cross-dark.svg" width="15px" /></mat-icon>
+                                            <mat-icon matChipRemove *ngIf="true ">
+                                                <img src="../../assets/img/x-cross-dark.svg " width="15px " /></mat-icon>
                                         </mat-chip>
-                                        <input class="form-control" placeholder="Add Tags" [matChipInputFor]="tagschipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" />
+                                        <input class="form-control " placeholder="Add Tags " [matChipInputFor]="tagschipList " [matChipInputSeparatorKeyCodes]="separatorKeysCodes " [matChipInputAddOnBlur]="true " (matChipInputTokenEnd)="add($event) " />
                                     </mat-chip-list>
                                 </div>
                             </div>
@@ -298,226 +317,216 @@
                     </div>
                 </div>
 
-                <div class="probootstrap-form border-form2" *ngIf="results_count">
+                <div class="probootstrap-form border-form2 " *ngIf="results_count ">
                     <div>
-                        <div class="row mb-3">
+                        <div class="row mb-3 ">
                             <!-- Search Tab -->
-                            <div class="col-md">
-                                <div class="tab active" id="search_tab" (click)="show_search()">
+                            <div class="col-md ">
+                                <div class="tab active " id="search_tab " (click)="show_search() ">
                                     Search Results
                                 </div>
                             </div>
                             <!-- Analytics Tab -->
-                            <div class="col-md">
-                                <div class="tab" id="analytics_tab" (click)="show_analytics()">
+                            <div class="col-md ">
+                                <div class="tab " id="analytics_tab " (click)="show_analytics() ">
                                     Analytics
                                 </div>
                             </div>
                             <!-- Intelligent Legal Output Tab -->
-                            <div class="col-md">
-                                <div class="tab" id="citation_tab" (click)="show_citations()">
+                            <div class="col-md ">
+                                <div class="tab " id="citation_tab " (click)="show_citations() ">
                                     Intelligent Legal Output
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3" *ngIf="view_search && searched">
+                        <div class="row mb-3 " *ngIf="view_search && searched ">
                             <!-- Search Slide -->
-                            <div id="slide-1">
-                                <p style="margin: 10px 0">
+                            <div id="slide-1 ">
+                                <p style="margin: 10px 0 ">
                                     {{ results_count }} results found in {{ results_time }} seconds
                                 </p>
-                                <div class="search-repeater" *ngFor="let data of rows">
-                                    <div style="display: grid; grid-template-columns: 80% 20%">
-                                        <div class="top-bar">
-                                            <div class="keyword-list-item case-id-keyword" *ngIf="data.case_id != ''">
-                                                <p style="margin: 0; padding: 0">
+                                <div class="search-repeater " *ngFor="let data of rows ">
+                                    <div style="display: grid; grid-template-columns: 80% 20% ">
+                                        <div class="top-bar ">
+                                            <div class="keyword-list-item case-id-keyword " *ngIf="data.case_id !='' ">
+                                                <p style="margin: 0; padding: 0 ">
                                                     {{ data.case_id }}
                                                 </p>
                                             </div>
-                                            <div class="keyword-list-item source-keyword" *ngIf="data.source != ''">
-                                                <p style="margin: 0; padding: 0">
+                                            <div class="keyword-list-item source-keyword " *ngIf="data.source !='' ">
+                                                <p style="margin: 0; padding: 0 ">
                                                     {{ data.source }}
                                                 </p>
                                             </div>
-                                            <div class="keyword-list-item judgement-keyword" *ngIf="data.judgement != ''">
-                                                <p style="margin: 0; padding: 0">
+                                            <div class="keyword-list-item judgement-keyword " *ngIf="data.judgement !='' ">
+                                                <p style="margin: 0; padding: 0 ">
                                                     {{ data.judgement }}
                                                 </p>
                                             </div>
-                                            <div class="keyword-list-item date-keyword" *ngIf="data.month != ''">
-                                                <p style="margin: 0; padding: 0">
+                                            <div class="keyword-list-item date-keyword " *ngIf="data.month !='' ">
+                                                <p style="margin: 0; padding: 0 ">
                                                     {{ data.day }} {{ data.month }} {{ data.year }}
                                                 </p>
                                             </div>
-                                            <div class="keyword-list-item bench-keyword" *ngIf="data.bench != ''">
-                                                <p style="margin: 0; padding: 0">
+                                            <div class="keyword-list-item bench-keyword " *ngIf="data.bench !='' ">
+                                                <p style="margin: 0; padding: 0 ">
                                                     {{ data.bench }}
                                                 </p>
                                             </div>
                                         </div>
 
-                                        <div style="
-                        display: flex;
-                        align-items: center;
-                        flex-direction: row-reverse;
-                      ">
-                                            <div class="occurences">
+                                        <div style=" display: flex; align-items: center; flex-direction: row-reverse; ">
+                                            <div class="occurences ">
                                                 Matches: {{ data.match_count }}
                                             </div>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <p id="search-desc" name="desc" style="font-size: 25px; font-family: PopMedium">
-                                            <a href="/casedoc/{{ data._id }}" target="_blank" style="text-decoration: none; margin: 0; color: #012970">{{ data.title }}</a
+                                        <p id="search-desc " name="desc " style="font-size: 25px; font-family: PopMedium ">
+                                            <a href="/casedoc/{{ data._id }} " target="_blank " style="text-decoration: none; margin: 0; color: #012970 ">{{ data.title }}</a
                       >
                     </p>
                   </div>
                   <div>
                     <div
-                      style="
-                        display: flex;
-                        flex-wrap: wrap;
-                        -webkit-flex-wrap: wrap;
-                      "
+                      style=" display: flex; flex-wrap: wrap; -webkit-flex-wrap: wrap; "
                     >
-                      <div *ngFor="let elem of data.query_terms">
-                        <div class="keyword-list-item query-term-keyword">
-                          <p style="margin: 0; padding: 0">
+                      <div *ngFor="let elem of data.query_terms ">
+                        <div class="keyword-list-item query-term-keyword ">
+                          <p style="margin: 0; padding: 0; cursor:pointer "  (click)="tag_click($event) ">
                             {{ elem }}
                           </p>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div style="margin: 5px 5px 5px 0">
+                  <div style="margin: 5px 5px 5px 0 ">
                     <p
-                      class="blog-post"
-                      style="font-size: small; text-align: justify"
-                      [innerHtml]="data.highlight"
+                      class="blog-post "
+                      style="font-size: small; text-align: justify "
+                      [innerHtml]="data.highlight "
                     ></p>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row mb-3" *ngIf="view_analytics && searched">
+            <div class="row mb-3 " *ngIf="view_analytics && searched ">
               <!-- Analytics Slide -->
-              <div id="slide-2">
+              <div id="slide-2 ">
                 <!-- Analytics part with graphs -->
-                <div *ngIf="show_graphs_warning" style="text-align: center">
+                <div *ngIf="show_graphs_warning " style="text-align: center ">
                   Rotate your device to landcape mode
                 </div>
-                <div *ngIf="!show_graphs_warning">
-                  <swiper style="margin: auto" [config]="config">
-                    <div class="swiper-wrapper">
-                      <div class="swiper-slide">
-                        <div class="graphs-item">
+                <div *ngIf="!show_graphs_warning ">
+                  <swiper style="margin: auto " [config]="config ">
+                    <div class="swiper-wrapper ">
+                      <div class="swiper-slide ">
+                        <div class="graphs-item ">
                           <canvas #myCanvas baseChart 
-                            [datasets]="barChartData"
-                            [labels]="barChartLabels"
-                            [options]="barChartOptions"
-                            [plugins]="barChartPlugins"
-                            [legend]="barChartLegend"
-                            [chartType]="barChartType">
+                            [datasets]="barChartData "
+                            [labels]="barChartLabels "
+                            [options]="barChartOptions "
+                            [plugins]="barChartPlugins "
+                            [legend]="barChartLegend "
+                            [chartType]="barChartType ">
                           </canvas>
                         </div>
                       </div>
-                      <div class="swiper-slide">
-                        <div class="graphs-item">
+                      <div class="swiper-slide ">
+                        <div class="graphs-item ">
                           <canvas
                             baseChart
-                            [chartType]="'line'"
-                            [datasets]="chartData"
-                            [labels]="chartLabels"
-                            [options]="linechartOptions"
-                            [legend]="true"
+                            [chartType]=" 'line' "
+                            [datasets]="chartData "
+                            [labels]="chartLabels "
+                            [options]="linechartOptions "
+                            [legend]="true "
                           ></canvas>
                         </div>
                       </div>
-                      <div class="swiper-slide">
-                        <div class="graphs-item">
+                      <div class="swiper-slide ">
+                        <div class="graphs-item ">
                           <canvas
                             baseChart
-                            [data]="doughnutChartData"
-                            [labels]="doughnutChartLabels"
-                            [options]="doughnutChartOptions"
-                            [chartType]="doughnutChartType"
+                            [data]="doughnutChartData "
+                            [labels]="doughnutChartLabels "
+                            [options]="doughnutChartOptions "
+                            [chartType]="doughnutChartType "
                           ></canvas>
                         </div>
                       </div>
-                      <!-- <div class="swiper-slide">
-                        <div class="graphs-item">
+                      <!-- <div class="swiper-slide ">
+                        <div class="graphs-item ">
                           <canvas
                             baseChart
-                            [datasets]="petitionerChartData"
-                            [labels]="petitionerChartLabels"
-                            [options]="petitionerChartOptions"
-                            [legend]="petitionerChartLegend"
-                            [chartType]="petitionerChartType"
+                            [datasets]="petitionerChartData "
+                            [labels]="petitionerChartLabels "
+                            [options]="petitionerChartOptions "
+                            [legend]="petitionerChartLegend "
+                            [chartType]="petitionerChartType "
                           ></canvas>
                         </div>
                       </div>
-                      <div class="swiper-slide">
-                        <div class="graphs-item">
+                      <div class="swiper-slide ">
+                        <div class="graphs-item ">
                           <canvas
                             baseChart
-                            [datasets]="respondentChartData"
-                            [labels]="respondentChartLabels"
-                            [options]="respondentChartOptions"
-                            [legend]="respondentChartLegend"
-                            [chartType]="respondentChartType"
+                            [datasets]="respondentChartData "
+                            [labels]="respondentChartLabels "
+                            [options]="respondentChartOptions "
+                            [legend]="respondentChartLegend "
+                            [chartType]="respondentChartType "
                           ></canvas>
                         </div>
                       </div> -->
                     </div>
 
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination "></div>
+                    <div class="swiper-button-next "></div>
+                    <div class="swiper-button-prev "></div>
                   </swiper>
                 </div>
               </div>
             </div>
-            <div class="row mb-3" *ngIf="view_citations && searched">
+            <div class="row mb-3 " *ngIf="view_citations && searched ">
               <!-- Intelligent Legal Output Slide -->
-              <div id="slide-3">
-                <div class="ilo-view">
-                  <div class="ilo-view-item">
-                    <h2 class="title-h2">Most Relevant Laws</h2>
+              <div id="slide-3 ">
+                <div class="ilo-view ">
+                  <div class="ilo-view-item ">
+                    <h2 class="title-h2 ">Most Relevant Laws</h2>
                     <div
-                      *ngFor="let provision of CitedProvisions; index as i"
-                      style="margin: 20px auto; display: flexbox"
+                      *ngFor="let provision of CitedProvisions; index as i "
+                      style="margin: 20px auto; display: flexbox "
                     >
-                      <div style="text-align: center; margin: 5px 0">
+                      <div style="text-align: center; margin: 5px 0 ">
                         {{ provision.act_name }}
                       </div>
                       <mat-chip-list #sectionsChipList>
                         <mat-chip
-                          class="tag-chip"
-                          *ngFor="let section of provision.sections"
+                          class="tag-chip "
+                          *ngFor="let section of provision.sections "
                         >
                           {{ section }}
                         </mat-chip>
                       </mat-chip-list>
                     </div>
                   </div>
-                  <div class="ilo-view-item">
-                    <h2 class="title-h2">Most important Cases</h2>
+                  <div class="ilo-view-item ">
+                    <h2 class="title-h2 ">Most important Cases</h2>
                     <div
-                      style="padding: 20px 0"
-                      *ngIf="cited_cases_url[0] !== 0"
-                      id="table-cited-cases"
+                      style="padding: 20px 0 "
+                      *ngIf="cited_cases_url[0] !==0 "
+                      id="table-cited-cases "
                     >
                       <div
-                        class="most-cited-case"
-                        *ngFor="let item of cited_cases; index as i"
+                        class="most-cited-case "
+                        *ngFor="let item of cited_cases; index as i "
                       >
                         <a
-                          style="color: black; text-decoration: none"
-                          href="https://firstcase.io/casedoc/{{
-                            cited_cases_url[i]
-                          }}"
-                          target="_blank"
+                          style="color: black; text-decoration: none "
+                          href="https://firstcase.io/casedoc/{{ cited_cases_url[i] }} "
+                          target="_blank "
                         >
                           {{ item.group }}
                         </a>
@@ -528,10 +537,10 @@
                     </div>
                 </div>
 
-                <div class="row mb-3" *ngIf="results_count && view_search">
+                <div class="row mb-3 " *ngIf="results_count && view_search ">
                     <!-- Pagination Previous -->
-                    <div class="col md">
-                        <div class="pagination-elem" *ngIf="page > 1">
+                    <div class="col md ">
+                        <div class="pagination-elem " *ngIf="page> 1">
                             <button (click)="sendPreviousPage()">Previous</button>
                         </div>
                     </div>

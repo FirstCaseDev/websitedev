@@ -194,7 +194,7 @@ app.get("/api/cases/query=:query", (req, res) => {
                             {
                                 simple_query_string: {
                                     query: searchText.trim(),
-                                    fields: ["title^5", "judgement_text^3"],
+                                    fields: ["title", "judgement_text^10", "query_terms", "petitioner", "respondent", "source"],
                                     default_operator: "and",
                                 },
                             },
@@ -250,6 +250,12 @@ app.get("/api/cases/query=:query", (req, res) => {
                             field: "source.keyword",
                             size: 10
                         }
+                    },
+                    related_searches: {
+                        terms: {
+                            field: "query_terms.keyword",
+                            size: 5
+                        }
                     }
                 },
                 sort: sort_options,
@@ -295,6 +301,9 @@ app.get("/api/cases/query=:query", (req, res) => {
                     }),
                     success: true,
                     court_analytics: response.aggregations.court_analytics.buckets,
+                    related_searches: response.aggregations.related_searches.buckets.map(function(i) {
+                        return i["key"];
+                    }),
                     msg: "Success",
                     day: response.hits.hits[0].day,
                     // response
@@ -395,7 +404,7 @@ app.get("/api/cases/cited_cases=:query", (req, res) => {
                             {
                                 simple_query_string: {
                                     query: searchText.trim(),
-                                    fields: ["title^5", "judgement_text^3"],
+                                    fields: ["title", "judgement_text^10", "query_terms", "petitioner", "respondent", "source"],
                                     default_operator: "and",
                                 },
                             },
@@ -505,7 +514,7 @@ app.get("/api/cases/cited_provisions=:query", (req, res) => {
                             {
                                 simple_query_string: {
                                     query: searchText.trim(),
-                                    fields: ["title^5", "judgement_text^3"],
+                                    fields: ["title", "judgement_text^10", "query_terms", "petitioner", "respondent", "source"],
                                     default_operator: "and",
                                 },
                             },
@@ -634,7 +643,7 @@ app.get("/api/cases/piecharts=:query", (req, res) => {
                             {
                                 simple_query_string: {
                                     query: searchText.trim(),
-                                    fields: ["title^5", "judgement_text^3"],
+                                    fields: ["title", "judgement_text^10", "query_terms", "petitioner", "respondent", "source"],
                                     default_operator: "and",
                                 },
                             },
@@ -748,7 +757,7 @@ app.get("/api/cases/charts=:query", (req, res) => {
                             {
                                 simple_query_string: {
                                     query: searchText.trim(),
-                                    fields: ["title^5", "judgement_text^3"],
+                                    fields: ["title", "judgement_text^10", "query_terms", "petitioner", "respondent", "source"],
                                     default_operator: "and",
                                 },
                             },
@@ -882,7 +891,7 @@ app.get("/api/cases/ptncharts=:query", (req, res) => {
                             {
                                 simple_query_string: {
                                     query: searchText.trim(),
-                                    fields: ["title^5", "judgement_text^3"],
+                                    fields: ["title", "judgement_text^10", "query_terms", "petitioner", "respondent", "source"],
                                     default_operator: "and",
                                 },
                             },
@@ -1010,7 +1019,7 @@ app.get("/api/cases/respcharts=:query", (req, res) => {
                             {
                                 simple_query_string: {
                                     query: searchText.trim(),
-                                    fields: ["title^5", "judgement_text^3"],
+                                    fields: ["title", "judgement_text^10", "query_terms", "petitioner", "respondent", "source"],
                                     default_operator: "and",
                                 },
                             },

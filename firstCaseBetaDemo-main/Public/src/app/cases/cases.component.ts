@@ -265,6 +265,7 @@ export class CasesComponent implements OnInit {
     },
   ];
   selectedJudgements: any = [];
+  related_searches: any = [];
   dropdownSettings: any = {};
 
   tags_colors = ['#a4c2f4ff', '#b6d7a8ff', '#f9cb9cff', '#ffe599ff'];
@@ -1172,6 +1173,7 @@ export class CasesComponent implements OnInit {
           this.rows = data.case_list;
           this.results_time = data.result_time;
           this.results_count = data.result_count;
+          this.related_searches = data.related_searches;
           console.log(data.court_analytics);
           this.barChartData[0].data = [];
           this.barChartLabels = [];
@@ -2022,5 +2024,11 @@ export class CasesComponent implements OnInit {
   autocomplete(event: any) {
     this.query = event.path[0].outerText;
     this.autocomplete_suggestions = [];
+  }
+
+  tag_click(event: any) {
+    console.log(event.target.innerHTML);
+    this.query=event.target.innerHTML;
+    this.search();
   }
 }
