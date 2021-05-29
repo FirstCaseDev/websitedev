@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Renderer2, Inject, Component, OnInit } from '@angular/core';
 import { SwiperOptions } from 'swiper';
 import { interval } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { HomeService } from './home.service';
+import { Meta } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +13,12 @@ import { HomeService } from './home.service';
 })
 export class HomeComponent implements OnInit {
   data_subscription: Subscription;
-  constructor(private homeService: HomeService) {
+  constructor(
+    private homeService: HomeService,
+    private metaTagService: Meta,
+    private renderer2: Renderer2,
+    @Inject(DOCUMENT) private curr_doc: Document
+  ) {
     this.data_subscription = interval(1000).subscribe((x) => {
       this.get_counts();
     });
@@ -52,7 +59,7 @@ export class HomeComponent implements OnInit {
   ind_hc_total_counter: any = 0;
   ind_tribunal_total_counter: any = 0;
   sg_sc_total_counter: any = 0;
-  page_views: any=0;
+  page_views: any = 0;
   testimonials: any[] = [
     {
       name: 'Saul Goodman',
@@ -102,6 +109,35 @@ export class HomeComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    //General SEO Meta Tags
+    this.metaTagService.addTags([
+      {
+        name: 'title',
+        content: 'FirstCase - Legal Research Assistant',
+      },
+      {
+        name: 'description',
+        content:
+          'Where Artificial Intelligence meets Law; Building smart solutions for legal professionals',
+      },
+    ]);
+
+    //Google SEO script tag
+    let seo_script = this.renderer2.createElement('script');
+    seo_script.type = 'application/ld+json';
+    seo_script.text = `
+    {
+      "@context": "https://schema.org",
+      "@type": "Corporation",
+      "name": "First Case - Big Data for Big Law",
+      "description": "First Case - Where Artificial Intelligence meets Law. Building smart solutions for legal professionals",
+      "email": "mailto:first.case.ai@gmail.com",
+      "url": "https://firstcase.io/",
+      "sameAs": "https://www.linkedin.com/company/firstcaselaw"
+    }
+    `;
+    this.renderer2.appendChild(this.curr_doc.head, seo_script);
+
     // document.getElementById('redirect')?.click();
     // this.homeService.getViews().subscribe((data: any) => {
     //   this.page_views = data.total
@@ -109,7 +145,7 @@ export class HomeComponent implements OnInit {
     //     .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     //     console.log(this.page_views);
     // });
-   
+
     this.get_counts();
   }
 

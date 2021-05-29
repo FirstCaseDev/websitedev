@@ -23,6 +23,10 @@ import { BlogComponent } from './blog/blog.component';
 import { SingleBlogComponent } from './single-blog/single-blog.component';
 import { PortfolioDetailsComponent } from './portfolio-details/portfolio-details.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
+import { AdminComponent } from './admin/admin.component';
+import { MainComponent } from './admin/main/main.component';
+import { SidebarComponent } from './admin/sidebar/sidebar.component';
+
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatChipsModule } from '@angular/material/chips';
@@ -44,6 +48,9 @@ import { MatIconModule } from '@angular/material/icon';
     SingleBlogComponent,
     PortfolioDetailsComponent,
     PortfolioComponent,
+    AdminComponent,
+    SidebarComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
