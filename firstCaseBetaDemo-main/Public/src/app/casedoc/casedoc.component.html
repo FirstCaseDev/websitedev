@@ -1,126 +1,97 @@
-<div *ngIf="!loading && !isMobile" class="page" style="margin-top: 100px">
-  <div>
-    <div class="top-bar" style="background-color: rgba(0, 0, 0, 0)">
-      <div style="display: flex; margin: 10px 0">
-        <img width="36px" src="../../assets/img/logo dark.svg" />
-        <div>
-          <p
-            style="
-              margin-left: 16px !important;
-              font-size: large;
-              padding: 0;
-              margin: 0;
-            "
-          >
-            {{ case.petitioner }} vs {{ case.respondent }}
-          </p>
-          <p
-            style="
-              margin-left: 16px !important;
-              font-size: medium;
-              color: #333;
-              padding: 0;
-              margin: 0;
-            "
-          >
-            {{ case.source }}
-          </p>
-        </div>
-      </div>
-      <div style="display: flex">
-        <a style="text-decoration: none">
-          <div class="tab-bar-buttons" (click)="downloadAsPDF()">Download</div>
-        </a>
-        <div
-          class="tab-bar-buttons"
-          id="copy-to-clipboard"
-          (click)="copy_link()"
+<div class="page" style="padding-top: 75px">
+  <div class="top-bar" style="background-color: rgba(0, 0, 0, 0)">
+    <div style="display: flex; margin: 10px 0">
+      <img width="36px" src="../../assets/img/logo dark.svg" />
+      <div>
+        <p
+          style="
+            margin-left: 16px !important;
+            font-size: large;
+            padding: 0;
+            margin: 0;
+          "
         >
-          <div *ngIf="!copied">Copy Link</div>
-          <div *ngIf="copied">Copied</div>
-        </div>
+          {{ case.petitioner }} vs {{ case.respondent }}
+        </p>
+        <p
+          style="
+            margin-left: 16px !important;
+            font-size: medium;
+            color: #333;
+            padding: 0;
+            margin: 0;
+          "
+        >
+          {{ case.source }}
+        </p>
       </div>
     </div>
+    <div style="display: flex">
+      <a style="text-decoration: none">
+        <div class="tab-bar-buttons" (click)="downloadAsPDF()">Download</div>
+      </a>
+      <div class="tab-bar-buttons" id="copy-to-clipboard" (click)="copy_link()">
+        <div *ngIf="!copied">Copy Link</div>
+        <div *ngIf="copied">Copied</div>
+      </div>
+    </div>
+  </div>
+  <div class="top-bar search-in-page-scrolled">
     <div
-      class="top-bar search-in-page-scrolled"
-      style="position: fixed; z-index: 50; right: 0px; border-bottom: none"
+      id="search-bar"
+      style="display: flex; margin: 10px 0; align-items: center"
     >
-      <div
-        id="search-bar"
-        style="display: flex; margin: 10px 0; align-items: center"
-      >
-        <div style="display: flex; align-items: center" id="find-in-page">
-          <input
-            type="text"
-            placeholder="Search In Page"
-            [(ngModel)]="query"
-            style="border: none; background-color: rgba(0, 0, 0, 0)"
+      <div style="display: flex; align-items: center" id="find-in-page">
+        <input
+          type="text"
+          placeholder="Search In Page"
+          [(ngModel)]="query"
+          style="border: none; background-color: rgba(0, 0, 0, 0)"
+        />
+        <div
+          *ngIf="!searched"
+          class="find-in-page-btn"
+          (click)="find_in_page()"
+        >
+          <img src="../../assets/img/search_icon.svg" />
+        </div>
+        <div *ngIf="searched" class="find-in-page-btn" (click)="reset()">
+          <img src="../../assets/img/x-cross-dark.svg" />
+        </div>
+        <div
+          *ngIf="searched"
+          class="find-in-page-btn"
+          (click)="goto_previous()"
+        >
+          <img
+            width="20px"
+            style="transform: rotate(180deg)"
+            src="../../assets/img/arrow_basic-dark.svg"
           />
-          <div
-            *ngIf="!searched"
-            class="find-in-page-btn"
-            (click)="find_in_page()"
-          >
-            <img src="../../assets/img/search_icon.svg" />
-          </div>
-          <div *ngIf="searched" class="find-in-page-btn" (click)="reset()">
-            <img src="../../assets/img/x-cross-dark.svg" />
-          </div>
-          <div
-            *ngIf="searched"
-            class="find-in-page-btn"
-            (click)="goto_previous()"
-          >
-            <img
-              width="20px"
-              style="transform: rotate(180deg)"
-              src="../../assets/img/arrow_basic-dark.svg"
-            />
-          </div>
-          <div *ngIf="searched" class="find-in-page-btn" (click)="goto_next()">
-            <img width="20px" src="../../assets/img/arrow_basic-dark.svg" />
-          </div>
+        </div>
+        <div *ngIf="searched" class="find-in-page-btn" (click)="goto_next()">
+          <img width="20px" src="../../assets/img/arrow_basic-dark.svg" />
         </div>
       </div>
-      <div *ngIf="searched">Search Results: {{ results_count }}</div>
     </div>
-    <br />
-    <br />
-    <br />
-    <div class="container-elem" style="display: flex">
-      <div style="display: flex">
-        <button class="tab active" (click)="tab1()" id="show_judgement">
-          Judgement
-        </button>
-        <button class="tab" (click)="tab2()" id="show_bench_counsels">
-          Bench & Counsels
-        </button>
-        <button class="tab" (click)="tab3()" id="show_act_law_citations">
-          Act/Law Citations
-        </button>
-        <button class="tab" (click)="tab4()" id="show_case_citations">
-          Case Citations
-        </button>
+    <div *ngIf="searched">Search Results: {{ results_count }}</div>
+  </div>
+  <br />
+  <br />
+  <br />
+  <div style="margin: 0 5%">
+    <div class="tab-list">
+      <div class="tab active" id="show_judgement" (click)="tab1()">
+        Judgement
       </div>
-      <div style="display: flex; justify-content: right">
-        <!-- <div>
-            <a target="_blank">
-              <div (click)="email()" class="tab-bar-buttons">
-                <img width="20px" src="../../assets/img/mail.svg" />
-              </div>
-            </a>
-          </div> -->
-        <div>
-          <a>
-            <div *ngIf="right_menu_btn_visible" (click)="right_menu_btn()">
-              <img
-                style="margin: 0 10px; transform: rotate(90deg)"
-                width="20px"
-                src="../../assets/img/three_dots.svg"
-              />
-            </div>
-          </a>
-        </div>
+      <div class="tab" id="show_bench_counsels" (click)="tab2()">
+        Bench & Counsels
+      </div>
+      <div class="tab" id="show_act_law_citations" (click)="tab3()">
+        Act/Law Citations
+      </div>
+      <div class="tab" id="show_case_citations" (click)="tab4()">
+        Case Citations
       </div>
     </div>
   </div>
@@ -161,14 +132,7 @@
               <p class="judgement-details-value">{{ case.judgement }}</p>
             </div>
             <br />
-            <!-- <div style="white-space: pre-line">
-            {{ case.judgement_text }}
-          </div> -->
-            <!-- <p style="text-align: justify;">{{ case.judgement_text }}</p> -->
-            <!-- <div
-              [innerHTML]="case.judgement_text"
-              style="text-align: justify"
-            ></div> -->
+
             <div style="font-family: monospace">
               <div
                 style="text-align: center"
@@ -178,29 +142,13 @@
               <div [innerHtml]="first_para_judgement_items"></div>
             </div>
             <div>
-              <!-- <pre style="font-size: medium; white-space: pre-wrap">{{
-              first_para
-            }}</pre> -->
-              <br />
-              <br />
               <div
                 style="text-align: justify"
                 *ngFor="let item of judgement_text_paragraphs"
               >
-                <p
-                  *ngIf="!searched"
-                  style="
-                    font-family: Arial, Helvetica, sans-serif;
-                    margin-bottom: 0 !important;
-                    font-size: 1.04rem;
-                    line-height: 2.2rem;
-                  "
-                >
+                <p *ngIf="!searched" class="para-content">
                   {{ item }}
                 </p>
-
-                <br />
-
                 <div
                   *ngIf="searched"
                   [innerHTML]="item | highlight: query"
@@ -384,125 +332,5 @@
       }
       /* generated by https://loading.io/ */
     </style>
-  </div>
-
-  <!-- ==================================================Mobile Site================================================== -->
-
-  <div *ngIf="isMobile">
-    <div>
-      <div style="display: grid; grid-template-columns: 33% 33% 33%">
-        <button (click)="find_in_page()">Find</button>
-        <button id="copy-to-clipboard" (click)="copy_link()">
-          <!-- {{ copy_btn_text }} -->
-        </button>
-        <a
-          href="{{ case.url }}"
-          target="_blank"
-          style="text-decoration: none; color: #000"
-        >
-          <button>Download</button>
-        </a>
-      </div>
-      <div>
-        <div id="slides" style="padding: 20px; margin-top: 0 !important">
-          <div class="slide" id="judgment-page" *ngIf="view_tab == 1">
-            <br />
-            <p class="case-title">{{ case.petitioner }}</p>
-            <p class="case-title">vs</p>
-            <p class="case-title">{{ case.respondent }}</p>
-            <div
-              style="
-                display: grid;
-                grid-template-columns: 50% 50%;
-                font-family: PopRegular;
-              "
-            >
-              <p class="judgement-details">Dated</p>
-              <p class="judgement-details-value">
-                {{ case_date }}/{{ case_month }}/{{ case_year }}
-              </p>
-              <p class="judgement-details">Source</p>
-              <p class="judgement-details-value">{{ case.source }}</p>
-              <p class="judgement-details">Author</p>
-              <p class="judgement-details-value">{{ case.doc_author }}</p>
-              <p class="judgement-details">Judgement</p>
-              <p class="judgement-details-value">{{ case.judgement }}</p>
-            </div>
-            <br />
-            <!-- <div style="white-space: pre-line">
-        {{ case.judgement_text }}
-      </div> -->
-            <!-- <p style="text-align: justify;">{{ case.judgement_text }}</p> -->
-            <!-- <div
-          [innerHTML]="case.judgement_text"
-          style="text-align: justify"
-        ></div> -->
-            <div>
-              <pre style="font-size: large">{{ first_para }}</pre>
-              <div
-                style="text-align: justify"
-                *ngFor="let item of judgement_text_paragraphs"
-              >
-                <p *ngIf="!searched" style="text-align: justify">
-                  {{ item }}
-                </p>
-
-                <div
-                  *ngIf="searched"
-                  [innerHTML]="item | highlight: query"
-                ></div>
-              </div>
-            </div>
-            <div id="page-end"></div>
-          </div>
-          <div
-            class="slide"
-            id="advocates-page"
-            style="
-              display: grid;
-              grid-template-columns: 10% 80% 10%;
-              justify-content: space-evenly;
-            "
-            *ngIf="view_tab == 2"
-          >
-            <div></div>
-            <div>
-              <h2 style="text-align: center">Bench</h2>
-              <br />
-              <div id="bench">
-                <div
-                  style="
-                    margin: 0px 10vw;
-                    display: flexbox;
-                    justify-content: space-around;
-                  "
-                >
-                  <div class="tabs-item" *ngFor="let candidate of bench_arr">
-                    {{ candidate }}
-                  </div>
-                </div>
-              </div>
-              <div id="counsels">
-                <div
-                  style="
-                    margin: 0px 10vw;
-                    display: flexbox;
-                    justify-content: space-around;
-                  "
-                >
-                  <div class="tabs-item" *ngFor="let candidate of bench_arr">
-                    {{ candidate }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div></div>
-          </div>
-          <div class="slide" id="bench-page" *ngIf="view_tab == 3">
-            <h2 style="text-align: center">Bench</h2>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
