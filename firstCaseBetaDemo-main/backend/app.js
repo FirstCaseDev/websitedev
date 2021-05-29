@@ -1372,9 +1372,9 @@ app.post("/api/sendEmail", function (req, res) {
   let contactFormMessage = req.body.contactMessage;
 
   let transporter = nodemailer.createTransport({
-    service: process.env.MAIL_SERVICE,
+    service: "gmail",
     auth: {
-      type: process.env.AUTH_TYPE,
+      type: "OAuth2",
       user: process.env.SENDER_USERNAME,
       pass: process.env.SENDER_PASSWORD,
       clientId: process.env.OAUTH_CLIENTID,
@@ -1387,9 +1387,9 @@ app.post("/api/sendEmail", function (req, res) {
   });
 
   const maillist = [
-    process.env.RECEIVER_USERNAME_1,
-    process.env.RECEIVER_USERNAME_2,
-    process.env.RECEIVER_USERNAME_3,
+    "puneet@firstcase.io",
+    "utkarsh@firstcase.io",
+    "tejasladhe24@gmail.com",
   ];
 
   let mailOptions = {
