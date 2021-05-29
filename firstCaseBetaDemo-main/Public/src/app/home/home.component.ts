@@ -122,22 +122,6 @@ export class HomeComponent implements OnInit {
       },
     ]);
 
-    //Google SEO script tag
-    let seo_script = this.renderer2.createElement('script');
-    seo_script.type = 'application/ld+json';
-    seo_script.text = `
-    {
-      "@context": "https://schema.org",
-      "@type": "Corporation",
-      "name": "First Case - Big Data for Big Law",
-      "description": "First Case - Where Artificial Intelligence meets Law. Building smart solutions for legal professionals",
-      "email": "mailto:first.case.ai@gmail.com",
-      "url": "https://firstcase.io/",
-      "sameAs": "https://www.linkedin.com/company/firstcaselaw"
-    }
-    `;
-    this.renderer2.appendChild(this.curr_doc.head, seo_script);
-
     // document.getElementById('redirect')?.click();
     // this.homeService.getViews().subscribe((data: any) => {
     //   this.page_views = data.total
