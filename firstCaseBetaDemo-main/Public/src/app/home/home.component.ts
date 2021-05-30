@@ -124,7 +124,7 @@ export class HomeComponent implements OnInit {
     // OG / FB meta tags
     this.metaService.updateTag({
       property: 'og:url',
-      content: 'https://firstcase.io/home',
+      content: 'https://firstcase.io',
     });
     this.metaService.updateTag({
       property: 'og:title',

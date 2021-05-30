@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   isLoggedIn: boolean = false;
 
   navRoutes = [
-    { text: 'Home', path: 'home', anchor: '#hero' },
+    { text: 'Home', path: '', anchor: '' },
     { text: 'About Us', path: 'about-us', anchor: '#about' },
     { text: 'Blog', path: 'blog', anchor: '#blog' },
     { text: 'Work With Us', path: 'about-us', anchor: '#contact' },
@@ -73,9 +73,11 @@ export class AppComponent implements OnInit {
       if (element.text == goto_route) {
         path = element.path;
         anchor = element.anchor;
-        this.router.navigateByUrl(path + anchor);
+        var url = 'http://localhost:4200/' + path + anchor;
+        // var url = 'https://firstcase.io/' + path + anchor;
+        // this.router.navigateByUrl(path + anchor);
         setTimeout(() => {
-          window.location.href = this.router.url;
+          window.location.href = url;
         }, 100);
         break;
       }

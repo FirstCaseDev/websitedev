@@ -15,8 +15,8 @@ import { MainComponent } from './dms/main/main.component';
 import { SidebarComponent } from './dms/sidebar/sidebar.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  // { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
   { path: 'cases', component: CasesComponent },
   { path: 'users', component: UsersComponent },
   { path: 'about-us', component: TeamComponent },
@@ -44,7 +44,7 @@ const routes: Routes = [
   },
 
   // This one should be in last of the list
-  { path: '**', redirectTo: '/home' },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
