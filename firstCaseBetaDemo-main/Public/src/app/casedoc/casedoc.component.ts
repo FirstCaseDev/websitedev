@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import Case from '../models/case';
 import provisions_referred_object from '../models/provisions_referred_object';
 import { CasedocService } from './casedoc.service';
-import { Title } from '@angular/platform-browser';
+import { Title, Meta, MetaDefinition } from '@angular/platform-browser';
 import * as copy from 'copy-to-clipboard';
 import { stringify } from '@angular/compiler/src/util';
 import { GoogleAnalyticsService } from '../google-analytics.service';
@@ -23,7 +23,8 @@ export class CasedocComponent implements OnInit {
     private router: Router,
     private casedocService: CasedocService,
     private sanitizer: DomSanitizer,
-    private componentTitle: Title
+    private componentTitle: Title,
+    private metaService: Meta
   ) {}
   casedoc_tab_clicked() {
     GoogleAnalyticsService.eventEmitter(
@@ -47,6 +48,7 @@ export class CasedocComponent implements OnInit {
     petitioner_counsel: [],
     respondent: '',
     respondent_counsel: [],
+    citing_cases: [],
     date: '',
     day: '',
     month: '',
@@ -177,6 +179,7 @@ export class CasedocComponent implements OnInit {
           .join('');
       }
 
+      this.first_para = this.judgement_text_paragraphs[0];
       // this.first_para = this.judgement_text_paragraphs[0].replace(
       //   /\n{2,}/g,
       //   ' '
@@ -193,6 +196,56 @@ export class CasedocComponent implements OnInit {
       //   '<br/>'
       // );
       this.loading = false;
+
+      //General SEO Meta Tags
+      this.metaService.updateTag({
+        name: 'title',
+        content: `FirstCase | ${data.case.title}`,
+      });
+      this.metaService.updateTag({
+        name: 'description',
+        content: this.first_para,
+      });
+
+      // OG / FB meta tags
+      this.metaService.updateTag({
+        property: 'og:url',
+        content: this.router.url,
+      });
+      this.metaService.updateTag({
+        property: 'og:title',
+        content: `FirstCase | ${data.case.title}`,
+      });
+      this.metaService.updateTag({
+        property: 'og:description',
+        content: this.first_para,
+      });
+      this.metaService.updateTag({
+        property: 'og:image',
+        content: '',
+      });
+
+      // Twitter meta tags
+      this.metaService.updateTag({
+        property: 'twitter:card',
+        content: '',
+      });
+      this.metaService.updateTag({
+        property: 'twitter:url',
+        content: this.router.url,
+      });
+      this.metaService.updateTag({
+        property: 'twitter:title',
+        content: `FirstCase | ${data.case.title}`,
+      });
+      this.metaService.updateTag({
+        property: 'twitter:description',
+        content: this.first_para,
+      });
+      this.metaService.updateTag({
+        property: 'twitter:image',
+        content: '',
+      });
     });
   }
 

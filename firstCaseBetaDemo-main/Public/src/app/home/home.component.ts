@@ -3,8 +3,9 @@ import { SwiperOptions } from 'swiper';
 import { interval } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { HomeService } from './home.service';
-import { Meta } from '@angular/platform-browser';
+import { Meta, MetaDefinition } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -15,14 +16,14 @@ export class HomeComponent implements OnInit {
   data_subscription: Subscription;
   constructor(
     private homeService: HomeService,
-    private metaTagService: Meta,
-    private renderer2: Renderer2,
-    @Inject(DOCUMENT) private curr_doc: Document
+    private metaService: Meta,
+    private componentTitle: Title
   ) {
     this.data_subscription = interval(1000).subscribe((x) => {
       this.get_counts();
     });
   }
+
   get_counts() {
     this.homeService.getTotalCount().subscribe((data: any) => {
       this.total_counter = data.total
@@ -110,17 +111,57 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     //General SEO Meta Tags
-    this.metaTagService.addTags([
-      {
-        name: 'title',
-        content: 'FirstCase - Legal Research Assistant',
-      },
-      {
-        name: 'description',
-        content:
-          'Where Artificial Intelligence meets Law; Building smart solutions for legal professionals',
-      },
-    ]);
+    this.componentTitle.setTitle('FirstCase | Home');
+    this.metaService.updateTag({
+      name: 'title',
+      content: 'FirstCase - Where Artificial Intelligence meets Law',
+    });
+    this.metaService.updateTag({
+      name: 'description',
+      content: 'Building smart solutions for legal professionals',
+    });
+
+    // OG / FB meta tags
+    this.metaService.updateTag({
+      property: 'og:url',
+      content: 'https://firstcase.io/home',
+    });
+    this.metaService.updateTag({
+      property: 'og:title',
+      content: 'FirstCase - Legal Research Assistant',
+    });
+    this.metaService.updateTag({
+      property: 'og:description',
+      content:
+        'Where Artificial Intelligence meets Law; Building smart solutions for legal professionals',
+    });
+    this.metaService.updateTag({
+      property: 'og:image',
+      content: 'https://imgur.com/a/0ZAThof',
+    });
+
+    // Twitter meta tags
+    this.metaService.updateTag({
+      property: 'twitter:card',
+      content: 'https://imgur.com/a/0ZAThof',
+    });
+    this.metaService.updateTag({
+      property: 'twitter:url',
+      content: 'https://firstcase.io/cases',
+    });
+    this.metaService.updateTag({
+      property: 'twitter:title',
+      content: 'FirstCase - Legal Research Assistant',
+    });
+    this.metaService.updateTag({
+      property: 'twitter:description',
+      content:
+        'Where Artificial Intelligence meets Law; Building smart solutions for legal professionals',
+    });
+    this.metaService.updateTag({
+      property: 'twitter:image',
+      content: 'https://imgur.com/a/0ZAThof',
+    });
 
     // document.getElementById('redirect')?.click();
     // this.homeService.getViews().subscribe((data: any) => {

@@ -7,6 +7,7 @@ export default class Case {
   source!: String;
   petitioner!: String;
   petitioner_counsel!: Array<string>;
+  citing_cases!: Array<any>;
   respondent!: String;
   respondent_counsel!: Array<string>;
   cases_referred!: Array<string>;

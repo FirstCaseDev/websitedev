@@ -10,9 +10,9 @@ import { BlogComponent } from './blog/blog.component';
 import { SingleBlogComponent } from './single-blog/single-blog.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { PortfolioDetailsComponent } from './portfolio-details/portfolio-details.component';
-import { AdminComponent } from './admin/admin.component';
-import { MainComponent } from './admin/main/main.component';
-import { SidebarComponent } from './admin/sidebar/sidebar.component';
+import { DmsComponent } from './dms/dms.component';
+import { MainComponent } from './dms/main/main.component';
+import { SidebarComponent } from './dms/sidebar/sidebar.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'portfolio/:portfolioID', component: PortfolioDetailsComponent },
   {
     path: 'dms',
-    component: AdminComponent,
+    component: DmsComponent,
     children: [
       {
         path: '',

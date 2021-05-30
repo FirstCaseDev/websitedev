@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  padding: 10px 20px;
+}
+
+#top-bar {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+input {
+  border-radius: 10px;
+  border: none;
+  padding: 15px;
+  background-color: rgb(235, 235, 235);
+}
+#top-search {
+  margin: 20px;
+}
+#top-search input {
+  min-width: 30em;
+  height: 62px;
+}
+
+#search-icon {
+  position: absolute;
+  top: 30%;
+  right: 10px;
+  cursor: pointer;
+}
+
+button {
+  border-radius: 10px;
+  margin: 20px;
+  border: none;
+  font-family: PopMedium;
+}
+
+.top-bar-btn {
+  padding: 20px;
+  min-width: 10em;
+}

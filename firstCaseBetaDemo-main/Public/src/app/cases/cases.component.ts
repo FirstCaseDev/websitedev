@@ -11,6 +11,7 @@ import { GoogleAnalyticsService } from '../google-analytics.service';
 import { COMMA, ENTER, UP_ARROW, DOWN_ARROW } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { SwiperOptions } from 'swiper';
+import { Meta, MetaDefinition } from '@angular/platform-browser';
 import { stringify } from '@angular/compiler/src/util';
 
 declare let Chart: any;
@@ -28,45 +29,11 @@ HC_heatmap(Highcharts);
   },
 })
 export class CasesComponent implements OnInit {
-  public barChartOptions: ChartOptions = {
-    defaultColor: '#b6d7a8ff',
-    responsive: true,
-    scales: {
-      xAxes: [
-        {
-          ticks: {
-            min: 0,
-          },
-        },
-      ],
-      yAxes: [{ ticks: { mirror: true } }],
-    },
-  };
-  public barChartLabels: Label[] = [
-    '2006',
-    '2007',
-    '2008',
-    '2009',
-    '2010',
-    '2011',
-    '2012',
-  ];
-  public barChartType: ChartType = 'horizontalBar';
-  public barChartLegend = true;
-  public barChartPlugins = [];
-  public barChartData: ChartDataSets[] = [
-    {
-      data: [65, 59, 80, 81, 56, 55, 40],
-      label: 'Cases for your query',
-      backgroundColor: 'rgba(182, 215, 168, 0.3)',
-      hoverBackgroundColor: 'rgba(182, 215, 168, 0.74)',
-      order: -1,
-    },
-  ];
   constructor(
     private caseService: CaseService,
     private fb: FormBuilder,
-    private componentTitle: Title
+    private componentTitle: Title,
+    private metaService: Meta
   ) {
     Chart.elements.Rectangle.prototype.draw = function () {
       var ctx = this._chart.ctx;
@@ -187,6 +154,42 @@ export class CasesComponent implements OnInit {
       }
     };
   }
+
+  public barChartOptions: ChartOptions = {
+    defaultColor: '#b6d7a8ff',
+    responsive: true,
+    scales: {
+      xAxes: [
+        {
+          ticks: {
+            min: 0,
+          },
+        },
+      ],
+      yAxes: [{ ticks: { mirror: true } }],
+    },
+  };
+  public barChartLabels: Label[] = [
+    '2006',
+    '2007',
+    '2008',
+    '2009',
+    '2010',
+    '2011',
+    '2012',
+  ];
+  public barChartType: ChartType = 'horizontalBar';
+  public barChartLegend = true;
+  public barChartPlugins = [];
+  public barChartData: ChartDataSets[] = [
+    {
+      data: [65, 59, 80, 81, 56, 55, 40],
+      label: 'Cases for your query',
+      backgroundColor: 'rgba(182, 215, 168, 0.3)',
+      hoverBackgroundColor: 'rgba(182, 215, 168, 0.74)',
+      order: -1,
+    },
+  ];
 
   show_graphs_warning = false;
 
@@ -763,6 +766,59 @@ export class CasesComponent implements OnInit {
   respondentDatalabels: any = [];
 
   ngOnInit() {
+    this.componentTitle.setTitle('FirstCase | Search');
+    this.metaService.updateTag({
+      name: 'title',
+      content: 'FirstCase - Search Cases',
+    });
+    this.metaService.updateTag({
+      name: 'description',
+      content:
+        'Our search engine maps your search context to a granular mapping of legal information, allowing you to significantly save time on legal research, utilize data-driven perspectives and practical visualisations.',
+    });
+
+    // OG / FB meta tags
+    this.metaService.updateTag({
+      property: 'og:url',
+      content: 'https://firstcase.io/cases',
+    });
+    this.metaService.updateTag({
+      property: 'og:title',
+      content: 'FirstCase - Search Cases',
+    });
+    this.metaService.updateTag({
+      property: 'og:description',
+      content:
+        'Our search engine maps your search context to a granular mapping of legal information, allowing you to significantly save time on legal research, utilize data-driven perspectives and practical visualisations.',
+    });
+    this.metaService.updateTag({
+      property: 'og:image',
+      content: 'https://imgur.com/a/0ZAThof',
+    });
+
+    // Twitter meta tags
+    this.metaService.updateTag({
+      property: 'twitter:card',
+      content: 'https://imgur.com/a/0ZAThof',
+    });
+    this.metaService.updateTag({
+      property: 'twitter:url',
+      content: 'https://firstcase.io/cases',
+    });
+    this.metaService.updateTag({
+      property: 'twitter:title',
+      content: 'FirstCase - Search Cases',
+    });
+    this.metaService.updateTag({
+      property: 'twitter:description',
+      content:
+        'Our search engine maps your search context to a granular mapping of legal information, allowing you to significantly save time on legal research, utilize data-driven perspectives and practical visualisations.',
+    });
+    this.metaService.updateTag({
+      property: 'twitter:image',
+      content: 'https://imgur.com/a/0ZAThof',
+    });
+
     this.court_list = [
       'Supreme Court of India',
       'Allahabad High Court',
@@ -830,7 +886,6 @@ export class CasesComponent implements OnInit {
     if (localStorage.device_type == 'mobile') this.isMobile = true;
     else this.isMobile = false;
 
-    this.componentTitle.setTitle('FirstCase | Search');
     this.pvb_init();
     this.rvb_init();
     this.selectedCourts = this.court_options;
