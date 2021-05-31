@@ -60,11 +60,19 @@
         </div>
       </div>
 
-      <div>fdsbjksfd</div>
-      <div>fdsbjksfd</div>
-      <div>fdsbjksfd</div>
-      <div>fdsbjksfd</div>
-      <div>fdsbjksfd</div>
+      <div class="content">
+        <div id="top-search">
+          <div class="icon" (click)="spacy_search()">
+            <span class="material-icons md-24">search</span>
+          </div>
+          <input
+            type="text"
+            placeholder="Full Text Search"
+            autocomplete="off"
+            [(ngModel)]="spacy_query"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { SpacyService } from './spacy.service';
 
 @Component({
   selector: 'app-dms',
@@ -9,9 +10,17 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
   encapsulation: ViewEncapsulation.None,
 })
 export class DmsComponent implements OnInit {
-  constructor() {}
+  constructor(private spacy: SpacyService) {}
+
+  spacy_query = '';
 
   ngOnInit(): void {}
+
+  spacy_search() {
+    this.spacy.get(this.spacy_query).subscribe((data: any) => {
+      console.log(data);
+    });
+  }
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
