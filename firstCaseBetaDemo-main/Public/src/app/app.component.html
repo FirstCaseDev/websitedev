@@ -1,11 +1,6 @@
 <body (click)="onClick($event)">
   <!-- ======= Header ======= -->
-  <header
-    id="header"
-    class="header fixed-top"
-    (scroll)="onWindowScroll()"
-    *ngIf="router.url !== '/dms'"
-  >
+  <header id="header" class="header fixed-top" (scroll)="onWindowScroll()">
     <div class="d-flex align-items-center justify-content-between">
       <a href="" class="logo d-flex align-items-center">
         <img src="../assets/img/logo.svg" alt="" />

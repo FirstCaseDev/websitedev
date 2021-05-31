@@ -1,9 +1,70 @@
-<div style="display: flex">
-  <div class="sidebar">
-    <router-outlet name="sideBar"></router-outlet>
-  </div>
+<div style="padding-top: 80px"></div>
+<div class="content">
+  <div style="display: grid; grid-template-columns: 250px auto">
+    <div class="column">
+      <!-- Upload Btn -->
+      <button>
+        <span class="material-icons md-24">add_circle_outline</span>
+        <span>Upload</span>
+      </button>
+      <br />
+      <!-- File Options -->
+      <ul style="list-style-type: none">
+        <li>
+          <span class="material-icons md-24">folder</span>
+          <span> My Folders </span>
+        </li>
+        <li>
+          <span class="material-icons md-24">folder_shared</span>
+          <span> Shared by me </span>
+        </li>
+        <li>
+          <span class="material-icons md-24">outbox</span>
+          <span> Shared with me </span>
+        </li>
+        <li>
+          <span class="material-icons md-24">try</span>
+          <span> Starred </span>
+        </li>
+        <li>
+          <span class="material-icons md-24">delete</span>
+          <span> Trash </span>
+        </li>
+      </ul>
+    </div>
 
-  <div class="pagecontent">
-    <router-outlet name="pageContent"></router-outlet>
+    <div class="column">
+      <div class="top-bar">
+        <div id="top-search">
+          <div class="icon">
+            <span class="material-icons md-24">search</span>
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              placeholder="Full Text Search"
+              autocomplete="off"
+            />
+            <div class="list-group filter-popover" *ngIf="showFilter">
+              <h1>filter</h1>
+              <h1>filter</h1>
+              <h1>filter</h1>
+            </div>
+          </div>
+          <div class="icon" (click)="show_filters()">
+            <span class="material-icons md-24">expand_more</span>
+          </div>
+        </div>
+        <div class="icon">
+          <span class="material-icons md-24">settings</span>
+        </div>
+      </div>
+
+      <div>fdsbjksfd</div>
+      <div>fdsbjksfd</div>
+      <div>fdsbjksfd</div>
+      <div>fdsbjksfd</div>
+      <div>fdsbjksfd</div>
+    </div>
   </div>
 </div>

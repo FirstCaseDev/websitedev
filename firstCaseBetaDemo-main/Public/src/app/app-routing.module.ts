@@ -11,8 +11,6 @@ import { SingleBlogComponent } from './single-blog/single-blog.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { PortfolioDetailsComponent } from './portfolio-details/portfolio-details.component';
 import { DmsComponent } from './dms/dms.component';
-import { MainComponent } from './dms/main/main.component';
-import { SidebarComponent } from './dms/sidebar/sidebar.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -26,22 +24,7 @@ const routes: Routes = [
   { path: 'blog/:blogID', component: SingleBlogComponent },
   { path: 'portfolio', component: PortfolioComponent },
   { path: 'portfolio/:portfolioID', component: PortfolioDetailsComponent },
-  {
-    path: 'dms',
-    component: DmsComponent,
-    children: [
-      {
-        path: '',
-        component: SidebarComponent,
-        outlet: 'sideBar',
-      },
-      {
-        path: '',
-        component: MainComponent,
-        outlet: 'pageContent',
-      },
-    ],
-  },
+  { path: 'dms', component: DmsComponent },
 
   // This one should be in last of the list
   { path: '**', redirectTo: '' },

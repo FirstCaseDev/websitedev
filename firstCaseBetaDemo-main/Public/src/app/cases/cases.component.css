@@ -284,25 +284,25 @@ a {
   transition: all 0.2s;
 }
 
-popover-class {
-  height: 100%;
-  width: 100%;
-  overflow: auto;
+.popover-class {
+  max-height: 300px;
+  overflow: scroll;
 }
 
-popover-class::-webkit-scrollbar {
+.popover-class::-webkit-scrollbar {
   width: 10px;
 }
 
-popover-class::-webkit-scrollbar-track {
-  background: #f1f1f1;
+.popover-class::-webkit-scrollbar-track {
+  background: #ffffff;
 }
 
-popover-class::-webkit-scrollbar-thumb {
+.popover-class::-webkit-scrollbar-thumb {
   background: #888;
+  border-radius: 5px;
 }
 
-popover-class::-webkit-scrollbar-thumb:hover {
+.popover-class::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 

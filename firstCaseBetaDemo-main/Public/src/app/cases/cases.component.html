@@ -396,115 +396,104 @@
                   {{ results_time }} seconds
                 </p>
                 <div class="search-repeater" *ngFor="let data of rows">
-                  <div style="display: grid; grid-template-columns: 80% 20%">
-                    <div class="top-bar">
-                      <div
-                        class="keyword-list-item case-id-keyword"
-                        *ngIf="data.case_id != ''"
-                      >
-                        <p style="margin: 0; padding: 0">
-                          {{ data.case_id }}
-                        </p>
-                      </div>
-                      <div
-                        class="keyword-list-item source-keyword"
-                        *ngIf="data.source != ''"
-                      >
-                        <p style="margin: 0; padding: 0">
-                          {{ data.source }}
-                        </p>
-                      </div>
-                      <div
-                        class="keyword-list-item judgement-keyword"
-                        *ngIf="data.judgement != ''"
-                      >
-                        <p style="margin: 0; padding: 0">
-                          {{ data.judgement }}
-                        </p>
-                      </div>
-                      <div
-                        class="keyword-list-item date-keyword"
-                        *ngIf="data.month != ''"
-                      >
-                        <p style="margin: 0; padding: 0">
-                          {{ data.day }} {{ data.month }} {{ data.year }}
-                        </p>
-                      </div>
-                      <div
-                        class="keyword-list-item bench-keyword"
-                        *ngIf="data.bench != ''"
-                      >
-                        <p style="margin: 0; padding: 0">
-                          {{ data.bench }}
-                        </p>
-                      </div>
-                      <div class="keyword-list-item occurences">
-                        <p style="margin: 0; padding: 0">
-                          Matches: {{ data.match_count }}
-                        </p>
-                      </div>
-                      <div
-                        class="keyword-list-item judgement-keyword"
-                        *ngIf="data.citing_cases.length > 0"
-                      >
-                        <ng-template #popCitCaseContent>
-                          <ul class="popover-class scrollable">
-                            <li *ngFor="let item of data.citing_cases">
-                              <a href="casedoc/{{ item._id }}">{{
-                                item.title
-                              }}</a>
-                            </li>
-                          </ul>
-                        </ng-template>
-                        <ng-template #popCitCasesTitle>
-                          <b>Cited by</b>
-                        </ng-template>
-                        <p
-                          style="margin: 0; padding: 0"
-                          type="button"
-                          placement="bottom"
-                          [ngbPopover]="popCitCaseContent"
-                          [popoverTitle]="popCitCasesTitle"
-                        >
-                          Cited by: {{ data.citing_cases.length }}
-                        </p>
-                      </div>
-
-                      <div
-                        class="keyword-list-item judgement-keyword"
-                        *ngIf="data.cases_referred.length > 0"
-                      >
-                        <ng-template #popRefCaseContent>
-                          <ul class="popover-class scrollable">
-                            <li *ngFor="let item of data.cases_referred">
-                              {{ item }}
-                            </li>
-                          </ul>
-                        </ng-template>
-                        <ng-template #popRefCasesTitle>
-                          <b>Cases Cited</b>
-                        </ng-template>
-                        <p
-                          style="margin: 0; padding: 0"
-                          type="button"
-                          placement="bottom"
-                          [ngbPopover]="popRefCaseContent"
-                          [popoverTitle]="popRefCasesTitle"
-                        >
-                          Cites: {{ data.cases_referred.length }}
-                        </p>
-                      </div>
+                  <div class="top-bar">
+                    <div
+                      class="keyword-list-item case-id-keyword"
+                      *ngIf="data.case_id != ''"
+                    >
+                      <p style="margin: 0; padding: 0">
+                        {{ data.case_id }}
+                      </p>
+                    </div>
+                    <div
+                      class="keyword-list-item source-keyword"
+                      *ngIf="data.source != ''"
+                    >
+                      <p style="margin: 0; padding: 0">
+                        {{ data.source }}
+                      </p>
+                    </div>
+                    <div
+                      class="keyword-list-item judgement-keyword"
+                      *ngIf="data.judgement != ''"
+                    >
+                      <p style="margin: 0; padding: 0">
+                        {{ data.judgement }}
+                      </p>
+                    </div>
+                    <div
+                      class="keyword-list-item date-keyword"
+                      *ngIf="data.month != ''"
+                    >
+                      <p style="margin: 0; padding: 0">
+                        {{ data.day }} {{ data.month }} {{ data.year }}
+                      </p>
+                    </div>
+                    <div
+                      class="keyword-list-item bench-keyword"
+                      *ngIf="data.bench != ''"
+                    >
+                      <p style="margin: 0; padding: 0">
+                        {{ data.bench }}
+                      </p>
                     </div>
 
-                    <!-- <div style="
-                        display: flex;
-                        align-items: center;
-                        flex-direction: row-reverse;
-                      ">
-                                        <div class="occurences">
-                                            Matches: {{ data.match_count }}
-                                        </div>
-                                    </div> -->
+                    <div
+                      class="keyword-list-item judgement-keyword"
+                      *ngIf="data.citing_cases.length > 0"
+                    >
+                      <ng-template #popCitCaseContent>
+                        <ul class="popover-class scrollable">
+                          <li *ngFor="let item of data.citing_cases">
+                            <a href="casedoc/{{ item._id }}" target="_blank">{{
+                              item.title
+                            }}</a>
+                          </li>
+                        </ul>
+                      </ng-template>
+                      <ng-template #popCitCasesTitle>
+                        <b>Cited by</b>
+                      </ng-template>
+                      <p
+                        style="margin: 0; padding: 0"
+                        type="button"
+                        placement="bottom"
+                        [ngbPopover]="popCitCaseContent"
+                        [popoverTitle]="popCitCasesTitle"
+                      >
+                        Cited by: {{ data.citing_cases.length }}
+                      </p>
+                    </div>
+
+                    <div
+                      class="keyword-list-item judgement-keyword"
+                      *ngIf="data.cases_referred.length > 0"
+                    >
+                      <ng-template #popRefCaseContent>
+                        <ul class="popover-class scrollable">
+                          <li *ngFor="let item of data.cases_referred">
+                            {{ item }}
+                          </li>
+                        </ul>
+                      </ng-template>
+                      <ng-template #popRefCasesTitle>
+                        <b>Cases Cited</b>
+                      </ng-template>
+                      <p
+                        style="margin: 0; padding: 0"
+                        type="button"
+                        placement="bottom"
+                        [ngbPopover]="popRefCaseContent"
+                        [popoverTitle]="popRefCasesTitle"
+                      >
+                        Cases Cited: {{ data.cases_referred.length }}
+                      </p>
+                    </div>
+                    <div class="keyword-list-item occurences">
+                      <p style="margin: 0; padding: 0">
+                        Matches: {{ data.match_count }}
+                      </p>
+                    </div>
                   </div>
 
                   <div>
