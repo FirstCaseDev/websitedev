@@ -990,7 +990,7 @@ export class CasesComponent implements OnInit {
     this.page = 1;
     this.loading = true;
     this.view_focussed = false;
-
+console.log(this.loading);
     this.search();
   }
 

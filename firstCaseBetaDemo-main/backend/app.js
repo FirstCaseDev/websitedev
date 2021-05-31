@@ -159,6 +159,7 @@ app.get("/api/cases/query=:query", (req, res) => {
             index: "indian_court_data.cases",
             body: {
                 track_total_hits: true,
+                track_scores: true,
                 from: startIndex,
                 explain: true,
                 size: limit,
@@ -191,8 +192,11 @@ app.get("/api/cases/query=:query", (req, res) => {
                                 simple_query_string: {
                                     query: searchText.trim(),
                                     fields: [
-                                        "title^5",
-                                        "judgement_text^3"
+                                        "title^100",
+                                        "judgement_text",
+                                        "query_terms",
+                                        "citing_cases",
+                                        "cases_referred"
                                     ],
                                     default_operator: "and",
                                 },
@@ -257,7 +261,16 @@ app.get("/api/cases/query=:query", (req, res) => {
                         },
                     },
                 },
-                sort: sort_options,
+                sort: [{
+                    _script: {
+                        script: {
+                            source: " double x = 7000*doc['citing_cases.title.keyword'].size() + 10*doc['cases_referred.keyword'].size(); int y = 0; if(doc['source.keyword'].value == 'Supreme Court of India') {y = 1000;} else if(doc['source.keyword'].value == 'Delhi High Court') { y =500;} else if(doc['source.keyword'].value == 'Bombay High Court') { y =500;} x+y+2*Float.parseFloat(doc['year.keyword'].value)+_score*100;",
+                            lang: "painless"
+                        },
+                        type: "number",
+                        order: "desc"
+                    }
+                }]
             },
         })
         .then((response) => {
