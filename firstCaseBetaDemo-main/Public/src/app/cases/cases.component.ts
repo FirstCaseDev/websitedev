@@ -990,7 +990,6 @@ export class CasesComponent implements OnInit {
     this.page = 1;
     this.loading = true;
     this.view_focussed = false;
-console.log(this.loading);
     this.search();
   }
 
@@ -1181,7 +1180,6 @@ console.log(this.loading);
           this.results_time = data.result_time;
           this.results_count = data.result_count;
           this.related_searches = data.related_searches;
-          console.log(data.court_analytics);
           this.barChartData[0].data = [];
           this.barChartLabels = [];
           for (var i = 0; i < data.court_analytics.length; i++) {
@@ -1189,7 +1187,6 @@ console.log(this.loading);
             // console.log(this.barChartData);
             this.barChartData[0].data?.push(data.court_analytics[i].doc_count);
           }
-          console.log(this.barChartData);
         } else {
           alert(data.msg);
           this.reset();
@@ -1851,7 +1848,6 @@ console.log(this.loading);
       this.caseService.getAutocomplete(val).subscribe((data: any) => {
         this.autocomplete_suggestions = data.result;
         if (val.indexOf('"') != -1) {
-          console.log('double quotes present');
           this.autoComplete_list = [];
           for (let i = 0; i < this.autocomplete_suggestions.length; i++) {
             var text = this.autocomplete_suggestions[i].text;
@@ -1862,7 +1858,6 @@ console.log(this.loading);
             }
           }
         } else {
-          console.log('NO double quotes');
           this.autoComplete_list = [];
           for (let i = 0; i < this.autocomplete_suggestions.length; i++) {
             var text = this.autocomplete_suggestions[i].text;
@@ -1935,7 +1930,6 @@ console.log(this.loading);
   }
 
   tag_click(event: any) {
-    console.log(event.target.innerHTML);
     this.query = event.target.innerHTML;
     this.search();
   }
