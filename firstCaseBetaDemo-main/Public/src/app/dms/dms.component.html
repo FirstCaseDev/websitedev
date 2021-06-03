@@ -36,41 +36,122 @@
     <div class="column">
       <div class="top-bar">
         <div id="top-search">
-          <div class="icon">
-            <span class="material-icons md-24">search</span>
+          <div class="icon" (click)="spacy_search()">
+            <span class="material-icons md-18">search</span>
           </div>
-          <div class="form-group">
+          <div>
             <input
               type="text"
+              style="min-width: 675px; max-width: 700px"
               placeholder="Full Text Search"
               autocomplete="off"
+              [(ngModel)]="spacy_query"
             />
             <div class="list-group filter-popover" *ngIf="showFilter">
-              <h1>filter</h1>
-              <h1>filter</h1>
-              <h1>filter</h1>
+              <div style="display: grid; grid-template-columns: 25% 75%">
+                <div class="row mb-3 small-font">Type</div>
+                <div>
+                  <select
+                    class="
+                      js-example-basic-single js-states
+                      form-control
+                      row
+                      mb-3
+                    "
+                    name="file_type"
+                    id="file_type"
+                    [(ngModel)]="filter_fileType"
+                  >
+                    <option
+                      *ngFor="let item of filter_fileType_list"
+                      [ngValue]="item"
+                    >
+                      {{ item.text }}
+                    </option>
+                  </select>
+                </div>
+                <div class="row mb-3 small-font">Owner</div>
+                <div>
+                  <div>
+                    <select
+                      class="
+                        js-example-basic-single js-states
+                        form-control
+                        row
+                        mb-3
+                      "
+                      name="file_owner"
+                      id="file_owner"
+                      [(ngModel)]="filter_owner"
+                    >
+                      <option
+                        *ngFor="let item of filter_owner_list"
+                        [ngValue]="item"
+                      >
+                        {{ item.text }}
+                      </option>
+                    </select>
+                  </div>
+                  <div>
+                    <input
+                      style="margin: 10px"
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="filter_owner_person"
+                      *ngIf="filter_owner.value == 'person'"
+                      placeholder="Name"
+                    />
+                  </div>
+                </div>
+                <div class="row mb-3 small-font">Date Modified</div>
+                <div>
+                  <select
+                    class="
+                      js-example-basic-single js-states
+                      form-control
+                      row
+                      mb-3
+                    "
+                    name="date_modified"
+                    id="date_modified"
+                    [(ngModel)]="filter_dateModified"
+                  >
+                    <option
+                      *ngFor="let item of filter_dateModified_list"
+                      [ngValue]="item"
+                    >
+                      {{ item.text }}
+                    </option>
+                  </select>
+                </div>
+                <div class="row mb-3 small-font">Include words</div>
+                <div>
+                  <input
+                    class="
+                      js-example-basic-single js-states
+                      form-control
+                      row
+                      mb-3
+                    "
+                    [(ngModel)]="filter_includeWords"
+                    placeholder="Add words with ',' "
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div class="icon" (click)="show_filters()">
-            <span class="material-icons md-24">expand_more</span>
+            <span class="material-icons md-18">expand_more</span>
           </div>
-        </div>
-        <div class="icon">
-          <span class="material-icons md-24">settings</span>
+          <div>
+            <button><span class="material-icons md-24">face</span></button>
+          </div>
         </div>
       </div>
-
-      <div class="content">
-        <div id="top-search">
-          <div class="icon" (click)="spacy_search()">
-            <span class="material-icons md-24">search</span>
-          </div>
-          <input
-            type="text"
-            placeholder="Full Text Search"
-            autocomplete="off"
-            [(ngModel)]="spacy_query"
-          />
+      <div class="top-bar">
+        <div class="recent-item" *ngFor="let item of recents">
+          <img src="{{ item.src }}" alt="" />
+          <h3 style="text-align: center">{{ item.text }}</h3>
         </div>
       </div>
     </div>

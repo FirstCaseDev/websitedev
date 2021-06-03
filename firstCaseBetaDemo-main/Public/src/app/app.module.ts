@@ -1,12 +1,14 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { Pipe, PipeTransform, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { FilterPipe } from './home/filter.pipe';
+import { SafeHtmlPipe } from './sanitizer.pipe';
 import { HighlightPipe } from './casedoc/highlight.pipe';
+import { SpacyUnderline } from './cases/spacy_underline.pipe';
 import { CasesComponent } from './cases/cases.component';
 import { ChartsModule } from 'ng2-charts';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -37,6 +39,8 @@ import { MatIconModule } from '@angular/material/icon';
     HomeComponent,
     FilterPipe,
     HighlightPipe,
+    SafeHtmlPipe,
+    SpacyUnderline,
     CasesComponent,
     UsersComponent,
     CasedocComponent,

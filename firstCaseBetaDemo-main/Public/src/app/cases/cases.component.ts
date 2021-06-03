@@ -13,6 +13,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { SwiperOptions } from 'swiper';
 import { Meta, MetaDefinition } from '@angular/platform-browser';
 import { stringify } from '@angular/compiler/src/util';
+import { SpacyService } from '../spacy.service';
 
 declare let Chart: any;
 HC_heatmap(Highcharts);
@@ -33,7 +34,8 @@ export class CasesComponent implements OnInit {
     private caseService: CaseService,
     private fb: FormBuilder,
     private componentTitle: Title,
-    private metaService: Meta
+    private metaService: Meta,
+    private spacy: SpacyService
   ) {
     Chart.elements.Rectangle.prototype.draw = function () {
       var ctx = this._chart.ctx;
@@ -358,8 +360,9 @@ export class CasesComponent implements OnInit {
   autocomplete_suggestions: any = [];
   cited_cases_url_unsorted: any = [];
   cited_cases_url: any = [];
-  // query: string = '"medical negligence"';
-  query: string = 'Jacob Mathew vs Punjab';
+  query: string = '';
+  test_query: string = '';
+  spacy_query: string = '';
   results_count: number = 0;
   results_time: number = 0;
   arrayOne: Array<number> = [];
@@ -988,6 +991,7 @@ export class CasesComponent implements OnInit {
       this.query,
       this.results_count
     );
+    this.spacySearch();
     this.page = 1;
     this.loading = true;
     this.view_focussed = false;
@@ -1160,45 +1164,55 @@ export class CasesComponent implements OnInit {
     }
     this.courts = this.court_indexes;
 
-    this.caseService
-      .getSearchedCases(
-        this.query,
-        this.courts,
-        this.judgement,
-        this.bench,
-        this.petitioner,
-        this.respondent,
-        this.page,
-        this.limit,
-        this.curr_sort,
-        this.date_floor.year,
-        this.date_ceil.year,
-        this.selectedCountry.name
-      )
-      .subscribe((data: any) => {
-        if (data.success) {
-          this.rows = data.case_list;
-          this.results_time = data.result_time;
-          this.results_count = data.result_count;
-          this.related_searches = data.related_searches;
-          this.barChartData[0].data = [];
-          this.barChartLabels = [];
-          for (var i = 0; i < data.court_analytics.length; i++) {
-            this.barChartLabels.push(data.court_analytics[i].key);
-            // console.log(this.barChartData);
-            this.barChartData[0].data?.push(data.court_analytics[i].doc_count);
-          }
-        } else {
-          alert(data.msg);
-          this.reset();
-          this.reset_filters();
-        }
-        this.loading = false;
-      });
+    console.log(this.query);
 
-    if (Boolean(this.view_search) == false) this.show_search();
-    this.createArray(this.results_count);
-    this.show_search();
+    // this.caseService
+    //   .getSearchedCases(
+    //     this.query,
+    //     this.courts,
+    //     this.judgement,
+    //     this.bench,
+    //     this.petitioner,
+    //     this.respondent,
+    //     this.page,
+    //     this.limit,
+    //     this.curr_sort,
+    //     this.date_floor.year,
+    //     this.date_ceil.year,
+    //     this.selectedCountry.name
+    //   )
+    //   .subscribe((data: any) => {
+    //     if (data.success) {
+    //       this.rows = data.case_list;
+    //       this.results_time = data.result_time;
+    //       this.results_count = data.result_count;
+    //       this.related_searches = data.related_searches;
+    //       this.barChartData[0].data = [];
+    //       this.barChartLabels = [];
+    //       for (var i = 0; i < data.court_analytics.length; i++) {
+    //         this.barChartLabels.push(data.court_analytics[i].key);
+    //         // console.log(this.barChartData);
+    //         this.barChartData[0].data?.push(data.court_analytics[i].doc_count);
+    //       }
+    //     } else {
+    //       alert(data.msg);
+    //       this.reset();
+    //       this.reset_filters();
+    //     }
+    //     this.loading = false;
+    //   });
+
+    setTimeout(() => {
+      this.results_count = 5;
+      this.loading = false;
+      if (Boolean(this.view_search) == false) this.show_search();
+      this.createArray(this.results_count);
+      this.show_search();
+    }, 100);
+
+    // if (Boolean(this.view_search) == false) this.show_search();
+    // this.createArray(this.results_count);
+    // this.show_search();
   }
 
   getLineCharts() {
@@ -1722,6 +1736,7 @@ export class CasesComponent implements OnInit {
   }
 
   reset() {
+    this.spacy_search = false;
     this.view_tags = false;
     this.tags_list = [];
     this.tagType = this.tagCategory[0];
@@ -1873,8 +1888,8 @@ export class CasesComponent implements OnInit {
 
   // getIndex(value: any) {
   //   for (let i = 0; i < this.autoComplete_list.length; i++) {
-  //     const element = this.autoComplete_list[i];
-  //     if (element.textContent === value) return i;
+  // const element = this.autoComplete_list[i];
+  // if (element.textContent === value) return i;
   //   }
   //   return -1;
   // }
@@ -1897,16 +1912,16 @@ export class CasesComponent implements OnInit {
 
     // if (event.which == 38) {
     //   if (active_idx != length - 1) {
-    //     this.unsetActive(active_idx);
-    //     active_idx = active_idx - 1;
-    //     this.setActive(active_idx);
+    // this.unsetActive(active_idx);
+    // active_idx = active_idx - 1;
+    // this.setActive(active_idx);
     //   }
     // }
     // if (event.which == 40) {
     //   if (active_idx != length - 1) {
-    //     this.unsetActive(active_idx);
-    //     active_idx = active_idx + 1;
-    //     this.setActive(active_idx);
+    // this.unsetActive(active_idx);
+    // active_idx = active_idx + 1;
+    // this.setActive(active_idx);
     //   }
     // }
     if (event.which == ENTER) {
@@ -1934,4 +1949,155 @@ export class CasesComponent implements OnInit {
     this.query = event.target.innerHTML;
     this.search();
   }
+
+  spacy_content: any[] = [];
+  spacy_search = false;
+
+  spacySearch() {
+    // this.spacy.get(this.spacy_query).subscribe((data: any) => {});
+    this.spacy_search = true;
+  }
+  resetSpacy() {
+    this.spacy_search = false;
+  }
+
+  first_para = {
+    text: 'The Indian Legislature has sought to cut across the web of rules and presumptions under the English common law, by enacting a uniform principle applicable to all stipulations naming amounts to be paid in case of breach, and stipulations by way of penalty, and according to this principle, even if there is a stipulation by way of liquidated damages, a party complaining of breach of contract can recover only reasonable compensation for the injury sustained by him, the stipulated amount being merely the outside limit.',
+    cited_in: '300+',
+    source: 'Supreme Court',
+    cited_yFloor: 1985,
+    cited_yCeil: 2021,
+    style: 'first_ans',
+  };
+
+  paras = [
+    {
+      text: 'When a contract has been broken, if a sum is named in the contract as the amount to be paid in case of such breach, or if the contract contains any other stipulation by way of penalty, the party complaining of the breach is entitled, whether or not actual damage or loss is proved to have been caused thereby, to receive from the party who has broken the contract reasonable compensation not exceeding the amount so named or, as the case may be, the penalty stipulated for.',
+      cited_in: 44,
+      source: 'Supreme Court',
+      cited_yFloor: 2003,
+      cited_yCeil: 2021,
+      title: 'Oil & Natural Gas Corporation Ltd vs Saw Pipes Ltd',
+    },
+    {
+      text: 'This Section is to be read with Section 74, which deals with penalty stipulated in the contract, inter alia [relevant for the present case] provides that when a contract has been broken, if a sum is named in the contract as the amount to be paid in case of such breach, the party complaining of breach is entitled, whether or not actual loss is proved to have been caused, thereby to receive from the party who has broken the contract reasonable compensation not exceeding the amount so named.',
+      cited_in: 51,
+      source: 'Supreme Court',
+      cited_yFloor: 2011,
+      cited_yCeil: 2021,
+      title: 'M/S.J.G.Engineers Pvt.Ltd vs Union Of India & Anr',
+    },
+    {
+      text: 'It may be mentioned here that the Principles contained in Section 20 of the old Act are reenacted in Section 23 of the Act of 1963 in language which makes it dear that a case where an option is given by a contract to a party either to pay or to carry out the other terms of the contract falls outside the purview of Section 20 of the old Act, but, mere specification of a sum of money to be paid for a breach in order to compel the formance of the contract to transfer property will not do.',
+      cited_in: 47,
+      source: 'Supreme Court',
+      cited_yFloor: 2009,
+      cited_yCeil: 2021,
+      title: 'Steel Authority Of India Ltd vs Gupta Brother Steel Tubes Ltd',
+    },
+    {
+      text: 'But if the compensation named in the contract for such breach is genuine pre- estimate of loss which the parties knew when they made the contract to be likely to result from the breach of it, there is no question of proving such loss or such party is not required to lead evidence to prove actual loss suffered by him.',
+      cited_in: 38,
+      source: 'Supreme Court',
+      cited_yFloor: 1973,
+      cited_yCeil: 2021,
+      title: 'N. L. Devender Singh & Ors vs Syed Khaja',
+    },
+    {
+      text: 'Thereby it merely dispenses with proof of "actual loss or damages"; it does not justify the award of compensation when in consequence of the breach no legal injury at all has resulted, because compensation for breach of contract can be awarded to make good loss or damage which naturally arose in the usual course of things, or which the parties knew when they made the contract, to be likely to result from the breach.',
+      cited_in: 49,
+      source: 'Madras High Court',
+      cited_yFloor: 1908,
+      cited_yCeil: 2021,
+      title: 'Natesa Aiyar And Ors. vs Appavu Padayach',
+    },
+    {
+      text: 'Similarly, if the award is patently against the statutory provisions of substantive law which is in force in India or is passed without giving an opportunity of hearing to the parties as provided under Section 24 or without giving any reason in a case where parties have not agreed that no reasons are to be recorded, it would be against the statutory provisions.',
+      cited_in: 56,
+      source: 'Supreme Court',
+      cited_yFloor: 2000,
+      cited_yCeil: 2021,
+      title:
+        'Oil & Natural Gas Corporation Ltd vs State Bank Of India, Overseas ...',
+    },
+    {
+      text: 'Compensation for loss or damage caused by breach of contract:- When a contract has been broken, the party who suffers by such breach is entitled to receive, from the party who has broken the contract, compensation for any loss or damage caused to him thereby, which naturally arose in the usual course of things from such breach, or which the parties knew, when they made the contract, to be likely to result from the breach of it.',
+      cited_in: 64,
+      source: 'Supreme Court',
+      cited_yFloor: 2008,
+      cited_yCeil: 2021,
+      title: 'Bharat Sanchar Nigam Ltd.& Anr vs Motorola India Pvt.Ltd',
+    },
+
+    // {
+    //   text: 'We are, therefore, in agreement with the view of the Full Bench that the powers of the State under an agreement entered into by it with a private person providing for assessment of damages for breach of conditions and recovery of the damages will stand confined only to those cases where the breach of conditions is admitted or it is not disputed.',
+    // },
+    // {
+    //   text: 'Under the common law a genuine pre-estimate of damages by mutual agreement is regarded as a stipulation naming liquidated damages and binding between the parties: a stipulation in a contract in terrorem is a penalty and the Court refuses to enforce it, awarding to the aggrieved party only reasonable compensation.',
+    // },
+    // {
+    //   text: 'The assumptions underlying the superficially attractive arguments an behalf of the Defendants-appellants are two : firstly, that the mere existence of a clause in a contract providing for liquidated damages or a penalty for a breach is sufficient to rebut the presumption raised by the explanation to Section 12; and, secondly, that, if the presumption is rebutted, the bar contained in Section 21 of the old-Act will ipso facto become operative.',
+    // },
+    // {
+    //   text: 'It will be no objection to any such appointment that the arbitrator so appointed is a Government servant, that he had to deal with the matters to which the contract relates and that in the course of his duties as Government servant he has expressed views on all or any of the matters in dispute or difference.',
+    // },
+    // {
+    //   text: 'But this rule does not apply where questions of law are specifically referred to the arbitrator for his decision; the award of the arbitrator on those questions is binding upon the parties, for by referring specific questions the parties desire to have a decision from the arbitrator on those questions rather than from the Court, and the Court will not unless it is satisfied that the arbitrator had proceeded illegally interfere with the decision.',
+    // },
+    // {
+    //   text: 'Unless otherwise agreed by the parties, where and in so far as an arbitral award is for the payment of money, the arbitral tribunal may include in the sum for which the award is made interest, at such rate as it deems reasonable, on the whole or any part of the money, for the whole or any part of the period between the date on which the cause of action arose and the date on which the award is made.',
+    // },
+    // {
+    //   text: 'Having regard to the conclusions of the learned trial Judge on payment of interest, which was granted by the learned Judge @ 12% per annum from the date of the respective claims, we fully concur  with the reasoning of the learned Judge and we hold that the above sum decreed in favour of the plaintiff is liable to be paid by the TNEB along with interest @ 12% per annum from the date of respective claims.',
+    // },
+    // {
+    //   text: 'The authorities make a clear distinction between these two cases, and, as they appear to me, they decide that in the former case the Court can interfere if and when any error of law appears on  the face of the award, but that in the latter case no such interference is possible upon the ground that it so appears that the decision upon the question of law is an erroneous one.',
+    // },
+    // {
+    //   text: 'It appeared, quite rightly, to the High Court That the Trial Court had gone completely astray in the exercise of its discretion on the footing that the Plaintiff Respondent enjoyed an "unfair advantage" over the first Defendants, whereas, on the facts and circumstances of the case, it was the first Defendant who was placed in a position to exploit the need of the plaintiff and the plaintiffs allegedly insecure position under the first agreement.',
+    // },
+    // {
+    //   text: 'The material placed before the Tribunal clearly established that during the intervening period the appellant had been informed by the respondent that clearance for commencing commercial operations could be considered only after the following requirements of the licence agreement were complied with:',
+    //   ol: [
+    //     { li: 'Payment of next instalment of licence fee due on 3.3.1999;' },
+    //     {
+    //       li: 'Provision of Performance Bank Guarantee (PBG) and enhanced Financial Bank Guarantee (FBG) for requisite amount and validity before commencement of succeeding year on 3.3.1999;',
+    //     },
+    //     {
+    //       li: 'Rectification of deficiencies pointed out by TEC before the commencement of commercial operations;',
+    //     },
+    //     {
+    //       li: 'Submission of plan in respect of providing Direct Exchange Lines (DEL-s) and Village Public Telephones (VPT-s) as per committed targets failing which Liquidated Damages (LD-s) are payable; and',
+    //     },
+    //     { li: 'Establishment of a separate bank account' },
+    //   ],
+    // },
+    // {
+    //   text: '"Is there any case where money deposited, as in this case, has been treated as a penalty and not as a liquidated sum," and he was of opinion that the cases cited showing the distinction between penalty and liquidated damages have no application to a case where the agreement contains a stipulation of forfeiture.',
+    // },
+    // {
+    //   text: 'There is however, no warrant for the assumption made by some of the High Courts in India, that Section 74 applies only to cases where the, aggrieved party is seeking to receive some amount on breach of contract and not to cases where upon breach of contract an amount received under the contract is sought to be forfeited.',
+    // },
+    // {
+    //   text: 'In the light of what is stated above, in the absence of a plea relating to fraud, much less of a finding thereto, we find that the court could not have stated that the defence raised by the respondent Bank on the grounds set forth earlier is sufficient to hold that unconditional leave should be granted to defend the suit.',
+    // },
+    // {
+    //   text: "This court held: <br> Even assuming for argument's sake that the terms of Clause 12 afford scope for being construed as empowering the officer of the State to decide upon the question of breach as well as assess the quantum of damages, we do not think that adjudication by the other officer regarding the breach of the contract can be sustained under law because a party to the agreement cannot be an arbiter in his own cause.",
+    // },
+    // {
+    //   text: 'In our judgment the expression "the contract contains any other stipulation by way of penalty" comprehensively applies to every covenant involving a penalty whether it is for payment on breach of contract of money or delivery of property in future, or for forfeiture of right to money or other property already delivered.',
+    // },
+    // {
+    //   text: 'The contract also provided for levy of liquidated damages if the contractor failed to complete the entire works or any part thereof comprising the total turn key project before the respective scheduled completion date fixed for the entire works or part thereof at a rate equal to 3% of the total contract price for each months delay subject to a maximum of 10% of the contract price.',
+    // },
+    // {
+    //   text: 'Reading Clause 15 and 16 together, it is apparent that Clause 16.2 will come into operation only after a finding is entered in terms of Clause 15 that the supplier is liable for payment of liquidated damages on account of delay on his part in the matter of making delivery.',
+    // },
+    // {
+    //   text: 'Again the appellant on September 27, 1993 informed the respondent Bank that the contractor was separately advised vide its letter date September 13, 1993 to extend the validity of the bank guarantee and in case the validity of the same is not extended on or before October 1, 1993, the said letter be treated as its notice invoking the said bank guarantee.',
+    // },
+    // {
+    //   text: 'the plaintiff agreed to sell and the defendant to purchase some property of which possession was to be given on or before the 13th October and in the event of either party not complying with every particular set forth in the agreement the defaulter should forfeit and pay the other £50.',
+    // },
+  ];
 }

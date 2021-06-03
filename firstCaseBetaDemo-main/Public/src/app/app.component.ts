@@ -11,7 +11,6 @@ declare let gtag: Function;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  isMobile = false;
   mobile_menu_open = false;
 
   constructor(
@@ -20,9 +19,6 @@ export class AppComponent implements OnInit {
     public appService: AppService,
     private location: Location
   ) {
-    this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (this.isMobile) localStorage.setItem('device_type', 'mobile');
-    else localStorage.setItem('device_type', 'other');
     //console.log('isMobile = ', this.isMobile);
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

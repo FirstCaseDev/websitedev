@@ -131,12 +131,8 @@
           "
         >
           <div>
-            <h3 style="margin: 0; padding: 0">
-              {{ tag.value }}
-            </h3>
-            <p style="font-size: xx-small; margin: 0">
-              {{ tag.type }}
-            </p>
+            <h3 style="margin: 0; padding: 0">{{ tag.value }}</h3>
+            <p style="font-size: xx-small; margin: 0">{{ tag.type }}</p>
           </div>
           <img
             style="margin-left: 10px; cursor: pointer"
@@ -292,17 +288,13 @@
               style="display: flex; flex-wrap: wrap; -webkit-flex-wrap: wrap"
             >
               <div class="tags-list-item source-tag" *ngIf="data.source != ''">
-                <p style="margin: 0; padding: 0">
-                  {{ data.source }}
-                </p>
+                <p style="margin: 0; padding: 0">{{ data.source }}</p>
               </div>
               <div
                 class="tags-list-item judgement-tag"
                 *ngIf="data.judgement != ''"
               >
-                <p style="margin: 0; padding: 0">
-                  {{ data.judgement }}
-                </p>
+                <p style="margin: 0; padding: 0">{{ data.judgement }}</p>
               </div>
               <div class="tags-list-item date-tag" *ngIf="data.month != ''">
                 <p style="margin: 0; padding: 0">
@@ -310,9 +302,7 @@
                 </p>
               </div>
               <div class="tags-list-item bench-tag" *ngIf="data.bench != ''">
-                <p style="margin: 0; padding: 0">
-                  {{ data.bench }}
-                </p>
+                <p style="margin: 0; padding: 0">{{ data.bench }}</p>
               </div>
             </div>
           </div>
@@ -322,9 +312,7 @@
             >
               <div *ngFor="let elem of data.query_terms">
                 <div class="tags-list-item query-term-tag">
-                  <p style="margin: 0; padding: 0">
-                    {{ elem }}
-                  </p>
+                  <p style="margin: 0; padding: 0">{{ elem }}</p>
                 </div>
               </div>
             </div>
@@ -686,3 +674,59 @@
     </div>
   </div> -->
 </div>
+
+<div class="form-group" id="search-form" style="margin-bottom: -5px !important">
+  <label for="search" class="probootstrap-date-wrap">Search</label>
+  <input
+    type="text"
+    *ngIf="!spacy_search || results_count < 1"
+    class="form-control search-input"
+    placeholder=""
+    name="search"
+    id="search-box"
+    (keyup)="key_press($event)"
+    (ngModelChange)="queryChange($event)"
+    required="required"
+    placeholder="Full Text Search"
+    [(ngModel)]="query"
+    autocomplete="off"
+  />
+  <div
+    *ngIf="spacy_search && results_count > 0"
+    class="form-control search-input"
+    style="display: flex; align-items: center; font-family: PopLight"
+    [innerHTML]="
+    query | SpacyUnderline: 'liquidated damages' | safeHtml
+  "
+  ></div>
+  <ul
+    id="autocomplete_list"
+    class="list-group search-input"
+    *ngIf="autocomplete_suggestions.length > 0 && view_focussed"
+  >
+    <li
+      *ngFor="let item of autoComplete_list"
+      class="autoComplete_items list-group-item"
+      (click)="autoComplete($event)"
+    >
+      {{ item }}
+    </li>
+  </ul>
+</div>
+<div class="form-group">
+  <div class="search-filter-btn-mobile" (click)="toggleShowFilter()">
+    <img src="../../assets/img/filter.svg" width="20px" />
+  </div>
+  <div class="search-icon-btn-mobile" (click)="first_search()">
+    <img src="../../assets/img/search_icon.svg" width="20px" />
+  </div>
+  <button class="search-filter-btn" (click)="toggleShowFilter()" *ngIf="false">
+    Filters</button
+  ><button class="search-icon-btn" (click)="first_search()">Search</button>
+</div>
+
+Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet, nesciunt
+ullam et facere reprehenderit vero ab temporibus iusto vitae veniam reiciendis
+alias quasi sed repellat blanditiis sint odio iure dicta. Provident ipsum id,
+quo saepe corrupti unde nostrum ipsa nemo. Sunt tempora deleniti amet laudantium
+doloribus cum excepturi tenetur iusto?

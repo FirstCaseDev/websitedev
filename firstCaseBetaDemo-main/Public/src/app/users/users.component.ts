@@ -20,11 +20,8 @@ export class UsersComponent implements OnInit {
   ) {}
   isLoggedIn: boolean = false;
   loginClicked: boolean = false;
-  isMobile = false;
 
   ngOnInit(): void {
-    if (localStorage.device_type == 'mobile') this.isMobile = true;
-    else this.isMobile = false;
     this.componentTitle.setTitle('FirstCase | Login');
     if (localStorage.getItem('token_exp')) {
       var exp = parseInt(localStorage.token_exp);

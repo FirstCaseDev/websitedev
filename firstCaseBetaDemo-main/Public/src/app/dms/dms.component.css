@@ -25,7 +25,9 @@
 }
 
 input {
-  border: none;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  margin: 0 10px;
 }
 .full-width {
   width: 100%;
@@ -33,12 +35,12 @@ input {
 
 .icon {
   cursor: pointer;
-  padding: 3px;
+  padding: 10px 10px 5px 10px;
+  border-radius: 10px;
 }
 
 .icon:hover {
-  background-color: #ddd;
-  border-radius: 50%;
+  box-shadow: 0 0 10px #ddd;
 }
 
 button {
@@ -92,7 +94,6 @@ button {
 }
 
 .row {
-  background-color: #ebebeb;
   margin: 10px !important;
   padding: 10px !important;
 }
@@ -107,29 +108,43 @@ span {
 }
 
 .filter-popover {
-  transform: translate(-40px, 5px);
-  background-color: thistle;
-  width: 37vw;
+  background-color: #fff;
+  box-shadow: 5px 5px 10px #ddd;
+  border-radius: 10px;
   padding: 20px;
+  margin: 0 10px;
 }
 
 .top-bar {
-  margin: 0 10px;
-  display: flex;
+  margin: 10px 10px;
   align-items: center;
 }
 #top-search {
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   height: 48px;
   padding: 10px;
   border-radius: 10px;
   border: none;
-  background-color: rgb(235, 235, 235);
 }
 #top-search input {
   min-width: 30em;
   margin-left: 10px;
   padding: 5px;
   background-color: transparent;
+}
+
+.small-font {
+  font-size: small;
+}
+
+.search-chip {
+  border-radius: 10px;
+  padding: 5px 35px 5px 10px !important;
+}
+
+.search-chip mat-icon {
+  position: absolute;
+  top: 1px;
+  right: 10px;
 }

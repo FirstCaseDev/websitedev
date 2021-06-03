@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CasedocComponent } from './casedoc/casedoc.component';
 import { CasesComponent } from './cases/cases.component';
 import { TeamComponent } from './team/team.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BlogComponent } from './blog/blog.component';
 import { SingleBlogComponent } from './single-blog/single-blog.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'cases', component: CasesComponent },
   { path: 'users', component: UsersComponent },
+  { path: 'user/:userid', component: UserProfileComponent },
   { path: 'about-us', component: TeamComponent },
   { path: 'casedoc/:caseid', component: CasedocComponent },
   { path: 'my', component: UserProfileComponent },

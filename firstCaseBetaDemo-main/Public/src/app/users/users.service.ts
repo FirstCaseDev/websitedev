@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { WebService } from '../web.service';
+import { DmsappService } from '../dmsapp.service';
 import User from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private webService: WebService) {}
+  constructor(private dmsAppService: DmsappService) {}
 
   getUsers() {
-    return this.webService.get('users');
+    return this.dmsAppService.get('users');
   }
 
   registerUser(regData: User) {
-    return this.webService.post('users', regData);
+    return this.dmsAppService.post('dms/users', regData);
   }
 
   loginUser(loginData: User) {
-    return this.webService.post('authenticate', loginData);
+    return this.dmsAppService.post('dms/authenticate', loginData);
   }
 
   setTokenExp(exp: any) {

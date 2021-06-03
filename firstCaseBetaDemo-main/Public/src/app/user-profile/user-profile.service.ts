@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { WebService } from '../web.service';
+import { DmsappService } from '../dmsapp.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserProfileService {
-  constructor(private webService: WebService) {}
+  constructor(private dmsAppService: DmsappService) {}
 
   getCurrentUser(username: string) {
-    return this.webService.get(`/users/${username}`);
+    return this.dmsAppService.get(`/users/${username}`);
   }
 }

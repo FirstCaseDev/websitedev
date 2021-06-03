@@ -1,5 +1,5 @@
 <div
-  *ngIf="loading"
+  *ngIf="false"
   class="loading_animation"
   style="display: flex; z-index: 1000"
 >
@@ -85,49 +85,44 @@
   <div class="overlay"></div>
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-md probootstrap-animate">
-        <div class="probootstrap-form form-1">
+      <div class="col-md">
+        <div class="probootstrap-form">
           <div class="form-group">
             <!-- Row 1 -->
             <div class="row mb-3">
               <!-- Search -->
               <div class="col-md">
-                <div
-                  class="form-group"
-                  id="search-form"
-                  style="margin-bottom: -5px !important"
+                <label for="search" class="probootstrap-date-wrap"
+                  >ILSA Search</label
                 >
-                  <label for="search" class="probootstrap-date-wrap"
-                    >Search</label
-                  >
+                <div style="display: flex">
                   <input
                     type="text"
+                    *ngIf="!spacy_search || results_count < 1"
                     class="form-control search-input"
-                    placeholder=""
                     name="search"
                     id="search-box"
                     (keyup)="key_press($event)"
                     (ngModelChange)="queryChange($event)"
                     required="required"
-                    placeholder="Full Text Search"
+                    placeholder="Type in your query"
                     [(ngModel)]="query"
                     autocomplete="off"
                   />
-                  <ul
-                    id="autocomplete_list"
-                    class="list-group search-input"
-                    *ngIf="autocomplete_suggestions.length > 0 && view_focussed"
-                  >
-                    <li
-                      *ngFor="let item of autoComplete_list"
-                      class="autoComplete_items list-group-item"
-                      (click)="autoComplete($event)"
-                    >
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
-                <div class="form-group">
+                  <div
+                    *ngIf="spacy_search && results_count > 0"
+                    class="form-control search-input"
+                    style="
+                      display: flex;
+                      align-items: center;
+                      font-family: PopLight;
+                    "
+                    [innerHTML]="
+                      query
+                        | SpacyUnderline: 'liquidated damages india'
+                        | safeHtml
+                    "
+                  ></div>
                   <div
                     class="search-filter-btn-mobile"
                     (click)="toggleShowFilter()"
@@ -137,18 +132,17 @@
                   <div class="search-icon-btn-mobile" (click)="first_search()">
                     <img src="../../assets/img/search_icon.svg" width="20px" />
                   </div>
-                  <button
-                    class="search-filter-btn"
-                    (click)="toggleShowFilter()"
+                  <!-- <button (click)="toggleShowFilter()">Filters</button> -->
+                  <button (click)="first_search()">Search</button>
+                  <!-- <button
+                    *ngIf="spacy_search && results_count > 0"
+                    (click)="reset()"
                   >
-                    Filters</button
-                  ><button class="search-icon-btn" (click)="first_search()">
-                    Search
-                  </button>
+                    Reset
+                  </button> -->
                 </div>
               </div>
             </div>
-
             <!-- Row 2 -->
             <div class="row mb-3" *ngIf="ShowFilter">
               <!-- Sort By -->
@@ -219,8 +213,8 @@
             <div class="row mb-3" *ngIf="related_searches.length > 0">
               <div class="col-md">
                 <label for="search" class="probootstrap-date-wrap"
-                  >Similar queries</label
-                >
+                  >Related Concepts
+                </label>
                 <div style="display: grid; grid-template-columns: 100%">
                   <div
                     style="
@@ -287,7 +281,7 @@
             <!-- END row -->
 
             <!-- Row 4 -->
-            <div class="row mb-3">
+            <div class="row mb-3" *ngIf="false">
               <div class="search-row-4">
                 <!-- Country -->
                 <div class="form-group">
@@ -366,229 +360,346 @@
           </div>
         </div>
 
-        <div class="probootstrap-form border-form2" *ngIf="results_count">
-          <div>
-            <div class="row mb-3">
-              <!-- Search Tab -->
-              <div class="col-md">
-                <div class="tab active" id="search_tab" (click)="show_search()">
-                  Search Results
-                </div>
+        <div
+          class="search-repeater first-para"
+          *ngIf="spacy_search && results_count > 0"
+          style="border-radius: 20px"
+        >
+          <div style="display: flex; align-items: center; margin: 0 10px">
+            <span
+              class="material-icons md-36"
+              style="color: #012970; margin-right: 10px"
+              >verified</span
+            >
+            <h4 style="margin: 0; color: #444">ILSA Recommended</h4>
+          </div>
+          <div style="margin: 10px">
+            <div
+              *ngIf="first_para.text"
+              [innerHTML]="
+                first_para.text
+                  | SpacyUnderline
+                    : 'reasonable compensation stipulated amount breach contract'
+                  | safeHtml
+              "
+              style="text-align: justify; font-family: PopLight"
+            ></div>
+            <ol type="i" *ngIf="first_para.ol" style="margin: 10px 0">
+              <li *ngFor="let elem of first_para.ol" style="font-size: small">
+                {{ elem.li }}
+              </li>
+            </ol>
+
+            <div class="top-bar">
+              <div
+                class="keyword-list-item bench-keyword"
+                *ngIf="first_para.cited_in"
+              >
+                <p style="margin: 0; padding: 0">
+                  Cited in <b>{{ first_para.cited_in }}</b> cases
+                </p>
               </div>
-              <!-- Analytics Tab -->
-              <div class="col-md">
-                <div class="tab" id="analytics_tab" (click)="show_analytics()">
-                  Analytics
-                </div>
+              <div
+                class="keyword-list-item petitionerCounsel"
+                *ngIf="first_para.source"
+              >
+                <p style="margin: 0; padding: 0">
+                  <b>{{ first_para.source }}</b>
+                </p>
               </div>
-              <!-- Intelligent Legal Output Tab -->
-              <div class="col-md">
-                <div class="tab" id="citation_tab" (click)="show_citations()">
-                  Intelligent Legal Output
-                </div>
+              <div
+                class="keyword-list-item petitionerName"
+                *ngIf="first_para.cited_yFloor"
+              >
+                <p style="margin: 0; padding: 0">
+                  Cited from <b>{{ first_para.cited_yFloor }}</b> to
+                  <b>{{ first_para.cited_yCeil }}</b>
+                </p>
               </div>
             </div>
-            <div class="row mb-3" *ngIf="view_search && searched">
-              <!-- Search Slide -->
-              <div id="slide-1 ">
-                <p style="margin: 10px 0">
-                  {{ results_count }} results found in
-                  {{ results_time }} seconds
+
+            <h4 style="color: #012970">
+              Oil & Natural Gas Corporation Ltd vs Saw Pipes Ltd
+            </h4>
+          </div>
+        </div>
+
+        <div
+          class="probootstrap-form"
+          style="padding-bottom: 30px"
+          *ngIf="spacy_search && results_count > 0"
+        >
+          <div
+            class="search-repeater"
+            style="border-radius: 20px"
+            *ngFor="let item of paras"
+          >
+            <div
+              *ngIf="item.text"
+              [innerHTML]="item.text | safeHtml"
+              style="text-align: justify; font-family: PopLight; margin: 10px 0"
+            ></div>
+            <ol type="i" *ngIf="item.ol">
+              <li *ngFor="let elem of item.ol" style="font-size: small">
+                {{ elem.li }}
+              </li>
+            </ol>
+
+            <div class="top-bar">
+              <div
+                class="keyword-list-item bench-keyword"
+                *ngIf="item.cited_in"
+              >
+                <p style="margin: 0; padding: 0">
+                  Cited in <b>{{ item.cited_in }}</b> cases
                 </p>
-                <div class="search-repeater" *ngFor="let data of rows">
-                  <div class="top-bar">
-                    <div
-                      class="keyword-list-item case-id-keyword"
-                      *ngIf="data.case_id != ''"
-                    >
-                      <p style="margin: 0; padding: 0">
-                        {{ data.case_id }}
-                      </p>
-                    </div>
-                    <div
-                      class="keyword-list-item source-keyword"
-                      *ngIf="data.source != ''"
-                    >
-                      <p style="margin: 0; padding: 0">
-                        {{ data.source }}
-                      </p>
-                    </div>
-                    <div
-                      class="keyword-list-item judgement-keyword"
-                      *ngIf="data.judgement != ''"
-                    >
-                      <p style="margin: 0; padding: 0">
-                        {{ data.judgement }}
-                      </p>
-                    </div>
-                    <div
-                      class="keyword-list-item date-keyword"
-                      *ngIf="data.month != ''"
-                    >
-                      <p style="margin: 0; padding: 0">
-                        {{ data.day }} {{ data.month }} {{ data.year }}
-                      </p>
-                    </div>
-                    <div
-                      class="keyword-list-item bench-keyword"
-                      *ngIf="data.bench != ''"
-                    >
-                      <p style="margin: 0; padding: 0">
-                        {{ data.bench }}
-                      </p>
-                    </div>
+              </div>
+              <div
+                class="keyword-list-item petitionerCounsel"
+                *ngIf="item.source"
+              >
+                <p style="margin: 0; padding: 0">
+                  <b>{{ item.source }}</b>
+                </p>
+              </div>
+              <div
+                class="keyword-list-item petitionerName"
+                *ngIf="item.cited_yFloor"
+              >
+                <p style="margin: 0; padding: 0">
+                  Cited from <b>{{ item.cited_yFloor }}</b> to
+                  <b>{{ item.cited_yCeil }}</b>
+                </p>
+              </div>
+            </div>
 
-                    <div
-                      class="keyword-list-item judgement-keyword"
-                      *ngIf="data.citing_cases.length > 0"
-                    >
-                      <ng-template #popCitCaseContent>
-                        <ul class="popover-class scrollable">
-                          <li *ngFor="let item of data.citing_cases">
-                            <a href="casedoc/{{ item._id }}" target="_blank">{{
-                              item.title
-                            }}</a>
-                          </li>
-                        </ul>
-                      </ng-template>
-                      <ng-template #popCitCasesTitle>
-                        <b>Cited by</b>
-                      </ng-template>
-                      <p
-                        style="margin: 0; padding: 0"
-                        type="button"
-                        placement="bottom"
-                        [ngbPopover]="popCitCaseContent"
-                        [popoverTitle]="popCitCasesTitle"
-                      >
-                        Cited by: {{ data.citing_cases.length }}
-                      </p>
-                    </div>
+            <h5 style="color: #012970">
+              {{ item.title }}
+            </h5>
+          </div>
+        </div>
 
-                    <div
-                      class="keyword-list-item judgement-keyword"
-                      *ngIf="data.cases_referred.length > 0"
-                    >
-                      <ng-template #popRefCaseContent>
-                        <ul class="popover-class scrollable">
-                          <li *ngFor="let item of data.cases_referred">
-                            {{ item }}
-                          </li>
-                        </ul>
-                      </ng-template>
-                      <ng-template #popRefCasesTitle>
-                        <b>Cases Cited</b>
-                      </ng-template>
-                      <p
-                        style="margin: 0; padding: 0"
-                        type="button"
-                        placement="bottom"
-                        [ngbPopover]="popRefCaseContent"
-                        [popoverTitle]="popRefCasesTitle"
-                      >
-                        Cases Cited: {{ data.cases_referred.length }}
-                      </p>
-                    </div>
-                    <div class="keyword-list-item occurences">
-                      <p style="margin: 0; padding: 0">
-                        Matches: {{ data.match_count }}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <p
-                      id="search-desc "
-                      name="desc "
-                      style="font-size: 25px; font-family: PopMedium"
-                    >
-                      <a
-                        href="/casedoc/{{ data._id }} "
-                        target="_blank "
-                        style="text-decoration: none; margin: 0; color: #012970"
-                        >{{ data.title }}</a
-                      >
+        <div class="probootstrap-form border-form2" *ngIf="false">
+          <div class="row mb-3">
+            <!-- Search Tab -->
+            <div class="col-md">
+              <div class="tab active" id="search_tab" (click)="show_search()">
+                Search Results
+              </div>
+            </div>
+            <!-- Analytics Tab -->
+            <div class="col-md">
+              <div class="tab" id="analytics_tab" (click)="show_analytics()">
+                Analytics
+              </div>
+            </div>
+            <!-- Intelligent Legal Output Tab -->
+            <div class="col-md">
+              <div class="tab" id="citation_tab" (click)="show_citations()">
+                Intelligent Legal Output
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="view_search && searched">
+            <!-- Search Slide -->
+            <div id="slide-1 ">
+              <p style="margin: 10px 0">
+                {{ results_count }} results found in {{ results_time }} seconds
+              </p>
+              <div class="search-repeater" *ngFor="let data of rows">
+                <div class="top-bar">
+                  <div
+                    class="keyword-list-item case-id-keyword"
+                    *ngIf="data.case_id != ''"
+                  >
+                    <p style="margin: 0; padding: 0">
+                      {{ data.case_id }}
                     </p>
                   </div>
-                  <div>
-                    <div
-                      style="
-                        display: flex;
-                        flex-wrap: wrap;
-                        -webkit-flex-wrap: wrap;
-                      "
+                  <div
+                    class="keyword-list-item source-keyword"
+                    *ngIf="data.source != ''"
+                  >
+                    <p style="margin: 0; padding: 0">
+                      {{ data.source }}
+                    </p>
+                  </div>
+                  <div
+                    class="keyword-list-item judgement-keyword"
+                    *ngIf="data.judgement != ''"
+                  >
+                    <p style="margin: 0; padding: 0">
+                      {{ data.judgement }}
+                    </p>
+                  </div>
+                  <div
+                    class="keyword-list-item date-keyword"
+                    *ngIf="data.month != ''"
+                  >
+                    <p style="margin: 0; padding: 0">
+                      {{ data.day }} {{ data.month }} {{ data.year }}
+                    </p>
+                  </div>
+                  <div
+                    class="keyword-list-item bench-keyword"
+                    *ngIf="data.bench != ''"
+                  >
+                    <p style="margin: 0; padding: 0">
+                      {{ data.bench }}
+                    </p>
+                  </div>
+
+                  <div
+                    class="keyword-list-item judgement-keyword"
+                    *ngIf="data.citing_cases.length > 0"
+                  >
+                    <ng-template #popCitCaseContent>
+                      <ul class="popover-class scrollable">
+                        <li *ngFor="let item of data.citing_cases">
+                          <a href="casedoc/{{ item._id }}" target="_blank">{{
+                            item.title
+                          }}</a>
+                        </li>
+                      </ul>
+                    </ng-template>
+                    <ng-template #popCitCasesTitle>
+                      <b>Cited by</b>
+                    </ng-template>
+                    <p
+                      style="margin: 0; padding: 0"
+                      type="button"
+                      placement="bottom"
+                      [ngbPopover]="popCitCaseContent"
+                      [popoverTitle]="popCitCasesTitle"
                     >
-                      <div *ngFor="let elem of data.query_terms">
-                        <div class="keyword-list-item query-term-keyword">
-                          <p
-                            style="margin: 0; padding: 0; cursor: pointer"
-                            (click)="tag_click($event)"
-                          >
-                            {{ elem }}
-                          </p>
-                        </div>
+                      Cited by: {{ data.citing_cases.length }}
+                    </p>
+                  </div>
+
+                  <div
+                    class="keyword-list-item judgement-keyword"
+                    *ngIf="data.cases_referred.length > 0"
+                  >
+                    <ng-template #popRefCaseContent>
+                      <ul class="popover-class scrollable">
+                        <li *ngFor="let item of data.cases_referred">
+                          {{ item }}
+                        </li>
+                      </ul>
+                    </ng-template>
+                    <ng-template #popRefCasesTitle>
+                      <b>Cases Cited</b>
+                    </ng-template>
+                    <p
+                      style="margin: 0; padding: 0"
+                      type="button"
+                      placement="bottom"
+                      [ngbPopover]="popRefCaseContent"
+                      [popoverTitle]="popRefCasesTitle"
+                    >
+                      Cases Cited: {{ data.cases_referred.length }}
+                    </p>
+                  </div>
+                  <div class="keyword-list-item occurences">
+                    <p style="margin: 0; padding: 0">
+                      Matches: {{ data.match_count }}
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <p
+                    id="search-desc "
+                    name="desc "
+                    style="font-size: 25px; font-family: PopMedium"
+                  >
+                    <a
+                      href="/casedoc/{{ data._id }} "
+                      target="_blank "
+                      style="text-decoration: none; margin: 0; color: #012970"
+                      >{{ data.title }}</a
+                    >
+                  </p>
+                </div>
+                <div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-wrap: wrap;
+                      -webkit-flex-wrap: wrap;
+                    "
+                  >
+                    <div *ngFor="let elem of data.query_terms">
+                      <div class="keyword-list-item query-term-keyword">
+                        <p
+                          style="margin: 0; padding: 0; cursor: pointer"
+                          (click)="tag_click($event)"
+                        >
+                          {{ elem }}
+                        </p>
                       </div>
                     </div>
                   </div>
-                  <div style="margin: 5px 5px 5px 0">
-                    <p
-                      class="blog-post"
-                      style="font-size: small; text-align: justify"
-                      [innerHtml]="data.highlight"
-                    ></p>
-                  </div>
+                </div>
+                <div style="margin: 5px 5px 5px 0">
+                  <p
+                    class="blog-post"
+                    style="font-size: small; text-align: justify"
+                    [innerHtml]="data.highlight"
+                  ></p>
                 </div>
               </div>
             </div>
-            <div class="row mb-3" *ngIf="view_analytics && searched">
-              <!-- Analytics Slide -->
-              <div id="slide-2 ">
-                <!-- Analytics part with graphs -->
-                <div *ngIf="show_graphs_warning" style="text-align: center">
-                  Rotate your device to landcape mode
-                </div>
-                <div *ngIf="!show_graphs_warning">
-                  <swiper style="margin: auto" [config]="config">
-                    <div class="swiper-wrapper">
-                      <div class="swiper-slide">
-                        <div class="graphs-item">
-                          <canvas
-                            #myCanvas
-                            baseChart
-                            [datasets]="barChartData"
-                            [labels]="barChartLabels"
-                            [options]="barChartOptions"
-                            [plugins]="barChartPlugins"
-                            [legend]="barChartLegend"
-                            [chartType]="barChartType"
-                          >
-                          </canvas>
-                        </div>
+          </div>
+          <div class="row mb-3" *ngIf="view_analytics && searched">
+            <!-- Analytics Slide -->
+            <div id="slide-2 ">
+              <!-- Analytics part with graphs -->
+              <div *ngIf="show_graphs_warning" style="text-align: center">
+                Rotate your device to landcape mode
+              </div>
+              <div *ngIf="!show_graphs_warning">
+                <swiper style="margin: auto" [config]="config">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="graphs-item">
+                        <canvas
+                          #myCanvas
+                          baseChart
+                          [datasets]="barChartData"
+                          [labels]="barChartLabels"
+                          [options]="barChartOptions"
+                          [plugins]="barChartPlugins"
+                          [legend]="barChartLegend"
+                          [chartType]="barChartType"
+                        >
+                        </canvas>
                       </div>
-                      <div class="swiper-slide">
-                        <div class="graphs-item">
-                          <canvas
-                            baseChart
-                            [chartType]="'line'"
-                            [datasets]="chartData"
-                            [labels]="chartLabels"
-                            [options]="linechartOptions"
-                            [legend]="true"
-                          ></canvas>
-                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="graphs-item">
+                        <canvas
+                          baseChart
+                          [chartType]="'line'"
+                          [datasets]="chartData"
+                          [labels]="chartLabels"
+                          [options]="linechartOptions"
+                          [legend]="true"
+                        ></canvas>
                       </div>
-                      <div class="swiper-slide">
-                        <div class="graphs-item">
-                          <canvas
-                            baseChart
-                            [data]="doughnutChartData"
-                            [labels]="doughnutChartLabels"
-                            [options]="doughnutChartOptions"
-                            [chartType]="doughnutChartType"
-                          ></canvas>
-                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="graphs-item">
+                        <canvas
+                          baseChart
+                          [data]="doughnutChartData"
+                          [labels]="doughnutChartLabels"
+                          [options]="doughnutChartOptions"
+                          [chartType]="doughnutChartType"
+                        ></canvas>
                       </div>
-                      <!-- <div class="swiper-slide ">
+                    </div>
+                    <!-- <div class="swiper-slide ">
                         <div class="graphs-item ">
                           <canvas
                             baseChart
@@ -612,91 +723,88 @@
                           ></canvas>
                         </div>
                       </div> -->
-                    </div>
+                  </div>
 
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                  </swiper>
-                </div>
+                  <div class="swiper-pagination"></div>
+                  <div class="swiper-button-next"></div>
+                  <div class="swiper-button-prev"></div>
+                </swiper>
               </div>
             </div>
-            <div class="row mb-3" *ngIf="view_citations && searched">
-              <!-- Intelligent Legal Output Slide -->
-              <div id="slide-3 ">
-                <div class="ilo-view">
-                  <div class="ilo-view-item">
-                    <h2 class="title-h2">Most Relevant Laws</h2>
-                    <div
-                      *ngFor="let provision of CitedProvisions; index as i"
-                      style="margin: 20px auto; display: flexbox"
-                    >
-                      <div style="text-align: center; margin: 5px 0">
-                        {{ provision.act_name }}
-                      </div>
-                      <mat-chip-list #sectionsChipList>
-                        <mat-chip
-                          class="tag-chip"
-                          *ngFor="let section of provision.sections"
-                        >
-                          {{ section }}
-                        </mat-chip>
-                      </mat-chip-list>
+          </div>
+          <div class="row mb-3" *ngIf="view_citations && searched">
+            <!-- Intelligent Legal Output Slide -->
+            <div id="slide-3 ">
+              <div class="ilo-view">
+                <div class="ilo-view-item">
+                  <h2 class="title-h2">Most Relevant Laws</h2>
+                  <div
+                    *ngFor="let provision of CitedProvisions; index as i"
+                    style="margin: 20px auto; display: flexbox"
+                  >
+                    <div style="text-align: center; margin: 5px 0">
+                      {{ provision.act_name }}
                     </div>
-                  </div>
-                  <div class="ilo-view-item">
-                    <h2 class="title-h2">Most important Cases</h2>
-                    <div
-                      style="padding: 20px 0"
-                      *ngIf="cited_cases_url[0] !== 0"
-                      id="table-cited-cases "
-                    >
-                      <div
-                        class="most-cited-case"
-                        *ngFor="let item of cited_cases; index as i"
+                    <mat-chip-list #sectionsChipList>
+                      <mat-chip
+                        class="tag-chip"
+                        *ngFor="let section of provision.sections"
                       >
-                        <a
-                          style="color: black; text-decoration: none"
-                          href="https://firstcase.io/casedoc/{{
-                            cited_cases_url[i]
-                          }} "
-                          target="_blank "
-                        >
-                          {{ item.group }}
-                        </a>
-                      </div>
+                        {{ section }}
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+                </div>
+                <div class="ilo-view-item">
+                  <h2 class="title-h2">Most important Cases</h2>
+                  <div
+                    style="padding: 20px 0"
+                    *ngIf="cited_cases_url[0] !== 0"
+                    id="table-cited-cases "
+                  >
+                    <div
+                      class="most-cited-case"
+                      *ngFor="let item of cited_cases; index as i"
+                    >
+                      <a
+                        style="color: black; text-decoration: none"
+                        href="https://firstcase.io/casedoc/{{
+                          cited_cases_url[i]
+                        }} "
+                        target="_blank "
+                      >
+                        {{ item.group }}
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="row mb-3" *ngIf="results_count && view_search">
-              <!-- Pagination Previous -->
-              <div class="col md">
-                <div class="pagination-elem" *ngIf="page > 1">
-                  <button (click)="sendPreviousPage()">Previous</button>
+          <div class="row mb-3" *ngIf="results_count && view_search">
+            <!-- Pagination Previous -->
+            <div class="col md">
+              <div class="pagination-elem" *ngIf="page > 1">
+                <button (click)="sendPreviousPage()">Previous</button>
+              </div>
+            </div>
+            <!-- Pagination Number -->
+            <div class="col md" style="text-align: center">
+              <div class="pagination-elem">
+                <div>
+                  Page: {{ page }} of
+                  {{ (results_count - (results_count % limit)) / limit }}
                 </div>
               </div>
-              <!-- Pagination Number -->
-              <div class="col md" style="text-align: center">
-                <div class="pagination-elem">
-                  <div>
-                    Page: {{ page }} of
-                    {{ (results_count - (results_count % limit)) / limit }}
-                  </div>
-                </div>
-              </div>
-              <!-- Pagination Next -->
-              <div class="col md">
-                <div
-                  class="pagination-elem"
-                  *ngIf="
-                    page < (results_count - (results_count % limit)) / limit
-                  "
-                >
-                  <button (click)="sendNextPage()">Next</button>
-                </div>
+            </div>
+            <!-- Pagination Next -->
+            <div class="col md">
+              <div
+                class="pagination-elem"
+                *ngIf="page < (results_count - (results_count % limit)) / limit"
+              >
+                <button (click)="sendNextPage()">Next</button>
               </div>
             </div>
           </div>
