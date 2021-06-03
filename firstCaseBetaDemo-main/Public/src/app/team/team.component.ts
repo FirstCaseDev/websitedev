@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { EmailService } from './email.service';
+import { EmailService } from '../email.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({

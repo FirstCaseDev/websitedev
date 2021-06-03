@@ -422,6 +422,7 @@ section {
 
 .features .feture-tabs {
   margin-top: 20px;
+  background-color: #f2f5fc;
 }
 
 .features .feture-tabs h3 {
@@ -1750,4 +1751,15 @@ section {
   padding-left: 5px;
   color: #a5c5fe;
   font-size: 14px;
+}
+
+.question-form form {
+  padding: 20px 40px;
+}
+
+button {
+  background: #012970;
+  padding: 8px 20px;
+  border-radius: 4px;
+  color: #fff;
 }

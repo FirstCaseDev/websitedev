@@ -1,11 +1,13 @@
-import { Renderer2, Inject, Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { SwiperOptions } from 'swiper';
 import { interval } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { HomeService } from './home.service';
-import { Meta, MetaDefinition } from '@angular/platform-browser';
-import { DOCUMENT } from '@angular/common';
+import { Meta } from '@angular/platform-browser';
+import { EmailService } from '../email.service';
+
 import { Title } from '@angular/platform-browser';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -14,14 +16,54 @@ import { Title } from '@angular/platform-browser';
 })
 export class HomeComponent implements OnInit {
   data_subscription: Subscription;
+  questionForm: FormGroup;
+  disabledSubmitButton: boolean = true;
+
+  @HostListener('input') oninput() {
+    if (this.questionForm.valid) {
+      this.disabledSubmitButton = false;
+    }
+  }
+
   constructor(
     private homeService: HomeService,
     private metaService: Meta,
-    private componentTitle: Title
+    private componentTitle: Title,
+    private connectionService: EmailService
   ) {
     this.data_subscription = interval(1000).subscribe((x) => {
       this.get_counts();
     });
+
+    this.questionForm = new FormGroup({
+      contactFormEmail: new FormControl(
+        '',
+        Validators.compose([Validators.required, Validators.email])
+      ),
+      contactFormResponse: new FormControl('', Validators.required),
+    });
+  }
+
+  processForm() {
+    this.connectionService.ISLAForm(this.questionForm.value).subscribe(
+      (data) => {
+        console.log(data);
+        alert('Your response has been recorded.');
+        this.questionForm.reset();
+        this.disabledSubmitButton = true;
+      },
+      (error) => {
+        console.log('Error', error);
+      }
+    );
+  }
+
+  get f() {
+    return this.questionForm.controls;
+  }
+
+  changeResponse(e: any) {
+    // console.log(e.target.value);
   }
 
   get_counts() {

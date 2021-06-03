@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WebService } from '../web.service';
+import { WebService } from './web.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,5 +15,13 @@ export class EmailService {
       contactMessage: FormData.contactFormMessage,
     };
     return this.webService.post('/sendEmail', payload);
+  }
+
+  ISLAForm(FormData: any) {
+    var payload = {
+      contactEmail: FormData.contactFormEmail,
+      contactResponse: FormData.contactFormResponse,
+    };
+    return this.webService.post('/sendResponseEmail', payload);
   }
 }
