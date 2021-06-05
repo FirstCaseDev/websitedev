@@ -37,9 +37,13 @@ export class TeamComponent implements OnInit {
   processForm() {
     // console.log(this.contactForm.value);
     this.connectionService.sendMessage(this.contactForm.value).subscribe(
-      (data) => {
-        // console.log(data);
-        alert('Your message has been sent.');
+      (data: any) => {
+        console.log(data);
+        if (data.status) {
+          alert('Your message has been sent.');
+        } else {
+          alert('Error in sending mail');
+        }
         this.contactForm.reset();
         this.disabledSubmitButton = true;
       },

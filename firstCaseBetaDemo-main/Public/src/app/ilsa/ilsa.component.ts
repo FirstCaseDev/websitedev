@@ -39,9 +39,13 @@ export class ILSAComponent implements OnInit {
 
   processForm() {
     this.connectionService.ISLAForm(this.questionForm.value).subscribe(
-      (data) => {
+      (data: any) => {
         console.log(data);
-        alert('Your response has been recorded.');
+        if (data.status) {
+          alert('Your message has been sent.');
+        } else {
+          alert('Error in sending mail');
+        }
         this.questionForm.reset();
         this.disabledSubmitButton = true;
       },
