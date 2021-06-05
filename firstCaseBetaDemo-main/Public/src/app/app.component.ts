@@ -34,14 +34,8 @@ export class AppComponent implements OnInit {
   }
   isLoggedIn: boolean = false;
 
-  navRoutes = [
-    { text: 'Home', path: '', anchor: '' },
-    { text: 'About Us', path: 'about-us', anchor: '#about' },
-    { text: 'Blog', path: 'blog', anchor: '#blog' },
-    { text: 'Work With Us', path: 'about-us', anchor: '#contact' },
-  ];
-
   ngOnInit(): void {
+    this.getActive();
     this.metaService.addTags([
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ]);
@@ -56,29 +50,73 @@ export class AppComponent implements OnInit {
     // console.log('User logged out');
   }
 
+  navRoutes = [
+    { text: 'Home', path: '', anchor: '' },
+    { text: 'ILSA NEW', path: 'ilsa', anchor: '' },
+    { text: 'About Us', path: 'about-us', anchor: '#about' },
+    { text: 'Blog', path: 'blog', anchor: '#blog' },
+    { text: 'Work With Us', path: 'about-us', anchor: '#contact' },
+  ];
+
+  // setActive(event: any) {
+  //   var elem = event.target;
+  //   var goto_route = elem.textContent;
+  //   var path = '';
+  //   var anchor = '';
+  //   var allElems = document.getElementsByClassName('nav-link');
+  //   for (let i = 0; i < allElems.length; i++) {
+  //     var element = allElems[i];
+  //     element.classList.remove('active');
+  //   }
+  //   elem.classList.add('active');
+
+  //   console.log(`
+  //   elem: ${elem}\n
+  //   goto_route: ${goto_route}\n
+  //   `);
+  //   for (let i = 0; i < this.navRoutes.length; i++) {
+  //     const element = this.navRoutes[i];
+  //     if (element.text == goto_route) {
+  //       path = element.path;
+  //       anchor = element.anchor;
+  //       var url = 'http://localhost:4200/' + path + anchor;
+  //       // var url = 'https://firstcase.io/' + path + anchor;
+  //       this.router.navigateByUrl(path + anchor);
+  //       setTimeout(() => {
+  //         window.location.href = url;
+  //       }, 100);
+  //       break;
+  //     }
+  //   }
+  // }
+
+  getActive() {
+    if (localStorage.getItem('active-link')) {
+      var nav_links = document.getElementsByClassName('nav-link');
+      for (let i = 0; i < nav_links.length; i++) {
+        if (nav_links[i].textContent == localStorage.getItem('active-link')) {
+          nav_links[i].classList.add('active');
+          break;
+        }
+      }
+      localStorage.removeItem('active-link');
+    }
+  }
+
   setActive(event: any) {
     var elem = event.target;
-    var goto_route = elem.textContent;
-    var path = '',
-      anchor = '';
-    var allElems = document.getElementsByClassName('nav-link');
-    for (let i = 0; i < allElems.length; i++) {
-      var element = allElems[i];
-      element.classList.remove('active');
-    }
-    elem.classList.add('active');
-
+    console.log(elem.textContent);
+    var nav_links = document.getElementsByClassName('nav-link');
+    console.log(nav_links);
     for (let i = 0; i < this.navRoutes.length; i++) {
-      const element = this.navRoutes[i];
-      if (element.text == goto_route) {
-        path = element.path;
-        anchor = element.anchor;
-        var url = 'http://localhost:4200/' + path + anchor;
-        // var url = 'https://firstcase.io/' + path + anchor;
-        // this.router.navigateByUrl(path + anchor);
-        setTimeout(() => {
-          window.location.href = url;
-        }, 100);
+      if (this.navRoutes[i].text == elem.textContent) {
+        localStorage.setItem('active-link', elem.textContent);
+        var domain = window.location.href.split('/');
+        while (domain.length > 3) domain.pop();
+        var url = '';
+        for (let i = 0; i < domain.length; i++) url = url + domain[i] + '/';
+        window.location.href =
+          url + this.navRoutes[i].path + this.navRoutes[i].anchor;
         break;
       }
     }

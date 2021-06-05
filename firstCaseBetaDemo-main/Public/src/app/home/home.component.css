@@ -1754,7 +1754,21 @@ section {
 }
 
 .question-form form {
-  padding: 20px 40px;
+  padding: 50px 40px;
+}
+
+iframe {
+  width: 40rem;
+  height: 22.5rem;
+  padding: auto;
+}
+
+@media (max-width: 768px) {
+  iframe {
+    width: 40rem;
+    height: 18.5rem;
+    padding: auto;
+  }
 }
 
 button {

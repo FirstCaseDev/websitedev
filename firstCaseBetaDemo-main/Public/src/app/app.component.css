@@ -661,3 +661,13 @@ section {
   font-size: 13px;
   color: #090e19;
 }
+
+sup {
+  background-color: #012970;
+  padding: 2px 4px;
+  color: white;
+  font-size: xx-small;
+  border-radius: 5px;
+  font-weight: 300;
+  line-height: 10px;
+}

@@ -29,6 +29,7 @@ import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { ILSAComponent } from './ilsa/ilsa.component';
 // import {createPopper} from '@popperjs/core';
 
 @NgModule({
@@ -47,6 +48,7 @@ import { MatIconModule } from '@angular/material/icon';
     PortfolioDetailsComponent,
     PortfolioComponent,
     DmsComponent,
+    ILSAComponent,
   ],
   imports: [
     BrowserModule,

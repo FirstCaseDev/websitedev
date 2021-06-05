@@ -11,6 +11,7 @@ import { SingleBlogComponent } from './single-blog/single-blog.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { PortfolioDetailsComponent } from './portfolio-details/portfolio-details.component';
 import { DmsComponent } from './dms/dms.component';
+import { ILSAComponent } from './ilsa/ilsa.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'portfolio', component: PortfolioComponent },
   { path: 'portfolio/:portfolioID', component: PortfolioDetailsComponent },
   { path: 'dms', component: DmsComponent },
+  { path: 'ilsa', component: ILSAComponent },
 
   // This one should be in last of the list
   { path: '**', redirectTo: '' },

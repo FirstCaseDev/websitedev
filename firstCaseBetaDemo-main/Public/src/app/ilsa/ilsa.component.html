@@ -1,0 +1,89 @@
+<div style="padding-top: 100px"></div>
+<!-- ======= Features Section ======= -->
+<section id="features" class="features">
+  <div class="container" data-aos="fade-up">
+    <header class="section-header">
+      <h2>FirstCase's ILSA</h2>
+      <p href="/cases">
+        <a href="/cases" style="text-decoration: none">
+          Intelligent Legal Search Assistant</a
+        >
+      </p>
+    </header>
+
+    <!-- Feature Tabs -->
+    <div class="row mb-3 video-container" data-aos="fade-up">
+      <iframe
+        src="https://www.youtube.com/embed/z8D-QNIa5KY"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <div class="row mb-3 video-container" data-aos="fade-up">
+      <form [formGroup]="questionForm" (ngSubmit)="processForm()">
+        <h4>Sign Up for Early Access</h4>
+        <div class="form-group">
+          <div class="row mb-3">
+            <div class="col-md">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Your Email"
+                required
+                formControlName="contactFormEmail"
+                id="defaultContactFormEmail"
+              />
+            </div>
+            <div class="col-md"></div>
+            <div class="col-md"></div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="response"
+              >Do you think ILSA can help you save time?
+            </label>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <input
+                id="radio_yes"
+                type="radio"
+                value="true"
+                name="contactFormResponse"
+                formControlName="contactFormResponse"
+                (change)="changeResponse($event)"
+              />
+              <label style="margin-left: 10px" for="radio_yes">Yes</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <input
+                id="radio_no"
+                type="radio"
+                value="false"
+                name="contactFormResponse"
+                formControlName="contactFormResponse"
+                (change)="changeResponse($event)"
+              />
+              <label style="margin-left: 10px" for="radio_no">No</label>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md" style="margin: 10px 0">
+              <button type="submit" [disabled]="!questionForm.valid">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- End Feature Tabs -->
+  </div>
+</section>
+<!-- End Features Section -->

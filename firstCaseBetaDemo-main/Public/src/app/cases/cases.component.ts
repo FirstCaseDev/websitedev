@@ -359,7 +359,7 @@ export class CasesComponent implements OnInit {
   cited_cases_url_unsorted: any = [];
   cited_cases_url: any = [];
   // query: string = '"medical negligence"';
-  query: string = 'Jacob Mathew vs Punjab';
+  query: string = '"medical negligence"';
   results_count: number = 0;
   results_time: number = 0;
   arrayOne: Array<number> = [];

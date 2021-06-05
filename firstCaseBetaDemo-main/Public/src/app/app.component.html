@@ -39,13 +39,13 @@
           <li>
             <a
               id="home-top"
-              class="nav-link scrollto active"
+              class="nav-link scrollto"
               (click)="setActive($event)"
               >Home</a
             >
           </li>
 
-          <li class="dropdown">
+          <!-- <li class="dropdown">
             <a href="#"
               ><span>Services</span> <i class="bi bi-chevron-down"></i
             ></a>
@@ -58,35 +58,49 @@
                 ></a>
                 <ul>
                   <li><a href="#">Coming Soon</a></li>
-                  <!-- <li><a href="#">Deep Drop Down 2</a></li>
+                  <li><a href="#">Deep Drop Down 2</a></li>
                   <li><a href="#">Deep Drop Down 3</a></li>
                   <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li> -->
+                  <li><a href="#">Deep Drop Down 5</a></li>
                 </ul>
               </li>
-              <!-- <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li> -->
+              <li><a href="#">Drop Down 3</a></li>
+              <li><a href="#">Drop Down 4</a></li>
             </ul>
+          </li> -->
+          <li>
+            <a
+              id="ilsa-top"
+              (click)="setActive($event)"
+              class="nav-link scrollto"
+              >ILSA<sup> NEW</sup>
+            </a>
           </li>
           <li>
             <a
-              id="about-top"
+              id="about-us-top"
               (click)="setActive($event)"
               class="nav-link scrollto"
               >About Us</a
             >
           </li>
+
           <!-- <li>
             <a (click)="setActive($event)" class="nav-link scrollto">Blog</a>
           </li> -->
 
           <li>
-            <a (click)="setActive($event)" class="nav-link scrollto"
+            <a
+              id="work-with-us-top"
+              (click)="setActive($event)"
+              class="nav-link scrollto"
               >Work With Us</a
             >
           </li>
           <li>
-            <a class="getstarted scrollto" href="/cases">Search Cases</a>
+            <a class="getstarted scrollto nav-link" href="/cases"
+              >Search Cases</a
+            >
           </li>
         </ul>
       </nav>
