@@ -27,14 +27,7 @@
       </a>
 
       <nav id="navbar" class="navbar">
-        <div class="mobile-nav-toggle bi bi-list" id="mobile_nav">
-          <!-- <img
-            src="../assets/img/hamburger.png"
-            alt=""
-            width="30px"
-            
-          /> -->
-        </div>
+        <div class="mobile-nav-toggle bi bi-list" id="mobile_nav"></div>
         <ul>
           <li>
             <a
@@ -325,6 +318,54 @@
       </div>
     </div>
   </footer>
+
+  <div style="position: fixed; bottom: 20px; right: 20px">
+    <div class="chatbot-icon" (click)="toggleChatBot()">
+      <img src="../assets/img/chatbot-icon.png" alt="" width="80px" />
+    </div>
+    <div class="chatbot-box animated fadeUp" *ngIf="view_chatbot">
+      <div class="header-chatbot">
+        <div style="display: flex; align-items: center">
+          <img src="../../assets/img/logo.svg" width="32px" alt="" />
+          <h3 class="headline">ILSA</h3>
+        </div>
+        <div style="display: flex; flex-direction: row-reverse">
+          <span class="material-icons md-18">more_vert</span>
+        </div>
+      </div>
+      <!-- <div class="msgs-view"> -->
+      <div class="msgs-view" id="main-view">
+        <div
+          *ngFor="let item of msg_lists"
+          class="{{ item.id }} animated fadeUp"
+        >
+          <p *ngIf="item.msg">{{ item.msg }}</p>
+          <p *ngIf="item.case">
+            From <a href="">{{ item.case }}</a>
+          </p>
+        </div>
+      </div>
+      <div class="user-type">
+        <input
+          type="text"
+          name="search"
+          required="required"
+          placeholder="Type in your query"
+          autocomplete="off"
+          (keyup)="key_press($event)"
+          [(ngModel)]="query"
+        />
+        <div>
+          <span
+            class="material-icons md-36"
+            (click)="sendMessage()"
+            style="color: #3663af"
+            >send</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- End Footer -->
 </body>

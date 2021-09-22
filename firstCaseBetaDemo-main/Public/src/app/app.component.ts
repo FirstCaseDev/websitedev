@@ -1,6 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AppService } from './app.service';
+import { ENTER } from '@angular/cdk/keycodes';
+
 import { Location } from '@angular/common';
 import { Meta } from '@angular/platform-browser';
 declare let gtag: Function;
@@ -149,5 +151,79 @@ export class AppComponent implements OnInit {
     } else {
       this.view_focussed = false;
     }
+  }
+
+  view_chatbot = false;
+
+  toggleChatBot() {
+    this.view_chatbot = !this.view_chatbot;
+  }
+
+  msg_lists: any[] = [];
+  india = false;
+
+  query: string = '';
+
+  sendMessage() {
+    if (this.query.split(' ').indexOf('US') > 0) {
+      this.msg_lists.push({
+        msg: 'single satisfaction double recovery US bankruptcy law',
+        id: 'user-msg',
+      });
+      this.scroll_to_bottom();
+      this.query = '';
+      setTimeout(() => {
+        this.msg_lists.push({
+          msg: '[T]he holder of a claim, upon which several parties are personally liable, may prove his claim against the estates of those who become bankrupt and may at the same time pursue the others at law, and, notwithstanding partial payments after the bankruptcy by other [parties] or their estates, he may recover dividends from each estate in bankruptcy upon the full amount of his claim at the time the petition in bankruptcy was filed therein until from all sources he has received full payment of his claim, but no longer.',
+          case: '',
+          id: 'app-msg',
+        });
+        this.scroll_to_bottom();
+        setTimeout(() => {
+          this.msg_lists.push({
+            case: 'Board of Com’RS v. Hurley, 169 F. 92 (8th Cir. 1909)',
+            id: 'app-msg',
+          });
+          this.scroll_to_bottom();
+        }, 1000);
+      }, 2500);
+    }
+
+    if (this.query.split(' ').indexOf('Singapore') > 0) {
+      this.msg_lists.push({
+        msg: 'What is the position on division of assets during divorce under Singapore law?',
+        id: 'user-msg',
+      });
+      this.query = '';
+      this.scroll_to_bottom();
+      setTimeout(() => {
+        this.msg_lists.push({
+          msg: 'For example, this court has held that there is no starting point, presumption or norm of an equal division of matrimonial assets, a holding that is wholly consistent with the legislative background which resulted in s 112 and its concomitant broad-brush approach (see, for example,   the decision of this court in Lock Yeng Fun v Chua Hock Chye [2007] 3 SLR(R)',
+          id: 'app-msg',
+        });
+        this.scroll_to_bottom();
+        setTimeout(() => {
+          this.msg_lists.push({
+            case: 'Chan Tin Sun vs Fong Quay Sim',
+            id: 'app-msg-2',
+          });
+          this.scroll_to_bottom();
+        }, 1000);
+      }, 1000);
+    }
+  }
+
+  key_press(event: any) {
+    if (event.keyCode == ENTER) {
+      this.sendMessage();
+    }
+  }
+
+  scroll_to_bottom() {
+    var view = document.getElementById('main-view');
+    view?.scrollTo({
+      top: view.scrollHeight,
+      behavior: 'smooth',
+    });
   }
 }

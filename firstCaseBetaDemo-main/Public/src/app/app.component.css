@@ -671,3 +671,166 @@ sup {
   font-weight: 300;
   line-height: 10px;
 }
+
+.chatbot-icon {
+  cursor: pointer;
+}
+.chatbot-icon:hover {
+  box-shadow: 0 0 15px #ddd;
+}
+
+.chatbot-box {
+  position: fixed;
+  right: 20px;
+  width: 360px;
+  height: 440px;
+  font-size: small;
+  bottom: calc(20px + 15%);
+  border-radius: 1rem;
+  padding: 10px 0;
+  background-color: white;
+  box-shadow: 0 0 15px #aaa;
+}
+
+/* Animations */
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+
+.fadeUp {
+  -webkit-animation-name: fadeUp;
+  animation-name: fadeUp;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes fadeUp {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ChatBot layout */
+.header-chatbot {
+  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #012970;
+}
+
+.header-chatbot .headline {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+  color: #3663af;
+}
+
+.header-chatbot div {
+  cursor: pointer;
+}
+
+.user-type {
+  position: absolute;
+  bottom: 20px;
+  width: 340px;
+  padding: 5px 0;
+  margin: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-type input {
+  border-radius: 10px;
+  width: 300px;
+  border: 2px solid #777;
+  font-size: small;
+  font-family: "Poppins", sans-serif;
+  padding: 5px 10px;
+}
+
+.msgs-view {
+  padding: 0 10px 80px 10px;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.msgs-view::-webkit-scrollbar {
+  width: 10px;
+}
+.msgs-view::-webkit-scrollbar-button {
+}
+.msgs-view::-webkit-scrollbar-corner {
+}
+.msgs-view::-webkit-scrollbar-thumb {
+  background: #676768;
+  border-radius: 10px;
+}
+.msgs-view::-webkit-scrollbar-thumb:hover {
+  background: #3663af;
+  border-radius: 10px;
+}
+
+.msgs-view::-webkit-scrollbar-track {
+  background: #fff;
+}
+.msgs-view::-webkit-scrollbar-track-piece {
+}
+
+.app-msg,
+.user-msg {
+  display: flex;
+}
+.user-msg {
+  flex-direction: row-reverse;
+  margin-bottom: 10px !important;
+  margin: 20px 0;
+}
+.app-msg {
+  margin-bottom: 4px !important;
+}
+.app-msg-2 {
+  margin-bottom: 10px !important;
+}
+
+.app-msg p,
+.app-msg-2 p,
+.user-msg p {
+  padding: 10px 20px;
+  margin-bottom: 0;
+  font-size: small;
+  font-family: "Poppins", sans-serif;
+  text-align: left;
+  max-width: 80%;
+  word-spacing: 2.5px;
+  letter-spacing: 0.5px;
+  line-height: 1.2rem;
+}
+
+.app-msg p,
+.app-msg-2 p {
+  background: #e3e7ee;
+  font-weight: 300;
+  color: #000;
+  border-radius: 0 20px 20px 20px;
+}
+
+.user-msg p {
+  background: #0077ff;
+  font-weight: 300;
+  color: #fff;
+  border-radius: 20px 0 20px 20px;
+}
